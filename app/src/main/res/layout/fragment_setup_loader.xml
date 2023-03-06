@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".SetupLoaderFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:id="@+id/bNewXGSetup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="New XG Setup"
+        app:icon="@drawable/ic_xg_sm" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/bNewQSSetup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="New QS300 Setup"
+        app:icon="@drawable/ic_qs300_sm" />
+
+    <Button
+        android:id="@+id/bLoadExisting"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="Open Existing Setup (.xbs)"
+        app:icon="@drawable/baseline_file_open_24" />
+</LinearLayout>

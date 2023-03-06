@@ -4,6 +4,8 @@ import android.content.Context
 import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
 import androidx.lifecycle.MutableLiveData
+import com.example.xgbuddy.data.InstrumentMode
+import com.example.xgbuddy.data.MidiSetup
 import javax.inject.Inject
 
 class MidiSession @Inject constructor(context: Context) {
@@ -35,6 +37,8 @@ class MidiSession @Inject constructor(context: Context) {
         }
     })
 
+    var midiSetup = MidiSetup.getXGDefault()
+
     fun getInputDevices(): Map<String, MidiDevice> = inputDevices
 
     fun getOutputDevices(): Map<String, MidiDevice> = outputDevices
@@ -55,6 +59,23 @@ class MidiSession @Inject constructor(context: Context) {
     fun removeOutputDevice(deviceInfo: MidiDeviceInfo) {
         val name = deviceInfo.properties.getString(MidiDeviceInfo.PROPERTY_NAME)
         outputDevices.remove(name)
+    }
+
+    fun createNewSetup(instrumentMode: InstrumentMode) {
+        midiSetup = if (instrumentMode == InstrumentMode.XG) {
+            MidiSetup.getXGDefault()
+        } else {
+            MidiSetup.getQSDefault()
+        }
+
+        /*
+        TODO: Work on data structures. Can't really continue on without having the MIDI data structs
+            all planned out.
+
+            Then need to work on encoding and sending MIDI.
+
+            Then will need to figure out how to send setups.
+         */
     }
 
 }
