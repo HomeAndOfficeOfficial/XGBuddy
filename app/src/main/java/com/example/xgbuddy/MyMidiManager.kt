@@ -36,7 +36,7 @@ import java.util.concurrent.Executor
  * Then I'll have to get into the QS300 voices, and see what all I am able to control.
  */
 
-class MyMidiManager(context: Context, val callback: MyMidiDeviceCallback) : DeviceCallback() {
+class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback) : DeviceCallback() {
     private val midiManager: MidiManager =
         context.getSystemService(Context.MIDI_SERVICE) as MidiManager
     private var devices: Set<MidiDeviceInfo>
@@ -54,6 +54,9 @@ class MyMidiManager(context: Context, val callback: MyMidiDeviceCallback) : Devi
             }, this
         )
         devices = midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
+        if (devices.isNotEmpty()) {
+            callback.onConnectionStatusChanged(devices)
+        }
     }
 
     fun openInputDevice(deviceInfo: MidiDeviceInfo) {

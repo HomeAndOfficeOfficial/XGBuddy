@@ -1,6 +1,6 @@
 package com.example.xgbuddy
 
-import android.media.midi.MidiDevice
+import android.annotation.SuppressLint
 import android.media.midi.MidiDeviceInfo
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ConnectedDeviceRecyclerAdapter(
-    private val midiSession: MidiSession, private val connectedDevices: List<MidiDeviceInfo>
+    private val midiSession: MidiSession, private var connectedDevices: List<MidiDeviceInfo>
 ) : RecyclerView.Adapter<ConnectedDeviceRecyclerAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -67,6 +67,12 @@ class ConnectedDeviceRecyclerAdapter(
                 }
             }
         holder.bind(name, isOutputChecked, isInputChecked, listener)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateDeviceList(deviceList: List<MidiDeviceInfo>) {
+        connectedDevices = deviceList
+        notifyDataSetChanged()
     }
 
 }

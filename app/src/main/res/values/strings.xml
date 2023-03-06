@@ -2,5 +2,7 @@
     <string name="app_name">XG Buddy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_midi_detected">No MIDI devices detected. Connect a MIDI device to get started.</string>
+    <string name="no_midi_detected">No MIDI devices detected.\nConnect a MIDI device to get started.</string>
+    <string name="dialog_done">Done</string>
+    <string name="available_devices">Available Devices</string>
 </resources>

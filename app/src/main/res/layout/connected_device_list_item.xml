@@ -17,8 +17,10 @@
 
         <TextView
             android:id="@+id/tvDeviceName"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="Roland UM-One"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
