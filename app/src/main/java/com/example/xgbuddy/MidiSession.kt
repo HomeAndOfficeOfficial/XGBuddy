@@ -62,11 +62,25 @@ class MidiSession @Inject constructor(context: Context) {
     }
 
     fun createNewSetup(instrumentMode: InstrumentMode) {
+
         midiSetup = if (instrumentMode == InstrumentMode.XG) {
             MidiSetup.getXGDefault()
         } else {
             MidiSetup.getQSDefault()
         }
+
+        /**
+         * Just a note: Instead of sending an entire default setup here, I think I could probably
+         * just send a "reset all parameters" command.
+         *
+         * From a fresh setup, any time a control is changed, that is added to a file (.xbs).
+         *
+         * Whenever a setup is loaded from a file, send a reset command, then send only the parameters
+         * that are required for that setup.
+         *
+         * I will still need to set initial values for everything in the code. It may take some work
+         * to determine what the default values for everything are when you reset every parameter.
+         */
 
         /*
         TODO: Work on data structures. Can't really continue on without having the MIDI data structs
