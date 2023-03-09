@@ -3,12 +3,25 @@ package com.example.xgbuddy
 import android.content.Context
 import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
+import android.media.midi.MidiOutputPort
+import android.media.midi.MidiReceiver
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.xgbuddy.data.DeviceError
 import com.example.xgbuddy.data.InstrumentMode
+import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.MidiSetup
 import javax.inject.Inject
 
 class MidiSession @Inject constructor(context: Context) {
+
+    private val midiReceiver = object : MidiReceiver() {
+        override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
+            midiReceivedListener?.onMidiMessageReceived(MidiMessage(msg, offset, count, timestamp))
+        }
+    }
+
+    private var midiReceivedListener: OnMidiReceivedListener? = null
 
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
     private var outputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
@@ -23,7 +36,8 @@ class MidiSession @Inject constructor(context: Context) {
             inputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
         }
 
-        override fun onOutputDeviceOpened(device: MidiDevice) {
+        override fun onOutputDeviceOpened(device: MidiDevice, outputPort: MidiOutputPort) {
+            outputPort.connect(midiReceiver)
             outputDeviceOpened.postValue(true)
             outputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
         }
@@ -34,6 +48,10 @@ class MidiSession @Inject constructor(context: Context) {
                 outputDeviceOpened.postValue(false)
                 inputDeviceOpened.postValue(false)
             }
+        }
+
+        override fun onDeviceError(error: DeviceError) {
+            Log.e(TAG, error.name)
         }
     })
 
@@ -90,6 +108,25 @@ class MidiSession @Inject constructor(context: Context) {
 
             Then will need to figure out how to send setups.
          */
+    }
+
+    fun registerForMidiCallbacks(listener: OnMidiReceivedListener) {
+        midiReceivedListener = listener
+    }
+
+    fun unregisterMidiListener(listener: OnMidiReceivedListener) {
+        if (midiReceivedListener == listener) {
+            midiReceivedListener = null
+            midiReceiver.flush()
+        }
+    }
+
+    fun interface OnMidiReceivedListener {
+        fun onMidiMessageReceived(message: MidiMessage)
+    }
+
+    companion object {
+        private const val TAG = "MidiSession"
     }
 
 }
