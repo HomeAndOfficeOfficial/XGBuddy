@@ -1,5 +1,6 @@
 package com.example.xgbuddy
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,9 @@ class SetupLoaderFragment : Fragment() {
     }
 
     private fun startFileBrowser(v: View) {
-
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type
+        }
     }
 }
