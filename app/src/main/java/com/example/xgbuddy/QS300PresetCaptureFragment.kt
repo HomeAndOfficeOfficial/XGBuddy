@@ -2,6 +2,7 @@ package com.example.xgbuddy
 
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.example.xgbuddy.data.MidiMessage
+import com.example.xgbuddy.databinding.FragmentQs300PresetCaptureBinding
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
-import java.io.FileNotFoundException
 import javax.inject.Inject
 
 private const val PRESETS_FILE_NAME = "qs300_presets.json"
@@ -22,12 +23,13 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     @Inject
     lateinit var midiSession: MidiSession
 
+    private lateinit var binding: FragmentQs300PresetCaptureBinding
+
     private val presetMessages: MutableList<MidiMessage> = mutableListOf()
     private var presetName = ""
     private var qs300PresetsJSON: JSONObject? = null
 
-    private var isReadyToReceive = false
-    private var isReadyForWrite = false
+    private var status: QS300PresetCaptureStatus = QS300PresetCaptureStatus.READY
 
 
     /**
@@ -61,25 +63,32 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
      * the fragment dismiss. While it writes, it may need to display a "Saving presets" message.
      */
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        midiSession.outputDeviceOpened.observe(viewLifecycleOwner) { isReadyToReceive = it }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         qs300PresetsJSON = if (savedInstanceState == null) {
             JSONObject(readPresetsJSON() ?: "{}")
         } else {
             JSONObject(savedInstanceState.getString(ARG_PRESET_JSON) ?: "")
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentQs300PresetCaptureBinding.inflate(layoutInflater)
+        midiSession.outputDeviceOpened.observe(viewLifecycleOwner) {
+            val status =
+                if (it) QS300PresetCaptureStatus.READY else QS300PresetCaptureStatus.NO_OUTPUT
+            setViewStatus(status)
+        }
+        return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        if (isReadyToReceive) { // <- This is set by observing midiSession.outputDeviceOpened
-            midiSession.registerForMidiCallbacks(this)
-        }
+        midiSession.registerForMidiCallbacks(this)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -103,21 +112,29 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     override fun onMidiMessageReceived(message: MidiMessage) {
         if (presetMessages.isEmpty()) {
             if (isValidPresetHeader(message)) {
+                addMessage(message)
                 presetMessages.add(message)
-                //TODO:
-                // Change status message to "receiving data" or something
-                // bClearData.enabled = true
+                setViewStatus(QS300PresetCaptureStatus.CAPTURING)
             }
         } else {
-            if (!isReadyForWrite) {
-                presetMessages.add(message)
-                if (isValidEndMessage(message)) {
-                    isReadyForWrite = true
-                    //TODO:
-                    // bSavePreset.enabled = true
-                    // Change status message to "Ready to save preset"
+            addMessage(message)
+            presetMessages.add(message)
+            if (isValidEndMessage(message)) {
+                setViewStatus(QS300PresetCaptureStatus.COMPLETE)
+            } else {
+                if (status != QS300PresetCaptureStatus.CAPTURING) {
+                    setViewStatus(QS300PresetCaptureStatus.CAPTURING)
                 }
             }
+        }
+    }
+
+    private fun addMessage(message: MidiMessage) {
+        presetMessages.add(message)
+        binding.tvCaptureData.text = StringBuilder().apply {
+            append(binding.tvCaptureData.text)
+            append("\n")
+            append(message.msg?.joinToString(" "))
         }
     }
 
@@ -142,17 +159,36 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
         }
     }
 
+    private fun setViewStatus(status: QS300PresetCaptureStatus) {
+        this.status = status
+        binding.bSavePreset.isEnabled = status.isSaveEnabled
+        binding.bClearData.isEnabled = status.isClearEnabled
+        binding.tvStatusText.text = getString(status.statusTextRes)
+        binding.ivStatusIcon.setImageResource(status.iconRes)
+        if (status == QS300PresetCaptureStatus.CAPTURING) {
+            (binding.ivStatusIcon.drawable as AnimatedVectorDrawable).start()
+        }
+    }
+
     private fun onClearDataClicked(v: View) {
-        presetMessages.clear()
-        isReadyForWrite = false
-        // Change status message to Waiting for data
+        reset()
     }
 
     private fun onSavePresetClicked(v: View) {
-        requireContext().openFileOutput(PRESETS_FILE_NAME, Context.MODE_APPEND).apply {
+        if (presetMessages.isNotEmpty()) {
+            requireContext().openFileOutput(PRESETS_FILE_NAME, Context.MODE_APPEND).apply {
 
+            }
         }
+        reset()
+    }
 
+    private fun reset() {
+        presetMessages.clear()
+        if (status != QS300PresetCaptureStatus.NO_OUTPUT) {
+            setViewStatus(QS300PresetCaptureStatus.READY)
+        }
+        binding.tvCaptureData.text = ""
     }
 
     private fun isValidPresetHeader(message: MidiMessage): Boolean {
@@ -169,6 +205,18 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
         /**
          * Same thing as above
          */
+    }
+
+    enum class QS300PresetCaptureStatus(
+        val statusTextRes: Int,
+        val iconRes: Int,
+        val isSaveEnabled: Boolean,
+        val isClearEnabled: Boolean
+    ) {
+        NO_OUTPUT(R.string.qs_cap_no_output, R.drawable.baseline_close_24, true, true),
+        READY(R.string.qs_cap_ready, R.drawable.baseline_check_circle_outline_24, false, true),
+        COMPLETE(R.string.qs_cap_complete, R.drawable.baseline_check_circle_24, true, true),
+        CAPTURING(R.string.qs_cap_capturing, R.drawable.hourglass_animation, false, true)
     }
 
     companion object {

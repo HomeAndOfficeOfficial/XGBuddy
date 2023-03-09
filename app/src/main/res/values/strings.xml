@@ -7,5 +7,9 @@
     <string name="available_devices">Available Devices</string>
     <string name="save_preset">Save Preset</string>
     <string name="clear_data">Clear Data</string>
-    <string name="save_preset_as">Save Preset As...</string>
+    <string name="save_preset_as">Save Preset As…</string>
+    <string name="qs_cap_ready">Ready to receive data</string>
+    <string name="qs_cap_no_output">No valid output device detected</string>
+    <string name="qs_cap_complete">Valid preset detected! Enter a name and click "Save Preset"</string>
+    <string name="qs_cap_capturing">Receiving data</string>
 </resources>
