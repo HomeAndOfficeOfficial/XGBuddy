@@ -88,6 +88,12 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
 
     override fun onResume() {
         super.onResume()
+        val width = resources.getDimensionPixelSize(R.dimen.preset_capture_dialog_width)
+        val height = resources.getDimensionPixelSize(R.dimen.preset_capture_dialog_height)
+        dialog?.window?.let {
+            it.setLayout(width, height)
+            it.setBackgroundDrawableResource(R.drawable.popup_bg)
+        }
         midiSession.registerForMidiCallbacks(this)
     }
 
@@ -220,7 +226,7 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     }
 
     companion object {
-        private const val TAG = "QS300PresetCaptureFragment"
+        const val TAG = "QS300PresetCaptureFragment"
         private const val ARG_PRESET_JSON = "arg_preset_json"
     }
 }
