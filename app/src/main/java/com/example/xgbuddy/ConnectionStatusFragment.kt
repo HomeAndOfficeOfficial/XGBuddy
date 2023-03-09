@@ -2,7 +2,6 @@ package com.example.xgbuddy
 
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +43,6 @@ class ConnectionStatusFragment : DialogFragment() {
         }
         midiSession.connectedDeviceList.observe(viewLifecycleOwner) { devices ->
             if (devices.isEmpty()) {
-                Log.d(TAG, "Empty should be showing view: $disconnectAlertContainer")
                 disconnectAlertContainer.visibility = View.VISIBLE
                 deviceListContainer.visibility = View.GONE
             } else {
@@ -64,6 +62,11 @@ class ConnectionStatusFragment : DialogFragment() {
             it.setLayout(width, height)
             it.setBackgroundDrawableResource(R.drawable.popup_bg)
         }
+        startAnimators()
+    }
+
+    private fun startAnimators() {
+        // Y Rotation
         ValueAnimator.ofFloat(0f, 359f).apply {
             duration = 4000
             addUpdateListener {
@@ -73,6 +76,8 @@ class ConnectionStatusFragment : DialogFragment() {
             interpolator = LinearInterpolator()
             start()
         }
+
+        // Alpha Oscillation
         ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000
             addUpdateListener {
