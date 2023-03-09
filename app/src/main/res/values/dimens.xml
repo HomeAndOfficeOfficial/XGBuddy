@@ -5,5 +5,9 @@
     <dimen name="popup_item_corner_radius">4dp</dimen>
     <dimen name="connection_dialog_height">400dp</dimen>
     <dimen name="connection_dialog_width">400dp</dimen>
+    <dimen name="preset_capture_dialog_height">400dp</dimen>
+    <dimen name="preset_capture_dialog_width">400dp</dimen>
     <dimen name="ic_disconnect_size">128dp</dimen>
+    <dimen name="capture_status_text_size">20sp</dimen>
+    <dimen name="onscreen_debug_text_size">12sp</dimen>
 </resources>

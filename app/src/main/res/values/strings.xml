@@ -5,4 +5,7 @@
     <string name="no_midi_detected">No MIDI devices detected.\nConnect a MIDI device to get started.</string>
     <string name="dialog_done">Done</string>
     <string name="available_devices">Available Devices</string>
+    <string name="save_preset">Save Preset</string>
+    <string name="clear_data">Clear Data</string>
+    <string name="save_preset_as">Save Preset As...</string>
 </resources>
