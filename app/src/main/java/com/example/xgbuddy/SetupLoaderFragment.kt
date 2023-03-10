@@ -1,15 +1,20 @@
 package com.example.xgbuddy
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.OutputStreamWriter
 import javax.inject.Inject
 
 // Displays options to load setup, start new XG or new QS300 setup
@@ -19,6 +24,11 @@ class SetupLoaderFragment : Fragment() {
 
     @Inject
     lateinit var midiSession: MidiSession
+
+    private val xbsFileSelectLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) {
+
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,15 +51,6 @@ class SetupLoaderFragment : Fragment() {
     }
 
     private fun startFileBrowser(v: View) {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-        }
-        val activityResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == Activity.RESULT_OK) {
-                    // Figure out how to get data from result
-                }
-            }
-        activityResult.launch(intent)
+        xbsFileSelectLauncher.launch("*/*")
     }
 }
