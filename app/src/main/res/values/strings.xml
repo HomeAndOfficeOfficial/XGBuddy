@@ -17,4 +17,5 @@
     <string name="new_xg_setup">New XG Setup</string>
     <string name="new_qs300_setup">New QS300 Setup</string>
     <string name="open_existing">Open Existing Setup (.xbx/.xbq)</string>
+    <string name="xgbuddy_files">XGBuddy Files</string>
 </resources>

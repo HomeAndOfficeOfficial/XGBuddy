@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -23,14 +25,7 @@ class FileBrowserFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            val upDirectoryList = currentDir.split("/").dropLast(2)
-            currentDir = if (upDirectoryList.isNotEmpty()) {
-                upDirectoryList.joinToString("/", postfix = "/")
-            } else {
-                ""
-            }
-            isEnabled = currentDir.isNotEmpty()
-            openOrNavigate("", FileType.DIR)
+            navigateUp()
         }
         backCallback.isEnabled = false
         fileAdapter = FileBrowserRecyclerAdapter(requireContext().fileList(), this::openOrNavigate)
@@ -42,6 +37,11 @@ class FileBrowserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFileBrowserBinding.inflate(layoutInflater)
+        binding.upListItem.bFileItem.apply {
+            text = "..."
+            setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_folder, 0, 0, 0)
+            setOnClickListener { navigateUp() }
+        }
         setupRecyclerView()
         return binding.root
     }
@@ -73,13 +73,64 @@ class FileBrowserFragment : Fragment() {
                         backCallback.isEnabled = true
                         currentDir += "$fileName/"
                     }
+                    updateUpItem()
+                    updateBreadcrumb()
                 }
             }
-            FileType.XBX -> {}
-            FileType.XBQ -> {}
+            FileType.XBX -> loadXGSession(fileName)
+            FileType.XBQ -> loadQSSession(fileName)
         }
     }
 
+    private fun loadXGSession(setupName: String) {
+
+    }
+
+    private fun loadQSSession(setupName: String) {
+
+    }
+
+    private fun updateBreadcrumb() {
+        val openDirectories = currentDir.split("/").dropLast(1) // Last element is ""
+        val newCrumbChildCount = openDirectories.size * 2 + 2
+        if (newCrumbChildCount > binding.llBreadCrumb.childCount) {
+            binding.llBreadCrumb.apply {
+                addView(getBreadcrumbArrow())
+                addView(getBreadcrumbTextView(openDirectories.last()))
+            }
+        } else {
+            binding.llBreadCrumb.apply {
+                removeViewAt(childCount - 1)
+                removeViewAt(childCount - 1)
+            }
+        }
+    }
+
+    private fun getBreadcrumbArrow(): ImageView = ImageView(requireContext()).apply {
+        setImageResource(R.drawable.baseline_keyboard_arrow_right_24)
+    }
+
+    private fun getBreadcrumbTextView(crumbText: String): TextView =
+        TextView(requireContext()).apply {
+            text = crumbText
+        }
+
+    private fun navigateUp() {
+        val upDirectoryList = currentDir.split("/").dropLast(2)
+        currentDir = if (upDirectoryList.isNotEmpty()) {
+            upDirectoryList.joinToString("/", postfix = "/")
+        } else {
+            ""
+        }
+        backCallback.isEnabled = currentDir.isNotEmpty()
+        openOrNavigate("", FileType.DIR)
+    }
+
+    private fun updateUpItem() {
+        binding.upListItem.root.visibility = if (currentDir.isEmpty()) View.GONE else View.VISIBLE
+    }
+
+    // TODO: Remove in favor of navigation args
     companion object {
         const val TAG = "FileBrowserFragment"
         const val ARG_MODE = "arg_mode"
