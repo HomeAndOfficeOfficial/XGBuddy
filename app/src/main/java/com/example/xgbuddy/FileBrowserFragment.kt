@@ -21,6 +21,7 @@ class FileBrowserFragment : Fragment() {
     private lateinit var binding: FragmentFileBrowserBinding
     private lateinit var backCallback: OnBackPressedCallback
     private var currentDir = ""
+    private var mode = READ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,36 +58,38 @@ class FileBrowserFragment : Fragment() {
     }
 
     private fun openOrNavigate(fileName: String, fileType: FileType) {
-        when (fileType) {
-            FileType.DIR -> {
-                val directoryFiles =
-                    File(requireContext().filesDir.path + "/" + currentDir + fileName).list()
-                if (directoryFiles == null) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.file_browser_invalid_dir, fileName),
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    fileAdapter.setFiles(directoryFiles)
-                    if (fileName.isNotEmpty()) {
-                        backCallback.isEnabled = true
-                        currentDir += "$fileName/"
-                    }
-                    updateUpItem()
-                    updateBreadcrumb()
+        if (fileType == FileType.DIR) {
+            val directoryFiles =
+                File(requireContext().filesDir.path + "/" + currentDir + fileName).list()
+            if (directoryFiles == null) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.file_browser_invalid_dir, fileName),
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                fileAdapter.setFiles(directoryFiles)
+                if (fileName.isNotEmpty()) {
+                    backCallback.isEnabled = true
+                    currentDir += "$fileName/"
                 }
+                updateUpItem()
+                updateBreadcrumb()
             }
-            FileType.XBX -> loadXGSession(fileName)
-            FileType.XBQ -> loadQSSession(fileName)
+        } else {
+            if (mode == READ) {
+                loadSession(fileName)
+            } else {
+                overwriteSession(fileName)
+            }
         }
     }
 
-    private fun loadXGSession(setupName: String) {
+    private fun loadSession(setupName: String) {
 
     }
 
-    private fun loadQSSession(setupName: String) {
+    private fun overwriteSession(setupName: String) {
 
     }
 
