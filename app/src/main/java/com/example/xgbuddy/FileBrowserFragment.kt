@@ -1,15 +1,15 @@
 package com.example.xgbuddy
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
+import java.io.File
 
 class FileBrowserFragment : Fragment() {
 
@@ -43,14 +43,23 @@ class FileBrowserFragment : Fragment() {
     }
 
     private fun openOrNavigate(fileName: String, fileType: FileType) {
-        if (fileType == FileType.DIR) {
-            fileAdapter.setFiles(
-                requireContext().getDir(
-                    currentDir + fileName,
-                    Context.MODE_PRIVATE
-                ).list() ?: arrayOf()
-            )
-            currentDir += "$fileName/"
+        when (fileType) {
+            FileType.DIR -> {
+                val directoryFiles =
+                    File(requireContext().filesDir.path + "/" + currentDir + fileName).list()
+                if (directoryFiles == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.file_browser_invalid_dir, fileName),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    fileAdapter.setFiles(directoryFiles)
+                    currentDir += "$fileName/"
+                }
+            }
+            FileType.XBX -> {}
+            FileType.XBQ -> {}
         }
     }
 

@@ -13,4 +13,5 @@
     <string name="qs_cap_complete">Valid preset detected! Enter a name and click "Save Preset"</string>
     <string name="qs_cap_capturing">Receiving data</string>
     <string name="import_qs300_presets">Import QS300 Presets</string>
+    <string name="file_browser_invalid_dir">%1$s is either empty or an invalid directory.</string>
 </resources>
