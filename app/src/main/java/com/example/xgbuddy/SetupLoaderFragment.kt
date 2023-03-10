@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,6 +39,6 @@ class SetupLoaderFragment : Fragment() {
     }
 
     private fun startFileBrowser(v: View) {
-
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToFileBrowserFragment())
     }
 }
