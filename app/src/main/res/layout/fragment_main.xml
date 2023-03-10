@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".MainFragment">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
-        android:name="com.example.xgbuddy.SetupLoaderFragment"
+    <Button
+        android:id="@+id/bNewXGSetup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_setup_loader" />
-</FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="@string/new_xg_setup"
+        app:icon="@drawable/ic_xg_sm" />
+
+    <Button
+        android:id="@+id/bNewQSSetup"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="@string/new_qs300_setup"
+        app:icon="@drawable/ic_qs300_sm" />
+
+    <Button
+        android:id="@+id/bLoadExisting"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".33"
+        android:text="@string/open_existing"
+        app:icon="@drawable/baseline_file_open_24" />
+</LinearLayout>

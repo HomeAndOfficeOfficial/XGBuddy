@@ -14,4 +14,7 @@
     <string name="qs_cap_capturing">Receiving data</string>
     <string name="import_qs300_presets">Import QS300 Presets</string>
     <string name="file_browser_invalid_dir">%1$s is either empty or an invalid directory.</string>
+    <string name="new_xg_setup">New XG Setup</string>
+    <string name="new_qs300_setup">New QS300 Setup</string>
+    <string name="open_existing">Open Existing Setup (.xbx/.xbq)</string>
 </resources>
