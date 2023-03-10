@@ -9,7 +9,7 @@
         style="@style/FileButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_xg_list"
+        android:drawableStart="@mipmap/ic_xg"
         android:gravity="start|center_vertical"
         android:text="preset_name.xbx"
         android:textAllCaps="false"

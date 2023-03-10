@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +17,22 @@ class FileBrowserFragment : Fragment() {
 
     private lateinit var fileAdapter: FileBrowserRecyclerAdapter
     private lateinit var binding: FragmentFileBrowserBinding
+    private lateinit var backCallback: OnBackPressedCallback
     private var currentDir = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            val upDirectoryList = currentDir.split("/").dropLast(2)
+            currentDir = if (upDirectoryList.isNotEmpty()) {
+                upDirectoryList.joinToString("/", postfix = "/")
+            } else {
+                ""
+            }
+            isEnabled = currentDir.isNotEmpty()
+            openOrNavigate("", FileType.DIR)
+        }
+        backCallback.isEnabled = false
         fileAdapter = FileBrowserRecyclerAdapter(requireContext().fileList(), this::openOrNavigate)
     }
 
@@ -55,7 +69,10 @@ class FileBrowserFragment : Fragment() {
                     ).show()
                 } else {
                     fileAdapter.setFiles(directoryFiles)
-                    currentDir += "$fileName/"
+                    if (fileName.isNotEmpty()) {
+                        backCallback.isEnabled = true
+                        currentDir += "$fileName/"
+                    }
                 }
             }
             FileType.XBX -> {}
