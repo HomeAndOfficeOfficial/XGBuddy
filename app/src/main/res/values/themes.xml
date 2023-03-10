@@ -17,10 +17,11 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="colorError">@color/red_900</item>
+        <item name="textFillColor">@color/background_dark</item>
     </style>
 
-    <style name="MyCheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
-
+    <style name="FileButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">?textFillColor</item>
     </style>
 
 </resources>
