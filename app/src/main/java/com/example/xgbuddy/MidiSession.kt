@@ -3,6 +3,7 @@ package com.example.xgbuddy
 import android.content.Context
 import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
+import android.media.midi.MidiInputPort
 import android.media.midi.MidiOutputPort
 import android.media.midi.MidiReceiver
 import android.util.Log
@@ -54,7 +55,7 @@ class MidiSession @Inject constructor(context: Context) {
     val connectedDeviceList = MutableLiveData(setOf<MidiDeviceInfo>())
 
     val midiManager = MyMidiManager(context, object : MyMidiManager.MyMidiDeviceCallback {
-        override fun onInputDeviceOpened(device: MidiDevice) {
+        override fun onInputDeviceOpened(device: MidiDevice, inputPort: MidiInputPort) {
             inputDeviceOpened.postValue(true)
             inputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
         }
@@ -142,6 +143,12 @@ class MidiSession @Inject constructor(context: Context) {
         if (midiReceivedListener == listener) {
             midiReceivedListener = null
             midiReceiver.flush()
+        }
+    }
+
+    fun send(midiMessages: List<MidiMessage>) {
+        midiMessages.forEach {
+            midiManager.inputPort?.send(it.msg!!, 0, it.msg.size)
         }
     }
 

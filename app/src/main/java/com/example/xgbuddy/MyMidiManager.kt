@@ -4,6 +4,7 @@ import android.content.Context
 import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
 import android.media.midi.MidiDeviceStatus
+import android.media.midi.MidiInputPort
 import android.media.midi.MidiManager
 import android.media.midi.MidiManager.DeviceCallback
 import android.media.midi.MidiManager.OnDeviceOpenedListener
@@ -38,6 +39,8 @@ import java.util.concurrent.Executor
  * Then I'll have to get into the QS300 voices, and see what all I am able to control.
  */
 
+private const val NOT_OPEN = -1
+
 class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback) :
     DeviceCallback() {
     private val midiManager: MidiManager =
@@ -47,7 +50,10 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
     var inputDevice: MidiDeviceInfo? = null
     var outputDevice: MidiDeviceInfo? = null
 
-    var outputPortNumber: Int = -1
+    var outputPortNumber: Int = NOT_OPEN
+    var inputPortNumber: Int = NOT_OPEN
+
+    var inputPort: MidiInputPort? = null
 
     init {
         midiManager.registerDeviceCallback(
@@ -69,7 +75,7 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
             deviceInfo,
             { device ->
                 inputDevice = deviceInfo
-                callback.onInputDeviceOpened(device)
+                openInputPort(device)
             },
             Handler(Looper.getMainLooper())
         )
@@ -100,8 +106,29 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
                     outputPortNumber = port.portNumber
                     callback.onOutputDeviceOpened(device, outputPort)
                 } else {
-                    outputPortNumber = -1
+                    outputPortNumber = NOT_OPEN
                     callback.onDeviceError(DeviceError.OUTPUT_PORT_FAILED)
+                }
+            }
+        }
+    }
+
+    private fun openInputPort(device: MidiDevice) {
+        val portInfo = device.info.ports
+        portInfo.forEach { port ->
+            Log.d(TAG, "Port: ${port.portNumber}, type: ${port.type}")
+            if (port.type == MidiDeviceInfo.PortInfo.TYPE_INPUT) {
+                inputPort = device.openInputPort(port.portNumber)
+                if (inputPort != null) {
+                    inputPortNumber = port.portNumber
+                    callback.onInputDeviceOpened(device, inputPort!!)
+                    // TODO: Figure out best implementation for connecting ports (factor in potential
+                    //  for multiple devices)
+//                    if (outputPortNumber != NOT_OPEN) {
+//                        device.connectPorts(inputPort, outputPortNumber)
+//                    }
+                } else {
+                    callback.onDeviceError(DeviceError.INPUT_PORT_FAILED)
                 }
             }
         }
@@ -111,7 +138,7 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
         /**
          * Might change the parameter that's passed to these functions
          */
-        fun onInputDeviceOpened(device: MidiDevice)
+        fun onInputDeviceOpened(device: MidiDevice, inputPort: MidiInputPort)
         fun onOutputDeviceOpened(device: MidiDevice, outputPort: MidiOutputPort)
         fun onConnectionStatusChanged(devices: Set<MidiDeviceInfo>)
         fun onDeviceError(error: DeviceError)

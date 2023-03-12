@@ -9,6 +9,7 @@ enum class QS300ElementParameter(
     val max: Byte,
     val description: String,
 ) {
+    // TODO: Add reflection name field to make parsing json string easier
     WAVE_HI(0x3du, 7, 7, 13, "Wave Number Hi"),
     WAVE_LO(0x3eu, 0, 0, 6, "Wave Mumber Lo"),
     NOTE_LO(0x3fu, 0, 0, 127, "Note Limit Low"),
