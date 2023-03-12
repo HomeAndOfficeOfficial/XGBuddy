@@ -3,6 +3,8 @@ package com.example.xgbuddy
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +15,12 @@ import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.databinding.FragmentQs300PresetCaptureBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
+import kotlin.coroutines.coroutineContext
 
 private const val PRESETS_FILE_NAME = "qs300_presets.json"
 
@@ -32,6 +37,8 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     private var qs300PresetsJSON: JSONObject? = null
 
     private var status: QS300PresetCaptureStatus = QS300PresetCaptureStatus.READY
+
+    private val viewUpdateHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,8 +104,21 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     }
 
     override fun onMidiMessageReceived(message: MidiMessage) {
-        addMessage(message)
-        checkForVoiceName(message)
+        presetMessages.add(message)
+        runBlocking(Dispatchers.Main) {
+            binding.tvCaptureData.text = StringBuilder().apply {
+                append(binding.tvCaptureData.text)
+                append("\n")
+                append(message.msg?.joinToString(" "))
+            }
+            checkForVoiceName(message)
+        }
+//        viewUpdateHandler.post {
+//
+//            run
+//        }
+//        addMessage(message)
+//        checkForVoiceName(message)
     }
 
     private fun checkForVoiceName(message: MidiMessage) {
@@ -164,10 +184,11 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
         }
         val midiMessageArray = JSONArray()
         presetMessages.forEach {
-            val dataArray = JSONArray(String(it.msg ?: byteArrayOf()))
-            midiMessageArray.put(dataArray)
+            val dataString = String(it.msg ?: byteArrayOf())
+            midiMessageArray.put(dataString)
         }
-        qs300PresetsJSON?.put(presetName, midiMessageArray)
+        val key = if (presetName.isEmpty()) binding.etPresetName.text.toString() else presetName
+        qs300PresetsJSON?.put(key, midiMessageArray)
         reset()
     }
 

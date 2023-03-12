@@ -92,11 +92,12 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
 
     private fun openOutputPort(device: MidiDevice) {
         val portInfo = device.info.ports
-        portInfo.forEachIndexed { i, port ->
+        portInfo.forEach { port ->
+            Log.d(TAG, "Port: ${port.portNumber}, type: ${port.type}")
             if (port.type == MidiDeviceInfo.PortInfo.TYPE_OUTPUT) {
-                val outputPort = device.openOutputPort(i)
+                val outputPort = device.openOutputPort(port.portNumber)
                 if (outputPort != null) {
-                    outputPortNumber = i
+                    outputPortNumber = port.portNumber
                     callback.onOutputDeviceOpened(device, outputPort)
                 } else {
                     outputPortNumber = -1

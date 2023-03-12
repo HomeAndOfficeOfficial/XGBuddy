@@ -7,17 +7,40 @@ import android.media.midi.MidiOutputPort
 import android.media.midi.MidiReceiver
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.xgbuddy.data.DeviceError
-import com.example.xgbuddy.data.InstrumentMode
-import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.MidiSetup
+import com.example.xgbuddy.data.*
 import javax.inject.Inject
 
 class MidiSession @Inject constructor(context: Context) {
 
-    private val midiReceiver = object : MidiReceiver() {
+    private val midiReceiveBuffer = mutableListOf<Byte>()
+
+    //TODO: This needs to be fleshed out. Need to determine what type of message it is to know where
+    // the message starts/ends.
+    private val midiReceiver = object : MidiReceiver(381) {
         override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
-            midiReceivedListener?.onMidiMessageReceived(MidiMessage(msg, offset, count, timestamp))
+            msg?.copyOfRange(offset, offset + count)?.forEach {
+                midiReceiveBuffer.add(it)
+                if (it == MidiConstants.END_BYTE) {
+                    Log.d(
+                        TAG,
+                        "OnSend at timestamp: $timestamp. Here's what it says ${
+                            midiReceiveBuffer.joinToString { b ->
+                                String.format(
+                                    "%02x ",
+                                    b
+                                )
+                            }
+                        }"
+                    )
+                    midiReceivedListener?.onMidiMessageReceived(
+                        MidiMessage(
+                            midiReceiveBuffer.toByteArray(),
+                            timestamp
+                        )
+                    )
+                    midiReceiveBuffer.clear()
+                }
+            }
         }
     }
 
@@ -37,6 +60,7 @@ class MidiSession @Inject constructor(context: Context) {
         }
 
         override fun onOutputDeviceOpened(device: MidiDevice, outputPort: MidiOutputPort) {
+            Log.d(TAG, "Should have an output device")
             outputPort.connect(midiReceiver)
             outputDeviceOpened.postValue(true)
             outputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device

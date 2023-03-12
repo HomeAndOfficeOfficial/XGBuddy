@@ -1,6 +1,6 @@
 package com.example.xgbuddy.data
 
-data class MidiMessage(val msg: ByteArray?, val offset: Int, val count: Int, val timestamp: Long) {
+data class MidiMessage(val msg: ByteArray?, val timestamp: Long) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -11,8 +11,6 @@ data class MidiMessage(val msg: ByteArray?, val offset: Int, val count: Int, val
             if (other.msg == null) return false
             if (!msg.contentEquals(other.msg)) return false
         } else if (other.msg != null) return false
-        if (offset != other.offset) return false
-        if (count != other.count) return false
         if (timestamp != other.timestamp) return false
 
         return true
@@ -20,8 +18,6 @@ data class MidiMessage(val msg: ByteArray?, val offset: Int, val count: Int, val
 
     override fun hashCode(): Int {
         var result = msg?.contentHashCode() ?: 0
-        result = 31 * result + offset
-        result = 31 * result + count
         result = 31 * result + timestamp.hashCode()
         return result
     }
