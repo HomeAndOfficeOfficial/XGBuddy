@@ -1,4 +1,4 @@
-package com.example.xgbuddy
+package com.example.xgbuddy.ui
 
 import android.animation.ValueAnimator
 import android.os.Bundle
@@ -11,6 +11,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.xgbuddy.MidiSession
+import com.example.xgbuddy.R
+import com.example.xgbuddy.adapter.ConnectedDeviceRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

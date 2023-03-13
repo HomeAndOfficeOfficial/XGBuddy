@@ -1,4 +1,4 @@
-package com.example.xgbuddy
+package com.example.xgbuddy.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import com.example.xgbuddy.data.FileType
+import com.example.xgbuddy.R
 
 class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClickListener) :
     RecyclerView.Adapter<FileBrowserRecyclerAdapter.ViewHolder>() {

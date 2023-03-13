@@ -12,8 +12,8 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.xgbuddy.FileBrowserRecyclerAdapter
-import com.example.xgbuddy.FileType
+import com.example.xgbuddy.adapter.FileBrowserRecyclerAdapter
+import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
 import java.io.File

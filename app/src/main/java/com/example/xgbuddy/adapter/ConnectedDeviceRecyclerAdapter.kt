@@ -1,4 +1,4 @@
-package com.example.xgbuddy
+package com.example.xgbuddy.adapter
 
 import android.annotation.SuppressLint
 import android.media.midi.MidiDeviceInfo
@@ -9,6 +9,8 @@ import android.widget.CheckBox
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.xgbuddy.MidiSession
+import com.example.xgbuddy.R
 
 class ConnectedDeviceRecyclerAdapter(
     private val midiSession: MidiSession, private var connectedDevices: List<MidiDeviceInfo>

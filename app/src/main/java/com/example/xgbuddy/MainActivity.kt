@@ -12,6 +12,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.core.view.MenuProvider
+import com.example.xgbuddy.ui.ConnectionStatusFragment
 import com.example.xgbuddy.ui.QS300PresetCaptureFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
