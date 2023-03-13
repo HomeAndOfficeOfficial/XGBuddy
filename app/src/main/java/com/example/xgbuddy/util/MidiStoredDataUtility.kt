@@ -13,6 +13,18 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
 
+    /**
+     * TODO: Consider an interface or an abstract class which would define the following methods.
+     * Since there will likely be a similar set of methods shared between QS300, XG, and maybe GM
+     * and TGB, it would probably make sense to have a general MidiDataParser class and separate
+     * implementations for QS300Parser, XGParser, etc.
+     *
+     * Will have to wait and see how the other data classes pan out. There will probably be a lot of
+     * refactoring to do as that develops.
+     *
+     * Anyway it would also be nice to not have all this extra code cluttering this class.
+     */
+
     fun getQS300Presets(): List<QS300Preset> {
         if (qs300Presets == null) {
             qs300Presets = parseQS300PresetsJSON()

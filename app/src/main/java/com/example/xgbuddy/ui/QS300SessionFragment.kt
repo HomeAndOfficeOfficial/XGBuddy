@@ -1,4 +1,4 @@
-package com.example.xgbuddy
+package com.example.xgbuddy.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.QS300Preset
 import com.example.xgbuddy.databinding.FragmentQS300SessionBinding
 import com.example.xgbuddy.util.MidiStoredDataUtility

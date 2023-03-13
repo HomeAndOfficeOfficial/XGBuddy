@@ -1,4 +1,4 @@
-package com.example.xgbuddy
+package com.example.xgbuddy.ui
 
 import android.content.Context
 import android.content.DialogInterface
@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
+import com.example.xgbuddy.MidiSession
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.databinding.FragmentQs300PresetCaptureBinding
