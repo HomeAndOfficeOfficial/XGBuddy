@@ -8,7 +8,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
 
-class MidiDataUtility @Inject constructor(val context: Context) {
+class MidiStoredDataUtility @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
@@ -18,6 +18,18 @@ class MidiDataUtility @Inject constructor(val context: Context) {
             qs300Presets = parseQS300PresetsJSON()
         }
         return qs300Presets!!
+    }
+
+    fun getQS300BulkDumpMessage(preset: QS300Preset): List<MidiMessage> {
+        val midiMessages = mutableListOf<MidiMessage>()
+        qs300PresetsJSON?.let { presetsJSON ->
+            val jsonArray = presetsJSON.getJSONArray(preset.name)
+            for (i in 0 until jsonArray.length()) {
+                val messageString = jsonArray.getString(i)
+                midiMessages.add(MidiMessage(messageString.toByteArray(), getBulkDumpTimeStamp(i)))
+            }
+        }
+        return midiMessages
     }
 
     private fun parseQS300PresetsJSON(): List<QS300Preset> {
@@ -89,6 +101,10 @@ class MidiDataUtility @Inject constructor(val context: Context) {
                 setProperty(property, midiByteString[i].code.toByte())
             }
         }
+
+    // TODO: Figure out best practice for scheduling messages
+    private fun getBulkDumpTimeStamp(messageIndex: Int): Long =
+        System.nanoTime() + messageIndex * MidiConstants.SEND_SCHEDULE_INTERVAL_NANO
 
     companion object {
         private const val TAG = "MidiDataUtility"

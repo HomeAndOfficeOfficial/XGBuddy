@@ -2,6 +2,8 @@ package com.example.xgbuddy.data
 
 object MidiConstants {
 
+    const val SEND_SCHEDULE_INTERVAL_NANO = 2
+
     const val END_BYTE: Byte = -9
 
     const val OFFSET_DEVICE_ID = 3

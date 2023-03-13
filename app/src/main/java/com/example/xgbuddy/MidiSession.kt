@@ -148,7 +148,7 @@ class MidiSession @Inject constructor(context: Context) {
 
     fun send(midiMessages: List<MidiMessage>) {
         midiMessages.forEach {
-            midiManager.inputPort?.send(it.msg!!, 0, it.msg.size)
+            midiManager.inputPort?.send(it.msg!!, 0, it.msg.size, it.timestamp)
         }
     }
 
