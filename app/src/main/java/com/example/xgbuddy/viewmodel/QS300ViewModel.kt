@@ -1,35 +1,85 @@
 package com.example.xgbuddy.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.databinding.BaseObservable
 import com.example.xgbuddy.data.QS300Preset
 
 
-class QS300ViewModel() : BaseObservable {
-    val preset = MutableLiveData<QS300Preset>(null)
+class QS300ViewModel() : BaseObservable() {
+    val preset: QS300Preset? = null
+    var voice: Int = 0
+    var element: Int = 0
+
 
     /**
-     * I guess before I do any real work on this, I'm going to have to figure out what the ui is
-     * going to look like.
+     * What might be required to set up the layouts programatically?
      *
-     * But I think similar to how I parse the preset json, I'm going to have to find a solution that
-     * utilizes reflection. Otherwise every viewmodel will have a very long and very complex set of
-     * methods for setting things.
+     * Each element needs to fulfill three functions:
+     * 1. On user interaction, send midi data
+     * 2. On Midi data received, update to display new value
+     * 3. On preset data changed, change displayed value
      *
-     * From a high level perspective, I know that this class will likely have a preset and keep track
-     * of what voice is displayed, and probably some of the universal things like volume (then again
-     * that stuff may be better off in a separate section)
      *
-     * The layout will probably use two way data binding. Each control will probably be bound to a
-     * function like "setProperty" or something.
+     * I can imagine a solution where we have a viewgroup that has several configurations - vertical,
+     * horizontal, grid(rows, columns), and also accepts as a parameter the instrument mode it's in,
+     * a start address and end address of the elements the controls will be mapped to.
      *
-     * I think the way to proceed on this would be just have a single control at first, something
-     * easy like volume. Get a reusable solution working for that. The view will need to update when
-     * receiving data from an external controller/message, it will need to send data when responding
-     * to a user interaction, and it will need to change the displayed value depending on that voice
-     * that is being displayed on screen, and also change when the current preset is changed.
+     * The viewgroup could automatically populate its views based on these parameters, and set
+     * interaction listeners on each view which would map directly to the address of the element
+     * that they represent
+     * That should take care of the first item. For example (something like this)
      *
-     * Honestly not sure if all that can be done in a neat two way binding solution but I will try.
+     * fun addViews(minAddr: Int, maxAddr: Int) {
+     *      for (i in minAddr until maxAddr) {
+     *          val element = QS300Element::getBaseAddress findBy i
+     *          addView(SeekBar().apply {
+     *              id = create some unique id based on the address that can be recreated later
+     *              min = element.min
+     *              max = element.max
+     *              progress = element.default
+     *              onChangedListener = { value, fromUser ->
+     *                  if (fromUser) {
+     *                      parameterChangeListener.onParameterChanged(element, value)
+     *                  }
+     *              }
+     *          }
+     *      }
+     * }
+     *
+     * // This would live in a fragment
+     * ParameterChangeListener.onParameterChanged(element: QS300Element, value: Int) {
+     *      val current = preset.voice[currentVoice].element[currentElement].getPropertValue(element.reflectedField)
+     *      if (current != value) {
+     *      preset.voice[currentVoice].element[currentElement].setProperty(element.reflectedField, value.toByte())
+     * }
+     *
+     * THere would likely be more logic around the type of view that would be populated, and dealing
+     * with the different callbacks.
+     *
+     * On to number 2. How do update that particular control if we get data from an external
+     * controller?
+     *
+     * In our midiReceived callback, check if the message is a control change or parameter change or
+     * whatever. It probably has an address in the message, use that to access the element in the
+     * viewgroup -> viewGroup.updateParameterView(elementAddr, value)
+     *
+     * Viewgroup can maintain a map of its views with unique keys based on the elementAddr, so they
+     * can easily be referenced.
+     *
+     * That's a vague solution for number 2, but it's feasible at least.
+     *
+     * When changing presets, probably just need to iterate through all the elements similar to
+     * how they are read in from json.
+     *
+     * Furthermore, we can keep this viewmodel around to keep track of the current voice, element, etc.
+     *
+     * Observe changes in those to update the views that are on the screen.
+     *
+     * THe viewgroup could have maybe have a method that takes in a preset/voice/element
+     * and all the views are updated appropriately.
+     *
+     * I think some elements just might not fit into this pattern so I guess there will have to be
+     * some level manual programming invovled. I guess as that is developed, I'll figure out what
+     * needs to be done.
      */
 
 
