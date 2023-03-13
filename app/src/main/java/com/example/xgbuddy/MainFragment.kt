@@ -5,8 +5,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.xgbuddy.databinding.FragmentMainBinding
+import com.example.xgbuddy.util.MidiDataUtility
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainFragment : Fragment() {
+
+    @Inject
+    lateinit var dataUtility: MidiDataUtility
 
     private lateinit var binding: FragmentMainBinding
 
@@ -23,7 +30,7 @@ class MainFragment : Fragment() {
     }
 
     private fun createQSSetup(v: View) {
-
+        dataUtility.getQS300Presets()
     }
 
     private fun createXGSetup(v: View) {
