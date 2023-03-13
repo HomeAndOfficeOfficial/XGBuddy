@@ -4,9 +4,14 @@ object MidiConstants {
 
     const val END_BYTE: Byte = -9
 
-    //TODO: Verify terminology for these constants
     const val OFFSET_DEVICE_ID = 3
+
+    // QS300 Bulk Dump
+    const val QS300_MAX_ELEMENTS = 2
+
     const val OFFSET_QS300_DATA_START = 9
+    const val OFFSET_QS300_EL_SWITCH = OFFSET_QS300_DATA_START + 11
+    const val OFFSET_QS300_VOICE_LEVEL = OFFSET_QS300_DATA_START + 12
     const val OFFSET_QS300_ELEMENT_DATA_START = OFFSET_QS300_DATA_START + 61
 
     const val QS300_VOICE_NAME_SIZE = 10

@@ -3,8 +3,6 @@ package com.example.xgbuddy
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,8 +34,6 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
     private var qs300PresetsJSON: JSONObject? = null
 
     private var status: QS300PresetCaptureStatus = QS300PresetCaptureStatus.READY
-
-    private val viewUpdateHandler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -112,12 +108,6 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
             }
             checkForVoiceName(message)
         }
-//        viewUpdateHandler.post {
-//
-//            run
-//        }
-//        addMessage(message)
-//        checkForVoiceName(message)
     }
 
     private fun checkForVoiceName(message: MidiMessage) {
@@ -186,7 +176,7 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
             val dataString = String(it.msg ?: byteArrayOf())
             midiMessageArray.put(dataString)
         }
-        val key = if (presetName.isEmpty()) binding.etPresetName.text.toString() else presetName
+        val key = presetName.ifEmpty { binding.etPresetName.text.toString() }
         qs300PresetsJSON?.put(key, midiMessageArray)
         reset()
     }
