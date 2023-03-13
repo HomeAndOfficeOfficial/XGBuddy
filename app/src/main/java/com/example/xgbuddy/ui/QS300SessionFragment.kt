@@ -59,6 +59,7 @@ class QS300SessionFragment : Fragment(), OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val midiBulkDump = dataUtility.getQS300BulkDumpMessage(presets[position])
         midiSession.send(midiBulkDump)
+
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
