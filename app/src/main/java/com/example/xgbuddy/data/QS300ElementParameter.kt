@@ -1,6 +1,5 @@
 package com.example.xgbuddy.data
 
-import android.util.Range
 import kotlin.reflect.KMutableProperty
 
 enum class QS300ElementParameter(
@@ -11,7 +10,6 @@ enum class QS300ElementParameter(
     val description: String,
     val reflectedField: KMutableProperty<Byte>
 ) {
-    // TODO: Add reflection name field to make parsing json string easier
     WAVE_HI(0x3du, 7, 7, 13, "Wave Number Hi", QS300Element::waveHi),
     WAVE_LO(0x3eu, 0, 0, 6, "Wave Mumber Lo", QS300Element::waveLo),
     NOTE_LO(0x3fu, 0, 0, 127, "Note Limit Low", QS300Element::noteLo),
@@ -263,4 +261,5 @@ enum class QS300ElementParameter(
 
     fun getAddress(elementNumber: Int) = baseAddress + (elementNumber * 0x50).toUByte()
     fun getBaseAddress() = baseAddress
+    fun getParamChangeAddressLo() = baseAddress - MidiConstants.OFFSET_QS300_ELEMENT_PARAM_CHANGE_ADDR
 }

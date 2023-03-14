@@ -88,13 +88,13 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
     private fun parseQS300Voice(midiByteString: String): QS300Voice = QS300Voice().apply {
         voiceName = String(
             midiByteString.substring(
-                MidiConstants.OFFSET_QS300_DATA_START,
-                MidiConstants.OFFSET_QS300_DATA_START + MidiConstants.QS300_VOICE_NAME_SIZE
+                MidiConstants.OFFSET_QS300_BULK_DATA_START,
+                MidiConstants.OFFSET_QS300_BULK_DATA_START + MidiConstants.QS300_VOICE_NAME_SIZE
             ).toByteArray(), Charsets.US_ASCII
         )
-        voiceLevel = midiByteString[MidiConstants.OFFSET_QS300_VOICE_LEVEL].code.toByte()
+        voiceLevel = midiByteString[MidiConstants.OFFSET_QS300_BULK_VOICE_LEVEL].code.toByte()
         elementSwitch =
-            midiByteString[MidiConstants.OFFSET_QS300_EL_SWITCH].code.toByte()
+            midiByteString[MidiConstants.OFFSET_QS300_BULK_EL_SWITCH].code.toByte()
 
         for (i in 0 until MidiConstants.QS300_MAX_ELEMENTS) {
             elements.add(parseQS300Element(midiByteString, i))
@@ -104,10 +104,10 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
     private fun parseQS300Element(midiByteString: String, index: Int): QS300Element =
         QS300Element(index).apply {
             val startIndex =
-                MidiConstants.OFFSET_QS300_ELEMENT_DATA_START + (index * MidiConstants.QS300_ELEMENT_DATA_SIZE)
+                MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START + (index * MidiConstants.QS300_ELEMENT_DATA_SIZE)
             for (i in startIndex until startIndex + MidiConstants.QS300_ELEMENT_DATA_SIZE) {
                 val baseAddress =
-                    (i - MidiConstants.OFFSET_QS300_DATA_START - (index * MidiConstants.QS300_ELEMENT_DATA_SIZE)).toUByte()
+                    (i - MidiConstants.OFFSET_QS300_BULK_DATA_START - (index * MidiConstants.QS300_ELEMENT_DATA_SIZE)).toUByte()
                 val elementParam = QS300ElementParameter::getBaseAddress findBy baseAddress
                 val property = elementParam?.reflectedField
                 setProperty(property, midiByteString[i].code.toByte())

@@ -121,8 +121,8 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
         if (qsId == MidiConstants.MODEL_ID_QS300) {
             presetName = String(
                 message.msg?.copyOfRange(
-                    MidiConstants.OFFSET_QS300_DATA_START,
-                    MidiConstants.OFFSET_QS300_DATA_START + MidiConstants.QS300_VOICE_NAME_SIZE
+                    MidiConstants.OFFSET_QS300_BULK_DATA_START,
+                    MidiConstants.OFFSET_QS300_BULK_DATA_START + MidiConstants.QS300_VOICE_NAME_SIZE
                 ) ?: byteArrayOf(), Charsets.US_ASCII
             ).trim()
             binding.etPresetName.setText(presetName)
