@@ -37,44 +37,45 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentElementEditBinding.inflate(layoutInflater)
-
         // Will need to do this for each control group
         binding.cvgLfo.apply {
             controlItemIds.forEach {
-                val param = QS300ElementParameter::descriptionRes findBy it
-                val paramData = QS300ControlParameter(
-                    param!!,
-                    viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)
-                )
                 addControlView(SliderControlView(requireContext()).apply {
-                    controlParameter = paramData
+                    controlParameter = initElementParam(it)
+                    listener = this@ElementEditFragment
                 })
             }
         }
 
         // Then also need to manually setup the special cases
+        // Will have to assess what refactoring will be needed once I add all the different groups
+        // Might become a big mess.
         binding.lfoExtras.apply {
             for (i in 0 until childCount) {
                 (getChildAt(i) as ParameterControlView).apply {
-                    val param = QS300ElementParameter::descriptionRes findBy paramId
-                    val paramData = QS300ControlParameter(
-                        param!!,
-                        viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)
-                    )
-                    controlParameter = paramData
+                    controlParameter = initElementParam(paramId)
+                    listener = this@ElementEditFragment
+                    binding.cvgLfo.mapUngroupedView(this)
                 }
 
             }
         }
         viewModel.preset.observe(viewLifecycleOwner) {
             it?.let {
-
                 // Will need to keep track of what voice and what element is currently displayed.
                 // Maybe if preset changes, just switch to zero by default?
                 binding.cvgLfo.updateViews(it.voices[0].elements[0])
             }
         }
         return binding.root
+    }
+
+    private fun initElementParam(descriptionRes: Int): QS300ControlParameter {
+        val param = QS300ElementParameter::descriptionRes findBy descriptionRes
+        return QS300ControlParameter(
+            param!!,
+            viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)
+        )
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter) {
