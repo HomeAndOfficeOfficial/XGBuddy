@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.QS300Element
+import com.example.xgbuddy.data.QS300ElementParameter
+import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
@@ -13,6 +16,8 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     private val tvLabel: TextView
     private val controlViewContainer: LinearLayout
 
+
+    val controlViewMap: MutableMap<UByte, ParameterControlView> = mutableMapOf()
     val controlItemIds: List<Int>
 
     init {
@@ -37,7 +42,23 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     }
 
     fun addControlView(view: ParameterControlView) {
+        controlViewMap[view.controlParameter!!.addr] = view
         controlViewContainer.addView(view)
+    }
+
+    fun mapUngroupedView(view: ParameterControlView) {
+        controlViewMap[view.controlParameter!!.addr] = view
+    }
+
+    // There will probably be multiple overloads of this to update views for whatever this group contains
+    fun updateViews(qS300Element: QS300Element) {
+        controlViewMap.keys.forEach {
+            // TODO: Move this 0x50 to a constant
+            val baseAddr = it - (qS300Element.elementNumber * 0x50).toUByte()
+            val param = QS300ElementParameter::getBaseAddress findBy baseAddr
+            controlViewMap[it]?.value =
+                QS300Element::getPropertyValue.call(qS300Element, param!!.reflectedField)
+        }
     }
 
     private fun getItemIdsFromAttributes(arrayId: Int): List<Int> {

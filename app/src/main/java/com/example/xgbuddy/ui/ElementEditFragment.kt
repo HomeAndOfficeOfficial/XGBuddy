@@ -64,18 +64,12 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         }
         viewModel.preset.observe(viewLifecycleOwner) {
             it?.let {
-//                val elementLevel = it.voices[0].elements[0].elementLvl
-//                binding.pcvTest.label = "$elementLevel"
-//                binding.pcvTest.value = elementLevel.toFloat()
+
+                // Will need to keep track of what voice and what element is currently displayed.
+                // Maybe if preset changes, just switch to zero by default?
+                binding.cvgLfo.updateViews(it.voices[0].elements[0])
             }
         }
-//        binding.pcvTest.listener =
-//            ParameterControlView.OnParameterChangedListener { controlParameter ->
-//                midiSession.send(controlParameter.getParamChangeMessage())
-//            }
-//        binding.bNextParam.setOnClickListener {
-//            viewModel.nextParameter()
-//        }
         return binding.root
     }
 
