@@ -6,8 +6,9 @@ import com.example.xgbuddy.data.QS300Preset
 import kotlin.reflect.full.memberProperties
 
 
-class QS300ViewModel() : ViewModel() {
-    val preset = MutableLiveData<QS300Preset?>(null)
+class QS300ViewModel : ViewModel() {
+
+    val preset = MutableLiveData<QS300Preset>(null)
     var currentParamIndex = 0
     var voice: Int = 0
     var element: Int = 0

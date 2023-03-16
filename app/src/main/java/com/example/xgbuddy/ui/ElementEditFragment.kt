@@ -12,10 +12,12 @@ import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.QS300ControlParameter
 import com.example.xgbuddy.data.QS300ElementParameter
+import com.example.xgbuddy.data.QS300Preset
 import com.example.xgbuddy.databinding.FragmentElementEditBinding
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiStoredDataUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -26,10 +28,21 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
     @Inject
     lateinit var midiSession: MidiSession
 
+    @Inject
+    lateinit var dataUtility: MidiStoredDataUtility
+
+    private lateinit var presets: List<QS300Preset>
+
     //TODO: Hook up receiver listener to update control view
 
     private val viewModel: QS300ViewModel by activityViewModels()
     private lateinit var binding: FragmentElementEditBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        presets = dataUtility.getQS300Presets()
+        viewModel.preset.value = presets[1]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
