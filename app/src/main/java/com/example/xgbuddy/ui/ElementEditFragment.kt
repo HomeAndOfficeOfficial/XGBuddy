@@ -33,18 +33,18 @@ class ElementEditFragment() : Fragment() {
         binding = FragmentElementEditBinding.inflate(layoutInflater)
         viewModel.preset.observe(viewLifecycleOwner) {
             it?.let {
-                val elementLevel = it.voices[0].elements[0].elementLvl
-                binding.pcvTest.label = "$elementLevel"
-                binding.pcvTest.value = elementLevel.toFloat()
+//                val elementLevel = it.voices[0].elements[0].elementLvl
+//                binding.pcvTest.label = "$elementLevel"
+//                binding.pcvTest.value = elementLevel.toFloat()
             }
         }
-        binding.pcvTest.listener =
-            ParameterControlView.OnParameterChangedListener { controlParameter ->
-                midiSession.send(controlParameter.getParamChangeMessage())
-            }
-        binding.bNextParam.setOnClickListener {
-            viewModel.nextParameter()
-        }
+//        binding.pcvTest.listener =
+//            ParameterControlView.OnParameterChangedListener { controlParameter ->
+//                midiSession.send(controlParameter.getParamChangeMessage())
+//            }
+//        binding.bNextParam.setOnClickListener {
+//            viewModel.nextParameter()
+//        }
         return binding.root
     }
 }

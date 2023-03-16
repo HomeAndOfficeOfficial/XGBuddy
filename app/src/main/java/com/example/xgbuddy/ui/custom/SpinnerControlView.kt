@@ -3,18 +3,17 @@ package com.example.xgbuddy.ui.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.Spinner
 import com.example.xgbuddy.R
-import com.google.android.material.slider.Slider
 
-class SliderControlView(context: Context, attributeSet: AttributeSet) :
-    ParameterControlView(context, attributeSet) {
+class SpinnerControlView(context: Context, attributeSet: AttributeSet): ParameterControlView(context, attributeSet) {
 
-    private val slider: Slider
+    private val spinner: Spinner
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, false)
-        slider = view.findViewById(R.id.cpSpinner)
+        val view = LayoutInflater.from(context).inflate(R.layout.spinner_control_view, this, false)
         initializeCommonViews(view)
+        spinner = view.findViewById(R.id.cpSpinner)
     }
 
     override fun updateControlBounds() {
