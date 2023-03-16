@@ -6,5 +6,6 @@
     </declare-styleable>
     <declare-styleable name="ControlViewGroup">
         <attr name="cvgLabel" format="string" />
+        <attr name="android:entries" />
     </declare-styleable>
 </resources>

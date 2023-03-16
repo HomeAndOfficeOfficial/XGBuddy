@@ -13,6 +13,8 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     private val tvLabel: TextView
     private val controlViewContainer: LinearLayout
 
+    val controlItemIds: List<Int>
+
     init {
         val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, false)
         tvLabel = v.findViewById(R.id.tvGroupLabel)
@@ -21,6 +23,8 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
             context.obtainStyledAttributes(attributeSet, R.styleable.ControlViewGroup, 0, 0)
         tvLabel.text =
             styledAttr.getString(R.styleable.ControlViewGroup_cvgLabel) ?: "Unnamed Group"
+        val itemArrayId = styledAttr.getResourceId(R.styleable.ControlViewGroup_android_entries, 0)
+        controlItemIds = getItemIdsFromAttributes(itemArrayId)
         styledAttr.recycle()
     }
 
@@ -34,5 +38,19 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
 
     fun addControlView(view: ParameterControlView) {
         controlViewContainer.addView(view)
+    }
+
+    private fun getItemIdsFromAttributes(arrayId: Int): List<Int> {
+        if (arrayId != 0) {
+            val array = resources.obtainTypedArray(arrayId)
+            val itemList = mutableListOf<Int>()
+            for (i in 0 until array.length()) {
+                itemList.add(array.getResourceId(i, 0))
+            }
+            array.recycle()
+            return itemList
+        }
+        return listOf()
+
     }
 }
