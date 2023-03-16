@@ -8,8 +8,18 @@ package com.example.xgbuddy.data
  * with the implementation of this method.
  */
 
-class QS300ControlParameter : ControlParameter() {
+class QS300ControlParameter(
+    override val name: String,
+    override val addr: UByte,
+    override var value: Byte,
+    override val min: Byte,
+    override val max: Byte,
+    override val default: Byte
+) : ControlParameter() {
     override fun getParamChangeMessage(): MidiMessage {
-        TODO("Not yet implemented")
+        val addrLo = (addr - MidiConstants.OFFSET_QS300_ELEMENT_PARAM_CHANGE_ADDR).toByte()
+        // TODO... Probably make these constants
+        val midiBytes = byteArrayOf(-16, 67, 16, 75, 46, 0, addrLo, value, -9)
+        return MidiMessage(midiBytes, System.nanoTime())
     }
 }

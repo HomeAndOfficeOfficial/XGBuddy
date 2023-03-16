@@ -1,13 +1,23 @@
 package com.example.xgbuddy.viewmodel
 
-import androidx.databinding.BaseObservable
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.xgbuddy.data.QS300Preset
+import kotlin.reflect.full.memberProperties
 
 
-class QS300ViewModel() : BaseObservable() {
-    val preset: QS300Preset? = null
+class QS300ViewModel() : ViewModel() {
+    val preset = MutableLiveData<QS300Preset?>(null)
+    var currentParamIndex = 0
     var voice: Int = 0
     var element: Int = 0
+
+    fun nextParameter() {
+        val params = preset.value!!.voices[0].elements[0]::class.memberProperties
+        if (currentParamIndex + 1 < params.size) {
+
+        }
+    }
 
 
     /**

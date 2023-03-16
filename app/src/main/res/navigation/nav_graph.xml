@@ -13,9 +13,16 @@
         <action
             android:id="@+id/action_mainFragment_to_fileBrowserFragment"
             app:destination="@id/fileBrowserFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_elementEditFragment"
+            app:destination="@id/elementEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/fileBrowserFragment"
         android:name="com.example.xgbuddy.ui.FileBrowserFragment"
         android:label="FileBrowserFragment" />
+    <fragment
+        android:id="@+id/elementEditFragment"
+        android:name="com.example.xgbuddy.ui.ElementEditFragment"
+        android:label="ElementEditFragment" />
 </navigation>

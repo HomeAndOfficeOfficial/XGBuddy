@@ -1,12 +1,13 @@
 package com.example.xgbuddy.data
 
-abstract class ControlParameter(
-    val name: String,
-    val value: Byte,
-    val min: Byte,
-    val max: Byte,
-    val default: Byte
-) {
+abstract class ControlParameter() {
+
+    abstract val name: String
+    abstract val addr: UByte
+    abstract var value: Byte
+    abstract val min: Byte
+    abstract val max: Byte
+    abstract val default: Byte
 
     var formatString: String? = null
 
