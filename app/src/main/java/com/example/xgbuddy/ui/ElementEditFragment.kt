@@ -25,6 +25,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedListener {
 
+    // TODO: Add "MidiBaseFragment" to avoid having to inject midiSession every time
+
     @Inject
     lateinit var midiSession: MidiSession
 
