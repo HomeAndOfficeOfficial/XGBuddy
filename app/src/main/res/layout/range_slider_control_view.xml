@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.slider.Slider
+    <com.google.android.material.slider.RangeSlider
         android:id="@+id/cpRangeSlider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

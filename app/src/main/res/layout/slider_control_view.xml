@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.slider.Slider
-        android:id="@+id/cpRangeSlider"
+        android:id="@+id/cpSlider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/tvParamValue"
@@ -26,8 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="127"
-        app:layout_constraintBottom_toBottomOf="@id/cpRangeSlider"
+        app:layout_constraintBottom_toBottomOf="@id/cpSlider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cpRangeSlider" />
+        app:layout_constraintTop_toTopOf="@+id/cpSlider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
