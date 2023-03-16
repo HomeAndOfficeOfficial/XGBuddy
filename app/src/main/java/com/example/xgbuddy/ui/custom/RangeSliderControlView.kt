@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.RangeSlider
 
-class RangeSliderControlView(context: Context, attributeSet: AttributeSet) :
-    ParameterControlView(context, attributeSet) {
+class RangeSliderControlView(context: Context) :
+    ParameterControlView(context) {
 
     private val rangeSlider: RangeSlider
 

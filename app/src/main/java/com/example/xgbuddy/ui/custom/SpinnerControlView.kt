@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.widget.Spinner
 import com.example.xgbuddy.R
 
-class SpinnerControlView(context: Context, attributeSet: AttributeSet): ParameterControlView(context, attributeSet) {
+class SpinnerControlView(context: Context): ParameterControlView(context) {
 
     private val spinner: Spinner
 

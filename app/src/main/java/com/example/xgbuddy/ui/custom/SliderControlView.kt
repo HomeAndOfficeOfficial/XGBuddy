@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
 
-class SliderControlView(context: Context, attributeSet: AttributeSet) :
-    ParameterControlView(context, attributeSet) {
+class SliderControlView(context: Context) :
+    ParameterControlView(context) {
 
     private val slider: Slider
 

@@ -9,8 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 
-abstract class ParameterControlView(context: Context, attributeSet: AttributeSet) :
-    ConstraintLayout(context, attributeSet) {
+abstract class ParameterControlView(context: Context) :
+    ConstraintLayout(context) {
 
     private var tvLabel: TextView? = null
     private var tvValue: TextView? = null

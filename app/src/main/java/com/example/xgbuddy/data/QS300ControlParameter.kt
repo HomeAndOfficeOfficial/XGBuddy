@@ -16,6 +16,16 @@ class QS300ControlParameter(
     override val max: Byte,
     override val default: Byte
 ) : ControlParameter() {
+
+    constructor(elementParameter: QS300ElementParameter, value: Byte) : this(
+        elementParameter.name,
+        elementParameter.getBaseAddress(),
+        value,
+        elementParameter.min,
+        elementParameter.max,
+        elementParameter.default
+    )
+
     override fun getParamChangeMessage(): MidiMessage {
         val addrLo = (addr - MidiConstants.OFFSET_QS300_ELEMENT_PARAM_CHANGE_ADDR).toByte()
         // TODO... Probably make these constants

@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-class SwitchControlView(context: Context, attributeSet: AttributeSet) :
-    ParameterControlView(context, attributeSet) {
+class SwitchControlView(context: Context) :
+    ParameterControlView(context) {
 
     private val switch: SwitchMaterial
 
