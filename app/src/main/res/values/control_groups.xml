@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="qs300_element_lfo">
+        <!--        <item>@string/qs300_el_lfo_wave</item>-->
+        <!--        <item>@string/qs300_el_lfo_phase_init</item>-->
+        <item>@string/qs300_el_lfo_speed</item>
+        <item>@string/qs300_el_lfo_fade</item>
+        <item>@string/qs300_el_lfo_pmd_depth</item>
+        <item>@string/qs300_el_lfo_cmd_depth</item>
+        <item>@string/qs300_el_lfo_amd_depth</item>
+    </array>
+</resources>
