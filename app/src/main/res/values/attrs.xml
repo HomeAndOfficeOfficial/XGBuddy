@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <declare-styleable name="ParameterControlView">
-     <attr name="pcMin" format="integer" />
-     <attr name="pcMax" format="integer" />
- </declare-styleable>
+    <declare-styleable name="ParameterControlView">
+        <attr name="pcMin" format="integer" />
+        <attr name="pcMax" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="ControlViewGroup">
+        <attr name="cvgLabel" format="string" />
+    </declare-styleable>
 </resources>

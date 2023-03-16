@@ -28,7 +28,7 @@ enum class QS300ElementParameter(
     LFO_WAVE(0x44u, 0, 0, 2, R.string.qs300_el_lfo_wave, QS300Element::lfoWave),
     LFO_PHASE_INIT(0x45u, 0, 0, 1, R.string.qs300_el_lfo_phase_init, QS300Element::lfoPhaseInit),
     LFO_SPEED(0x46u, 0, 0, 63, R.string.qs300_el_lfo_speed, QS300Element::lfoSpeed),
-    LFO_DELAY(0x47u, 0, 0, 127, R.string.qs300_el_lfo_delay, QS300Element::lfoDelay),
+    LFO_DELAY(0x47u, 0, 0, 127,contextR.string.qs300_el_lfo_delay, QS300Element::lfoDelay),
     LFO_FADE_TIME(0x48u, 0, 0, 127, R.string.qs300_el_lfo_fade, QS300Element::lfoFadeTime),
     LFO_PMD_DEPTH(0x49u, 0, 0, 63, R.string.qs300_el_lfo_pmd_depth, QS300Element::lfoPmdDepth),
     LFO_CMD_DEPTH(0x4au, 0, 0, 15, R.string.qs300_el_lfo_cmd_depth, QS300Element::lfoCmdDepth),
