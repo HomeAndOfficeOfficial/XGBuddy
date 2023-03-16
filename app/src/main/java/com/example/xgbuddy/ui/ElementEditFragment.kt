@@ -42,8 +42,10 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         binding.cvgLfo.apply {
             controlItemIds.forEach {
                 val param = QS300ElementParameter::descriptionRes findBy it
-                val paramData = QS300ControlParameter(param!!, param.default)
-                // These should actually get their values from the viewModel's preset.
+                val paramData = QS300ControlParameter(
+                    param!!,
+                    viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)
+                )
                 addControlView(SliderControlView(requireContext()).apply {
                     controlParameter = paramData
                 })
@@ -51,16 +53,18 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         }
 
         // Then also need to manually setup the special cases
-        /**
-         * Consider adding an optional controlItemId attr to ControlView,
-         * then it would be possible to iterate through all views in each
-         * control group and set them up like above
-         */
-        binding.cvLfoWave.apply {
-            controlParameter = QS300ControlParameter(QS300ElementParameter.LFO_WAVE, 0)
-        }
-        binding.cvLfoPhaseInit.apply {
-            controlParameter = QS300ControlParameter(QS300ElementParameter.LFO_PHASE_INIT, 0)
+        binding.lfoExtras.apply {
+            for (i in 0 until childCount) {
+                (getChildAt(i) as ParameterControlView).apply {
+                    val param = QS300ElementParameter::descriptionRes findBy paramId
+                    val paramData = QS300ControlParameter(
+                        param!!,
+                        viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)
+                    )
+                    controlParameter = paramData
+                }
+
+            }
         }
         viewModel.preset.observe(viewLifecycleOwner) {
             it?.let {

@@ -8,6 +8,12 @@ import com.example.xgbuddy.R
 
 class SpinnerControlView(context: Context): ParameterControlView(context) {
 
+    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SpinnerControlView, 0, 0)
+        getIdFromAttr(typedArray)
+        typedArray.recycle()
+    }
+
     private val spinner: Spinner
 
     init {

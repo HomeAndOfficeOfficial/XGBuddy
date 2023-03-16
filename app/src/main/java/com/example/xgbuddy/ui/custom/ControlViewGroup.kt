@@ -56,8 +56,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
             // TODO: Move this 0x50 to a constant
             val baseAddr = it - (qS300Element.elementNumber * 0x50).toUByte()
             val param = QS300ElementParameter::getBaseAddress findBy baseAddr
-            controlViewMap[it]?.value =
-                QS300Element::getPropertyValue.call(qS300Element, param!!.reflectedField)
+            controlViewMap[it]?.value = qS300Element.getPropertyValue(param!!.reflectedField)
         }
     }
 

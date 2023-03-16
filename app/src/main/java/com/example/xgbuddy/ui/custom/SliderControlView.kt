@@ -8,6 +8,11 @@ import com.google.android.material.slider.Slider
 
 class SliderControlView(context: Context) :
     ParameterControlView(context) {
+    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
+        getIdFromAttr(typedArray)
+        typedArray.recycle()
+    }
 
     private val slider: Slider
 

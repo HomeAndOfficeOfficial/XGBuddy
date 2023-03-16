@@ -9,6 +9,12 @@ import com.google.android.material.switchmaterial.SwitchMaterial
 class SwitchControlView(context: Context) :
     ParameterControlView(context) {
 
+    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SpinnerControlView, 0, 0)
+        getIdFromAttr(typedArray)
+        typedArray.recycle()
+    }
+
     private val switch: SwitchMaterial
 
     init {

@@ -1,6 +1,7 @@
 package com.example.xgbuddy.ui.custom
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ abstract class ParameterControlView(context: Context) :
             field = value
             tvLabel?.text = value
         }
+    var paramId: Int = 0
     var listener: OnParameterChangedListener? = null
 
     /**
@@ -80,6 +82,10 @@ abstract class ParameterControlView(context: Context) :
 
     protected abstract fun updateControlBounds()
     protected abstract fun updateViews()
+
+    protected fun getIdFromAttr(typedArray: TypedArray) {
+        paramId = typedArray.getResourceId(R.styleable.ParameterControlView_pcId, 0)
+    }
 
     protected fun initializeCommonViews(view: View) {
         tvLabel = view.findViewById(R.id.tvParamLabel)

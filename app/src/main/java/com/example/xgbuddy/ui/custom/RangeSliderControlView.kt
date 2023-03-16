@@ -9,6 +9,12 @@ import com.google.android.material.slider.RangeSlider
 class RangeSliderControlView(context: Context) :
     ParameterControlView(context) {
 
+    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.RangeSliderControlView, 0, 0)
+        getIdFromAttr(typedArray)
+        typedArray.recycle()
+    }
+
     private val rangeSlider: RangeSlider
 
     init {
