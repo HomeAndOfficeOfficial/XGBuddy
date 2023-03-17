@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/lfoExtras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -25,8 +25,6 @@
                 android:id="@+id/cvLfoWave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:pcId="@string/qs300_el_lfo_wave" />
 
             <com.example.xgbuddy.ui.custom.SwitchControlView
@@ -34,11 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                app:layout_constraintStart_toEndOf="@+id/cvLfoWave"
-                app:layout_constraintTop_toTopOf="parent"
                 app:pcId="@string/qs300_el_lfo_phase_init" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </com.example.xgbuddy.ui.custom.ControlViewGroup>
 
     <!--    <com.example.xgbuddy.ui.custom.ParameterControlView-->
