@@ -108,7 +108,7 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
             for (i in startIndex until startIndex + MidiConstants.QS300_ELEMENT_DATA_SIZE) {
                 val baseAddress =
                     (i - MidiConstants.OFFSET_QS300_BULK_DATA_START - (index * MidiConstants.QS300_ELEMENT_DATA_SIZE)).toUByte()
-                val elementParam = QS300ElementParameter::getBaseAddress findBy baseAddress
+                val elementParam = QS300ElementParameter::baseAddress findBy baseAddress
                 val property = elementParam?.reflectedField
                 setProperty(property, midiByteString[i].code.toByte())
             }

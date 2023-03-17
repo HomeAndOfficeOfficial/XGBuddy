@@ -91,6 +91,7 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
 
     private fun initElementParam(descriptionRes: Int): QS300ControlParameter {
         val param = QS300ElementParameter::descriptionRes findBy descriptionRes
+        Log.d(TAG, "Element Param: ${param?.name}, addr: ${param?.baseAddress}")
         return QS300ControlParameter(
             param!!,
             viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)

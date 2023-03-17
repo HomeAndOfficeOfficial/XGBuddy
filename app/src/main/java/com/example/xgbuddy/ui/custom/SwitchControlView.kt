@@ -10,7 +10,8 @@ class SwitchControlView(context: Context) :
     ParameterControlView(context) {
 
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
-        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SpinnerControlView, 0, 0)
+        val typedArray =
+            context.obtainStyledAttributes(attributeSet, R.styleable.SwitchControlView, 0, 0)
         getIdFromAttr(typedArray)
         typedArray.recycle()
     }
@@ -23,11 +24,9 @@ class SwitchControlView(context: Context) :
         initializeCommonViews(view)
     }
 
-    override fun updateControlBounds() {
-        TODO("Not yet implemented")
-    }
+    override fun updateControlBounds() {}
 
     override fun updateViews() {
-        TODO("Not yet implemented")
+        switch.isChecked = controlParameter?.value == 1.toByte()
     }
 }

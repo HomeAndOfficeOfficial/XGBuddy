@@ -19,7 +19,7 @@ class QS300ControlParameter(
 
     constructor(elementParameter: QS300ElementParameter, value: Byte) : this(
         elementParameter.name,
-        elementParameter.getBaseAddress(),
+        elementParameter.baseAddress,
         value,
         elementParameter.min,
         elementParameter.max,

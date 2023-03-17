@@ -23,10 +23,9 @@ class SpinnerControlView(context: Context): ParameterControlView(context) {
     }
 
     override fun updateControlBounds() {
-        TODO("Not yet implemented")
+
     }
 
     override fun updateViews() {
-        TODO("Not yet implemented")
     }
 }

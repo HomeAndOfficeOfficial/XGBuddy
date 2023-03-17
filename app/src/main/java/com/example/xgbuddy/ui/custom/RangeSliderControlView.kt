@@ -25,10 +25,10 @@ class RangeSliderControlView(context: Context) :
     }
 
     override fun updateControlBounds() {
-        TODO("Not yet implemented")
+
     }
 
     override fun updateViews() {
-        TODO("Not yet implemented")
+
     }
 }

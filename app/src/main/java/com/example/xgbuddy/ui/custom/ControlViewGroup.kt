@@ -2,6 +2,7 @@ package com.example.xgbuddy.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +25,6 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     val controlItemIds: List<Int>
 
     init {
-
         val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, true)
         root = v.findViewById(R.id.cvgRoot)
         tvLabel = v.findViewById(R.id.tvGroupLabel)
@@ -67,8 +67,9 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     fun updateViews(qS300Element: QS300Element) {
         controlViewMap.keys.forEach {
             // TODO: Move this 0x50 to a constant
-            val baseAddr = it - (qS300Element.elementNumber * 0x50).toUByte()
-            val param = QS300ElementParameter::getBaseAddress findBy baseAddr
+            val baseAddr: UByte = (it - (qS300Element.elementNumber * 0x50).toUByte()).toUByte()
+            Log.d(TAG, "Map key: $it, baseAddr: $it")
+            val param = QS300ElementParameter::baseAddress findBy baseAddr
             controlViewMap[it]?.value = qS300Element.getPropertyValue(param!!.reflectedField)
         }
     }
@@ -85,5 +86,9 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         }
         return listOf()
 
+    }
+
+    companion object {
+        const val TAG = "ControlViewGroup"
     }
 }

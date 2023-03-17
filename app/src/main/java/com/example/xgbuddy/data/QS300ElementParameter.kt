@@ -4,7 +4,7 @@ import com.example.xgbuddy.R
 import kotlin.reflect.KMutableProperty
 
 enum class QS300ElementParameter(
-    private val baseAddress: UByte,
+    val baseAddress: UByte,
     val default: Byte,
     val min: Byte,
     val max: Byte,
@@ -351,7 +351,8 @@ enum class QS300ElementParameter(
     RESONANCE_SENS(0x8cu, 64, 57, 71, R.string.qs300_el_res_sens, QS300Element::resonanceSens);
 
     fun getAddress(elementNumber: Int) = baseAddress + (elementNumber * 0x50).toUByte()
-    fun getBaseAddress() = baseAddress
+
+    //    fun getBaseAddress() = baseAddress
     fun getParamChangeAddressLo() =
         baseAddress - MidiConstants.OFFSET_QS300_ELEMENT_PARAM_CHANGE_ADDR
 }

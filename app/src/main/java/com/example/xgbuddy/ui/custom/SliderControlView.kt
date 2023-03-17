@@ -9,7 +9,8 @@ import com.google.android.material.slider.Slider
 class SliderControlView(context: Context) :
     ParameterControlView(context) {
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
-        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
+        val typedArray =
+            context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
         getIdFromAttr(typedArray)
         typedArray.recycle()
     }
@@ -23,10 +24,11 @@ class SliderControlView(context: Context) :
     }
 
     override fun updateControlBounds() {
-        TODO("Not yet implemented")
+        slider.valueFrom = controlParameter?.min?.toFloat() ?: 0f
+        slider.valueTo = controlParameter?.max?.toFloat() ?: 127f
     }
 
     override fun updateViews() {
-        TODO("Not yet implemented")
+        slider.value = controlParameter?.value?.toFloat() ?: 0f
     }
 }
