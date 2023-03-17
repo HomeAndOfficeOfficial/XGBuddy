@@ -3,6 +3,8 @@ package com.example.xgbuddy.ui.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.xgbuddy.R
@@ -13,6 +15,7 @@ import com.example.xgbuddy.util.EnumFinder.findBy
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
+    private var root: LinearLayout? = null
     private val tvLabel: TextView
     private val controlViewContainer: LinearLayout
 
@@ -21,7 +24,9 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     val controlItemIds: List<Int>
 
     init {
-        val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, false)
+
+        val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, true)
+        root = v.findViewById(R.id.cvgRoot)
         tvLabel = v.findViewById(R.id.tvGroupLabel)
         controlViewContainer = v.findViewById(R.id.sliderControlContainer)
         val styledAttr =
@@ -38,6 +43,14 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         if (childCount > 2) {
             removeView(controlViewContainer)
             addView(controlViewContainer)
+        }
+    }
+
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        if (root == null) {
+            super.addView(child, index, params)
+        } else {
+            root?.addView(child, index, params)
         }
     }
 
