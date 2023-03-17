@@ -85,6 +85,7 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
                 // Will need to keep track of what voice and what element is currently displayed.
                 // Maybe if preset changes, just switch to zero by default?
                 cvgLfo.updateViews(it.voices[0].elements[0])
+                Log.d(TAG, "Element: ${it.voices[0].elements[0].toString()}")
             }
         }
         return v
@@ -92,7 +93,6 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
 
     private fun initElementParam(descriptionRes: Int): QS300ControlParameter {
         val param = QS300ElementParameter::descriptionRes findBy descriptionRes
-        Log.d(TAG, "Element Param: ${param?.name}, addr: ${param?.baseAddress}")
         return QS300ControlParameter(
             param!!,
             viewModel.preset.value!!.voices[0].elements[0].getPropertyValue(param.reflectedField)

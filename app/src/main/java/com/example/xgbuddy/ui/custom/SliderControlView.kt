@@ -20,7 +20,6 @@ class SliderControlView(context: Context) :
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
-        Log.d("SliderControlView", "In init")
         slider = view.findViewById(R.id.cpSlider)
         initializeCommonViews(view)
     }
@@ -31,6 +30,7 @@ class SliderControlView(context: Context) :
     }
 
     override fun updateViews() {
-        slider.value = controlParameter?.value?.toFloat() ?: 0f
+        slider.value = value.toFloat()
+        tvValue?.text = "$value"
     }
 }

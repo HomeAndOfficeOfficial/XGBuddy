@@ -26,11 +26,12 @@ abstract class ParameterControlView(context: Context) :
     }
 
     private var tvLabel: TextView? = null
-    private var tvValue: TextView? = null
+    protected var tvValue: TextView? = null
 
     var controlParameter: ControlParameter? = null
         set(value) {
             field = value
+            label = value?.name ?: "Unnamed param"
             updateControlBounds()
         }
     var value: Byte = 0
