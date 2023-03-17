@@ -19,7 +19,7 @@ class SwitchControlView(context: Context) :
     private val switch: SwitchMaterial
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.switch_control_view, this, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.switch_control_view, this, true)
         switch = view.findViewById(R.id.cpSwitch)
         initializeCommonViews(view)
     }

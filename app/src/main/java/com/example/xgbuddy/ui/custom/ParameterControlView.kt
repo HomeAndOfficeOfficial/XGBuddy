@@ -5,6 +5,7 @@ import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xgbuddy.R
@@ -12,6 +13,17 @@ import com.example.xgbuddy.data.ControlParameter
 
 abstract class ParameterControlView(context: Context) :
     ConstraintLayout(context) {
+
+    constructor(context: Context, attributeSet: AttributeSet) : this(context)
+
+    private var root: ConstraintLayout? = null
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        if (root == null) {
+            super.addView(child, index, params)
+        } else {
+            root?.addView(child, index, params)
+        }
+    }
 
     private var tvLabel: TextView? = null
     private var tvValue: TextView? = null
@@ -88,6 +100,7 @@ abstract class ParameterControlView(context: Context) :
     }
 
     protected fun initializeCommonViews(view: View) {
+        root = view.findViewById(R.id.pcRoot)
         tvLabel = view.findViewById(R.id.tvParamLabel)
         tvValue = view.findViewById(R.id.tvParamValue)
     }

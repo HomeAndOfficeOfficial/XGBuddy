@@ -11,17 +11,18 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <TextView
+            android:id="@+id/tvGroupLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Control Group Label" />
+
+        <LinearLayout
+            android:id="@+id/sliderControlContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvGroupLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Control Group Label" />
 
-    <LinearLayout
-        android:id="@+id/sliderControlContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
 </merge>

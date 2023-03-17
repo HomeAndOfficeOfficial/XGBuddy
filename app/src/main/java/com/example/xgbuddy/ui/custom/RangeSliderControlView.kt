@@ -19,7 +19,7 @@ class RangeSliderControlView(context: Context) :
 
     init {
         val view =
-            LayoutInflater.from(context).inflate(R.layout.range_slider_control_view, this, false)
+            LayoutInflater.from(context).inflate(R.layout.range_slider_control_view, this, true)
         rangeSlider = view.findViewById(R.id.cpRangeSlider)
         initializeCommonViews(view)
     }

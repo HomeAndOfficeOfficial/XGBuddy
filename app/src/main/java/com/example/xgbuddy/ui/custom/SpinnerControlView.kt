@@ -17,7 +17,7 @@ class SpinnerControlView(context: Context): ParameterControlView(context) {
     private val spinner: Spinner
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.spinner_control_view, this, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.spinner_control_view, this, true)
         initializeCommonViews(view)
         spinner = view.findViewById(R.id.cpSpinner)
     }

@@ -39,11 +39,12 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+//        if (childCount > 2) {
+//            removeView(controlViewContainer)
+//            addView(controlViewContainer)
+//        }
         super.onLayout(changed, left, top, right, bottom)
-        if (childCount > 2) {
-            removeView(controlViewContainer)
-            addView(controlViewContainer)
-        }
+
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
@@ -51,6 +52,14 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
             super.addView(child, index, params)
         } else {
             root?.addView(child, index, params)
+        }
+    }
+
+    override fun removeView(view: View?) {
+        if (root == null) {
+            super.removeView(view)
+        } else {
+            root?.removeView(view)
         }
     }
 
