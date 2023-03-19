@@ -12,10 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.ControlParameter
-import com.example.xgbuddy.data.QS300ControlParameter
-import com.example.xgbuddy.data.QS300ElementParameter
-import com.example.xgbuddy.data.QS300Preset
+import com.example.xgbuddy.data.*
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
@@ -42,6 +39,8 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
 
     private val viewModel: QS300ViewModel by activityViewModels()
 //    private lateinit var binding: FragmentElementEditBinding
+
+    private var currentParam: QS300ElementParameter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,8 +98,23 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         )
     }
 
+    private fun updatePreset(controlParameter: ControlParameter) {
+        if (controlParameter.name != currentParam?.name) {
+            // TODO: Apply current element to controlParam.addr to get actual base addr
+            currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
+        }
+        viewModel.preset.value!!.voices[0].elements[0].setProperty(
+            currentParam!!.reflectedField,
+            controlParameter.value
+        )
+
+        midiSession.send(viewModel.preset.value!!.voices[0].generateBulkDump())
+    }
+
     override fun onParameterChanged(controlParameter: ControlParameter) {
         Log.d(TAG, "Parameter changed: ${controlParameter.name}: ${controlParameter.value}")
+        updatePreset(controlParameter)
+//        midiSession.send(controlParameter.getParamChangeMessage())
     }
 
     companion object {
