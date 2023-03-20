@@ -142,7 +142,7 @@ enum class QS300ElementParameter(
         63,
         0,
         127,
-        R.string.qs300_el_cutoff_scale_3,
+        R.string.qs300_el_cutoff_scale_off_3,
         QS300Element::cutoffScalingOffset3
     ),
     CUTOFF_SCALING_OFFSET_4(

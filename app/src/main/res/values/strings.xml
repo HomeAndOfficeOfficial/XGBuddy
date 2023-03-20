@@ -61,7 +61,7 @@
     <string name="qs300_el_cutoff_scale_bp_4">Cutoff Scaling Breakpoint 4</string>
     <string name="qs300_el_cutoff_scale_off_1">Cutoff Scaling Offset 1</string>
     <string name="qs300_el_cutoff_scale_off_2">Cutoff Scaling Offset 2</string>
-    <string name="qs300_el_cutoff_scale_3">Cutoff Scaling Offset 3</string>
+    <string name="qs300_el_cutoff_scale_off_3">Cutoff Scaling Offset 3</string>
     <string name="qs300_el_cutoff_scale_off_4">Cutoff Scaling Offset 4</string>
     <string name="qs300_el_vel_feg_lvl_sens">Velocity FEG Level Sensitivity</string>
     <string name="qs300_el_vel_feg_rate_sens">Velocity FEG Rate Sensitivity</string>
