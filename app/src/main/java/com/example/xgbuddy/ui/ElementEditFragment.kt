@@ -83,6 +83,7 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
             it?.let {
                 // Will need to keep track of what voice and what element is currently displayed.
                 // Maybe if preset changes, just switch to zero by default?
+                Log.d(TAG, "Preset observed")
                 cvgLfo.updateViews(it.voices[0].elements[0])
                 Log.d(TAG, "Element: ${it.voices[0].elements[0].toString()}")
             }
