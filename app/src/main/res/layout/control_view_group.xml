@@ -8,14 +8,46 @@
         android:id="@+id/cvgRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvGroupLabel"
+        <Button
+            android:id="@+id/bLabel"
+            style="@style/FileButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Control Group Label" />
+            android:text="Group label"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            app:iconGravity="end"
+            app:iconTint="#ffffff" />
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/clLabel"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:clickable="true"-->
+<!--            android:padding="8dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvGroupLabel"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Control Group Label"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/ivGroupOpenIndicator"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:srcCompat="@drawable/baseline_keyboard_arrow_up_24" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
 
         <LinearLayout
             android:id="@+id/sliderControlContainer"

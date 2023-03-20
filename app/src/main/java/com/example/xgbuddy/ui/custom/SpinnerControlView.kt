@@ -18,8 +18,8 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SpinnerControlView, 0, 0)
-        getIdFromAttr(typedArray)
         entriesResId = typedArray.getResourceId(R.styleable.SpinnerControlView_pcEntries, 0)
+        getIdFromAttr(typedArray)
         setupSpinner()
         typedArray.recycle()
     }
