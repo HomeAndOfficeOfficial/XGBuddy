@@ -1,14 +1,14 @@
 package com.example.xgbuddy.ui.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
 
 class SliderControlView(context: Context) :
-    ParameterControlView(context) {
+    ParameterControlView(context), Slider.OnChangeListener {
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
@@ -20,7 +20,9 @@ class SliderControlView(context: Context) :
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
-        slider = view.findViewById(R.id.cpSlider)
+        slider = view.findViewById<Slider?>(R.id.cpSlider).apply {
+            addOnChangeListener(this@SliderControlView)
+        }
         initializeCommonViews(view)
     }
 
@@ -32,5 +34,13 @@ class SliderControlView(context: Context) :
     override fun updateViews() {
         slider.value = value.toFloat()
         tvValue?.text = "$value"
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
+        if (fromUser) {
+            this.value = value.toInt().toByte()
+            listener?.onParameterChanged(controlParameter!!)
+        }
     }
 }
