@@ -5,29 +5,30 @@
     <attr name="pcMax" format="integer" />
     <attr name="pcId" format="reference" />
     <declare-styleable name="ParameterControlView">
-        <attr name="pcMin"  />
+        <attr name="pcMin" />
         <attr name="pcMax" />
         <attr name="pcId" />
     </declare-styleable>
     <declare-styleable name="SliderControlView">
-        <attr name="pcMin"  />
+        <attr name="pcMin" />
         <attr name="pcMax" />
         <attr name="pcId" />
     </declare-styleable>
     <declare-styleable name="RangeSliderControlView">
-        <attr name="pcMin"  />
+        <attr name="pcMin" />
         <attr name="pcMax" />
         <attr name="pcId" />
     </declare-styleable>
     <declare-styleable name="SwitchControlView">
-        <attr name="pcMin"  />
+        <attr name="pcMin" />
         <attr name="pcMax" />
         <attr name="pcId" />
     </declare-styleable>
     <declare-styleable name="SpinnerControlView">
-        <attr name="pcMin"  />
+        <attr name="pcMin" />
         <attr name="pcMax" />
         <attr name="pcId" />
+        <attr name="pcEntries" format="integer" />
     </declare-styleable>
     <declare-styleable name="ControlViewGroup">
         <attr name="cvgLabel" format="string" />

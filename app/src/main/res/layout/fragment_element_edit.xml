@@ -26,6 +26,7 @@
                 android:id="@+id/cvLfoWave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:pcEntries="@array/qs300_lfo_wave_entries"
                 app:pcId="@string/qs300_el_lfo_wave" />
 
             <com.example.xgbuddy.ui.custom.SwitchControlView
