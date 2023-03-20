@@ -1,7 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
- <declare-styleable name="ParameterControlView">
-     <attr name="pcMin" format="integer" />
-     <attr name="pcMax" format="integer" />
- </declare-styleable>
+
+    <attr name="pcMin" format="integer" />
+    <attr name="pcMax" format="integer" />
+    <attr name="pcId" format="reference" />
+    <attr name="pcEntries" format="integer" />
+    <declare-styleable name="ParameterControlView">
+        <attr name="pcMin" />
+        <attr name="pcMax" />
+        <attr name="pcId" />
+        <attr name="pcEntries" />
+    </declare-styleable>
+    <declare-styleable name="SliderControlView">
+        <attr name="pcMin" />
+        <attr name="pcMax" />
+        <attr name="pcId" />
+        <attr name="pcEntries" />
+    </declare-styleable>
+    <declare-styleable name="RangeSliderControlView">
+        <attr name="pcMin" />
+        <attr name="pcMax" />
+        <attr name="pcId" />
+        <attr name="pcEntries" />
+    </declare-styleable>
+    <declare-styleable name="SwitchControlView">
+        <attr name="pcMin" />
+        <attr name="pcMax" />
+        <attr name="pcId" />
+        <attr name="pcEntries" />
+    </declare-styleable>
+    <declare-styleable name="SpinnerControlView">
+        <attr name="pcMin" />
+        <attr name="pcMax" />
+        <attr name="pcId" />
+        <attr name="pcEntries" />
+    </declare-styleable>
+    <declare-styleable name="ControlViewGroup">
+        <attr name="cvgLabel" format="string" />
+        <attr name="android:entries" />
+    </declare-styleable>
 </resources>

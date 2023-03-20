@@ -10,6 +10,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.xgbuddy.data.*
 import javax.inject.Inject
+import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
@@ -42,6 +43,21 @@ class MidiSession @Inject constructor(context: Context) {
                     midiReceiveBuffer.clear()
                 }
             }
+        }
+    }
+
+    private val inputReceiver = object : MidiReceiver(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) {
+        override fun onSend(p0: ByteArray?, p1: Int, p2: Int, p3: Long) {
+            Log.d(
+                TAG, "onSend - here's the bytes: ${
+                    p0?.joinToString { b ->
+                        String.format(
+                            "%02x ",
+                            b
+                        )
+                    }
+                }"
+            )
         }
     }
 
@@ -152,13 +168,59 @@ class MidiSession @Inject constructor(context: Context) {
         }
     }
 
+    // There is something weird happening and I'm not sure what the issue is.
+    /**
+     * First of all, the byte array attached to midiMessage is 392 bytes long and it appears to be
+     * structured properly. The full array is being passed to inputPort. On the receiving side however,
+     * sometimes only 240 bytes are received, sometimes 359 are received. Never any other amount.
+     *
+     * The longer message looks to be mostly complete and has the correct ending, but is just missing
+     * 33 bytes somewhere.
+     *
+     * I'm stumped.
+     */
     fun send(midiMessage: MidiMessage) {
-        midiManager.inputPort?.send(
-            midiMessage.msg!!,
-            0,
-            midiMessage.msg.size,
-            midiMessage.timestamp
+        midiManager.inputPort?.flush()
+        var bytesSent = 0
+        var messageCount = 1
+        Log.d(
+            TAG, "Here's the message. It's ${midiMessage.msg?.size} bytes long. ${
+                midiMessage.msg!!.joinToString { b ->
+                    String.format(
+                        "%02x ",
+                        b
+                    )
+                }
+            }"
         )
+        while (bytesSent < midiMessage.msg.size) {
+            val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 32)) {
+                midiMessage.msg[bytesSent++]
+            }
+            Log.d(
+                TAG, "Here's what is being sent: ${
+                    buffer.joinToString { b ->
+                        String.format(
+                            "%02x ",
+                            b
+                        )
+                    }
+                }"
+            )
+            midiManager.inputPort?.send(
+                buffer,
+                0,
+                buffer.size,
+                System.nanoTime() + (messageCount * 100)
+            )
+            messageCount++
+        }
+//        midiManager.inputPort?.send(
+//            midiMessage.msg,
+//            0,
+//            midiMessage.msg.size,
+////            midiMessage.timestamp
+//        )
     }
 
     fun interface OnMidiReceivedListener {

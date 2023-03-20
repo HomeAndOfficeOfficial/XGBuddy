@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- QS300 LFO Wave -->
+    <string-array name="qs300_lfo_wave_entries">
+        <item>@string/qs300_lfo_wave_saw</item>
+        <item>@string/qs300_lfo_wave_tri</item>
+        <item>@string/qs300_lfo_wave_sh</item>
+    </string-array>
+    <!-- QS300 LFO Wave -->
+
+</resources>

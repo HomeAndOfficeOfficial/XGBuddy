@@ -18,4 +18,94 @@
     <string name="new_qs300_setup">New QS300 Setup</string>
     <string name="open_existing">Open Existing Setup (.xbx/.xbq)</string>
     <string name="xgbuddy_files">XGBuddy Files</string>
+
+    <!-- QS300 Element Parameter Descriptions -->
+    <string name="qs300_el_wave_hi">Wave Number Hi</string>
+    <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
+    <string name="qs300_el_note_lo">Note Limit Low</string>
+    <string name="qs300_el_note_hi">Note Limit High</string>
+    <string name="qs300_el_vel_lo">Velocity Limit Low</string>
+    <string name="qs300_el_vel_hi">Velocity Limit High</string>
+    <string name="qs300_el_feg_vel_curve">Filter EG Velocity Curve</string>
+    <string name="qs300_el_lfo_wave">LFO Wave</string>
+    <string name="qs300_el_lfo_phase_init">LFO Phase Initialize</string>
+    <string name="qs300_el_lfo_speed">LFO Speed</string>
+    <string name="qs300_el_lfo_fade">LFO Fade Time</string>
+    <string name="qs300_el_lfo_pmd_depth">LFO PMD Depth</string>
+    <string name="qs300_el_lfo_cmd_depth">LFO CMD Depth</string>
+    <string name="qs300_el_lfo_amd_depth">LFO AMD Depth</string>
+    <string name="qs300_el_note_shift">Note Shift</string>
+    <string name="qs300_el_detune">Detune</string>
+    <string name="qs300_el_pitch_scaling">Pitch Scaling</string>
+    <string name="qs300_el_pitch_scale_center">Pitch Scaling Center Note</string>
+    <string name="qs300_el_peg_depth">Pitch EG Depth</string>
+    <string name="qs300_el_vel_peg_lvl_sens">Velocity PEG Level Sensitivity</string>
+    <string name="qs300_el_vel_peg_rate_sens">Velocity PEG Rate Sensitivity</string>
+    <string name="qs300_el_peg_rate_scaling">PEG Rate Scaling</string>
+    <string name="qs300_el_peg_rate_scale_center">PEG Rate Scaling Center Note</string>
+    <string name="qs300_el_peg_rate_1">PEG Rate 1</string>
+    <string name="qs300_el_peg_rate_2">PEG Rate 2</string>
+    <string name="qs300_el_peg_rate_3">PEG Rate 3</string>
+    <string name="qs300_el_peg_rate_4">PEG Rate 4</string>
+    <string name="qs300_el_peg_lvl_0">PEG Level 0</string>
+    <string name="qs300_el_peg_lvl_1">PEG Level 1</string>
+    <string name="qs300_el_peg_lvl_2">PEG Level 2</string>
+    <string name="qs300_el_peg_lvl_3">PEG Level 3</string>
+    <string name="qs300_el_peg_lvl_4">PEG Level 4</string>
+    <string name="qs300_el_filter_res">Filter Resonance</string>
+    <string name="qs300_el_vel_sens">Velocity Sensitivity</string>
+    <string name="qs300_el_cutoff_freq">Cutoff Frequency</string>
+    <string name="qs300_el_cutoff_scale_bp_1">Cutoff Scaling Breakpoint 1</string>
+    <string name="qs300_el_cutoff_scale_bp_2">Cutoff Scaling Breakpoint 2</string>
+    <string name="qs300_el_cutoff_scale_bp_3">Cutoff Scaling Breakpoint 3</string>
+    <string name="qs300_el_cutoff_scale_bp_4">Cutoff Scaling Breakpoint 4</string>
+    <string name="qs300_el_cutoff_scale_off_1">Cutoff Scaling Offset 1</string>
+    <string name="qs300_el_cutoff_scale_off_2">Cutoff Scaling Offset 2</string>
+    <string name="qs300_el_cutoff_scale_off_3">Cutoff Scaling Offset 3</string>
+    <string name="qs300_el_cutoff_scale_off_4">Cutoff Scaling Offset 4</string>
+    <string name="qs300_el_vel_feg_lvl_sens">Velocity FEG Level Sensitivity</string>
+    <string name="qs300_el_vel_feg_rate_sens">Velocity FEG Rate Sensitivity</string>
+    <string name="qs300_el_feg_rate_scaling">FEG Rate Scaling</string>
+    <string name="qs300_el_feg_rate_scale_center">FEG Rate Scaling Center Note</string>
+    <string name="qs300_el_feg_rate_1">FEG Rate 1</string>
+    <string name="qs300_el_feg_rate_3">FEG Rate 3</string>
+    <string name="qs300_el_feg_rate_2">FEG Rate 2</string>
+    <string name="qs300_el_feg_rate_4">FEG Rate 4</string>
+    <string name="qs300_el_feg_lvl_0">FEG Level 0</string>
+    <string name="qs300_el_feg_lvl_1">FEG Level 1</string>
+    <string name="qs300_el_feg_lvl_2">FEG Level 2</string>
+    <string name="qs300_el_feg_lvl_3">FEG Level 3</string>
+    <string name="qs300_el_feg_lvl_4">FEG Level 4</string>
+    <string name="qs300_el_element_lvl">Element Level</string>
+    <string name="qs300_el_lvl_scale_bp_1">Level Scaling Breakpoint 1</string>
+    <string name="qs300_el_lvl_scale_bp_2">Level Scaling Breakpoint 2</string>
+    <string name="qs300_el_lvl_scale_bp_3">Level Scaling Breakpoint 3</string>
+    <string name="qs300_el_lvl_scale_bp_4">Level Scaling Breakpoint 4</string>
+    <string name="qs300_el_lvl_scale_off_1">Level Scaling Offset 1</string>
+    <string name="qs300_el_lvl_scale_off_2">Level Scaling Offset 2</string>
+    <string name="qs300_el_lvl_scale_off_3">Level Scaling Offset 3</string>
+    <string name="qs300_el_lvl_scale_off_4">Level Scaling Offset 4</string>
+    <string name="qs300_el_vel_curve">Velocity Curve</string>
+    <string name="qs300_el_pan">Pan</string>
+    <string name="qs300_el_aeg_rate_scaling">AEG Rate Scaling</string>
+    <string name="qs300_el_aeg_rate_scale_center">AEG Scaling Center Note</string>
+    <string name="qs300_el_aeg_key_on_delay">AEG Key On Delay</string>
+    <string name="qs300_el_aeg_attack">AEG Attack Rate</string>
+    <string name="qs300_el_aeg_decay_rate_1">AEG Decay Rate 1</string>
+    <string name="qs300_el_aeg_decay_rate_2">AEG Decay Rate 2</string>
+    <string name="qs300_el_aeg_release">AEG Release Rate</string>
+    <string name="qs300_el_aeg_decay_lvl_1">AEG Decay Level 1</string>
+    <string name="qs300_el_aeg_decay_lvl_2">AEG Decay Level 2</string>
+    <string name="qs300_el_addr_off_hi">Address Offset Hi</string>
+    <string name="qs300_el_addr_off_lo">Address Offset Lo</string>
+    <string name="qs300_el_res_sens">Resonance Sensitivity</string>
+    <string name="qs300_el_lfo_delay">LFO Delay</string>
+    <!-- QS300 Element Parameter Descriptions -->
+
+    <!-- QS300 LFO Wave Names -->
+    <string name="qs300_lfo_wave_saw">Saw</string>
+    <string name="qs300_lfo_wave_tri">Tri</string>
+    <string name="qs300_lfo_wave_sh">S&amp;H</string>
+    <!-- QS300 LFO Wave Names -->
+
 </resources>

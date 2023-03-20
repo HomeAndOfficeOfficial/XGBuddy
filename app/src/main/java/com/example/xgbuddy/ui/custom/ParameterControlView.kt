@@ -1,56 +1,69 @@
 package com.example.xgbuddy.ui.custom
 
 import android.content.Context
+import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
-import com.google.android.material.slider.Slider
 
-class ParameterControlView(context: Context, attributeSet: AttributeSet) :
-    ConstraintLayout(context, attributeSet) {
+abstract class ParameterControlView(context: Context) :
+    ConstraintLayout(context) {
 
-    private val slider: Slider
-    private val tvLabel: TextView
-    private val tvValue: TextView
+    // TODO: Add callbacks to all interface types
+    // TODO: Figure out a way to pass values to spinner views.
+    //  Wave select spinner will will need its own customized implementation since it has a hi/lo value
+
+    constructor(context: Context, attributeSet: AttributeSet) : this(context)
+
+    private var root: ConstraintLayout? = null
+    override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
+        if (root == null) {
+            super.addView(child, index, params)
+        } else {
+            root?.addView(child, index, params)
+        }
+    }
+
+    private var tvLabel: TextView? = null
+    protected var tvValue: TextView? = null
 
     var controlParameter: ControlParameter? = null
         set(value) {
             field = value
+            label = value?.name ?: "Unnamed param"
             updateControlBounds()
         }
-    var value = 0f
+    var value: Byte = 0
         set(value) {
-            field = value
-            updateViews()
+            controlParameter?.value = value
+            if (field != value) {
+                field = value
+                updateViews()
+            }
         }
     var label = ""
         set(value) {
             field = value
-            tvLabel.text = value
+            tvLabel?.text = value
         }
+    var paramId: Int = 0
     var listener: OnParameterChangedListener? = null
 
-    init {
-        val v = LayoutInflater.from(context).inflate(R.layout.parameter_control_view, this, false)
-        tvLabel = v.findViewById(R.id.tvParamLabel)
-        tvValue = v.findViewById(R.id.tvParamValue)
-        slider = v.findViewById(R.id.cpSlider)
+    protected abstract fun updateControlBounds()
+    protected abstract fun updateViews()
+
+    protected fun getIdFromAttr(typedArray: TypedArray) {
+        paramId = typedArray.getResourceId(R.styleable.ParameterControlView_pcId, 0)
     }
 
-    private fun updateControlBounds() {
-        slider.apply {
-            valueFrom = controlParameter!!.min.toFloat()
-            valueTo = controlParameter!!.max.toFloat()
-            value = controlParameter!!.default.toFloat()
-        }
-    }
-
-    private fun updateViews() {
-        slider.value = value
-        tvValue.text = "$value"
+    protected fun initializeCommonViews(view: View) {
+        root = view.findViewById(R.id.pcRoot)
+        tvLabel = view.findViewById(R.id.tvParamLabel)
+        tvValue = view.findViewById(R.id.tvParamValue)
     }
 
     fun interface OnParameterChangedListener {

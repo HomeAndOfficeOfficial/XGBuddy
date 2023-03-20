@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="qs300_element_main">
+        <item>@string/qs300_el_element_lvl</item>
+        <item>@string/qs300_el_pan</item>
+        <item>@string/qs300_el_cutoff_freq</item>
+        <item>@string/qs300_el_filter_res</item>
+    </array>
+
+    <array name="qs300_element_general">
+        <item>@string/qs300_el_vel_sens</item>
+        <item>@string/qs300_el_vel_curve</item>
+        <item>@string/qs300_el_note_lo</item>
+        <item>@string/qs300_el_note_hi</item>
+        <item>@string/qs300_el_vel_lo</item>
+        <item>@string/qs300_el_vel_hi</item>
+        <!-- Item address offset -->
+        <!-- Item wave hi/lo -->
+    </array>
+
+    <array name="qs300_element_lfo">
+        <!--  Item LFO Wave -->
+        <!-- Item Phase Init -->
+        <item>@string/qs300_el_lfo_speed</item>
+        <item>@string/qs300_el_lfo_fade</item>
+        <item>@string/qs300_el_lfo_pmd_depth</item>
+        <item>@string/qs300_el_lfo_cmd_depth</item>
+        <item>@string/qs300_el_lfo_amd_depth</item>
+    </array>
+
+    <array name="qs300_element_pitch">
+        <item>@string/qs300_el_detune</item>
+        <item>@string/qs300_el_note_shift</item>
+        <item>@string/qs300_el_pitch_scaling</item>
+        <item>@string/qs300_el_pitch_scale_center</item>
+    </array>
+
+    <array name="qs300_element_aeg">
+        <item>@string/qs300_el_aeg_attack</item>
+        <item>@string/qs300_el_aeg_decay_rate_1</item>
+        <item>@string/qs300_el_aeg_decay_lvl_1</item>
+        <item>@string/qs300_el_aeg_decay_rate_2</item>
+        <item>@string/qs300_el_aeg_decay_lvl_2</item>
+        <item>@string/qs300_el_aeg_release</item>
+        <item>@string/qs300_el_aeg_key_on_delay</item>
+        <item>@string/qs300_el_aeg_rate_scaling</item>
+        <item>@string/qs300_el_aeg_rate_scale_center</item>
+    </array>
+
+    <array name="qs300_element_peg">
+        <item>@string/qs300_el_peg_depth</item>
+        <item>@string/qs300_el_peg_lvl_0</item>
+        <item>@string/qs300_el_peg_rate_1</item>
+        <item>@string/qs300_el_peg_lvl_1</item>
+        <item>@string/qs300_el_peg_rate_2</item>
+        <item>@string/qs300_el_peg_lvl_2</item>
+        <item>@string/qs300_el_peg_rate_3</item>
+        <item>@string/qs300_el_peg_lvl_3</item>
+        <item>@string/qs300_el_peg_rate_4</item>
+        <item>@string/qs300_el_peg_lvl_4</item>
+        <item>@string/qs300_el_peg_rate_scaling</item>
+        <item>@string/qs300_el_peg_rate_scale_center</item>
+        <item>@string/qs300_el_vel_peg_lvl_sens</item>
+        <item>@string/qs300_el_vel_peg_rate_sens</item>
+    </array>
+
+    <array name="qs300_element_feg">
+        <item>@string/qs300_el_feg_vel_curve</item>
+        <item>@string/qs300_el_feg_lvl_0</item>
+        <item>@string/qs300_el_feg_rate_1</item>
+        <item>@string/qs300_el_feg_lvl_1</item>
+        <item>@string/qs300_el_feg_rate_2</item>
+        <item>@string/qs300_el_feg_lvl_2</item>
+        <item>@string/qs300_el_feg_rate_3</item>
+        <item>@string/qs300_el_feg_lvl_3</item>
+        <item>@string/qs300_el_feg_rate_4</item>
+        <item>@string/qs300_el_feg_lvl_4</item>
+        <item>@string/qs300_el_feg_rate_scaling</item>
+        <item>@string/qs300_el_feg_rate_scale_center</item>
+        <item>@string/qs300_el_vel_feg_lvl_sens</item>
+        <item>@string/qs300_el_vel_feg_rate_sens</item>
+    </array>
+
+    <array name="qs300_element_filter_scaling">
+        <item>@string/qs300_el_cutoff_scale_bp_1</item>
+        <item>@string/qs300_el_cutoff_scale_bp_2</item>
+        <item>@string/qs300_el_cutoff_scale_bp_3</item>
+        <item>@string/qs300_el_cutoff_scale_bp_4</item>
+        <item>@string/qs300_el_cutoff_scale_off_1</item>
+        <item>@string/qs300_el_cutoff_scale_off_2</item>
+        <item>@string/qs300_el_cutoff_scale_off_3</item>
+        <item>@string/qs300_el_cutoff_scale_off_4</item>
+    </array>
+
+    <array name="qs300_element_level_scaling">
+        <item>@string/qs300_el_lvl_scale_bp_1</item>
+        <item>@string/qs300_el_lvl_scale_bp_2</item>
+        <item>@string/qs300_el_lvl_scale_bp_3</item>
+        <item>@string/qs300_el_lvl_scale_bp_4</item>
+        <item>@string/qs300_el_lvl_scale_off_1</item>
+        <item>@string/qs300_el_lvl_scale_off_2</item>
+        <item>@string/qs300_el_lvl_scale_off_3</item>
+        <item>@string/qs300_el_lvl_scale_off_4</item>
+    </array>
+
+</resources>

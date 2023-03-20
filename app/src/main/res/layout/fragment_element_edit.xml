@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:viewBindingIgnore="true">
 
-    <com.example.xgbuddy.ui.custom.ParameterControlView
-        android:id="@+id/pcvTest"
-        android:layout_width="0dp"
+    <com.example.xgbuddy.ui.custom.ControlViewGroup
+        android:id="@+id/cvgLfo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:entries="@array/qs300_element_lfo"
+        app:cvgLabel="LFO">
 
-    <Button
-        android:id="@+id/bNextParam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pcvTest" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:id="@+id/lfoExtras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.xgbuddy.ui.custom.SpinnerControlView
+                android:id="@+id/cvLfoWave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:pcEntries="@array/qs300_lfo_wave_entries"
+                app:pcId="@string/qs300_el_lfo_wave" />
+
+            <com.example.xgbuddy.ui.custom.SwitchControlView
+                android:id="@+id/cvLfoPhaseInit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                app:pcId="@string/qs300_el_lfo_phase_init" />
+
+        </LinearLayout>
+    </com.example.xgbuddy.ui.custom.ControlViewGroup>
+</LinearLayout>
