@@ -1,5 +1,423 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- QS300 Wave List -->
+    <string-array name="qs300_wave_entries">
+        <item>Grand</item>        <!-- <item>37</item> -->
+        <item>Brite</item>        <!-- <item>38</item> -->
+        <item>Honky</item>        <!-- <item>39</item> -->
+        <item>Roads</item>        <!-- <item>56</item> -->
+        <item>CP80</item>         <!-- <item>172</item>-->
+        <item>DX7</item>          <!-- <item>55</item> -->
+        <item>Accordion</item>    <!-- <item>79</item> -->
+        <item>Bandoneon</item>    <!-- <item>241</item>-->
+        <item>Celesta</item>      <!-- <item>80</item> -->
+        <item>Clavi</item>        <!-- <item>81</item> -->
+        <item>Harpsichrd</item>   <!-- <item>82</item> -->
+        <item>Glocken</item>      <!-- <item>105</item>-->
+        <item>Marimba</item>      <!-- <item>106</item>-->
+        <item>SteelDrum</item>    <!-- <item>107</item>-->
+        <item>Timpani</item>      <!-- <item>108</item>-->
+        <item>TinkleBell</item>   <!-- <item>109</item>-->
+        <item>TublarBell</item>   <!-- <item>110</item>-->
+        <item>Vibes</item>        <!-- <item>111</item>-->
+        <item>Xylophone</item>    <!-- <item>112</item>-->
+        <item>Pipe</item>         <!-- <item>86</item> -->
+        <item>Reed</item>         <!-- <item>87</item> -->
+        <item>Drawbar1</item>     <!-- <item>83</item> -->
+        <item>Drawbar2</item>     <!-- <item>240</item>-->
+        <item>Percussive</item>   <!-- <item>84</item> -->
+        <item>Rock1</item>        <!-- <item>85</item> -->
+        <item>Rock2</item>        <!-- <item>237</item>-->
+        <item>Nylon</item>        <!-- <item>71</item> -->
+        <item>Steel</item>        <!-- <item>72</item> -->
+        <item>12GtrUpper</item>   <!-- <item>190</item>-->
+        <item>JazzGtr</item>      <!-- <item>73</item> -->
+        <item>Clean</item>        <!-- <item>74</item> -->
+        <item>Muted</item>        <!-- <item>75</item> -->
+        <item>Overdrive</item>    <!-- <item>76</item> -->
+        <item>OvrdriveLp</item>   <!-- <item>183</item>-->
+        <item>Distortion</item>   <!-- <item>77</item> -->
+        <item>Harmonics1</item>   <!-- <item>78</item> -->
+        <item>Harmonics2</item>   <!-- <item>242</item>-->
+        <item>Upright</item>      <!-- <item>46</item> -->
+        <item>Finger</item>       <!-- <item>40</item> -->
+        <item>Fretless</item>     <!-- <item>41</item> -->
+        <item>Picked</item>       <!-- <item>42</item> -->
+        <item>Slap1</item>        <!-- <item>43</item> -->
+        <item>Slap2</item>        <!-- <item>44</item> -->
+        <item>Thump</item>        <!-- <item>45</item> -->
+        <item>Bass1</item>        <!-- <item>97</item> -->
+        <item>Bass2</item>        <!-- <item>98</item> -->
+        <item>Violin</item>       <!-- <item>88</item> -->
+        <item>Viola</item>        <!-- <item>89</item> -->
+        <item>Cello</item>        <!-- <item>90</item> -->
+        <item>ContraBass</item>   <!-- <item>91</item> -->
+        <item>SectionEns</item>   <!-- <item>92</item> -->
+        <item>Pizzicato</item>    <!-- <item>93</item> -->
+        <item>StrngEnsLp</item>   <!-- <item>180</item>-->
+        <item>Ensemble</item>     <!-- <item>231</item>-->
+        <item>Aah</item>          <!-- <item>53</item> -->
+        <item>Ooh</item>          <!-- <item>54</item> -->
+        <item>Trumpet</item>      <!-- <item>47</item> -->
+        <item>MutedTrp</item>     <!-- <item>48</item> -->
+        <item>Trombone</item>     <!-- <item>49</item> -->
+        <item>Tuba</item>         <!-- <item>50</item> -->
+        <item>FrenchHorn</item>   <!-- <item>51</item> -->
+        <item>TrumpetEns</item>   <!-- <item>52</item> -->
+        <item>Brass</item>        <!-- <item>99</item> -->
+        <item>Bassoon</item>      <!-- <item>113</item>-->
+        <item>Clarinet</item>     <!-- <item>114</item>-->
+        <item>EnglshHorn</item>   <!-- <item>115</item>-->
+        <item>Oboe</item>         <!-- <item>117</item>-->
+        <item>SopranoSax</item>   <!-- <item>120</item>-->
+        <item>SprSaxAtk</item>    <!-- <item>176</item>-->
+        <item>AltoSax</item>      <!-- <item>121</item>-->
+        <item>AltoSaxAtk</item>   <!-- <item>177</item>-->
+        <item>TenorSax</item>     <!-- <item>184</item>-->
+        <item>BaritonSax</item>   <!-- <item>123</item>-->
+        <item>BariSaxAtk</item>   <!-- <item>179</item>-->
+        <item>BariSaxLp</item>    <!-- <item>182</item>-->
+        <item>Flute</item>        <!-- <item>116</item>-->
+        <item>Piccolo</item>      <!-- <item>118</item>-->
+        <item>SprRecordr</item>   <!-- <item>119</item>-->
+        <item>Banjo</item>        <!-- <item>57</item> -->
+        <item>BagPipe</item>      <!-- <item>58</item> -->
+        <item>Dulcimer</item>     <!-- <item>59</item> -->
+        <item>Harmonica</item>    <!-- <item>60</item> -->
+        <item>Harp</item>         <!-- <item>61</item> -->
+        <item>Kalimba</item>      <!-- <item>62</item> -->
+        <item>Koto</item>         <!-- <item>63</item> -->
+        <item>Ocarina</item>      <!-- <item>64</item> -->
+        <item>Shakuhachi</item>   <!-- <item>66</item> -->
+        <item>Shamisen</item>     <!-- <item>67</item> -->
+        <item>Sho</item>          <!-- <item>69</item> -->
+        <item>Sitar</item>        <!-- <item>70</item> -->
+        <item>Shanai</item>       <!-- <item>188</item>-->
+        <item>PanFlute</item>     <!-- <item>243</item>-->
+        <item>SideStick</item>    <!-- <item>4</item>  -->
+        <item>Snare1</item>       <!-- <item>5</item>  -->
+        <item>Snare2</item>       <!-- <item>6</item>  -->
+        <item>Snare3</item>       <!-- <item>7</item>  -->
+        <item>Snare4</item>       <!-- <item>8</item>  -->
+        <item>Snare5</item>       <!-- <item>9</item>  -->
+        <item>Snare6</item>       <!-- <item>10</item> -->
+        <item>SnareBrush</item>   <!-- <item>11</item> -->
+        <item>Tom1</item>         <!-- <item>12</item> -->
+        <item>Tom2</item>         <!-- <item>13</item> -->
+        <item>Tom3</item>         <!-- <item>14</item> -->
+        <item>Tom4</item>         <!-- <item>15</item> -->
+        <item>Tom5</item>         <!-- <item>16</item> -->
+        <item>Tom6</item>         <!-- <item>17</item> -->
+        <item>Kick1</item>        <!-- <item>18</item> -->
+        <item>Kick2</item>        <!-- <item>19</item> -->
+        <item>Kick3</item>        <!-- <item>20</item> -->
+        <item>Kick4</item>        <!-- <item>21</item> -->
+        <item>GranCasa</item>     <!-- <item>22</item> -->
+        <item>Stick</item>        <!-- <item>23</item> -->
+        <item>Cymbal1</item>      <!-- <item>24</item> -->
+        <item>Cymbal2</item>      <!-- <item>25</item> -->
+        <item>Cymbal3</item>      <!-- <item>26</item> -->
+        <item>Cymbal4</item>      <!-- <item>27</item> -->
+        <item>LoopCymbal</item>   <!-- <item>29</item> -->
+        <item>Agogo</item>        <!-- <item>32</item> -->
+        <item>Castanet</item>     <!-- <item>33</item> -->
+        <item>WoodBlock</item>    <!-- <item>34</item> -->
+        <item>Taiko</item>        <!-- <item>35</item> -->
+        <item>Triangle</item>     <!-- <item>36</item> -->
+        <item>BassSlap</item>     <!-- <item>128</item>-->
+        <item>GtrStroke</item>    <!-- <item>138</item>-->
+        <item>GtrFretNz</item>    <!-- <item>139</item>-->
+        <item>KeyPad</item>       <!-- <item>143</item>-->
+        <item>Metronome</item>    <!-- <item>146</item>-->
+        <item>OrchHit</item>      <!-- <item>148</item>-->
+        <item>WindChime</item>    <!-- <item>163</item>-->
+        <item>TublrBellLp</item>  <!-- <item>189</item>-->
+        <item>XylophonLp</item>   <!-- <item>191</item>-->
+        <item>Scratch</item>      <!-- <item>245</item>-->
+        <item>Applause</item>     <!-- <item>124</item>-->
+        <item>Bird1</item>        <!-- <item>125</item>-->
+        <item>Bird2</item>        <!-- <item>126</item>-->
+        <item>Breath</item>       <!-- <item>127</item>-->
+        <item>Bubble</item>       <!-- <item>129</item>-->
+        <item>CarPass</item>      <!-- <item>130</item>-->
+        <item>CarCrash</item>     <!-- <item>131</item>-->
+        <item>CarStart</item>     <!-- <item>132</item>-->
+        <item>Dog</item>          <!-- <item>133</item>-->
+        <item>DoorSlam</item>     <!-- <item>134</item>-->
+        <item>DoorSqueak</item>   <!-- <item>135</item>-->
+        <item>FootStep</item>     <!-- <item>136</item>-->
+        <item>Gallop</item>       <!-- <item>137</item>-->
+        <item>Gun</item>          <!-- <item>140</item>-->
+        <item>Helicopter</item>   <!-- <item>141</item>-->
+        <item>HeartBeat</item>    <!-- <item>142</item>-->
+        <item>Laughing</item>     <!-- <item>144</item>-->
+        <item>MachineGun</item>   <!-- <item>145</item>-->
+        <item>Punch</item>        <!-- <item>149</item>-->
+        <item>Rain</item>         <!-- <item>150</item>-->
+        <item>Scream</item>       <!-- <item>151</item>-->
+        <item>Stream</item>       <!-- <item>152</item>-->
+        <item>Surf</item>         <!-- <item>153</item>-->
+        <item>TelDial</item>      <!-- <item>154</item>-->
+        <item>TelRing1</item>     <!-- <item>155</item>-->
+        <item>TelRing2</item>     <!-- <item>162</item>-->
+        <item>Thunder</item>      <!-- <item>156</item>-->
+        <item>TireSkid</item>     <!-- <item>157</item>-->
+        <item>Train</item>        <!-- <item>158</item>-->
+        <item>Wind</item>         <!-- <item>159</item>-->
+        <item>Square</item>       <!-- <item>94</item> -->
+        <item>Saw</item>          <!-- <item>95</item> -->
+        <item>Sine</item>         <!-- <item>195</item>-->
+        <item>Digi1</item>        <!-- <item>196</item>-->
+        <item>Digi2</item>        <!-- <item>197</item>-->
+        <item>Digi3</item>        <!-- <item>198</item>-->
+        <item>Digi4</item>        <!-- <item>199</item>-->
+        <item>Digi5</item>        <!-- <item>200</item>-->
+        <item>Digi6</item>        <!-- <item>201</item>-->
+        <item>Digi7</item>        <!-- <item>202</item>-->
+        <item>Digi8</item>        <!-- <item>203</item>-->
+        <item>Digi9</item>        <!-- <item>204</item>-->
+        <item>Digi10</item>       <!-- <item>205</item>-->
+        <item>Digi11</item>       <!-- <item>206</item>-->
+        <item>Digi12</item>       <!-- <item>207</item>-->
+        <item>Digi13</item>       <!-- <item>208</item>-->
+        <item>Digi14</item>       <!-- <item>209</item>-->
+        <item>Digi15</item>       <!-- <item>210</item>-->
+        <item>Digi16</item>       <!-- <item>211</item>-->
+        <item>Digi17</item>       <!-- <item>212</item>-->
+        <item>Digi19</item>       <!-- <item>213</item>-->
+        <item>Digi20</item>       <!-- <item>214</item>-->
+        <item>Digi21</item>       <!-- <item>215</item>-->
+        <item>Digi22</item>       <!-- <item>216</item>-->
+        <item>Digi23</item>       <!-- <item>217</item>-->
+        <item>Digi24</item>       <!-- <item>218</item>-->
+        <item>Digi25</item>       <!-- <item>219</item>-->
+        <item>Digi26</item>       <!-- <item>220</item>-->
+        <item>Digi27</item>       <!-- <item>221</item>-->
+        <item>Digi28</item>       <!-- <item>222</item>-->
+        <item>Digi29</item>       <!-- <item>223</item>-->
+        <item>Digi30</item>       <!-- <item>224</item>-->
+        <item>Digi31</item>       <!-- <item>225</item>-->
+        <item>Digi32</item>       <!-- <item>226</item>-->
+        <item>Pulse10</item>      <!-- <item>228</item>-->
+        <item>Pulse25</item>      <!-- <item>229</item>-->
+        <item>Pad1</item>         <!-- <item>102</item>-->
+        <item>Pad2</item>         <!-- <item>227</item>-->
+        <item>Pad3</item>         <!-- <item>230</item>-->
+        <item>Itopia</item>       <!-- <item>236</item>-->
+        <item>Mallet</item>       <!-- <item>104</item>-->
+        <item>Noise</item>        <!-- <item>147</item>-->
+        <item>StndrdKit</item>    <!-- <item>1</item>  -->
+    </string-array>
+    <!-- QS300 Wave Entries -->
+
+    <integer-array name="qs300_wave_values">
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>56</item>
+        <item>172</item>
+        <item>55</item>
+        <item>79</item>
+        <item>241</item>
+        <item>80</item>
+        <item>81</item>
+        <item>82</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+        <item>108</item>
+        <item>109</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>86</item>
+        <item>87</item>
+        <item>83</item>
+        <item>240</item>
+        <item>84</item>
+        <item>85</item>
+        <item>237</item>
+        <item>71</item>
+        <item>72</item>
+        <item>190</item>
+        <item>73</item>
+        <item>74</item>
+        <item>75</item>
+        <item>76</item>
+        <item>183</item>
+        <item>77</item>
+        <item>78</item>
+        <item>242</item>
+        <item>46</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>97</item>
+        <item>98</item>
+        <item>88</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
+        <item>180</item>
+        <item>231</item>
+        <item>53</item>
+        <item>54</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>99</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>117</item>
+        <item>120</item>
+        <item>176</item>
+        <item>121</item>
+        <item>177</item>
+        <item>184</item>
+        <item>123</item>
+        <item>179</item>
+        <item>182</item>
+        <item>116</item>
+        <item>118</item>
+        <item>119</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+        <item>64</item>
+        <item>66</item>
+        <item>67</item>
+        <item>69</item>
+        <item>70</item>
+        <item>188</item>
+        <item>243</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>29</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>128</item>
+        <item>138</item>
+        <item>139</item>
+        <item>143</item>
+        <item>146</item>
+        <item>148</item>
+        <item>163</item>
+        <item>189</item>
+        <item>191</item>
+        <item>245</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
+        <item>129</item>
+        <item>130</item>
+        <item>131</item>
+        <item>132</item>
+        <item>133</item>
+        <item>134</item>
+        <item>135</item>
+        <item>136</item>
+        <item>137</item>
+        <item>140</item>
+        <item>141</item>
+        <item>142</item>
+        <item>144</item>
+        <item>145</item>
+        <item>149</item>
+        <item>150</item>
+        <item>151</item>
+        <item>152</item>
+        <item>153</item>
+        <item>154</item>
+        <item>155</item>
+        <item>162</item>
+        <item>156</item>
+        <item>157</item>
+        <item>158</item>
+        <item>159</item>
+        <item>94</item>
+        <item>95</item>
+        <item>195</item>
+        <item>196</item>
+        <item>197</item>
+        <item>198</item>
+        <item>199</item>
+        <item>200</item>
+        <item>201</item>
+        <item>202</item>
+        <item>203</item>
+        <item>204</item>
+        <item>205</item>
+        <item>206</item>
+        <item>207</item>
+        <item>208</item>
+        <item>209</item>
+        <item>210</item>
+        <item>211</item>
+        <item>212</item>
+        <item>213</item>
+        <item>214</item>
+        <item>215</item>
+        <item>216</item>
+        <item>217</item>
+        <item>218</item>
+        <item>219</item>
+        <item>220</item>
+        <item>221</item>
+        <item>222</item>
+        <item>223</item>
+        <item>224</item>
+        <item>225</item>
+        <item>226</item>
+        <item>228</item>
+        <item>229</item>
+        <item>102</item>
+        <item>227</item>
+        <item>230</item>
+        <item>236</item>
+        <item>104</item>
+        <item>147</item>
+        <item>1</item>
+    </integer-array>
+
     <!-- QS300 LFO Wave -->
     <string-array name="qs300_lfo_wave_entries">
         <item>@string/qs300_lfo_wave_saw</item>
