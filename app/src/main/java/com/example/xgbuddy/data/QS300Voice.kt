@@ -30,6 +30,18 @@ class QS300Voice {
     var elementSwitch: Byte = EL_12
     var voiceName: String = ""
 
+    /** To troubleshoot the issue with this bulk dump seemingly not being recognized by my MU10,
+     * I think I will need to do a full implementation of the preset data.
+     *
+     * Add a QS300VoiceCommonParameter enum that has all the fields from voice name to the start of
+     * the element parameters.
+     *
+     * Don't assume only two elements, just go ahead and populate all four. This should result in
+     * an identical bulk dump message to what is read in, then I can see if my checksum calculation
+     * is the issue or if something else is wrong.
+     *
+     */
+
 
     // TODO: Create constants for indices and setup values
     // TODO: Create method that creates header byte array
