@@ -48,7 +48,8 @@ class VoiceEditFragment : Fragment() {
             // For now just work with single voice
             preset.voices[0].let {
                 etVoiceName.setText(it.voiceName)
-                cvVoiceLevel.value = it.voiceLevel
+                // TODO: Add VoiceCommon enum so param id can be added to layout element
+//                cvVoiceLevel.value = it.voiceLevel
                 setElementContainerVisibilities(llElementEditContainer, it.elements)
                 setElementContainerVisibilities(llPrimaryControlContainer, it.elements)
             }
@@ -72,11 +73,12 @@ class VoiceEditFragment : Fragment() {
         llPrimaryControlContainer = v.findViewById(R.id.llPrimaryControlContainer)
         llElementEditContainer = v.findViewById(R.id.llElementEditContainer)
         etVoiceName = v.findViewById(R.id.etVoiceName)
-        cvVoiceLevel = v.findViewById(R.id.cvVoiceLevel)
+//        cvVoiceLevel = v.findViewById(R.id.cvVoiceLevel)
     }
 
     private lateinit var llPrimaryControlContainer: LinearLayout
     private lateinit var etVoiceName: EditText
-    private lateinit var cvVoiceLevel: SliderControlView
+
+    //    private lateinit var cvVoiceLevel: SliderControlView
     private lateinit var llElementEditContainer: LinearLayout
 }

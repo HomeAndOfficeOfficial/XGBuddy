@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
@@ -18,7 +17,6 @@ import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
-import com.example.xgbuddy.util.MidiStoredDataUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,7 +32,6 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
     //TODO: Hook up receiver listener to update control view
 
     private val viewModel: QS300ViewModel by activityViewModels()
-//    private lateinit var binding: FragmentElementEditBinding
 
     private var currentParam: QS300ElementParameter? = null
     private var elementIndex = NOT_INITIALIZED
@@ -63,8 +60,16 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        binding = FragmentElementEditBinding.inflate(layoutInflater)
         // Will need to do this for each control group'
+        if (elementIndex < 0) {
+            with(savedInstanceState?.getInt(ARG_EL_INDEX)) {
+                if (this != null) {
+                    elementIndex = this
+                } else {
+                    Log.e(TAG, "Element index was never saved or initialized")
+                }
+            }
+        }
         val v = layoutInflater.inflate(R.layout.fragment_element_edit, container, false)
         findViews(v)
         cvgLfo.apply {
@@ -116,6 +121,11 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
         )
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(ARG_EL_INDEX, elementIndex)
+    }
+
     private fun updatePreset(controlParameter: ControlParameter) {
         if (controlParameter.name != currentParam?.name) {
             // TODO: Apply current element to controlParam.addr to get actual base addr
@@ -139,12 +149,12 @@ class ElementEditFragment : Fragment(), ParameterControlView.OnParameterChangedL
     override fun onParameterChanged(controlParameter: ControlParameter) {
         Log.d(TAG, "Parameter changed: ${controlParameter.name}: ${controlParameter.value}")
         updatePreset(controlParameter)
-//        midiSession.send(controlParameter.getParamChangeMessage())
     }
 
     companion object {
         const val TAG = "ElementEditFragment"
         private const val NOT_INITIALIZED = -1
+        private const val ARG_EL_INDEX = "arg_el_index"
     }
 
     private fun findViews(v: View) {

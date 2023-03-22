@@ -86,11 +86,10 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     // There will probably be multiple overloads of this to update views for whatever this group contains
     fun updateViews(qS300Element: QS300Element) {
         controlViewMap.keys.forEach {
-            // TODO: Move this 0x50 to a constant
-            val baseAddr: UByte = (it - (qS300Element.elementNumber * 0x50).toUByte()).toUByte()
-            Log.d(TAG, "Map key: $it, baseAddr: $it")
-            val param = QS300ElementParameter::baseAddress findBy baseAddr
-            controlViewMap[it]?.value = qS300Element.getPropertyValue(param!!.reflectedField)
+            val param = QS300ElementParameter::baseAddress findBy it
+            Log.d(TAG, "Map key: $it, param: ${param?.name}")
+            controlViewMap[it]?.value =
+                if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
         }
     }
 
