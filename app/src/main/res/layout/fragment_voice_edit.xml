@@ -15,7 +15,7 @@
         android:padding="8dp">
 
         <EditText
-            android:id="@+id/editTextVoiceName"
+            android:id="@+id/etVoiceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,38 +28,95 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextVoiceName" />
+            app:layout_constraintTop_toBottomOf="@+id/etVoiceName" />
 
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel">
+
             <LinearLayout
                 android:id="@+id/llPrimaryControlContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/elementPrimaryContainer0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elementIndex="0"
+                    tools:layout="@layout/fragment_qs_element_primary_control" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/elementPrimaryContainer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elementIndex="1"
+                    tools:layout="@layout/fragment_qs_element_primary_control" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/elementPrimaryContainer2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elementIndex="2"
+                    tools:layout="@layout/fragment_qs_element_primary_control" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/elementPrimaryContainer3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:elementIndex="3"
+                    tools:layout="@layout/fragment_qs_element_primary_control" />
             </LinearLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementEditContainer0"
+    <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.38"
-        tools:layout="@layout/fragment_element_edit" />
+        android:layout_weight="0.76">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementEditContainer1"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.38"
-        tools:layout="@layout/fragment_element_edit" />
+        <LinearLayout
+            android:id="@+id/llElementEditContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer0"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                app:elementIndex="0"
+                tools:layout="@layout/fragment_element_edit" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer1"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                app:elementIndex="1"
+                tools:layout="@layout/fragment_element_edit" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer2"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                app:elementIndex="2"
+                tools:layout="@layout/fragment_element_edit" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer3"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                app:elementIndex="3"
+                tools:layout="@layout/fragment_element_edit" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
 
 </LinearLayout>

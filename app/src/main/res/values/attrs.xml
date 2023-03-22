@@ -39,4 +39,7 @@
         <attr name="cvgLabel" format="string" />
         <attr name="android:entries" />
     </declare-styleable>
+    <declare-styleable name="ElementEditFragment_MembersInjector">
+        <attr name="elementIndex" format="integer" />
+    </declare-styleable>
 </resources>

@@ -10,4 +10,5 @@
     <dimen name="ic_disconnect_size">128dp</dimen>
     <dimen name="capture_status_text_size">16sp</dimen>
     <dimen name="onscreen_debug_text_size">12sp</dimen>
+    <dimen name="qs300_element_edit_width">400dp</dimen>
 </resources>
