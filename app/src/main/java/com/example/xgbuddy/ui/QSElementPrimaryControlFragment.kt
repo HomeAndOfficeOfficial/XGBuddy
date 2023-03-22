@@ -17,7 +17,6 @@ import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.switchmaterial.SwitchMaterial
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.experimental.or
 
 @AndroidEntryPoint
 class QSElementPrimaryControlFragment : Fragment() {
@@ -99,11 +98,16 @@ class QSElementPrimaryControlFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
-            val voice = viewModel.voice
+            val voiceIndex = viewModel.voice
             if (elementIndex < preset.voices[viewModel.voice].elements.size) {
-                val element = preset.voices[voice].elements[elementIndex]
+                val voice = preset.voices[voiceIndex]
+                val element = preset.voices[voiceIndex].elements[elementIndex]
                 val waveValue = decodeWave(element.waveHi, element.waveLo)
                 spWave.setSelection(waveValues.indexOfFirst { it == waveValue })
+
+                // TODO: Verify element switch values when more than two elements are allowed
+                Log.d(TAG, "eL switch = ${voice.elementSwitch}")
+                swElementOn.isChecked = elementIndex <= voice.elementSwitch
             }
         }
     }
