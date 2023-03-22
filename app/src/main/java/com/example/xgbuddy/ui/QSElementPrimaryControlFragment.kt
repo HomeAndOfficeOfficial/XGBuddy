@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +25,8 @@ class QSElementPrimaryControlFragment : Fragment() {
     private var elementIndex = NOT_INITIALIZED
 
     private val viewModel: QS300ViewModel by activityViewModels()
+
+    private lateinit var waveValues: IntArray
 
     /**
      * TODO: This is pretty much duplicated from ElementEditFragment. These fragments do
@@ -48,6 +52,7 @@ class QSElementPrimaryControlFragment : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,11 +67,34 @@ class QSElementPrimaryControlFragment : Fragment() {
                 }
             }
         }
+        waveValues = resources.getIntArray(R.array.qs300_wave_values)
         val v =
             layoutInflater.inflate(R.layout.fragment_qs_element_primary_control, container, false)
         findViews(v)
         initObservers()
+        initListeners()
         return v
+    }
+
+    private fun initListeners() {
+        spWave.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val waveValue = waveValues[position]
+                val element =
+                    viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex]
+                if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
+                    element.setWaveValue(waveValue)
+                    // TODO: Call midi send method
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     private fun initObservers() {
@@ -75,7 +103,7 @@ class QSElementPrimaryControlFragment : Fragment() {
             if (elementIndex < preset.voices[viewModel.voice].elements.size) {
                 val element = preset.voices[voice].elements[elementIndex]
                 val waveValue = decodeWave(element.waveHi, element.waveLo)
-                Log.d(TAG, "Wave value = $waveValue")
+                spWave.setSelection(waveValues.indexOfFirst { it == waveValue })
             }
         }
     }
@@ -86,7 +114,7 @@ class QSElementPrimaryControlFragment : Fragment() {
     }
 
     private fun decodeWave(waveHi: Byte, waveLo: Byte): Int =
-        (waveLo.toInt() or (waveHi.toInt() shl 8))
+        (waveLo.toInt() or (waveHi.toInt() shl 7))
 
     private fun findViews(v: View) {
         spWave = v.findViewById(R.id.spQsWave)
