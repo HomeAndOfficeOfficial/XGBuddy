@@ -46,21 +46,6 @@ class MidiSession @Inject constructor(context: Context) {
         }
     }
 
-    private val inputReceiver = object : MidiReceiver(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) {
-        override fun onSend(p0: ByteArray?, p1: Int, p2: Int, p3: Long) {
-            Log.d(
-                TAG, "onSend - here's the bytes: ${
-                    p0?.joinToString { b ->
-                        String.format(
-                            "%02x ",
-                            b
-                        )
-                    }
-                }"
-            )
-        }
-    }
-
     private var midiReceivedListener: OnMidiReceivedListener? = null
 
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
@@ -182,45 +167,18 @@ class MidiSession @Inject constructor(context: Context) {
     fun send(midiMessage: MidiMessage) {
         midiManager.inputPort?.flush()
         var bytesSent = 0
-        var messageCount = 1
-        Log.d(
-            TAG, "Here's the message. It's ${midiMessage.msg?.size} bytes long. ${
-                midiMessage.msg!!.joinToString { b ->
-                    String.format(
-                        "%02x ",
-                        b
-                    )
-                }
-            }"
-        )
-        while (bytesSent < midiMessage.msg.size) {
-            val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 32)) {
+        var sendCount = 1
+        while (bytesSent < midiMessage.msg!!.size) {
+            val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 3)) {
                 midiMessage.msg[bytesSent++]
             }
-            Log.d(
-                TAG, "Here's what is being sent: ${
-                    buffer.joinToString { b ->
-                        String.format(
-                            "%02x ",
-                            b
-                        )
-                    }
-                }"
-            )
             midiManager.inputPort?.send(
                 buffer,
                 0,
-                buffer.size,
-                System.nanoTime() + (messageCount * 100)
+                buffer.size
             )
-            messageCount++
+            sendCount++
         }
-//        midiManager.inputPort?.send(
-//            midiMessage.msg,
-//            0,
-//            midiMessage.msg.size,
-////            midiMessage.timestamp
-//        )
     }
 
     fun interface OnMidiReceivedListener {
