@@ -24,7 +24,7 @@
     <com.example.xgbuddy.ui.custom.ControlViewGroup
         android:id="@+id/cvgElementMain"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:entries="@array/qs300_element_main"
         app:cvgLabel=""
         app:layout_constraintBottom_toBottomOf="parent"

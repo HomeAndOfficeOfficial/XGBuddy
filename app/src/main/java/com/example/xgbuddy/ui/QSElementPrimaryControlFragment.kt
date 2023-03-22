@@ -28,6 +28,7 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         val v =
             layoutInflater.inflate(R.layout.fragment_qs_element_primary_control, container, false)
         findViews(v)
+        initControlGroup(cvgElementMain)
         initListeners()
         return v
     }
