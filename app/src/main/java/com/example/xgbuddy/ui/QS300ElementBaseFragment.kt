@@ -75,7 +75,11 @@ abstract class QS300ElementBaseFragment : Fragment(),
         controlGroups.forEach { controlGroup ->
             controlGroup.updateViews(element)
         }
-        Log.d(TAG, "Element: ${preset.voices[viewModel.voice].elements[elementIndex]}")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        controlGroups.clear()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

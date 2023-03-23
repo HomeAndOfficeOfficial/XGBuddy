@@ -2,7 +2,6 @@ package com.example.xgbuddy.ui
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +71,6 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         spWave.setSelection(waveValues.indexOfFirst { it == waveValue })
 
         // TODO: Verify element switch values when more than two elements are allowed
-        Log.d(TAG, "eL switch = ${voice.elementSwitch}")
         swElementOn.isChecked = elementIndex <= voice.elementSwitch
     }
 

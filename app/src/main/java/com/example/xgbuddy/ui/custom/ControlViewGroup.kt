@@ -3,7 +3,6 @@ package com.example.xgbuddy.ui.custom
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,7 +92,6 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     fun updateViews(qS300Element: QS300Element) {
         controlViewMap.keys.forEach {
             val param = QS300ElementParameter::baseAddress findBy it
-            Log.d(TAG, "Map key: $it, param: ${param?.name}")
             controlViewMap[it]?.value =
                 if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
         }

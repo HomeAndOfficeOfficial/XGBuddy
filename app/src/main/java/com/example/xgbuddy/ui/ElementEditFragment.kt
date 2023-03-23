@@ -23,8 +23,6 @@ class ElementEditFragment : QS300ElementBaseFragment(),
     ): View {
         val v = layoutInflater.inflate(R.layout.fragment_element_edit, container, false)
         findViews(v)
-        // Probably just call this method manually as many times as needed.
-        // There won't be that many control groups
         initControlGroup(
             cvgLfo,
             isInteractive = true,
