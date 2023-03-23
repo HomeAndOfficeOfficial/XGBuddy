@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
 
+@SuppressLint("ClickableViewAccessibility")
 class SliderControlView(context: Context) :
     ParameterControlView(context), Slider.OnChangeListener {
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
@@ -22,6 +23,10 @@ class SliderControlView(context: Context) :
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
         slider = view.findViewById<Slider?>(R.id.cpSlider).apply {
             addOnChangeListener(this@SliderControlView)
+            setOnTouchListener { v, _ ->
+                v.parent.requestDisallowInterceptTouchEvent(true)
+                false
+            }
         }
         initializeCommonViews(view)
     }

@@ -49,12 +49,16 @@
 <!--                app:srcCompat="@drawable/baseline_keyboard_arrow_up_24" />-->
 <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
-
-        <LinearLayout
-            android:id="@+id/sliderControlContainer"
+        <ScrollView
+            android:id="@+id/scrollRoot"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/sliderControlContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
     </LinearLayout>
 
 
