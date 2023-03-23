@@ -1,5 +1,6 @@
 package com.example.xgbuddy.ui
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,7 +19,8 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     private lateinit var waveValues: IntArray
 
     override val elementAttrs: IntArray = R.styleable.ElementEditFragment_MembersInjector
-    override val attrIndexElIndex: Int = R.styleable.QSElementPrimaryControlFragment_MembersInjector_elementIndex
+    override val attrIndexElIndex: Int =
+        R.styleable.QSElementPrimaryControlFragment_MembersInjector_elementIndex
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +29,10 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     ): View? {
         val v =
             layoutInflater.inflate(R.layout.fragment_qs_element_primary_control, container, false)
+        v.backgroundTintList =
+            ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
         findViews(v)
-        initControlGroup(cvgElementMain)
+        initControlGroup(cvgElementMain, isInteractive = false, shouldShowColoredHeader = false)
         initListeners()
         return v
     }

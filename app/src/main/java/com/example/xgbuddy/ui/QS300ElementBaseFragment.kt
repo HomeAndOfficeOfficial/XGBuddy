@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.*
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
@@ -84,9 +85,15 @@ abstract class QS300ElementBaseFragment : Fragment(),
 
     protected fun initControlGroup(
         controlGroup: ControlViewGroup,
+        isInteractive: Boolean,
+        shouldShowColoredHeader: Boolean,
         extraChildren: ViewGroup? = null
     ) {
         controlGroup.apply {
+            this.isInteractive = isInteractive
+            if (shouldShowColoredHeader) {
+                headerColor = resources.getIntArray(R.array.element_container_colors)[elementIndex]
+            }
             controlItemIds.forEach {
                 addControlView(SliderControlView(requireContext()).apply {
                     controlParameter = initElementParam(it)

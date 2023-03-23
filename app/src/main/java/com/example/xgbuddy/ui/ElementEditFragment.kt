@@ -9,9 +9,11 @@ import com.example.xgbuddy.R
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 
-class ElementEditFragment : QS300ElementBaseFragment(), ParameterControlView.OnParameterChangedListener {
+class ElementEditFragment : QS300ElementBaseFragment(),
+    ParameterControlView.OnParameterChangedListener {
     override val elementAttrs: IntArray = R.styleable.ElementEditFragment_MembersInjector
-    override val attrIndexElIndex: Int = R.styleable.ElementEditFragment_MembersInjector_elementIndex
+    override val attrIndexElIndex: Int =
+        R.styleable.ElementEditFragment_MembersInjector_elementIndex
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,7 +24,7 @@ class ElementEditFragment : QS300ElementBaseFragment(), ParameterControlView.OnP
         findViews(v)
         // Probably just call this method manually as many times as needed.
         // There won't be that many control groups
-        initControlGroup(cvgLfo, clLfoExtras)
+        initControlGroup(cvgLfo, isInteractive = true, shouldShowColoredHeader = true, clLfoExtras)
         return v
     }
 

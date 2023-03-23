@@ -25,4 +25,11 @@
         <item name="android:textColor">?textFillColor</item>
     </style>
 
+    <style name="ControlViewGroupHeader" parent="Widget.AppCompat.ButtonBar">
+        <item name="android:textColor">?textFillColor</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
 </resources>

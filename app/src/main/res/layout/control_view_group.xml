@@ -14,7 +14,7 @@
 
         <Button
             android:id="@+id/bLabel"
-            style="@style/FileButton"
+            style="@style/ControlViewGroupHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Group label"

@@ -1,6 +1,8 @@
 package com.example.xgbuddy.ui.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,24 +22,27 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     private val bLabel: Button
     private val controlViewContainer: LinearLayout
 
-
     val controlViewMap: MutableMap<UByte, ParameterControlView> = mutableMapOf()
     val controlItemIds: List<Int>
+
+    var isInteractive: Boolean = true
+        set(value) {
+            field = value
+            if (!value) {
+                updateHeaderButtonBehavior(value)
+            }
+        }
+    var headerColor: Int = 0
+        set(value) {
+            field = value
+            bLabel.backgroundTintList = ColorStateList.valueOf(value)
+        }
 
     init {
         val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, true)
         root = v.findViewById(R.id.cvgRoot)
-        bLabel = v.findViewById<Button?>(R.id.bLabel).apply {
-            setOnClickListener {
-                toggleControlVisibility()
-            }
-            setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.baseline_keyboard_arrow_up_24,
-                0
-            )
-        }
+        bLabel = v.findViewById(R.id.bLabel)
+        updateHeaderButtonBehavior(isInteractive)
         controlViewContainer = v.findViewById(R.id.sliderControlContainer)
         val styledAttr =
             context.obtainStyledAttributes(attributeSet, R.styleable.ControlViewGroup, 0, 0)
@@ -90,6 +95,24 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
             Log.d(TAG, "Map key: $it, param: ${param?.name}")
             controlViewMap[it]?.value =
                 if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
+        }
+    }
+
+    private fun updateHeaderButtonBehavior(isInteractive: Boolean) {
+        bLabel.apply {
+            if (isInteractive) {
+                setOnClickListener {
+                    toggleControlVisibility()
+                }
+                setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.baseline_keyboard_arrow_up_24,
+                    0
+                )
+            } else {
+                visibility = View.GONE
+            }
         }
     }
 
