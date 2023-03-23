@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:background="?backgroundContainer">
+        android:background="@drawable/container_bg_shape">
 
         <Button
             android:id="@+id/bLabel"
