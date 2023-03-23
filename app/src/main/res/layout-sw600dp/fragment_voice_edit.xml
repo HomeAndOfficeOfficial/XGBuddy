@@ -49,7 +49,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/elementPrimaryContainer0"
-                    android:name="com.example.xgbuddy.ui.QSElementPrimaryControlFragment"
+                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:elementIndex="0"
@@ -57,7 +57,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/elementPrimaryContainer1"
-                    android:name="com.example.xgbuddy.ui.QSElementPrimaryControlFragment"
+                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:elementIndex="1"
@@ -65,7 +65,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/elementPrimaryContainer2"
-                    android:name="com.example.xgbuddy.ui.QSElementPrimaryControlFragment"
+                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:elementIndex="2"
@@ -73,7 +73,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/elementPrimaryContainer3"
-                    android:name="com.example.xgbuddy.ui.QSElementPrimaryControlFragment"
+                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:elementIndex="3"
@@ -99,7 +99,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer0"
-                android:name="com.example.xgbuddy.ui.ElementEditFragment"
+                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 app:elementIndex="0"
@@ -107,7 +107,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer1"
-                android:name="com.example.xgbuddy.ui.ElementEditFragment"
+                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 app:elementIndex="1"
@@ -115,7 +115,7 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer2"
-                android:name="com.example.xgbuddy.ui.ElementEditFragment"
+                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 app:elementIndex="2"
@@ -123,7 +123,7 @@
 
             <!--            <androidx.fragment.app.FragmentContainerView-->
             <!--                android:id="@+id/elementEditContainer3"-->
-            <!--                android:name="com.example.xgbuddy.ui.ElementEditFragment"-->
+            <!--                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"-->
             <!--                android:layout_width="@dimen/qs300_element_edit_width"-->
             <!--                android:layout_height="match_parent"-->
             <!--                app:elementIndex="3"-->

@@ -2,7 +2,7 @@ package com.example.xgbuddy.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.xgbuddy.data.QS300Preset
+import com.example.xgbuddy.data.qs300.QS300Preset
 import kotlin.reflect.full.memberProperties
 
 

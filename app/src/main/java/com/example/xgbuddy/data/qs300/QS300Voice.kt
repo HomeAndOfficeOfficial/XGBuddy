@@ -1,27 +1,8 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.qs300
 
+import com.example.xgbuddy.data.MidiConstants
+import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.util.EnumFinder.findBy
-import kotlin.experimental.inv
-
-
-/**
- * Thoughts about layout of Voice Edit Screen:
- *
- * Each voice only contains 2 elements
- * I think the fragment can be split into three sections
- * On the left most section, which would take up about 20% of the screen width, an editText for
- * voice name, a control for voice level, then a set of main controls for each element (volume, pan,
- * filter, res, wave, on/off switch which would map to elementSwitch)
- *
- * Then there would be a panel for each element (color coded to match the main control box?)
- * The control groups would collapse into rows that just say the category name and have a little
- * up/down arrow to indicate they can be collapsed/expanded.
- *
- * Each of these (ElementEditFragment) panels would be scrollable up and down, so I should probably
- * leave some padding on either side to allow for scrolling.
- *
- * This layout can be achieved using LinearLayout and weights for each of the sections.
- */
 
 class QS300Voice {
 

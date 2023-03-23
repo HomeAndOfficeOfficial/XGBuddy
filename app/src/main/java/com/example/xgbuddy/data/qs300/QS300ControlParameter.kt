@@ -1,4 +1,8 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.qs300
+
+import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.MidiConstants
+import com.example.xgbuddy.data.MidiMessage
 
 /**
  * WIll probably need special subclasses for every type of parameter change

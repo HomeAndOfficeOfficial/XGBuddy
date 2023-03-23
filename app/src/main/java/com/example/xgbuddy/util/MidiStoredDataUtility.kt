@@ -3,6 +3,10 @@ package com.example.xgbuddy.util
 import android.content.Context
 import android.util.Log
 import com.example.xgbuddy.data.*
+import com.example.xgbuddy.data.qs300.QS300Element
+import com.example.xgbuddy.data.qs300.QS300ElementParameter
+import com.example.xgbuddy.data.qs300.QS300Preset
+import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.util.EnumFinder.findBy
 import org.json.JSONArray
 import org.json.JSONObject

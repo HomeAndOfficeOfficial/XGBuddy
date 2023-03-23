@@ -1,4 +1,4 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.qs300
 
 import android.content.Context
 import android.os.Bundle
@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.*
+import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.qs300.QS300ControlParameter
+import com.example.xgbuddy.data.qs300.QS300ElementParameter
+import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView

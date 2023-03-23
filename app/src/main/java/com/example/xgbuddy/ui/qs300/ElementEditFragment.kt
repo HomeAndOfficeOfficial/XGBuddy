@@ -1,11 +1,10 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.qs300
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.core.view.children
 import com.example.xgbuddy.R
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView

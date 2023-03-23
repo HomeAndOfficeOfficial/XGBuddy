@@ -1,4 +1,4 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.qs300
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.QS300Preset
+import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 
@@ -42,7 +41,7 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     }
 
     private fun initListeners() {
-        spWave.onItemSelectedListener = object : OnItemSelectedListener {
+        spWave.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,

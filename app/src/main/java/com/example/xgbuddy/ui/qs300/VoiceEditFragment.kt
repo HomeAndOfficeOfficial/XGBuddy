@@ -1,4 +1,4 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.qs300
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.QS300Element
+import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.util.MidiStoredDataUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint

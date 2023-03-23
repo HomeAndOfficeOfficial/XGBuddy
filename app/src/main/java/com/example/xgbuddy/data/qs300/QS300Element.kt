@@ -1,4 +1,4 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.qs300
 
 import kotlin.reflect.KMutableProperty
 

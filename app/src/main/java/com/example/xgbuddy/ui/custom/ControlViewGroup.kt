@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.QS300Element
-import com.example.xgbuddy.data.QS300ElementParameter
+import com.example.xgbuddy.data.qs300.QS300Element
+import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :

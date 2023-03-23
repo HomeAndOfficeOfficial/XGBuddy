@@ -23,6 +23,6 @@
         android:label="FileBrowserFragment" />
     <fragment
         android:id="@+id/voiceEditFragment"
-        android:name="com.example.xgbuddy.ui.VoiceEditFragment"
+        android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
         android:label="VoiceEditFragment" />
 </navigation>
