@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.QS300Element
 import com.example.xgbuddy.data.QS300ElementParameter
@@ -19,7 +18,6 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {
 
     private var root: LinearLayout? = null
-    private var scrollRoot: ScrollView? = null
     private val bLabel: Button
     private val controlViewContainer: LinearLayout
 
@@ -42,7 +40,6 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     init {
         val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, true)
         root = v.findViewById(R.id.cvgRoot)
-        scrollRoot = v.findViewById(R.id.scrollRoot)
         bLabel = v.findViewById(R.id.bLabel)
         updateHeaderButtonBehavior(isInteractive)
         controlViewContainer = v.findViewById(R.id.sliderControlContainer)
@@ -56,18 +53,18 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     }
 
     private fun toggleControlVisibility() {
-        val isControlVisible = scrollRoot?.visibility == View.VISIBLE
+        val isControlVisible = controlViewContainer.visibility == View.VISIBLE
         val iconRes =
             if (isControlVisible) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_up_24
         bLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, iconRes, 0)
-        scrollRoot?.visibility = if (isControlVisible) View.GONE else View.VISIBLE
+        controlViewContainer.visibility = if (isControlVisible) View.GONE else View.VISIBLE
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
         if (root == null) {
             super.addView(child, index, params)
         } else {
-            if (child?.id == R.id.scrollRoot || child?.id == R.id.bLabel) {
+            if (child?.id == R.id.bLabel) {
                 root?.addView(child, index, params)
             } else {
                 controlViewContainer.addView(child, 0, params)
@@ -99,6 +96,18 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
             Log.d(TAG, "Map key: $it, param: ${param?.name}")
             controlViewMap[it]?.value =
                 if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
+        }
+    }
+
+    fun collapse() {
+        if (controlViewContainer.visibility == VISIBLE) {
+            toggleControlVisibility()
+        }
+    }
+
+    fun expand() {
+        if (controlViewContainer.visibility == GONE) {
+            toggleControlVisibility()
         }
     }
 

@@ -85,8 +85,9 @@ abstract class QS300ElementBaseFragment : Fragment(),
 
     protected fun initControlGroup(
         controlGroup: ControlViewGroup,
-        isInteractive: Boolean,
-        shouldShowColoredHeader: Boolean,
+        isInteractive: Boolean = true,
+        shouldShowColoredHeader: Boolean = true,
+        shouldStartExpanded: Boolean = true,
         extraChildren: ViewGroup? = null
     ) {
         controlGroup.apply {
@@ -99,6 +100,9 @@ abstract class QS300ElementBaseFragment : Fragment(),
                     controlParameter = initElementParam(it)
                     listener = this@QS300ElementBaseFragment
                 })
+            }
+            if (!shouldStartExpanded) {
+                collapse()
             }
         }
         extraChildren?.apply {
