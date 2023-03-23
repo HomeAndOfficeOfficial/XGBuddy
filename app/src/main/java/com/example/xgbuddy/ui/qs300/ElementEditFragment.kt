@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
+import org.w3c.dom.Text
 
 class ElementEditFragment : QS300ElementBaseFragment(),
     ParameterControlView.OnParameterChangedListener {
@@ -49,6 +51,12 @@ class ElementEditFragment : QS300ElementBaseFragment(),
         cvgFeg = v.findViewById(R.id.cvgFeg)
         cvgLvlScale = v.findViewById(R.id.cvgLvlScale)
         cvgFilterScale = v.findViewById(R.id.cvgFilterScale)
+        tvElementNum = v.findViewById<TextView?>(R.id.tvElementNum).apply {
+            text = buildString {
+                append("Element ")
+                append(elementIndex + 1)
+            }
+        }
     }
 
     private lateinit var cvgLfo: ControlViewGroup
@@ -60,4 +68,5 @@ class ElementEditFragment : QS300ElementBaseFragment(),
     private lateinit var cvgLvlScale: ControlViewGroup
     private lateinit var cvgFilterScale: ControlViewGroup
     private lateinit var clLfoExtras: LinearLayout
+    private lateinit var tvElementNum: TextView
 }

@@ -1,88 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingEnd="48dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/llElEditControlContainer"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvElementNum"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="vertical"
-        tools:viewBindingIgnore="true">
+        android:layout_marginStart="8dp"
+        android:padding="8dp"
+        android:text="Element 1"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgLfo"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_lfo"
-            app:cvgLabel="LFO">
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvElementNum" />
 
-            <LinearLayout
-                android:id="@+id/lfoExtras"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingEnd="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider2">
 
-                <com.example.xgbuddy.ui.custom.SpinnerControlView
-                    android:id="@+id/cvLfoWave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:pcEntries="@array/qs300_lfo_wave_entries"
-                    app:pcId="@string/qs300_el_lfo_wave" />
+        <LinearLayout
+            android:id="@+id/llElEditControlContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            tools:viewBindingIgnore="true">
 
-                <com.example.xgbuddy.ui.custom.SwitchControlView
-                    android:id="@+id/cvLfoPhaseInit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    app:pcId="@string/qs300_el_lfo_phase_init" />
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgLfo"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_lfo"
+                app:cvgLabel="LFO">
 
-            </LinearLayout>
-        </com.example.xgbuddy.ui.custom.ControlViewGroup>
+                <LinearLayout
+                    android:id="@+id/lfoExtras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgAeg"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_aeg"
-            app:cvgLabel="Amplitude EG" />
+                    <com.example.xgbuddy.ui.custom.SpinnerControlView
+                        android:id="@+id/cvLfoWave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:pcEntries="@array/qs300_lfo_wave_entries"
+                        app:pcId="@string/qs300_el_lfo_wave" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgPitch"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_pitch"
-            app:cvgLabel="Pitch" />
+                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                        android:id="@+id/cvLfoPhaseInit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        app:pcId="@string/qs300_el_lfo_phase_init" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgPeg"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_peg"
-            app:cvgLabel="Pitch EG" />
+                </LinearLayout>
+            </com.example.xgbuddy.ui.custom.ControlViewGroup>
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgFeg"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_feg"
-            app:cvgLabel="Filter EG" />
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgAeg"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_aeg"
+                app:cvgLabel="Amplitude EG" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgLvlScale"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_level_scaling"
-            app:cvgLabel="Level Scaling" />
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgPitch"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_pitch"
+                app:cvgLabel="Pitch" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgFilterScale"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_filter_scaling"
-            app:cvgLabel="Filter Scaling" />
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgPeg"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_peg"
+                app:cvgLabel="Pitch EG" />
 
-        <com.example.xgbuddy.ui.custom.ControlViewGroup
-            android:id="@+id/cvgMisc"
-            style="@style/ControlViewGroupElement"
-            android:entries="@array/qs300_element_general"
-            app:cvgLabel="Note/Vel Range" />
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgFeg"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_feg"
+                app:cvgLabel="Filter EG" />
 
-    </LinearLayout>
-</ScrollView>
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgLvlScale"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_level_scaling"
+                app:cvgLabel="Level Scaling" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgFilterScale"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_filter_scaling"
+                app:cvgLabel="Filter Scaling" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMisc"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/qs300_element_general"
+                app:cvgLabel="Note/Vel Range" />
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
