@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Spinner
+import android.widget.TextView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.custom.ControlViewGroup
@@ -80,6 +81,12 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         spWave = v.findViewById(R.id.spQsWave)
         swElementOn = v.findViewById(R.id.swElementOn)
         cvgElementMain = v.findViewById(R.id.cvgElementMain)
+        tvElementNum = v.findViewById<TextView?>(R.id.tvPrimElementNum).apply {
+            text = buildString {
+                append("Element ")
+                append(elementIndex + 1)
+            }
+        }
     }
 
     companion object {
@@ -89,4 +96,5 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     private lateinit var spWave: Spinner
     private lateinit var swElementOn: SwitchMaterial
     private lateinit var cvgElementMain: ControlViewGroup
+    private lateinit var tvElementNum: TextView
 }
