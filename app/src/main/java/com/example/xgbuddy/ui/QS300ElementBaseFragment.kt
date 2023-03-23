@@ -28,13 +28,13 @@ abstract class QS300ElementBaseFragment : Fragment(),
 
     protected val viewModel: QS300ViewModel by activityViewModels()
 
-    protected var currentParam: QS300ElementParameter? = null
     protected var elementIndex = NOT_INITIALIZED
 
     protected abstract val elementAttrs: IntArray
     protected abstract val attrIndexElIndex: Int
 
     private val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
+    private var currentParam: QS300ElementParameter? = null
 
     override fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) {
         super.onInflate(context, attrs, savedInstanceState)
@@ -131,12 +131,6 @@ abstract class QS300ElementBaseFragment : Fragment(),
         )
     }
 
-    /**
-     * TODO: I think this logic might be able to be applied universally. In other words,
-     * I think the bulk of the logic for updating the viewmodel and sending messages could
-     * probably be consolidated in a higher level fragment (like QS300Session perhaps). I figure
-     * there will be some difference in logic between different instrument modes.
-     */
     override fun onParameterChanged(controlParameter: ControlParameter) {
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr

@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.QS300Element
-import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.MidiStoredDataUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,8 +39,17 @@ class VoiceEditFragment : Fragment() {
     ): View? {
         val v = layoutInflater.inflate(R.layout.fragment_voice_edit, container, false)
         findViews(v)
+        initListeners()
         initObservers()
         return v
+    }
+
+    private fun initListeners() {
+        etVoiceName.addTextChangedListener {
+            it?.let {
+                viewModel.preset.value!!.voices[viewModel.voice].voiceName = it.toString()
+            }
+        }
     }
 
     private fun initObservers() {
