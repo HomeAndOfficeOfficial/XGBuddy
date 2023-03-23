@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
+    android:divider="@drawable/vertical_divider"
     android:orientation="horizontal"
+    android:showDividers="middle"
     tools:viewBindingIgnore="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,7 @@
             android:id="@+id/etVoiceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/qs_voice_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +93,10 @@
             android:id="@+id/llElementEditContainer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:divider="@drawable/vertical_divider"
+            android:dividerPadding="8dp"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer0"
@@ -116,13 +122,13 @@
                 app:elementIndex="2"
                 tools:layout="@layout/fragment_element_edit" />
 
-            <!--            <androidx.fragment.app.FragmentContainerView-->
-            <!--                android:id="@+id/elementEditContainer3"-->
-            <!--                android:name="com.example.xgbuddy.ui.ElementEditFragment"-->
-            <!--                android:layout_width="@dimen/qs300_element_edit_width"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                app:elementIndex="3"-->
-            <!--                tools:layout="@layout/fragment_element_edit" />-->
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer3"
+                android:name="com.example.xgbuddy.ui.ElementEditFragment"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                app:elementIndex="3"
+                tools:layout="@layout/fragment_element_edit" />
 
         </LinearLayout>
     </HorizontalScrollView>

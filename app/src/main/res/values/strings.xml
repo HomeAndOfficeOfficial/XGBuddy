@@ -106,6 +106,7 @@
     <string name="qs300_lfo_wave_saw">Saw</string>
     <string name="qs300_lfo_wave_tri">Tri</string>
     <string name="qs300_lfo_wave_sh">S&amp;H</string>
+    <string name="qs_voice_name">Voice Name</string>
     <!-- QS300 LFO Wave Names -->
 
 </resources>
