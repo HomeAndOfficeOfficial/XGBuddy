@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.4"
+        android:layout_weight="0.25"
         android:padding="8dp">
 
         <EditText
@@ -33,7 +33,6 @@
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingEnd="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +83,7 @@
     <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6">
+        android:layout_weight="0.75">
 
         <LinearLayout
             android:id="@+id/llElementEditContainer"
