@@ -102,6 +102,60 @@
     <string name="qs300_el_lfo_delay">LFO Delay</string>
     <!-- QS300 Element Parameter Descriptions -->
 
+    <!-- QS300 Voice Common Descriptions -->
+    <string name="qs300_voice_voice_category">Voice Category</string>
+    <string name="qs300_voice_el_switch">Element Switch</string>
+    <string name="qs300_voice_voice_lvl">Voice Level</string>
+    <string name="qs300_voice_vel_sens_depth">Velocity Sensitivity Depth</string>
+    <string name="qs300_voice_vel_sens_offset">Velocity Sensitivity Offset</string>
+    <string name="qs300_voice_reverb_send_lvl">Reverb Send Level</string>
+    <string name="qs300_voice_chorus_send_lvl">Chorus Send Level</string>
+    <string name="qs300_voice_send_chor_to_rev">Send Chorus To Reverd</string>
+    <string name="qs300_voice_var_type_msb">Variation Type MSB</string>
+    <string name="qs300_voice_var_type_lsb">Variation Type LSB</string>
+    <string name="qs300_voice_var_param_msb_1">Variation Param 1 MSB</string>
+    <string name="qs300_voice_var_param_lsb_1">Variation Param 1 LSB</string>
+    <string name="qs300_voice_var_param_msb_2">Variation Param 2 MSB</string>
+    <string name="qs300_voice_var_param_lsb_2">Variation Param 2 LSB</string>
+    <string name="qs300_voice_var_param_msb_3">Variation Param 3 MSB</string>
+    <string name="qs300_voice_var_param_lsb_3">Variation Param 3 LSB</string>
+    <string name="qs300_voice_var_param_msb_4">Variation Param 4 MSB</string>
+    <string name="qs300_voice_var_param_lsb_4">Variation Param 4 LSB</string>
+    <string name="qs300_voice_var_param_msb_5">Variation Param 5 MSB</string>
+    <string name="qs300_voice_var_param_lsb_5">Variation Param 5 LSB</string>
+    <string name="qs300_voice_var_atten_lvl">Variation Attenuate Lvl</string>
+    <string name="qs300_voice_var_param_lsb_10">Variation Param 10 LSB</string>
+    <string name="qs300_voice_play_mode">Play Mode</string>
+    <string name="qs300_voice_porta_switch">Portamento Switch</string>
+    <string name="qs300_voice_porta_time">Portamento Time</string>
+    <string name="qs300_voice_bend_wheel_pitch">Bend Wheel Pitch Ctrl</string>
+    <string name="qs300_voice_bend_wheel_cutoff">Bend Wheel Cutoff Ctrl</string>
+    <string name="qs300_voice_bend_wheel_amp">Bend Wheel Amp Ctrl</string>
+    <string name="qs300_voice_bend_wheel_pm">Bend Wheel PM Ctrl</string>
+    <string name="qs300_voice_bend_wheel_am">Bend Wheel AM Ctrl</string>
+    <string name="qs300_voice_bend_wheel_fm">Bend Wheel FM Ctrl</string>
+    <string name="qs300_voice_mod_wheel_pitch">Mod Wheel Pitch Ctrl</string>
+    <string name="qs300_voice_mod_wheel_cutoff">Mod Wheel Cutoff Ctrl</string>
+    <string name="qs300_voice_mod_wheel_amp">Mod Wheel Amp Ctrl</string>
+    <string name="qs300_voice_mod_wheel_pm">Mod Wheel PM Ctrl</string>
+    <string name="qs300_voice_mod_wheel_fm">Mod Wheel FM Ctrl</string>
+    <string name="qs300_voice_mod_wheel_am">Mod Wheel AM Ctrl</string>
+    <string name="qs300_voice_mod_wheel_var_ef">Mod Wheel VariEf Ctrl</string>
+    <string name="qs300_voice_after_touch_pitch">After Touch Pitch Ctrl</string>
+    <string name="qs300_voice_after_touch_cutoff">After Touch Cutoff Ctrl</string>
+    <string name="qs300_voice_after_touch_amp">After Touch Amp Ctrl</string>
+    <string name="qs300_voice_after_touch_pm">After Touch PM Ctrl</string>
+    <string name="qs300_voice_after_touch_fm">After Touch FM Ctrl</string>
+    <string name="qs300_voice_after_touch_am">After Touch AM Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_pitch">Foot Controller Pitch Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_cutoff">Foot Controller Cutoff Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_amp">Foot Controller Amp Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_pm">Foot Controller PM Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_fm">Foot Controller FM Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_am">Foot Controller AM Ctrl</string>
+    <string name="qs300_voice_foot_ctrl_var_ef">Foot Controller VariEf Ctrl</string>
+    <!-- QS300 Voice COmmon Descriptions -->
+
     <!-- QS300 LFO Wave Names -->
     <string name="qs300_lfo_wave_saw">Saw</string>
     <string name="qs300_lfo_wave_tri">Tri</string>

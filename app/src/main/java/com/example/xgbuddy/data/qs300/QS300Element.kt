@@ -1,8 +1,9 @@
 package com.example.xgbuddy.data.qs300
 
+import com.example.xgbuddy.data.MidiData
 import kotlin.reflect.KMutableProperty
 
-data class QS300Element(val elementNumber: Int) {
+data class QS300Element(val elementNumber: Int) : MidiData() {
     var waveHi: Byte = QS300ElementParameter.WAVE_HI.default
     var waveLo: Byte = QS300ElementParameter.WAVE_LO.default
     var noteLo: Byte = QS300ElementParameter.NOTE_LO.default
@@ -83,13 +84,6 @@ data class QS300Element(val elementNumber: Int) {
     var addressOffsetHi: Byte = QS300ElementParameter.ADDRESS_OFFSET_HI.default
     var addressOffsetLo: Byte = QS300ElementParameter.ADDRESS_OFFSET_LOW.default
     var resonanceSens: Byte = QS300ElementParameter.RESONANCE_SENS.default
-
-    fun setProperty(property: KMutableProperty<Byte>?, value: Byte) {
-        property?.setter!!.call(this, value)
-    }
-
-    fun getPropertyValue(property: KMutableProperty<Byte>?): Byte =
-        property?.getter!!.call(this)
 
     fun setWaveValue(waveValue: Int) {
         waveLo = (waveValue and 0x7f).toByte()
