@@ -22,8 +22,7 @@ object MidiConstants {
     const val OFFSET_QS300_BULK_DATA_START = 9
 
     // These should possibly go into their own enum like the other parameter types
-    const val OFFSET_QS300_BULK_EL_SWITCH = OFFSET_QS300_BULK_DATA_START + 11
-    const val OFFSET_QS300_BULK_VOICE_LEVEL = OFFSET_QS300_BULK_DATA_START + 12
+    const val OFFSET_QS300_BULK_VOICE_COMMON_START = OFFSET_QS300_BULK_DATA_START + 10
     const val OFFSET_QS300_BULK_ELEMENT_DATA_START = OFFSET_QS300_BULK_DATA_START + 61
 
     const val OFFSET_QS300_ELEMENT_PARAM_CHANGE_ADDR = 0x3du

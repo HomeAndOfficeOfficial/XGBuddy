@@ -85,8 +85,13 @@ data class QS300Voice(var voiceName: String = ""): MidiData() {
             } // Space
         }
 
-        midiBytes[MidiConstants.OFFSET_QS300_BULK_EL_SWITCH] = elementSwitch
-        midiBytes[MidiConstants.OFFSET_QS300_BULK_VOICE_LEVEL] = voiceLevel
+        // Voice common
+        for (i in MidiConstants.OFFSET_QS300_BULK_VOICE_COMMON_START until MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START) {
+            val addr = i - MidiConstants.OFFSET_QS300_BULK_DATA_START
+            val voiceParam = QS300VoiceParameter::baseAddress findBy addr
+            val property = voiceParam?.reflectedField
+            midiBytes[i] = getPropertyValue(property)
+        }
 
         // Element data
         for (i in 0 until MidiConstants.QS300_MAX_ELEMENTS) {
