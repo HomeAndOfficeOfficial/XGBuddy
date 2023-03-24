@@ -95,7 +95,7 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
         )
 
         for (i in MidiConstants.OFFSET_QS300_BULK_VOICE_COMMON_START until MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START) {
-            val addr = i - MidiConstants.OFFSET_QS300_BULK_DATA_START
+            val addr = (i - MidiConstants.OFFSET_QS300_BULK_DATA_START).toUByte()
             val voiceParam = QS300VoiceParameter::baseAddress findBy addr
             val property = voiceParam?.reflectedField
             setProperty(property, midiByteString[i].code.toByte())

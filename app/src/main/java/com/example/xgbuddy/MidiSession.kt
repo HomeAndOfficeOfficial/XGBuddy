@@ -168,17 +168,26 @@ class MidiSession @Inject constructor(context: Context) {
         midiManager.inputPort?.let { inputPort ->
 //            midiManager.inputPort?.flush() // Don't think this is needed
             var bytesSent = 0
-            var sendCount = 1
+//            var sendCount = 1
+            val buffer = ByteArray(3)
             while (bytesSent < midiMessage.msg!!.size) {
-                val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 3)) {
-                    midiMessage.msg[bytesSent++]
+                for (i in 0 until 3) {
+                    if (bytesSent < midiMessage.msg.size) {
+                        buffer[i] = midiMessage.msg[bytesSent++]
+                    } else {
+                        inputPort.send(buffer.copyOf(i+1), 0, i+1)
+                        return@let
+                    }
                 }
+//                val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 3)) {
+//                    midiMessage.msg[bytesSent++]
+//                }
                 inputPort.send(
                     buffer,
                     0,
                     buffer.size
                 )
-                sendCount++
+//                sendCount++
             }
         }
     }

@@ -142,7 +142,7 @@ abstract class QS300ElementBaseFragment : Fragment(),
             currentParam!!.reflectedField,
             controlParameter.value
         )
-        midiSession.send(viewModel.preset.value!!.voices[viewModel.voice].generateBulkDump())
+        midiSession.send(viewModel.preset.value!!.voices[viewModel.voice].getBulkDumpForParameterChange(controlParameter, currentParam!!))
     }
 
     companion object {
