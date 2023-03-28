@@ -3,13 +3,14 @@ package com.example.xgbuddy.ui.custom
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
 
 @SuppressLint("ClickableViewAccessibility")
 class SliderControlView(context: Context) :
-    ParameterControlView(context), Slider.OnChangeListener {
+    ParameterControlView(context), Slider.OnChangeListener, Slider.OnSliderTouchListener {
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
@@ -23,6 +24,7 @@ class SliderControlView(context: Context) :
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
         slider = view.findViewById<Slider?>(R.id.cpSlider).apply {
             addOnChangeListener(this@SliderControlView)
+            addOnSliderTouchListener(this@SliderControlView)
             setOnTouchListener { v, _ ->
                 v.parent.requestDisallowInterceptTouchEvent(true)
                 false
@@ -43,8 +45,20 @@ class SliderControlView(context: Context) :
 
     @SuppressLint("RestrictedApi")
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-        if (fromUser) {
+        if (fromUser && isRealtimeControl) {
             this.value = value.toInt().toByte()
+            listener?.onParameterChanged(controlParameter!!)
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onStartTrackingTouch(slider: Slider) {
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onStopTrackingTouch(slider: Slider) {
+        if (!isRealtimeControl) {
+            this.value = slider.value.toInt().toByte()
             listener?.onParameterChanged(controlParameter!!)
         }
     }
