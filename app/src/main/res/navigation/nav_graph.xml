@@ -14,15 +14,15 @@
             android:id="@+id/action_mainFragment_to_fileBrowserFragment"
             app:destination="@id/fileBrowserFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_elementEditFragment"
-            app:destination="@id/elementEditFragment" />
+            android:id="@+id/action_mainFragment_to_voiceEditFragment"
+            app:destination="@id/voiceEditFragment" />
     </fragment>
     <fragment
         android:id="@+id/fileBrowserFragment"
         android:name="com.example.xgbuddy.ui.FileBrowserFragment"
         android:label="FileBrowserFragment" />
     <fragment
-        android:id="@+id/elementEditFragment"
-        android:name="com.example.xgbuddy.ui.ElementEditFragment"
-        android:label="ElementEditFragment" />
+        android:id="@+id/voiceEditFragment"
+        android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
+        android:label="VoiceEditFragment" />
 </navigation>

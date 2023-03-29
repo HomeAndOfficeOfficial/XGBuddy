@@ -3,6 +3,7 @@ package com.example.xgbuddy.util
 import android.content.Context
 import android.util.Log
 import com.example.xgbuddy.data.*
+import com.example.xgbuddy.data.qs300.*
 import com.example.xgbuddy.util.EnumFinder.findBy
 import org.json.JSONArray
 import org.json.JSONObject
@@ -92,9 +93,13 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
                 MidiConstants.OFFSET_QS300_BULK_DATA_START + MidiConstants.QS300_VOICE_NAME_SIZE
             ).toByteArray(), Charsets.US_ASCII
         )
-        voiceLevel = midiByteString[MidiConstants.OFFSET_QS300_BULK_VOICE_LEVEL].code.toByte()
-        elementSwitch =
-            midiByteString[MidiConstants.OFFSET_QS300_BULK_EL_SWITCH].code.toByte()
+
+        for (i in MidiConstants.OFFSET_QS300_BULK_VOICE_COMMON_START until MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START) {
+            val addr = (i - MidiConstants.OFFSET_QS300_BULK_DATA_START).toUByte()
+            val voiceParam = QS300VoiceParameter::baseAddress findBy addr
+            val property = voiceParam?.reflectedField
+            setProperty(property, midiByteString[i].code.toByte())
+        }
 
         for (i in 0 until MidiConstants.QS300_MAX_ELEMENTS) {
             elements.add(parseQS300Element(midiByteString, i))

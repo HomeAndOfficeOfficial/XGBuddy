@@ -1,15 +1,15 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.qs300
 
+import android.R
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import com.example.xgbuddy.MidiSession
-import com.example.xgbuddy.data.QS300Preset
+import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.databinding.FragmentQS300SessionBinding
 import com.example.xgbuddy.util.MidiStoredDataUtility
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,7 +55,7 @@ import javax.inject.Inject
  * and a method to construct a midiMessage.
  */
 @AndroidEntryPoint
-class QS300SessionFragment : Fragment(), OnItemSelectedListener {
+class QS300SessionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     @Inject
     lateinit var midiSession: MidiSession
@@ -84,7 +84,7 @@ class QS300SessionFragment : Fragment(), OnItemSelectedListener {
     private fun addPresetsToSpinner() {
         ArrayAdapter(
             requireContext(),
-            android.R.layout.simple_spinner_item,
+            R.layout.simple_spinner_item,
             presets.map { it.name }
         ).also { arrayAdapter ->
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

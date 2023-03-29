@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="backgroundContainer" format="reference|color" />
     <attr name="pcMin" format="integer" />
     <attr name="pcMax" format="integer" />
     <attr name="pcId" format="reference" />
     <attr name="pcEntries" format="integer" />
+    <attr name="elementIndex" format="integer" />
     <declare-styleable name="ParameterControlView">
         <attr name="pcMin" />
         <attr name="pcMax" />
@@ -38,5 +40,11 @@
     <declare-styleable name="ControlViewGroup">
         <attr name="cvgLabel" format="string" />
         <attr name="android:entries" />
+    </declare-styleable>
+    <declare-styleable name="ElementEditFragment_MembersInjector">
+        <attr name="elementIndex" />
+    </declare-styleable>
+    <declare-styleable name="QSElementPrimaryControlFragment_MembersInjector">
+        <attr name="elementIndex" />
     </declare-styleable>
 </resources>

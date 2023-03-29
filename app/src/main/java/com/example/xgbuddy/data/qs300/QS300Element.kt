@@ -1,8 +1,9 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.qs300
 
+import com.example.xgbuddy.data.MidiData
 import kotlin.reflect.KMutableProperty
 
-data class QS300Element(val elementNumber: Int) {
+data class QS300Element(val elementNumber: Int) : MidiData() {
     var waveHi: Byte = QS300ElementParameter.WAVE_HI.default
     var waveLo: Byte = QS300ElementParameter.WAVE_LO.default
     var noteLo: Byte = QS300ElementParameter.NOTE_LO.default
@@ -84,13 +85,10 @@ data class QS300Element(val elementNumber: Int) {
     var addressOffsetLo: Byte = QS300ElementParameter.ADDRESS_OFFSET_LOW.default
     var resonanceSens: Byte = QS300ElementParameter.RESONANCE_SENS.default
 
-    fun setProperty(property: KMutableProperty<Byte>?, value: Byte) {
-        property?.setter!!.call(this, value)
+    fun setWaveValue(waveValue: Int) {
+        waveLo = (waveValue and 0x7f).toByte()
+        waveHi = ((waveValue shr 7) and 0x7f).toByte()
     }
-
-    fun getPropertyValue(property: KMutableProperty<Byte>?): Byte =
-        property?.getter!!.call(this)
-
 
     override fun toString(): String {
         return "QS300Element(elementNumber=$elementNumber, waveHi=$waveHi, waveLo=$waveLo, noteLo=$noteLo, noteHi=$noteHi, velLo=$velLo, velHi=$velHi, filterEGVelCurve=$filterEGVelCurve, lfoWave=$lfoWave, lfoPhaseInit=$lfoPhaseInit, lfoSpeed=$lfoSpeed, lfoDelay=$lfoDelay, lfoFadeTime=$lfoFadeTime, lfoPmdDepth=$lfoPmdDepth, lfoCmdDepth=$lfoCmdDepth, lfoAmdDepth=$lfoAmdDepth, noteShift=$noteShift, detune=$detune, pitchScaling=$pitchScaling, pitchScalingCenter=$pitchScalingCenter, pitchEgDepth=$pitchEgDepth, velPegLvlSens=$velPegLvlSens, velPegRateSens=$velPegRateSens, pegRateScaling=$pegRateScaling, pegRateScalingCenter=$pegRateScalingCenter, pegRate1=$pegRate1, pegRate2=$pegRate2, pegRate3=$pegRate3, pegRate4=$pegRate4, pegLvl0=$pegLvl0, pegLvl1=$pegLvl1, pegLvl2=$pegLvl2, pegLvl3=$pegLvl3, pegLvl4=$pegLvl4, filterRes=$filterRes, velSens=$velSens, cutoffFreq=$cutoffFreq, cutoffScalingBreak1=$cutoffScalingBreak1, cutoffScalingBreak2=$cutoffScalingBreak2, cutoffScalingBreak3=$cutoffScalingBreak3, cutoffScalingBreak4=$cutoffScalingBreak4, cutoffScalingOffset1=$cutoffScalingOffset1, cutoffScalingOffset2=$cutoffScalingOffset2, cutoffScalingOffset3=$cutoffScalingOffset3, cutoffScalingOffset4=$cutoffScalingOffset4, velFegLvlSens=$velFegLvlSens, velFegRateSens=$velFegRateSens, fegRateScaling=$fegRateScaling, fegRateScalingCenter=$fegRateScalingCenter, fegRate1=$fegRate1, fegRate2=$fegRate2, fegRate3=$fegRate3, fegRate4=$fegRate4, fegLvl0=$fegLvl0, fegLvl1=$fegLvl1, fegLvl2=$fegLvl2, fegLvl3=$fegLvl3, fegLvl4=$fegLvl4, elementLvl=$elementLvl, lvlScalingBreak1=$lvlScalingBreak1, lvlScalingBreak2=$lvlScalingBreak2, lvlScalingBreak3=$lvlScalingBreak3, lvlScalingBreak4=$lvlScalingBreak4, lvlScalingOffset1=$lvlScalingOffset1, lvlScalingOffset2=$lvlScalingOffset2, lvlScalingOffset3=$lvlScalingOffset3, lvlScalingOffset4=$lvlScalingOffset4, velCurve=$velCurve, pan=$pan, aegRateScaling=$aegRateScaling, aegScalingCenter=$aegScalingCenter, aegKeyOnDelay=$aegKeyOnDelay, aegAttackRate=$aegAttackRate, aegDecayRate1=$aegDecayRate1, aegDecayRate2=$aegDecayRate2, aegReleaseRate=$aegReleaseRate, aegDecayLvl1=$aegDecayLvl1, aegDecayLvl2=$aegDecayLvl2, addressOffsetHi=$addressOffsetHi, addressOffsetLo=$addressOffsetLo, resonanceSens=$resonanceSens)"

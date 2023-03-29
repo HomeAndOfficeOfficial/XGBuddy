@@ -1,16 +1,16 @@
 package com.example.xgbuddy.ui.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.QS300Element
-import com.example.xgbuddy.data.QS300ElementParameter
+import com.example.xgbuddy.data.qs300.QS300Element
+import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
@@ -20,24 +20,27 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     private val bLabel: Button
     private val controlViewContainer: LinearLayout
 
-
     val controlViewMap: MutableMap<UByte, ParameterControlView> = mutableMapOf()
     val controlItemIds: List<Int>
+
+    var isInteractive: Boolean = true
+        set(value) {
+            field = value
+            if (!value) {
+                updateHeaderButtonBehavior(value)
+            }
+        }
+    var headerColor: Int = 0
+        set(value) {
+            field = value
+            bLabel.backgroundTintList = ColorStateList.valueOf(value)
+        }
 
     init {
         val v = LayoutInflater.from(context).inflate(R.layout.control_view_group, this, true)
         root = v.findViewById(R.id.cvgRoot)
-        bLabel = v.findViewById<Button?>(R.id.bLabel).apply {
-            setOnClickListener {
-                toggleControlVisibility()
-            }
-            setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                0,
-                R.drawable.baseline_keyboard_arrow_up_24,
-                0
-            )
-        }
+        bLabel = v.findViewById(R.id.bLabel)
+        updateHeaderButtonBehavior(isInteractive)
         controlViewContainer = v.findViewById(R.id.sliderControlContainer)
         val styledAttr =
             context.obtainStyledAttributes(attributeSet, R.styleable.ControlViewGroup, 0, 0)
@@ -53,16 +56,18 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         val iconRes =
             if (isControlVisible) R.drawable.baseline_keyboard_arrow_down_24 else R.drawable.baseline_keyboard_arrow_up_24
         bLabel.setCompoundDrawablesWithIntrinsicBounds(0, 0, iconRes, 0)
-        for (i in 1 until root!!.childCount) { // First child is always label container
-            root?.getChildAt(i)?.visibility = if (isControlVisible) View.GONE else View.VISIBLE
-        }
+        controlViewContainer.visibility = if (isControlVisible) View.GONE else View.VISIBLE
     }
 
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
         if (root == null) {
             super.addView(child, index, params)
         } else {
-            root?.addView(child, index, params)
+            if (child?.id == R.id.bLabel) {
+                root?.addView(child, index, params)
+            } else {
+                controlViewContainer.addView(child, 0, params)
+            }
         }
     }
 
@@ -86,11 +91,39 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     // There will probably be multiple overloads of this to update views for whatever this group contains
     fun updateViews(qS300Element: QS300Element) {
         controlViewMap.keys.forEach {
-            // TODO: Move this 0x50 to a constant
-            val baseAddr: UByte = (it - (qS300Element.elementNumber * 0x50).toUByte()).toUByte()
-            Log.d(TAG, "Map key: $it, baseAddr: $it")
-            val param = QS300ElementParameter::baseAddress findBy baseAddr
-            controlViewMap[it]?.value = qS300Element.getPropertyValue(param!!.reflectedField)
+            val param = QS300ElementParameter::baseAddress findBy it
+            controlViewMap[it]?.value =
+                if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
+        }
+    }
+
+    fun collapse() {
+        if (controlViewContainer.visibility == VISIBLE) {
+            toggleControlVisibility()
+        }
+    }
+
+    fun expand() {
+        if (controlViewContainer.visibility == GONE) {
+            toggleControlVisibility()
+        }
+    }
+
+    private fun updateHeaderButtonBehavior(isInteractive: Boolean) {
+        bLabel.apply {
+            if (isInteractive) {
+                setOnClickListener {
+                    toggleControlVisibility()
+                }
+                setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.baseline_keyboard_arrow_up_24,
+                    0
+                )
+            } else {
+                visibility = View.GONE
+            }
         }
     }
 

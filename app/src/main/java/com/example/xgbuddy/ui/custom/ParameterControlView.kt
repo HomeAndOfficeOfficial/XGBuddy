@@ -52,6 +52,7 @@ abstract class ParameterControlView(context: Context) :
         }
     var paramId: Int = 0
     var listener: OnParameterChangedListener? = null
+    var isRealtimeControl = true
 
     protected abstract fun updateControlBounds()
     protected abstract fun updateViews()

@@ -6,7 +6,6 @@
         android:name="android.software.midi"
         android:required="true" />
 
-
     <application
         android:name=".XGBuddyApplication"
         android:allowBackup="true"
@@ -18,7 +17,8 @@
         android:theme="@style/Theme.XGBuddy">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

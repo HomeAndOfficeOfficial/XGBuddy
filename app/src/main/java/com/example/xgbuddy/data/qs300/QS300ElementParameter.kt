@@ -1,6 +1,7 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.qs300
 
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.MidiConstants
 import kotlin.reflect.KMutableProperty
 
 enum class QS300ElementParameter(

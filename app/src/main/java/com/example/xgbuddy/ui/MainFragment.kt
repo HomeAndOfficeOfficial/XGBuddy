@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
     }
 
     private fun createQSSetup(v: View) {
-        findNavController().navigate(MainFragmentDirections.actionMainFragmentToElementEditFragment())
+        findNavController().navigate(MainFragmentDirections.actionMainFragmentToVoiceEditFragment())
     }
 
     private fun createXGSetup(v: View) {
