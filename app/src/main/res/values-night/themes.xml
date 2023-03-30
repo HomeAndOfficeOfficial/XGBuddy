@@ -7,6 +7,7 @@
         <item name="colorControlActivated">?attr/colorPrimaryVariant</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_200</item>
+        <item name="colorPrimaryDark">@color/green_900</item>
         <item name="colorPrimaryVariant">@color/green_700</item>
         <item name="colorOnPrimary">@color/background_dark</item>
         <!-- Secondary brand color. -->
