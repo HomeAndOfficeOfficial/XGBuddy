@@ -3,15 +3,13 @@ package com.example.xgbuddy.adapter
 import android.content.Context
 import android.view.ViewGroup
 import com.example.xgbuddy.data.MidiChannel
+import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.custom.PartsRowItem
 
-/**
- * Probably should send a viewmodel to this as well so it can update it when a row is clicked.
- */
 class PartsListAdapter(
     context: Context,
-    private val partsContainer: ViewGroup,
-    private var channels: List<MidiChannel>
+    private val viewModel: MidiViewModel,
+    private val partsContainer: ViewGroup
 ) : PartsRowItem.OnPartsRowTouchListener {
 
     private var selectedRow = NOT_SET
@@ -21,7 +19,7 @@ class PartsListAdapter(
     }
 
     private fun populateContainer(context: Context) {
-        channels.forEach { midiChannel ->
+        viewModel.channels.value?.forEach { midiChannel ->
             partsContainer.addView(PartsRowItem(context).apply {
                 setChannelInfo(midiChannel)
                 listener = this@PartsListAdapter
@@ -30,11 +28,13 @@ class PartsListAdapter(
     }
 
     override fun onPartsRowTouched(partNumber: Int) {
-        // Update viewmodel
-        // Observing fragment then calls selectRow
+        viewModel.selectedChannel.value = partNumber
     }
 
     fun selectRow(rowNumber: Int) {
+        if (rowNumber < 0 || rowNumber >= partsContainer.childCount) {
+            return
+        }
         if (selectedRow > NOT_SET && rowNumber != selectedRow) {
             (partsContainer.getChildAt(selectedRow) as PartsRowItem).isRowSelected = false
         }
