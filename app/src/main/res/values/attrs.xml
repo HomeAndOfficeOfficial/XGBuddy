@@ -47,4 +47,7 @@
     <declare-styleable name="QSElementPrimaryControlFragment_MembersInjector">
         <attr name="elementIndex" />
     </declare-styleable>
+    <declare-styleable name="KeyView">
+        <attr name="note" format="string" />
+    </declare-styleable>
 </resources>

@@ -4,13 +4,116 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Keyboard fragment"
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="c" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView1"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView"
+        app:note="d" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView2"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView1"
+        app:note="e" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView3"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView2"
+        app:note="f" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView4"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView3"
+        app:note="g" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView5"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView4"
+        app:note="a" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView6"
+        android:layout_width="@dimen/kbd_white_width"
+        android:layout_height="match_parent"
+        android:layout_marginStart="-5dp"
+        app:layout_constraintStart_toEndOf="@+id/keyView5"
+        app:note="b" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView8"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toStartOf="@+id/keyView2"
+        app:layout_constraintStart_toStartOf="@+id/keyView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="cs" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView7"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toStartOf="@+id/keyView3"
+        app:layout_constraintStart_toEndOf="@+id/keyView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="ds" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView9"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toStartOf="@+id/keyView5"
+        app:layout_constraintStart_toEndOf="@+id/keyView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="fs" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView10"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toStartOf="@+id/keyView5"
+        app:layout_constraintStart_toEndOf="@+id/keyView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="fs" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView11"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toEndOf="@+id/keyView5"
+        app:layout_constraintStart_toEndOf="@+id/keyView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="gs" />
+
+    <com.example.xgbuddy.ui.custom.KeyView
+        android:id="@+id/keyView12"
+        android:layout_width="@dimen/kbd_black_width"
+        android:layout_height="@dimen/kbd_black_height"
+        app:layout_constraintEnd_toEndOf="@+id/keyView6"
+        app:layout_constraintStart_toEndOf="@+id/keyView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:note="as" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
