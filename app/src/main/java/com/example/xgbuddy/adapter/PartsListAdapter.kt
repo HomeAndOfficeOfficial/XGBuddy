@@ -2,7 +2,6 @@ package com.example.xgbuddy.adapter
 
 import android.content.Context
 import android.view.ViewGroup
-import com.example.xgbuddy.data.MidiChannel
 import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.custom.PartsRowItem
 
@@ -39,6 +38,7 @@ class PartsListAdapter(
             (partsContainer.getChildAt(selectedRow) as PartsRowItem).isRowSelected = false
         }
         (partsContainer.getChildAt(rowNumber) as PartsRowItem).isRowSelected = true
+        selectedRow = rowNumber
     }
 
     companion object {
