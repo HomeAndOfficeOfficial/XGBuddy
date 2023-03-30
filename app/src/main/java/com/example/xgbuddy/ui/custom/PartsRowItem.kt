@@ -11,8 +11,10 @@ import android.widget.TextView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.MidiChannel
 
-class PartsRowItem(context: Context, attributeSet: AttributeSet) :
-    LinearLayout(context, attributeSet) {
+class PartsRowItem(context: Context) :
+    LinearLayout(context) {
+
+    constructor(context: Context, attributeSet: AttributeSet) : this(context)
 
     private var rowNumber = 0
 
