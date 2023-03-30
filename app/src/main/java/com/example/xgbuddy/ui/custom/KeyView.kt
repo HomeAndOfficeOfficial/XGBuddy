@@ -3,7 +3,6 @@ package com.example.xgbuddy.ui.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import androidx.constraintlayout.widget.ConstraintSet.Motion
 import com.example.xgbuddy.R
 
 class KeyView(context: Context, attributeSet: AttributeSet) :
@@ -11,40 +10,58 @@ class KeyView(context: Context, attributeSet: AttributeSet) :
 
     private val note: String // TODO: Expand this to a Note data class probably
 
+    private var isKeyOn = false
+        set(value) {
+            field = value
+            setKeyBackground()
+        }
+
     var listener: OnKeyPressListener? = null
 
     init {
         val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.KeyView, 0, 0)
         note = typedArray.getString(R.styleable.KeyView_note) ?: "c"
-        setBackgroundForNote()
+        setKeyBackground()
         typedArray.recycle()
     }
 
-    private fun setBackgroundForNote() {
+    private fun setKeyBackground() {
         if (note.length == 1) {
-            setImageResource(R.drawable.kbd_white_selector)
+            if (isKeyOn) {
+                setImageResource(R.drawable.kdb_white_bg_press)
+            } else {
+                setImageResource(R.drawable.kbd_white_bg)
+            }
         } else {
-            setImageResource(R.drawable.kbd_black_selector)
+            if (isKeyOn) {
+                setImageResource(R.drawable.kbd_black_bg_press)
+            } else {
+                setImageResource(R.drawable.kbd_black_bg)
+            }
         }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                if (!isPressed) {
-                    isPressed = true
-                    listener?.onKeyDown(note)
+                if (event.x < 0 || event.x > measuredWidth || event.y < 0 || event.y > measuredHeight) {
+                    isKeyOn = false
+                    listener?.onKeyUp(note)
+                } else {
+                    if (!isKeyOn) {
+                        isKeyOn = true
+                        listener?.onKeyDown(note)
+                    }
                 }
                 return true
             }
-            MotionEvent.ACTION_CANCEL,
-            MotionEvent.ACTION_OUTSIDE -> {
-                isPressed = false
+            MotionEvent.ACTION_UP -> {
+                isKeyOn = false
                 listener?.onKeyUp(note)
                 return false
             }
         }
-        return false
+        return super.onTouchEvent(event)
     }
 
     interface OnKeyPressListener {
