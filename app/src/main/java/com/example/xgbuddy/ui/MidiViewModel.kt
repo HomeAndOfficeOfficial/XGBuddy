@@ -2,9 +2,9 @@ package com.example.xgbuddy.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.xgbuddy.data.MidiChannel
+import com.example.xgbuddy.data.MidiPart
 
 class MidiViewModel : ViewModel() {
-    val channels = MutableLiveData(List(16) { MidiChannel(it) })
+    val channels = MutableLiveData(List(16) { MidiPart(it) })
     val selectedChannel = MutableLiveData(-1)
 }

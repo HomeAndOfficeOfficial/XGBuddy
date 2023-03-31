@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.MidiChannel
+import com.example.xgbuddy.data.MidiPart
 
 class PartsRowItem(context: Context) :
     LinearLayout(context) {
@@ -58,7 +58,7 @@ class PartsRowItem(context: Context) :
         }
     }
 
-    fun setChannelInfo(channel: MidiChannel) {
+    fun setChannelInfo(channel: MidiPart) {
         rowNumber = channel.ch
         tvChannelNumber.text = "${channel.ch}"
         /*
