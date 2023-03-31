@@ -38,13 +38,11 @@ class KeyboardFragment : Fragment() {
             (binding.keysContainer.getChildAt(i) as KeyView).listener =
                 object : KeyView.OnKeyPressListener {
                     override fun onKeyDown(note: String) {
-                        Log.d(TAG, "kEY dOWN")
-//                        sendMidiNote(note, true)
+                        sendMidiNote(note, true)
                     }
 
                     override fun onKeyUp(note: String) {
-                        Log.d(TAG, "kEY uP")
-//                        sendMidiNote(note, false)
+                        sendMidiNote(note, false)
                     }
                 }
         }
