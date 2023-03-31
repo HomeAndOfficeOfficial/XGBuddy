@@ -161,6 +161,14 @@
     <string name="qs300_lfo_wave_tri">Tri</string>
     <string name="qs300_lfo_wave_sh">S&amp;H</string>
     <string name="qs_voice_name">Voice Name</string>
+    <string name="save_setup">Save Setup</string>
+    <string name="connection_status">Connection Status</string>
+    <string name="voice_name">Voice Name</string>
+    <string name="part_receiving">Rcv. Ch.</string>
+    <string name="level">Level</string>
+    <string name="pan">Pan</string>
+    <string name="reverb">Reverb</string>
+    <string name="chorus">Chorus</string>
     <!-- QS300 LFO Wave Names -->
 
 </resources>

@@ -11,4 +11,7 @@
     <dimen name="capture_status_text_size">16sp</dimen>
     <dimen name="onscreen_debug_text_size">12sp</dimen>
     <dimen name="qs300_element_edit_width">400dp</dimen>
+    <dimen name="kbd_white_width">96dp</dimen>
+    <dimen name="kbd_black_width">56dp</dimen>
+    <dimen name="kbd_black_height">244dp</dimen>
 </resources>

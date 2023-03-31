@@ -3,26 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/mainFragment">
-
+    app:startDestination="@id/partsFragment">
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.xgbuddy.ui.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
-        <action
-            android:id="@+id/action_mainFragment_to_fileBrowserFragment"
-            app:destination="@id/fileBrowserFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_voiceEditFragment"
-            app:destination="@id/voiceEditFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/fileBrowserFragment"
-        android:name="com.example.xgbuddy.ui.FileBrowserFragment"
-        android:label="FileBrowserFragment" />
+        android:id="@+id/partsFragment"
+        android:name="com.example.xgbuddy.ui.PartsFragment"
+        android:label="Parts"
+        tools:layout="@layout/fragment_parts" />
     <fragment
         android:id="@+id/voiceEditFragment"
         android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
-        android:label="VoiceEditFragment" />
+        android:label="Voice Edit"
+        tools:layout="@layout/fragment_voice_edit" />
+    <fragment
+        android:id="@+id/effectsFragment"
+        android:name="com.example.xgbuddy.ui.EffectsFragment"
+        android:label="Effects"
+        tools:layout="@layout/fragment_effects" />
+    <fragment
+        android:id="@+id/midiSettingsFragment"
+        android:name="com.example.xgbuddy.ui.MidiSettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_midi_settings" />
+    <fragment
+        android:id="@+id/keyboardFragment"
+        android:name="com.example.xgbuddy.ui.KeyboardFragment"
+        android:label="Keyboard"
+        tools:layout="@layout/fragment_keyboard" />
 </navigation>

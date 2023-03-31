@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/qs_capture"
-        android:title="@string/import_qs300_presets"
-        android:icon="@drawable/baseline_import_export_24" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/save_setup"
+        android:icon="@drawable/baseline_save_24"
+        android:title="@string/save_setup"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/open_setup"
+        android:icon="@drawable/baseline_folder_24"
+        android:title="@string/open_existing"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/qs_capture"
+        android:icon="@drawable/baseline_import_export_24"
+        android:title="@string/import_qs300_presets" />
+    <item
+        android:id="@+id/connect_status"
+        android:icon="@drawable/baseline_cable_48"
+        android:title="@string/connection_status" />
 </menu>

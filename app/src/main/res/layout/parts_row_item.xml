@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/rowContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvPartNum"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".05"
+            android:text="1" />
+
+        <TextView
+            android:id="@+id/tvPartName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".4"
+            android:text="Grand Piano" />
+
+        <TextView
+            android:id="@+id/tvPartReceiving"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".09"
+            android:text="1" />
+
+        <TextView
+            android:id="@+id/tvPartLevel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".09"
+            android:text="100" />
+
+        <TextView
+            android:id="@+id/tvPartPan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".09"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/tvPartReverb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".09"
+            android:text="20" />
+
+        <TextView
+            android:id="@+id/tvPartChorus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".09"
+            android:text="0" />
+    </LinearLayout>
+</merge>
