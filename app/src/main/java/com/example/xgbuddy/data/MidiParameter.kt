@@ -2,7 +2,7 @@ package com.example.xgbuddy.data
 
 import com.example.xgbuddy.R
 
-enum class MidiParameter(addrLo: Byte, descriptionRes: Int, min: Byte, max: Byte, default: Byte) {
+enum class MidiParameter(val addrLo: Byte, val descriptionRes: Int, val min: Byte, val max: Byte, val default: Byte) {
     ELEMENT_RESERVE(0, R.string.midi_mp_el_reserve, 0, 32, 2), // For drum, default is 0
     BANK_MSB(
         1,
