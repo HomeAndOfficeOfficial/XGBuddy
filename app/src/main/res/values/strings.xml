@@ -46,7 +46,7 @@
     <string name="midi_mp_CUTOFF_FREQ">Cutoff Frequency</string>
     <string name="midi_mp_RESONANCE">Resonance</string>
     <string name="midi_mp_EG_ATTACK_TIME">EG Attack Time</string>
-    <string name="midi_mp_EG_DECAY_TIME">EG Delay Time</string>
+    <string name="midi_mp_EG_DECAY_TIME">EG Decay Time</string>
     <string name="midi_mp_EG_RELEASE_TIME">EG Release Time</string>
     <string name="midi_mp_MW_PITCH_CTRL">Mod Wheel Pitch</string>
     <string name="midi_mp_MW_FILTER_CTRL">Mod Wheel Filter</string>
