@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+
     <!-- QS300 Wave Entries -->
     <string-array name="qs300_wave_entries">
         <item>Grand</item>        <!-- <item>37</item> -->
