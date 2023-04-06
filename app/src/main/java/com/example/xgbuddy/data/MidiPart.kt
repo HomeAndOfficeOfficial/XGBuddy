@@ -115,4 +115,7 @@ data class MidiPart(val ch: Int) {
     var pitchEgRelTime: Byte = MidiParameter.PITCH_EG_REL_TIME.default
     var velocityLimitLo: Byte = MidiParameter.VEL_LIMIT_LOW.default
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
+
+    // TODO: Put all XG voices and corresponding MSB/LSB values in array.xml
+    //  Then add method to set LSB/MSB for selected voice?
 }
