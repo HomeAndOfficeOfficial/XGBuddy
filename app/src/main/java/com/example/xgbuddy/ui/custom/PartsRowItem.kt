@@ -58,17 +58,16 @@ class PartsRowItem(context: Context) :
         }
     }
 
-    fun setChannelInfo(channel: MidiPart) {
+    fun setChannelInfo(channel: MidiPart, name: String) {
         rowNumber = channel.ch
         tvChannelNumber.text = "${channel.ch}"
-        /*
-        tvName.text = "${channel.voiceName}"
-        tvReceiving.text = "${channel.receiving}"
-        tvLevel.text = "${channel.level}"
+        tvName.text = name
+        tvReceiving.text = "${channel.receiveChannel}"
+        tvLevel.text = "${channel.volume}"
         tvPan.text = "${channel.pan}"
-        tvReverb.text = "${channel.reverb}"
-        tvChorus.text = "${channel.chorus}"
-         */
+        tvReverb.text = "${channel.reverbSend}"
+        tvChorus.text = "${channel.chorusSend}"
+
         updateColor()
     }
 

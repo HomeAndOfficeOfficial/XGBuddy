@@ -17,7 +17,7 @@ data class MidiPart(val ch: Int) {
     var bankMsb: Byte = MidiParameter.BANK_MSB.default
     var bankLsb: Byte = MidiParameter.BANK_LSB.default
     var programNumber: Byte = MidiParameter.PROG_NUMBER.default
-    var receiveChannel: Byte = MidiParameter.RCV_CHANNEL.default
+    var receiveChannel: Byte = ch.toByte()
     var polyMode: Byte = MidiParameter.POLY_MODE.default
     var keyOnAssign: Byte = MidiParameter.KEY_ON_ASSIGN.default
     var partMode: Byte = MidiParameter.PART_MODE.default
@@ -115,6 +115,16 @@ data class MidiPart(val ch: Int) {
     var pitchEgRelTime: Byte = MidiParameter.PITCH_EG_REL_TIME.default
     var velocityLimitLo: Byte = MidiParameter.VEL_LIMIT_LOW.default
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
+
+    init {
+        if (ch == 10) {
+            // Drum channel by default. If this isn't a drum channel, these fields will be changed
+            // anyway.
+            elementReserve = 0
+            bankMsb = 127
+            partMode = 2
+        }
+    }
 
     // TODO: Put all XG voices and corresponding MSB/LSB values in array.xml
     //  Then add method to set LSB/MSB for selected voice?

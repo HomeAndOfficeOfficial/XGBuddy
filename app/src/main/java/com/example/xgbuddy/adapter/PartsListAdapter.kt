@@ -20,10 +20,20 @@ class PartsListAdapter(
     private fun populateContainer(context: Context) {
         viewModel.channels.value?.forEach { midiChannel ->
             partsContainer.addView(PartsRowItem(context).apply {
-                setChannelInfo(midiChannel)
+                val name = getVoiceName(
+                    midiChannel.programNumber,
+                    midiChannel.bankMsb,
+                    midiChannel.bankLsb
+                )
+                setChannelInfo(midiChannel, name)
                 listener = this@PartsListAdapter
             })
         }
+    }
+
+    private fun getVoiceName(program: Byte, msb: Byte, lsb: Byte): String {
+        // TODO: Create a utility that maps voice name to program, msb, lsb
+        return "Grand Piano"
     }
 
     override fun onPartsRowTouched(partNumber: Int) {
