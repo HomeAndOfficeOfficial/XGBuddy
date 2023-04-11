@@ -97,6 +97,10 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
             setupOptionsMenu()
             setupNavigation()
+            Log.d(
+                TAG,
+                "Grand piano res: ${resources.getIntArray(R.array.xg_normal_voice_resources)[0]} and the id is ${R.string.xgnv_grand_pno}"
+            )
         } else {
             displayNoMidiCompatScreen()
         }

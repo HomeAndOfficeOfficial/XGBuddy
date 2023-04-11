@@ -19,6 +19,10 @@
     <string name="open_existing">Open Existing Setup (.xbx/.xbq)</string>
     <string name="xgbuddy_files">XGBuddy Files</string>
 
+    <!-- XG Normal Voice Names -->
+    <string name="xgnv_grand_pno">GrandPno</string>
+
+
     <!-- MIDI Multi-Part Parameter Descriptions -->
     <string name="midi_mp_el_reserve">Element Reserve</string>
     <string name="midi_mp_BANK_MSB">Bank MSB</string>

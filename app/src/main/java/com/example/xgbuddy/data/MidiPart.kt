@@ -128,4 +128,9 @@ data class MidiPart(val ch: Int) {
 
     // TODO: Put all XG voices and corresponding MSB/LSB values in array.xml
     //  Then add method to set LSB/MSB for selected voice?
+
+    /**
+     * XG Normal voices all have msb 0
+     *
+     */
 }

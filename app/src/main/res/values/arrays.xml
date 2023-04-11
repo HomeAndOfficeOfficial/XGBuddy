@@ -444,6 +444,10 @@
     </string-array>
     <!-- XG Normal Voice Entries -->
 
+
+    <integer-array name="xg_normal_voice_resources">
+        <item>@string/xgnv_grand_pno</item>
+    </integer-array>
     <!-- XG SFX Voice Entries -->
     <string-array name="xg_sfx_voice_entries">
         
