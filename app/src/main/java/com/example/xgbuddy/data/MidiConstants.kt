@@ -4,6 +4,9 @@ object MidiConstants {
 
     const val SEND_SCHEDULE_INTERVAL_NANO = 2
 
+    const val STATUS_PROGRAM_CHANGE = 0xC0
+
+
     const val EXCLUSIVE_STATUS_BYTE: Byte = -16
     const val YAMAHA_ID_BYTE: Byte = 67
     const val DEVICE_NUMBER_BULK_DUMP: Byte = 0

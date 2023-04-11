@@ -1,5 +1,7 @@
 package com.example.xgbuddy.data
 
+import com.example.xgbuddy.data.xg.XGNormalVoice
+
 data class MidiPart(val ch: Int) {
     /**
      * Will probably need a field to specify whether this is a drum part, a qs300 voice, or a
@@ -117,7 +119,7 @@ data class MidiPart(val ch: Int) {
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
 
     init {
-        if (ch == 10) {
+        if (ch == 9) {
             // Drum channel by default. If this isn't a drum channel, these fields will be changed
             // anyway.
             elementReserve = 0
@@ -126,11 +128,23 @@ data class MidiPart(val ch: Int) {
         }
     }
 
-    // TODO: Put all XG voices and corresponding MSB/LSB values in array.xml
-    //  Then add method to set LSB/MSB for selected voice?
+    fun setXGNormalVoice(voice: XGNormalVoice) {
+        programNumber = voice.program
+        bankMsb = 0
+        bankLsb = voice.bank
+        // Set element reserve?
+
+    }
 
     /**
-     * XG Normal voices all have msb 0
-     *
+     * TODO: Better solution for this may be have a utility class that contains a bunch of possible
+     *  midi message calls. Each method takes in a MidiPart as a param or whatever it needs to take.
+     *  That way these data classes don't have any knowledge of other classes/constants/etc. For
+     *  now just leave these message methods where they are since I'm still figuring it all out.
      */
+
+    fun getProgramChangeMessage(): MidiMessage {
+        val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE and ch).toByte()
+        return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
+    }
 }
