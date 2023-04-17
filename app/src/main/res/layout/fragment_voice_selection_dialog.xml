@@ -5,22 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navRailVoiceSelect"
+    <RadioGroup
+        android:id="@+id/rgVoiceCategory"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/voice_select_menu"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <RadioButton
+            android:id="@+id/rbXGVoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XG Normal" />
+
+        <RadioButton
+            android:id="@+id/rbXGDrum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XG Drum" />
+
+        <RadioButton
+            android:id="@+id/rbXGSfx"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SFX" />
+
+        <RadioButton
+            android:id="@+id/rbQs300"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="QS300" />
+    </RadioGroup>
+
+    <!--    <com.google.android.material.navigationrail.NavigationRailView-->
+    <!--        android:id="@+id/navRailVoiceSelect"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        app:labelVisibilityMode="labeled"-->
+    <!--        app:menu="@menu/voice_select_menu"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVoiceSelect"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/navRailVoiceSelect"
+        app:layout_constraintStart_toEndOf="@+id/rgVoiceCategory"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/voice_list_item" />
 
