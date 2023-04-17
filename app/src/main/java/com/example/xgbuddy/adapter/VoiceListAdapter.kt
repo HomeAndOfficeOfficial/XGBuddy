@@ -3,17 +3,25 @@ package com.example.xgbuddy.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
 
-class VoiceListAdapter : RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
-
-    var voiceList: List<String>? = null
+class VoiceListAdapter(
+    var voiceList: List<String>,
+    private val listener: OnVoiceItemClickListener
+) :
+    RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(position: Int) {
+        private val tvVoice = itemView.findViewById<TextView>(R.id.tvVoiceItem)
 
+        fun bind(position: Int, voiceName: String, listener: OnVoiceItemClickListener) {
+            tvVoice.text = voiceName
+            itemView.setOnClickListener {
+                listener.onVoiceItemClicked(position)
+            }
         }
     }
 
@@ -22,9 +30,13 @@ class VoiceListAdapter : RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
         return ViewHolder(v)
     }
 
-    override fun getItemCount(): Int = voiceList?.size ?: 0
+    override fun getItemCount(): Int = voiceList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position, voiceList[position], listener)
+    }
+
+    fun interface OnVoiceItemClickListener {
+        fun onVoiceItemClicked(position: Int)
     }
 }
