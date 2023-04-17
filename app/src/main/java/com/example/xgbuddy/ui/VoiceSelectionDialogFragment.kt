@@ -37,6 +37,16 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        val width = resources.getDimensionPixelSize(R.dimen.voice_select_dialog_width)
+        val height = resources.getDimensionPixelSize(R.dimen.voice_select_dialog_height)
+        dialog?.window?.let {
+            it.setLayout(width, height)
+            it.setBackgroundDrawableResource(R.drawable.popup_bg)
+        }
+    }
+
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
             XGNormalVoice.values().toList() // TODO: Add other voice types

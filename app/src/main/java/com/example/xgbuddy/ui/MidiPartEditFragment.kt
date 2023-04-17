@@ -44,6 +44,22 @@ class MidiPartEditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding.etPartVoiceName.apply {
+            showSoftInputOnFocus = false
+            setOnClickListener { openVoiceSelectionDialog() }
+        }
         return binding.root
+    }
+
+    private fun openVoiceSelectionDialog() {
+        val voiceSelectFragment = VoiceSelectionDialogFragment().apply {
+            arguments = Bundle().apply {
+                putInt(
+                    VoiceSelectionDialogFragment.ARG_START_CATEGORY,
+                    VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
+                )
+            }
+        }
+        voiceSelectFragment.show(childFragmentManager, VoiceSelectionDialogFragment.TAG)
     }
 }

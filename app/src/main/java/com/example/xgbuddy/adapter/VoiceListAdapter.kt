@@ -51,7 +51,7 @@ class VoiceListAdapter(
         return ViewHolder(v)
     }
 
-    override fun getItemCount(): Int = voiceList.size
+    override fun getItemCount(): Int = filteredList?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         filteredList?.let {
