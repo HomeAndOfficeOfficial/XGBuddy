@@ -133,7 +133,6 @@ data class MidiPart(val ch: Int) {
         bankMsb = 0
         bankLsb = voice.bank
         // Set element reserve?
-
     }
 
     /**
