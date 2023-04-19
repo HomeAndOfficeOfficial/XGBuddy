@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.MidiParameter
 import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
-import com.example.xgbuddy.ui.custom.ControlViewGroup
-import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.ui.custom.SwitchControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 
 class MidiPartEditFragment : ControlBaseFragment() {
 
@@ -20,6 +20,8 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private val binding: FragmentMidiPartEditBinding by lazy {
         FragmentMidiPartEditBinding.inflate(layoutInflater)
     }
+
+    private var currentParam: MidiParameter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,11 +105,32 @@ class MidiPartEditFragment : ControlBaseFragment() {
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter) {
-        /*
-        1. Figure out what parameter we're working with
-        2. update viewmodel
-        3. figure out if we need to send CC, NPRN, RPN, or XG param change
-        4. send command.
-         */
+        if (controlParameter.name != currentParam?.name) {
+            currentParam = MidiParameter::addrLo findBy controlParameter.addr
+        }
+        midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setProperty(
+            currentParam!!.reflectedField,
+            controlParameter.value
+        )
+        midiSession.send(getParamChangeMessage(controlParameter))
+    }
+
+    private fun getParamChangeMessage(controlParameter: ControlParameter): MidiMessage {
+
+        // First check if nrpn param
+//        if (currentParam?.nrpn != null) {
+
+//        }
+
+        // Then check if control change param
+        if (currentParam?.controlChange != null) {
+            return MidiMessageUtility.getControlChange(
+                midiViewModel.selectedChannel.value!!,
+                currentParam!!.controlChange!!.controlNumber,
+                controlParameter.value
+            )
+        }
+
+        return MidiMessageUtility.getXGParamChange()
     }
 }
