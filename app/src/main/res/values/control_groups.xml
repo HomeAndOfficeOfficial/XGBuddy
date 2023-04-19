@@ -3,7 +3,7 @@
     <array name="midi_main">
         <!-- Item Bank msb/lsb -->
         <!-- Item Part mode -->
-        <item>@string/midi_mp_RCV_CHANNEL</item>
+<!--        <item>@string/midi_mp_RCV_CHANNEL</item>-->
         <item>@string/midi_mp_VOLUME</item>
         <item>@string/midi_mp_PAN</item>
         <item>@string/midi_mp_CUTOFF_FREQ</item>
@@ -17,7 +17,7 @@
     </array>
 
     <array name="midi_note_general">
-        <item>@string/midi_mp_PORTA_SWITCH</item>
+<!--        <item>@string/midi_mp_PORTA_SWITCH</item>-->
         <item>@string/midi_mp_PORTA_TIME</item>
         <item>@string/midi_mp_NOTE_SHIFT</item>
         <item>@string/midi_mp_NOTE_LIMIT_LOW</item>
@@ -100,7 +100,7 @@
     </array>
 
     <array name="midi_ac1">
-        <item>@string/midi_mp_AC1_CTRL_NUMBER</item>
+<!--        <item>@string/midi_mp_AC1_CTRL_NUMBER</item>-->
         <item>@string/midi_mp_AC1_PITCH_CTRL</item>
         <item>@string/midi_mp_AC1_FILTER_CTRL</item>
         <item>@string/midi_mp_AC1_AMP_CTRL</item>
@@ -110,7 +110,7 @@
     </array>
 
     <array name="midi_ac2">
-        <item>@string/midi_mp_AC2_CTRL_NUMBER</item>
+<!--        <item>@string/midi_mp_AC2_CTRL_NUMBER</item>-->
         <item>@string/midi_mp_AC2_PITCH_CTRL</item>
         <item>@string/midi_mp_AC2_FILTER_CTRL</item>
         <item>@string/midi_mp_AC2_AMP_CTRL</item>

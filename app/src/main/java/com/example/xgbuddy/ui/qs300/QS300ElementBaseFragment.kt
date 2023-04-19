@@ -87,21 +87,6 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             if (shouldShowColoredHeader) {
                 headerColor = resources.getIntArray(R.array.element_container_colors)[elementIndex]
             }
-            controlItemIds.forEach {
-                addControlView(SliderControlView(requireContext()).apply {
-                    controlParameter = initElementParam(it)
-                    listener = this@QS300ElementBaseFragment
-                })
-            }
-        }
-        extraChildren?.apply {
-            for (i in 0 until childCount) {
-                (getChildAt(i) as ParameterControlView).apply {
-                    controlParameter = initElementParam(paramId)
-                    listener = this@QS300ElementBaseFragment
-                    controlGroup.mapUngroupedView(this)
-                }
-            }
         }
         super.initControlGroup(
             controlGroup,
@@ -112,8 +97,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         )
     }
 
-    private fun initElementParam(descriptionRes: Int): QS300ControlParameter {
-        val param = QS300ElementParameter::descriptionRes findBy descriptionRes
+    override fun initParameter(paramId: Int): ControlParameter {
+        val param = QS300ElementParameter::descriptionRes findBy paramId
         return QS300ControlParameter(
             param!!,
             viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].getPropertyValue(
