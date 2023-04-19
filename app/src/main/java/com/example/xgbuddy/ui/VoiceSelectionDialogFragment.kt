@@ -9,12 +9,22 @@ import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
 import com.example.xgbuddy.adapter.VoiceListAdapter
+import com.example.xgbuddy.adapter.VoiceListAdapter.VoiceListCategory.*
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
+import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class VoiceSelectionDialogFragment : DialogFragment() {
+
+    @Inject
+    lateinit var midiSession: MidiSession
 
     private val midiViewModel: MidiViewModel by activityViewModels()
     private val binding: FragmentVoiceSelectionDialogBinding by lazy {
@@ -49,14 +59,9 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
-            XGNormalVoice.values().toList() // TODO: Add other voice types
-        ) {
-            /**
-             * TODO: Not sure the best way to go about "selecting" the voice.
-             *  Probably need to wait until all the data structures are sorted out.
-             */
-            updateSelectedVoice(it)
-        }
+            XGNormalVoice.values().toList(), // TODO: Add other voice types)
+            this::updateSelectedVoice
+        )
     }
 
     private fun setupCategoryButtons() {
@@ -81,17 +86,34 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun updateAdapterCategory(categoryId: Int) {
         val category = when (categoryId) {
-            CATEGORY_ID_NORMAL -> VoiceListAdapter.VoiceListCategory.XG_NORMAL
-            CATEGORY_ID_XGDRUM -> VoiceListAdapter.VoiceListCategory.XG_DRUM
-            CATEGORY_ID_SFX -> VoiceListAdapter.VoiceListCategory.SFX
-            CATEGORY_ID_QS300 -> VoiceListAdapter.VoiceListCategory.QS300 // Ugh, might have to make a complete list of QS300 voice presets
+            CATEGORY_ID_NORMAL -> XG_NORMAL
+            CATEGORY_ID_XGDRUM -> XG_DRUM
+            CATEGORY_ID_SFX -> SFX
+            CATEGORY_ID_QS300 -> QS300 // Ugh, might have to make a complete list of QS300 voice presets
             else -> null
         }
         category?.let { voiceListAdapter.updateCategory(it) }
     }
 
-    private fun updateSelectedVoice(voiceIndex: Int) {
-        // TODO: Update viewmodel
+    private fun updateSelectedVoice(
+        voiceIndex: Int,
+        voiceCategory: VoiceListAdapter.VoiceListCategory
+    ) {
+        when (voiceCategory) {
+            XG_NORMAL -> {
+                (XGNormalVoice::ordinal findBy voiceIndex)?.let { xgVoice ->
+                    val updatedPartsList = midiViewModel.channels.value!!
+                    val updatedPart = updatedPartsList[midiViewModel.selectedChannel.value!!]
+                    updatedPart.changeXGVoice(xgVoice)
+                    updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
+                    midiViewModel.channels.value = updatedPartsList
+                    midiSession.send(MidiMessageUtility.getXGNormalVoiceChange(updatedPart.ch, xgVoice))
+                }
+            }
+            XG_DRUM -> TODO()
+            SFX -> TODO()
+            QS300 -> TODO()
+        }
         dismiss()
     }
 

@@ -45,5 +45,4 @@ enum class MidiControlChange(val controlNumber: Byte) {
     OMNI_MODE_ON(125),
     MONO_MODE(126),
     POLY_MODE(127)
-
 }

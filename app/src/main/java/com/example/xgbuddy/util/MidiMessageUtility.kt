@@ -1,10 +1,12 @@
 package com.example.xgbuddy.util
 
 import com.example.xgbuddy.data.MidiConstants
+import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
+import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 object MidiMessageUtility {
@@ -26,13 +28,28 @@ object MidiMessageUtility {
      */
 
     fun getProgramChange(channel: Int, programNumber: Byte): MidiMessage {
-        val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE and channel).toByte()
+        val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE or channel).toByte()
         return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
     }
 
     fun getControlChange(channel: Int, controlNumber: Byte, value: Byte): MidiMessage {
-        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE and channel).toByte()
+        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel).toByte()
         return MidiMessage(byteArrayOf(statusByte, controlNumber, value), 0)
+    }
+
+    fun getXGNormalVoiceChange(channel: Int, xgNormalVoice: XGNormalVoice): List<MidiMessage> {
+        val programChange = getProgramChange(channel, xgNormalVoice.program)
+        val ccMsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_MSB.controlNumber,
+            MidiConstants.XG_NORMAL_VOICE_MSB
+        )
+        val ccLsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_LSB.controlNumber,
+            xgNormalVoice.bank
+        )
+        return listOf(ccMsb, ccLsb, programChange)
     }
 
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {

@@ -17,7 +17,9 @@ class VoiceListAdapter(
     RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
     private val voiceList: List<VoiceListEntry>
+
     private var filteredList: List<VoiceListEntry>? = null
+    private var selectedCategory: VoiceListCategory? = null
 
     init {
         voiceList = List(voiceEntries.size) {
@@ -38,10 +40,15 @@ class VoiceListAdapter(
 
         private val tvVoice = itemView.findViewById<TextView>(R.id.tvVoiceItem)
 
-        fun bind(position: Int, voiceName: String, listener: OnVoiceItemClickListener) {
+        fun bind(
+            position: Int,
+            voiceName: String,
+            category: VoiceListCategory?,
+            listener: OnVoiceItemClickListener
+        ) {
             tvVoice.text = voiceName
             itemView.setOnClickListener {
-                listener.onVoiceItemClicked(position)
+                listener.onVoiceItemClicked(position, category!!)
             }
         }
     }
@@ -55,7 +62,7 @@ class VoiceListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         filteredList?.let {
-            holder.bind(position, it[position].name, listener)
+            holder.bind(position, it[position].name, selectedCategory, listener)
         }
     }
 
@@ -70,11 +77,12 @@ class VoiceListAdapter(
     }
 
     fun interface OnVoiceItemClickListener {
-        fun onVoiceItemClicked(position: Int)
+        fun onVoiceItemClicked(position: Int, category: VoiceListCategory)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateCategory(category: VoiceListCategory) {
+        selectedCategory = category
         filteredList = voiceList.filter {
             it.typeName == category.enumName
         }

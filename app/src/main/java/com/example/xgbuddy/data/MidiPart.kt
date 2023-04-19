@@ -146,4 +146,11 @@ data class MidiPart(val ch: Int) {
         val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE and ch).toByte()
         return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
     }
+
+    fun changeXGVoice(xgVoice: XGNormalVoice) {
+        programNumber = xgVoice.program
+        bankMsb = 0
+        bankLsb = xgVoice.bank
+        // TODO: Set name too
+    }
 }

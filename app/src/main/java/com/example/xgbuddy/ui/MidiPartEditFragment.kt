@@ -48,6 +48,9 @@ class MidiPartEditFragment : Fragment() {
             showSoftInputOnFocus = false
             setOnClickListener { openVoiceSelectionDialog() }
         }
+        midiViewModel.channels.observe(viewLifecycleOwner) {
+            // update views here
+        }
         return binding.root
     }
 
