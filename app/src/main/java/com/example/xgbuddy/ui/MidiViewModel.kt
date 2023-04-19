@@ -6,5 +6,5 @@ import com.example.xgbuddy.data.MidiPart
 
 class MidiViewModel : ViewModel() {
     val channels = MutableLiveData(MutableList(16) { MidiPart(it) })
-    val selectedChannel = MutableLiveData(-1)
+    val selectedChannel = MutableLiveData(0)
 }

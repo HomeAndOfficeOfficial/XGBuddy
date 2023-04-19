@@ -106,7 +106,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
 
     override fun onParameterChanged(controlParameter: ControlParameter) {
         if (controlParameter.name != currentParam?.name) {
-            currentParam = MidiParameter::addrLo findBy controlParameter.addr
+            currentParam = MidiParameter::addrLo findBy controlParameter.addr.toByte()
         }
         midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setProperty(
             currentParam!!.reflectedField,
