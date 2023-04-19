@@ -4,46 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.MidiMessage
+import com.example.xgbuddy.data.MidiParameter
+import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
+import com.example.xgbuddy.ui.custom.SwitchControlView
+import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 
-class MidiPartEditFragment : Fragment() {
+class MidiPartEditFragment : ControlBaseFragment() {
 
     private val midiViewModel: MidiViewModel by activityViewModels()
     private val binding: FragmentMidiPartEditBinding by lazy {
         FragmentMidiPartEditBinding.inflate(layoutInflater)
     }
 
-
-    /**
-     * The first control should probably a button that lets you choose the voice.
-     * Since a MidiPart can contain a lot of different types of voices (QS300, XG normal, sfx,
-     * drum), I'd like to have a fragment dedicated to organizing and displaying these views.
-     *
-     * This would most likely be a tabbed dialog fragment, with a tab for each of the voice
-     * categories.
-     *
-     * I think there's a potential to add filters, subcategories, etc to make navigating the list
-     * more convenient, but for now I'll keep it simple and just have a group of tabs, selecting the
-     * tab changes the list that is displayed. I'll worry about adding sticky labels, subcategories,
-     * and filters later.
-     *
-     * Anyway, that's all it's own fragment.
-     *
-     * Voice/Sound selection would be an EditText with softInputOnFocus disabled, and a click
-     * listener to open that selection dialog.
-     *
-     * Below that, probably just all the midi main control groups, since I think these will be
-     * present no matter what type of voice is selected.
-     *
-     */
+    private var currentParam: MidiParameter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        initControlGroups()
         binding.etPartVoiceName.apply {
             showSoftInputOnFocus = false
             setOnClickListener { openVoiceSelectionDialog() }
@@ -52,6 +37,49 @@ class MidiPartEditFragment : Fragment() {
             // update views here
         }
         return binding.root
+    }
+
+    private fun initControlGroups() {
+        binding.apply {
+            // TODO: Add RCV_CHANNEL as extra
+            initControlGroup(cvgMidiMain, shouldStartExpanded = true)
+
+            // TODO: Add detune as extra
+            initControlGroup(cvgMidiPitch)
+
+            initControlGroup(cvgMidiEG)
+            initControlGroup(cvgMidiFx)
+
+            // TODO: Add porta_switch as extra
+            initControlGroup(cvgMidiNote)
+
+            initControlGroup(cvgMidiPat)
+            initControlGroup(cvgMidiCat)
+            initControlGroup(cvgMidiBend)
+            initControlGroup(cvgMidiMod)
+
+            // TODO: Add controller number as extra for ac1 and ac2
+            initControlGroup(cvgMidiAc1)
+            initControlGroup(cvgMidiAc2)
+
+            initControlGroup(cvgMidiScale)
+            initControlGroup(cvgMidiCh)
+        }
+        initReceiveSwitches()
+    }
+
+    private fun initReceiveSwitches() {
+        binding.cvgMidiRcv.apply {
+            isInteractive = true
+            collapse()
+            controlItemIds.forEach {
+                addControlView(SwitchControlView(requireContext()).apply {
+                    controlParameter = initParameter(it)
+                    listener = this@MidiPartEditFragment
+                })
+            }
+        }
+        controlGroups.add(binding.cvgMidiRcv)
     }
 
     private fun openVoiceSelectionDialog() {
@@ -64,5 +92,45 @@ class MidiPartEditFragment : Fragment() {
             }
         }
         voiceSelectFragment.show(childFragmentManager, VoiceSelectionDialogFragment.TAG)
+    }
+
+    override fun initParameter(paramId: Int): ControlParameter {
+        val param = MidiParameter::descriptionRes findBy paramId
+        return XGControlParameter(
+            param!!,
+            midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].getPropertyValue(
+                param.reflectedField
+            )
+        )
+    }
+
+    override fun onParameterChanged(controlParameter: ControlParameter) {
+        if (controlParameter.name != currentParam?.name) {
+            currentParam = MidiParameter::addrLo findBy controlParameter.addr
+        }
+        midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setProperty(
+            currentParam!!.reflectedField,
+            controlParameter.value
+        )
+        midiSession.send(getParamChangeMessage(controlParameter))
+    }
+
+    private fun getParamChangeMessage(controlParameter: ControlParameter): MidiMessage {
+
+        // First check if nrpn param
+//        if (currentParam?.nrpn != null) {
+
+//        }
+
+        // Then check if control change param
+        if (currentParam?.controlChange != null) {
+            return MidiMessageUtility.getControlChange(
+                midiViewModel.selectedChannel.value!!,
+                currentParam!!.controlChange!!.controlNumber,
+                controlParameter.value
+            )
+        }
+
+        return MidiMessageUtility.getXGParamChange()
     }
 }

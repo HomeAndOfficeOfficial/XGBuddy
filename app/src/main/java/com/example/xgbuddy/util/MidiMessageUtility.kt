@@ -52,6 +52,11 @@ object MidiMessageUtility {
         return listOf(ccMsb, ccLsb, programChange)
     }
 
+    // TODO: Construct actual param change message
+    fun getXGParamChange(): MidiMessage {
+        return MidiMessage(byteArrayOf(), 0)
+    }
+
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
         val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {

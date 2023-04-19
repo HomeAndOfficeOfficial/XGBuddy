@@ -31,13 +31,13 @@ class ElementEditFragment : QS300ElementBaseFragment(),
             shouldStartExpanded = true,
             clLfoExtras
         )
-        initControlGroup(cvgAeg, shouldStartExpanded = false)
-        initControlGroup(cvgPitch, shouldStartExpanded = false)
-        initControlGroup(cvgPeg, shouldStartExpanded = false)
-        initControlGroup(cvgFeg, shouldStartExpanded = false)
-        initControlGroup(cvgLvlScale, shouldStartExpanded = false)
-        initControlGroup(cvgFilterScale, shouldStartExpanded = false)
-        initControlGroup(cvgMisc, shouldStartExpanded = false)
+        initControlGroup(cvgAeg)
+        initControlGroup(cvgPitch)
+        initControlGroup(cvgPeg)
+        initControlGroup(cvgFeg)
+        initControlGroup(cvgLvlScale)
+        initControlGroup(cvgFilterScale)
+        initControlGroup(cvgMisc)
         return v
     }
 
