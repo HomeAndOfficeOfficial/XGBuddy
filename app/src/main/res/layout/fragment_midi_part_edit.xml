@@ -22,4 +22,118 @@
             android:hint="@string/qs_voice_name" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tiPartVoiceName">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_main"
+                app:cvgLabel="Main" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiPitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_pitch"
+                app:cvgLabel="Pitch" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiEG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_eg"
+                app:cvgLabel="EG" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiFx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_fx"
+                app:cvgLabel="Effects" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_note_general"
+                app:cvgLabel="Note" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiPat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_pat"
+                app:cvgLabel="PAT" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiCat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_cat"
+                app:cvgLabel="CAT" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiBend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_bend"
+                app:cvgLabel="Bend Wheel" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiMod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_mod_wheel"
+                app:cvgLabel="Mod Wheel" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiAc1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_ac1"
+                app:cvgLabel="AC1 Settings" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiAc2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_ac2"
+                app:cvgLabel="AC2 Settings" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiScale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_scale_tuning"
+                app:cvgLabel="Scale Tuning" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiRcv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_rcv_switch"
+                app:cvgLabel="Receive Switches" />
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgMidiCh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/midi_channel"
+                app:cvgLabel="Channel Setting" />
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
