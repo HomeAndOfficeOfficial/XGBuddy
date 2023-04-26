@@ -103,7 +103,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
      */
     fun updateViews(midipart: MidiPart) {
         controlViewMap.keys.forEach {
-            val param = MidiParameter::addrLo findBy it
+            val param = MidiParameter::addrLo findBy it.toByte()
             controlViewMap[it]?.value =
                 if (param != null) midipart.getPropertyValue(param.reflectedField) else 0
         }
