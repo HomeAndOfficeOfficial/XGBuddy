@@ -54,35 +54,24 @@ class MidiPartEditFragment : ControlBaseFragment() {
     }
 
     private fun initControlGroups() {
-
-        // TODO: Add RCV_CHANNEL as extra
         initControlGroup(
             cvgMidiMain,
             shouldStartExpanded = true,
             extraChildren = midiMainExtras
         )
-
         // TODO: Add detune as extra
         initControlGroup(cvgMidiPitch)
-
         initControlGroup(cvgMidiEG)
         initControlGroup(cvgMidiFx)
-
-        // TODO: Add porta_switch and poly_mode as extra
-        initControlGroup(cvgMidiNote)
-
+        initControlGroup(cvgMidiNote, extraChildren = midiNoteExtras)
         initControlGroup(cvgMidiPat)
         initControlGroup(cvgMidiCat)
         initControlGroup(cvgMidiBend)
         initControlGroup(cvgMidiMod)
-
-        // TODO: Add controller number as extra for ac1 and ac2
         initControlGroup(cvgMidiAc1)
         initControlGroup(cvgMidiAc2)
-
         initControlGroup(cvgMidiScale)
         initControlGroup(cvgMidiCh)
-
         initReceiveSwitches()
     }
 
@@ -160,6 +149,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
         cvgMidiEG = v.findViewById(R.id.cvgMidiEG)
         cvgMidiFx = v.findViewById(R.id.cvgMidiFx)
         cvgMidiNote = v.findViewById(R.id.cvgMidiNote)
+        midiNoteExtras = v.findViewById(R.id.midiNoteExtras)
         cvgMidiPat = v.findViewById(R.id.cvgMidiPat)
         cvgMidiCat = v.findViewById(R.id.cvgMidiCat)
         cvgMidiBend = v.findViewById(R.id.cvgMidiBend)
@@ -178,6 +168,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private lateinit var cvgMidiEG: ControlViewGroup
     private lateinit var cvgMidiFx: ControlViewGroup
     private lateinit var cvgMidiNote: ControlViewGroup
+    private lateinit var midiNoteExtras: LinearLayout
     private lateinit var cvgMidiPat: ControlViewGroup
     private lateinit var cvgMidiCat: ControlViewGroup
     private lateinit var cvgMidiBend: ControlViewGroup
