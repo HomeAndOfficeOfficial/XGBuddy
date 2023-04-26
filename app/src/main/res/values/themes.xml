@@ -32,6 +32,10 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <style name="ControlViewGroupHeader.DefaultColor" parent="ControlViewGroupHeader">
+        <item name="android:backgroundTint">?colorPrimaryVariant</item>
+    </style>
+
     <style name="ControlViewGroupElement">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
