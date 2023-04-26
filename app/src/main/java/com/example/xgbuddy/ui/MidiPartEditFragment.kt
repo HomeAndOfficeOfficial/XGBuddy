@@ -35,30 +35,20 @@ class MidiPartEditFragment : ControlBaseFragment() {
             setOnClickListener { openVoiceSelectionDialog() }
         }
         midiViewModel.channels.observe(viewLifecycleOwner) {
-            updateViews(it)
+            val channel = midiViewModel.selectedChannel.value
+            binding.etPartVoiceName.setText(it[channel!!].voiceNameRes)
+        }
+        midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
+            updateViews(midiViewModel.channels.value!![it])
         }
         return binding.root
     }
 
-    private fun updateViews(parts: MutableList<MidiPart>) {
-        val channel = midiViewModel.selectedChannel.value
-        /*
-            I think the only view that needs to be updated when the viewModel is
-            observed is the voice spinner. Everything else should update itself.
-
-            For now anyway. This may change when I start monitoring incoming messages.
-            It will depend on how these fragments are notified of incoming messages.
-            This is difficult because since there are so many data points, I'm going against
-            the viewModel pattern a bit by sending messages as a direct result of view
-            interaction. I should be updating the viewmodel then sending messages based on
-            what was updated. But there are way too many things to account for, so that's not
-            really feasible.
-
-            Anyway I'll just update the voice field for now.
-         */
-
-        binding.etPartVoiceName.setText(parts[channel!!].voiceNameRes)
-
+    private fun updateViews(midiPart: MidiPart) {
+        binding.etPartVoiceName.setText(midiPart.voiceNameRes)
+        controlGroups.forEach {
+            it.updateViews(midiPart)
+        }
     }
 
     private fun initControlGroups() {
