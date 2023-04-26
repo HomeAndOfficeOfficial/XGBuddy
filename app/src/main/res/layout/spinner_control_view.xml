@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pcRoot"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
 
-    <TextView
-        android:id="@+id/tvParamLabel"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/pcRoot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Voice Level"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="8dp">
 
-    <Spinner
-        android:id="@+id/cpSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvParamLabel" />
+        <TextView
+            android:id="@+id/tvParamLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voice Level"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvParamValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="127"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/cpSpinner"
-        app:layout_constraintStart_toEndOf="@+id/cpSpinner"
-        app:layout_constraintTop_toTopOf="@+id/cpSpinner" />
+        <Spinner
+            android:id="@+id/cpSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvParamLabel" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvParamValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="127"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/cpSpinner"
+            app:layout_constraintStart_toEndOf="@+id/cpSpinner"
+            app:layout_constraintTop_toTopOf="@+id/cpSpinner" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>

@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.MidiParameter
 import com.example.xgbuddy.data.MidiPart
 import com.example.xgbuddy.data.xg.XGControlParameter
-import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
+import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.SwitchControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
@@ -18,9 +21,6 @@ import com.example.xgbuddy.util.MidiMessageUtility
 class MidiPartEditFragment : ControlBaseFragment() {
 
     private val midiViewModel: MidiViewModel by activityViewModels()
-    private val binding: FragmentMidiPartEditBinding by lazy {
-        FragmentMidiPartEditBinding.inflate(layoutInflater)
-    }
 
     private var currentParam: MidiParameter? = null
 
@@ -29,59 +29,65 @@ class MidiPartEditFragment : ControlBaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val v = layoutInflater.inflate(R.layout.fragment_midi_part_edit, container, false)
+        findViews(v)
         initControlGroups()
-        binding.etPartVoiceName.apply {
+        etPartVoiceName.apply {
             showSoftInputOnFocus = false
             setOnClickListener { openVoiceSelectionDialog() }
         }
         midiViewModel.channels.observe(viewLifecycleOwner) {
             val channel = midiViewModel.selectedChannel.value
-            binding.etPartVoiceName.setText(it[channel!!].voiceNameRes)
+            etPartVoiceName.setText(it[channel!!].voiceNameRes)
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             updateViews(midiViewModel.channels.value!![it])
         }
-        return binding.root
+        return v
     }
 
     private fun updateViews(midiPart: MidiPart) {
-        binding.etPartVoiceName.setText(midiPart.voiceNameRes)
+        etPartVoiceName.setText(midiPart.voiceNameRes)
         controlGroups.forEach {
             it.updateViews(midiPart)
         }
     }
 
     private fun initControlGroups() {
-        binding.apply {
-            // TODO: Add RCV_CHANNEL as extra
-            initControlGroup(cvgMidiMain, shouldStartExpanded = true)
 
-            // TODO: Add detune as extra
-            initControlGroup(cvgMidiPitch)
+        // TODO: Add RCV_CHANNEL as extra
+        initControlGroup(
+            cvgMidiMain,
+            shouldStartExpanded = true,
+            extraChildren = midiMainExtras
+        )
 
-            initControlGroup(cvgMidiEG)
-            initControlGroup(cvgMidiFx)
+        // TODO: Add detune as extra
+        initControlGroup(cvgMidiPitch)
 
-            // TODO: Add porta_switch as extra
-            initControlGroup(cvgMidiNote)
+        initControlGroup(cvgMidiEG)
+        initControlGroup(cvgMidiFx)
 
-            initControlGroup(cvgMidiPat)
-            initControlGroup(cvgMidiCat)
-            initControlGroup(cvgMidiBend)
-            initControlGroup(cvgMidiMod)
+        // TODO: Add porta_switch and poly_mode as extra
+        initControlGroup(cvgMidiNote)
 
-            // TODO: Add controller number as extra for ac1 and ac2
-            initControlGroup(cvgMidiAc1)
-            initControlGroup(cvgMidiAc2)
+        initControlGroup(cvgMidiPat)
+        initControlGroup(cvgMidiCat)
+        initControlGroup(cvgMidiBend)
+        initControlGroup(cvgMidiMod)
 
-            initControlGroup(cvgMidiScale)
-            initControlGroup(cvgMidiCh)
-        }
+        // TODO: Add controller number as extra for ac1 and ac2
+        initControlGroup(cvgMidiAc1)
+        initControlGroup(cvgMidiAc2)
+
+        initControlGroup(cvgMidiScale)
+        initControlGroup(cvgMidiCh)
+
         initReceiveSwitches()
     }
 
     private fun initReceiveSwitches() {
-        binding.cvgMidiRcv.apply {
+        cvgMidiRcv.apply {
             isInteractive = true
             collapse()
             controlItemIds.forEach {
@@ -91,7 +97,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
                 })
             }
         }
-        controlGroups.add(binding.cvgMidiRcv)
+        controlGroups.add(cvgMidiRcv)
     }
 
     private fun openVoiceSelectionDialog() {
@@ -145,4 +151,40 @@ class MidiPartEditFragment : ControlBaseFragment() {
 
         return MidiMessageUtility.getXGParamChange()
     }
+
+    private fun findViews(v: View) {
+        etPartVoiceName = v.findViewById(R.id.etPartVoiceName)
+        cvgMidiMain = v.findViewById(R.id.cvgMidiMain)
+        midiMainExtras = v.findViewById(R.id.midiMainExtras)
+        cvgMidiPitch = v.findViewById(R.id.cvgMidiPitch)
+        cvgMidiEG = v.findViewById(R.id.cvgMidiEG)
+        cvgMidiFx = v.findViewById(R.id.cvgMidiFx)
+        cvgMidiNote = v.findViewById(R.id.cvgMidiNote)
+        cvgMidiPat = v.findViewById(R.id.cvgMidiPat)
+        cvgMidiCat = v.findViewById(R.id.cvgMidiCat)
+        cvgMidiBend = v.findViewById(R.id.cvgMidiBend)
+        cvgMidiMod = v.findViewById(R.id.cvgMidiMod)
+        cvgMidiAc1 = v.findViewById(R.id.cvgMidiAc1)
+        cvgMidiAc2 = v.findViewById(R.id.cvgMidiAc2)
+        cvgMidiScale = v.findViewById(R.id.cvgMidiScale)
+        cvgMidiRcv = v.findViewById(R.id.cvgMidiRcv)
+        cvgMidiCh = v.findViewById(R.id.cvgMidiCh)
+    }
+
+    private lateinit var etPartVoiceName: EditText
+    private lateinit var cvgMidiMain: ControlViewGroup
+    private lateinit var midiMainExtras: LinearLayout
+    private lateinit var cvgMidiPitch: ControlViewGroup
+    private lateinit var cvgMidiEG: ControlViewGroup
+    private lateinit var cvgMidiFx: ControlViewGroup
+    private lateinit var cvgMidiNote: ControlViewGroup
+    private lateinit var cvgMidiPat: ControlViewGroup
+    private lateinit var cvgMidiCat: ControlViewGroup
+    private lateinit var cvgMidiBend: ControlViewGroup
+    private lateinit var cvgMidiMod: ControlViewGroup
+    private lateinit var cvgMidiAc1: ControlViewGroup
+    private lateinit var cvgMidiAc2: ControlViewGroup
+    private lateinit var cvgMidiScale: ControlViewGroup
+    private lateinit var cvgMidiRcv: ControlViewGroup
+    private lateinit var cvgMidiCh: ControlViewGroup
 }
