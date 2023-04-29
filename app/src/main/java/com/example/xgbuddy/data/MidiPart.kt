@@ -2,7 +2,7 @@ package com.example.xgbuddy.data
 
 import com.example.xgbuddy.data.xg.XGNormalVoice
 
-data class MidiPart(val ch: Int) {
+data class MidiPart(val ch: Int) : MidiData() {
     /**
      * Will probably need a field to specify whether this is a drum part, a qs300 voice, or a
      * regular instrument voice. May not be necessary to distinguish between GM, TG300B, etc at this
@@ -15,6 +15,7 @@ data class MidiPart(val ch: Int) {
      *  so it's fully understood.
      */
 
+    var voiceNameRes: Int = XGNormalVoice.GRAND_PNO.nameRes
     var elementReserve: Byte = MidiParameter.ELEMENT_RESERVE.default
     var bankMsb: Byte = MidiParameter.BANK_MSB.default
     var bankLsb: Byte = MidiParameter.BANK_LSB.default
@@ -132,6 +133,7 @@ data class MidiPart(val ch: Int) {
         programNumber = voice.program
         bankMsb = 0
         bankLsb = voice.bank
+        voiceNameRes = voice.nameRes
         // Set element reserve?
     }
 
@@ -145,5 +147,12 @@ data class MidiPart(val ch: Int) {
     fun getProgramChangeMessage(): MidiMessage {
         val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE and ch).toByte()
         return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
+    }
+
+    fun changeXGVoice(xgVoice: XGNormalVoice) {
+        programNumber = xgVoice.program
+        bankMsb = 0
+        bankLsb = xgVoice.bank
+        voiceNameRes = xgVoice.nameRes
     }
 }

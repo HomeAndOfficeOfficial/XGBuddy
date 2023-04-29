@@ -1,7 +1,7 @@
 package com.example.xgbuddy.data
 
 enum class MidiControlChange(val controlNumber: Byte) {
-    BANK_SELECT(0),
+    BANK_SELECT_MSB(0),
     MODULATION(1),
     BREATH(2),
     FOOT(4),
@@ -12,6 +12,8 @@ enum class MidiControlChange(val controlNumber: Byte) {
     EXPRESSION(11),
     EFFECT_1(12),
     EFFECT_2(13),
+    BANK_SELECT_LSB(32),
+    DATA_ENTRY_LSB(38),
     SUSTAIN(64),
     PORTA(65),
     SOSTENUTO(66),
@@ -23,11 +25,11 @@ enum class MidiControlChange(val controlNumber: Byte) {
     AMP_RELEASE(72),
     AMP_ATTACK(73),
     CUTOFF(74),
-    PORTA_AMOUNT(84),
+    PORTA_CONTROL(84),
     REVERB_SEND(91),
     TREMOLO(92),
     CHORUS(93),
-    DETUNE(94),
+    DETUNE(94), // Also controls Variation Send, TODO: Should probably rename
     PHASER(95),
     NRPN_INCR(96),
     NRPN_DECR(97),
@@ -43,5 +45,4 @@ enum class MidiControlChange(val controlNumber: Byte) {
     OMNI_MODE_ON(125),
     MONO_MODE(126),
     POLY_MODE(127)
-
 }

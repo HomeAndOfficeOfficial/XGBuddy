@@ -41,6 +41,7 @@ import java.util.concurrent.Executor
 
 private const val NOT_OPEN = -1
 
+@Suppress("DEPRECATION") // To accommodate API < 33
 class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback) :
     DeviceCallback() {
     private val midiManager: MidiManager =
@@ -56,16 +57,30 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
     var inputPort: MidiInputPort? = null
 
     init {
-        midiManager.registerDeviceCallback(
-            MidiManager.TRANSPORT_MIDI_BYTE_STREAM,
-            {
-                Log.d(TAG, "Connection status change, should be calling callback")
-                devices = midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            midiManager.registerDeviceCallback(
+                MidiManager.TRANSPORT_MIDI_BYTE_STREAM,
+                {
+                    Log.d(TAG, "Connection status change, should be calling callback")
+                    devices =
+                        midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
+                    callback.onConnectionStatusChanged(devices)
+                }, this
+            )
+            devices = midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
+            if (devices.isNotEmpty()) {
                 callback.onConnectionStatusChanged(devices)
-            }, this
-        )
-        devices = midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
-        if (devices.isNotEmpty()) {
+            }
+        } else {
+            devices = midiManager.devices.toSet()
+            midiManager.registerDeviceCallback(this, Handler(Looper.getMainLooper()))
+        }
+    }
+
+    override fun onDeviceStatusChanged(status: MidiDeviceStatus?) {
+        super.onDeviceStatusChanged(status)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            devices = midiManager.devices.toSet()
             callback.onConnectionStatusChanged(devices)
         }
     }

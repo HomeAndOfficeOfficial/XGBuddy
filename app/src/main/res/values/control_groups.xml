@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="midi_main">
-        <!-- Item Bank msb/lsb -->
-        <!-- Item Part mode -->
-        <item>@string/midi_mp_RCV_CHANNEL</item>
+<!--        <item>@string/midi_mp_RCV_CHANNEL</item>-->
         <item>@string/midi_mp_VOLUME</item>
         <item>@string/midi_mp_PAN</item>
         <item>@string/midi_mp_CUTOFF_FREQ</item>
@@ -17,7 +15,8 @@
     </array>
 
     <array name="midi_note_general">
-        <item>@string/midi_mp_PORTA_SWITCH</item>
+<!--        <item>@string/midi_mp_POLY_MODE</item>-->
+<!--        <item>@string/midi_mp_PORTA_SWITCH</item>-->
         <item>@string/midi_mp_PORTA_TIME</item>
         <item>@string/midi_mp_NOTE_SHIFT</item>
         <item>@string/midi_mp_NOTE_LIMIT_LOW</item>
