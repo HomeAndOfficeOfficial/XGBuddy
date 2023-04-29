@@ -588,6 +588,13 @@
     <string name="nrpn_drum_vari_send">Variation</string>
     <!-- NRPN -->
 
+    <!-- RPN -->
+    <string name="rpn_pitch_bend">Pitch Bend Sens.</string>
+    <string name="rpn_fine_tune">Fine Tuning</string>
+    <string name="rpn_coarse_tune">Coarse Tuning</string>
+    <string name="rpn_null">Reset RPN/NRPN</string>
+    <!-- RPN -->
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
