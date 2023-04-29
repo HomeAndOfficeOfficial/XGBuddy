@@ -595,6 +595,16 @@
     <string name="rpn_null">Reset RPN/NRPN</string>
     <!-- RPN -->
 
+    <!-- Channel Mode Message -->
+    <string name="cmm_all_sound_off">All Sounds Off</string>
+    <string name="cmm_reset_ctrl">Reset All Controllers</string>
+    <string name="cmm_all_note_off">All Notes Off</string>
+    <string name="cmm_omni_off">Omni Off</string>
+    <string name="cmm_omni_on">Omni On</string>
+    <string name="cmm_mono">Mono</string>
+    <string name="cmm_poly">Poly</string>
+    <!-- Channel Model Message -->
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
