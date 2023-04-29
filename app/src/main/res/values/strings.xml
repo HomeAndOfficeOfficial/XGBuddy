@@ -605,6 +605,54 @@
     <string name="cmm_poly">Poly</string>
     <!-- Channel Model Message -->
 
+    <!-- Variation -->
+    <string name="vari_no_effect">No effect</string>
+    <string name="vari_hall_1">Hall 1</string>
+    <string name="vari_hall_2">Hall 2</string>
+    <string name="vari_room_1">Room 1</string>
+    <string name="vari_room_2">Room 2</string>
+    <string name="vari_room_3">Room 3</string>
+    <string name="vari_stage_1">Stage 1</string>
+    <string name="vari_stage_2">Stage 2</string>
+    <string name="vari_plate">Plate</string>
+    <string name="vari_delay_lcr">Delay L,C,R</string>
+    <string name="vari_delay_lr">Delay L,R</string>
+    <string name="vari_echo">Echo</string>
+    <string name="vari_x_delay">Cross Delay</string>
+    <string name="vari_early_ref_1">Early Ref. 1</string>
+    <string name="vari_early_ref_2">Early Ref. 2</string>
+    <string name="vari_gate_reverb">Gate Reverb</string>
+    <string name="vari_rev_gate">Reverse Gate</string>
+    <string name="vari_karaoke_1">Karaoke 1</string>
+    <string name="vari_karaoke_2">Karaoke 2</string>
+    <string name="vari_karaoke_3">Karaoke 3</string>
+    <string name="vari_chorus_1">Chorus 1</string>
+    <string name="vari_chorus_2">Chorus 2</string>
+    <string name="vari_chorus_3">Chorus 3</string>
+    <string name="vari_chorus_4">Chorus 4</string>
+    <string name="vari_celeste_1">Celeste 1</string>
+    <string name="vari_celeste_2">Celeste 2</string>
+    <string name="vari_celeste_3">Celeste 3</string>
+    <string name="vari_celeste_4">Celeste 4</string>
+    <string name="vari_flanger_1">Flanger 1</string>
+    <string name="vari_flanger_2">Flanger 2</string>
+    <string name="vari_flanger_3">Flanger 3</string>
+    <string name="vari_symphonic">Symphonic</string>
+    <string name="vari_rot_speaker">Rotary Speaker</string>
+    <string name="vari_tremolo">Tremolo</string>
+    <string name="vari_auto_pan">Auto Pan</string>
+    <string name="vari_phaser_1">Phaser 1</string>
+    <string name="vari_phaser_2">Phaser 2</string>
+    <string name="vari_distortion">Distortion</string>
+    <string name="vari_overdrive">Overdrive</string>
+    <string name="vari_amp_sim">Amp Simulator</string>
+    <string name="vari_3_band_eq">3-Band EQ (Mono)</string>
+    <string name="vari_2_band_eq">2-Band EQ (Stereo)</string>
+    <string name="vari_auto_wah">Auto Wah (LFO)</string>
+    <string name="vari_pitch_change">Pitch Change</string>
+    <string name="vari_thru">Thru</string>
+    <!-- Variation -->
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
