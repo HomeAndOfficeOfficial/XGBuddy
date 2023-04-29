@@ -566,6 +566,28 @@
     <string name="midi_mp_VEL_LIMIT_HIGH">Upper Vel. Limit</string>
     <!-- MIDI Multi-Part Parameter Descriptions -->
 
+    <!-- NRPN -->
+    <string name="nrpn_vibrato_rate">Vibrato Rate</string>
+    <string name="nrpn_vibrato_depth">Vibrato Depth</string>
+    <string name="nrpn_vibrato_delay">Vibrato Delay</string>
+    <string name="nrpn_cutoff_freq">Cutoff Freq.</string>
+    <string name="nrpn_resonance">Resonance</string>
+    <string name="nrpn_eg_attack_time">Attack</string>
+    <string name="nrpn_eg_decay_time">Decay</string>
+    <string name="nrpn_eg_release_time">Release</string>
+    <string name="nrpn_drum_cutoff_freq">Cutoff Freq.</string>
+    <string name="nrpn_drum_resonance">Resonance</string>
+    <string name="nrpn_drum_eg_attack_rate">Attack</string>
+    <string name="nrpn_drum_eg_decay_rate">Decay</string>
+    <string name="nrpn_drum_pitch_coarse">Pitch Coarse</string>
+    <string name="nrpn_drum_pitch_fine">Pitch Fine</string>
+    <string name="nrpn_drum_level">Level</string>
+    <string name="nrpn_drum_pan">Pan</string>
+    <string name="nrpn_drum_reverb_send">Reverb</string>
+    <string name="nrpn_drum_chorus_send">Chorus</string>
+    <string name="nrpn_drum_vari_send">Variation</string>
+    <!-- NRPN -->
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
