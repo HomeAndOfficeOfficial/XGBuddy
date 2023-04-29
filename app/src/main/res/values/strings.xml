@@ -605,7 +605,7 @@
     <string name="cmm_poly">Poly</string>
     <!-- Channel Model Message -->
 
-    <!-- Variation -->
+    <!-- Variation/Effects -->
     <string name="vari_no_effect">No effect</string>
     <string name="vari_hall_1">Hall 1</string>
     <string name="vari_hall_2">Hall 2</string>
@@ -651,7 +651,9 @@
     <string name="vari_auto_wah">Auto Wah (LFO)</string>
     <string name="vari_pitch_change">Pitch Change</string>
     <string name="vari_thru">Thru</string>
-    <!-- Variation -->
+    <string name="reverb_white">White Room</string>
+    <string name="reverb_basement">Basement</string>
+    <!-- Variation/Effects -->
 
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
