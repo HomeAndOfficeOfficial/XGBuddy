@@ -655,6 +655,57 @@
     <string name="reverb_basement">Basement</string>
     <!-- Variation/Effects -->
 
+    <!-- Effect Parameters -->
+    <string name="fxp_dry_wet">Dry/Wet</string>
+    <string name="fxp_diffusion">Dry/Wet</string>
+    <string name="fxp_init_delay">Dry/Wet</string>
+    <string name="fxp_hpf_cutoff">Dry/Wet</string>
+    <string name="fxp_lpf_cutoff">Dry/Wet</string>
+    <string name="fxp_reverb_time">Dry/Wet</string>
+    <string name="fxp_rch_delay_2">Dry/Wet</string>
+    <string name="fxp_density">Dry/Wet</string>
+    <string name="fxp_er_rev_balance">Dry/Wet</string>
+    <string name="fxp_feedback_level">Dry/Wet</string>
+    <string name="fxp_lch_delay_1">Dry/Wet</string>
+    <string name="fxp_lch_delay_2">Dry/Wet</string>
+    <string name="fxp_lch_feedback_level">Dry/Wet</string>
+    <string name="fxp_rch_delay_1">Dry/Wet</string>
+    <string name="fxp_rch_feedback_level">Dry/Wet</string>
+    <string name="fxp_high_damp">Dry/Wet</string>
+    <string name="fxp_delay_2_lvl">Dry/Wet</string>
+    <string name="fxp_eq_low_freq">Dry/Wet</string>
+    <string name="fxp_eq_low_gain">Dry/Wet</string>
+    <string name="fxp_eq_high_freq">Dry/Wet</string>
+    <string name="fxp_eq_high_gain">Dry/Wet</string>
+    <string name="fxp_width">Dry/Wet</string>
+    <string name="fxp_height">Dry/Wet</string>
+    <string name="fxp_depth">Dry/Wet</string>
+    <string name="fxp_wall_vary">Dry/Wet</string>
+    <string name="fxp_reverb_delay">Dry/Wet</string>
+    <string name="fxp_lr_delay">Dry/Wet</string>
+    <string name="fxp_rl_delay">Dry/Wet</string>
+    <string name="fxp_input_select">Dry/Wet</string>
+    <string name="fxp_cch_delay">Dry/Wet</string>
+    <string name="fxp_feedback_delay_1">Dry/Wet</string>
+    <string name="fxp_cch_level">Dry/Wet</string>
+    <string name="fxp_type">Dry/Wet</string>
+    <string name="fxp_room_size">Dry/Wet</string>
+    <string name="fxp_liveness">Dry/Wet</string>
+    <string name="fxp_feedback_delay_2">Dry/Wet</string>
+    <string name="fxp_lfo_freq">Dry/Wet</string>
+    <string name="fxp_lfo_depth">Dry/Wet</string>
+    <string name="fxp_delay_offset">Dry/Wet</string>
+    <string name="fxp_input_mode">Dry/Wet</string>
+    <string name="fxp_am_depth">Dry/Wet</string>
+    <string name="fxp_pm_depth">Dry/Wet</string>
+    <string name="fxp_lfo_phase_diff">Dry/Wet</string>
+    <string name="fxp_lr_depth">Dry/Wet</string>
+    <string name="fxp_fr_depth">Dry/Wet</string>
+    <string name="fxp_pan_direction">Dry/Wet</string>
+    <string name="fxp_phase_shift_offset">Dry/Wet</string>
+    <string name="fxp_stage">Dry/Wet</string>
+    <!-- Effect Parameters -->
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
