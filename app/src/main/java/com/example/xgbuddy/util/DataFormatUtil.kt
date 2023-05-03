@@ -100,6 +100,39 @@ object DataFormatUtil {
         }
     }
 
+    val gateTypeFormatter = DataAssignFormatter {
+        if (it == 0)
+            "TypeA"
+        else
+            "TypeB"
+    }
+
+    val karaokeDelayFormatter = DataAssignFormatter {
+        "${EffectDataAssignTables.karaokeDelay[it]}ms"
+    }
+
+    val eqTenthKHzFormatter = DataAssignFormatter {
+        "${it / 10f}"
+    }
+
+    val ampTypeFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "Off"
+            1 -> "Stack"
+            2 -> "Combo"
+            3 -> "Tube"
+            else -> ""
+        }
+    }
+
+    val pitchFormatter = DataAssignFormatter {
+        "${-24 + it - 40}"
+    }
+
+    val fineFormatter = DataAssignFormatter {
+        "${-50 + it - 14}"
+    }
+
     fun interface DataAssignFormatter {
         fun format(value: Int): String
     }

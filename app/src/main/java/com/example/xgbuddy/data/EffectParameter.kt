@@ -66,7 +66,7 @@ enum class EffectParameter(
     CCH_DELAY(R.string.fxp_cch_delay, 1, 7150, DataFormatUtil.millisecondFormatter, false),
     LCH_DELAY_715(R.string.fxp_lch_delay_1, 1, 7150, DataFormatUtil.millisecondFormatter, false),
     RCH_DELAY_715(R.string.fxp_rch_delay_1, 1, 7150, DataFormatUtil.millisecondFormatter, false),
-    FEEDBACK_DELAY_715(
+    FEEDBACK_DELAY_1_715(
         R.string.fxp_feedback_delay_1,
         1,
         7150,
@@ -77,7 +77,9 @@ enum class EffectParameter(
     ER_TYPE(R.string.fxp_type, 0, 5, DataFormatUtil.erTypeFormatter, false),
     ROOM_SIZE(R.string.fxp_room_size, 0, 44, DataFormatUtil.roomSizeFormatter, false),
     LIVENESS(R.string.fxp_liveness, 0, 10, null, false),
-    FEEDBACK_DELAY_1_715(
+    REV_GATE_TYPE(R.string.fxp_gate_type, 0, 1, DataFormatUtil.gateTypeFormatter, false),
+    DELAY_TIME(R.string.fxp_delay_time, 0, 127, DataFormatUtil.karaokeDelayFormatter, false),
+    FEEDBACK_DELAY_2_715(
         R.string.fxp_feedback_delay_1,
         1,
         7150,
@@ -94,6 +96,7 @@ enum class EffectParameter(
     LFO_FREQ(R.string.fxp_lfo_freq, 0, 127, DataFormatUtil.lfoFreqFormatter, true),
     LFO_DEPTH(R.string.fxp_lfo_depth, 0, 127, null, false),
     DELAY_OFFSET(R.string.fxp_delay_offset, 0, 127, DataFormatUtil.modDelayOffsetFormatter, false),
+    FLANGE_DELAY_OFFSET(R.string.fxp_delay_offset, 0, 63, DataFormatUtil.modDelayOffsetFormatter, false),
     INPUT_MODE(R.string.fxp_input_mode, 0, 1, DataFormatUtil.monoSteroFormatter, false),
     AM_DEPTH(R.string.fxp_am_depth, 0, 127, null, false),
     PM_DEPTH(R.string.fxp_pm_depth, 0, 127, null, false),
@@ -102,12 +105,17 @@ enum class EffectParameter(
     FR_DEPTH(R.string.fxp_fr_depth, 0, 127, null, false),
     PAN_DIRECTION(R.string.fxp_pan_direction, 0, 5, DataFormatUtil.panDirectionFormatter, false),
     PHASE_SHIFT_OFFSET(R.string.fxp_phase_shift_offset, 0, 127, null, false),
-    STAGE(R.string.fxp_stage, 3, 10, DataFormatUtil.phaserStageFormatter, false);
-
-    /**
-     * TODO: Since a lot of these formatters will be the same, make an object class that can provide
-     *  an instance of the appropriate one. Will probably make sense to move the interface into its
-     *  own file too in that case.
-     */
+    STAGE(R.string.fxp_stage, 3, 10, DataFormatUtil.phaserStageFormatter, false),
+    DRIVE(R.string.fxp_drive, 0, 127, null, true),
+    OUTPUT_LEVEL(R.string.fxp_output_lvl, 0, 127, null, false),
+    EQ_MID_FREQ(R.string.fxp_eq_mid_freq, 28, 54, DataFormatUtil.eqFreqFormatter, false),
+    EQ_MID_GAIN(R.string.fxp_eq_mid_gain, 52, 76, DataFormatUtil.decibleFormatter, false),
+    EQ_MID_WIDTH(R.string.fxp_eq_mid_width, 10, 120, DataFormatUtil.eqTenthKHzFormatter, false),
+    EDGE(R.string.fxp_edge, 0, 127, null, false),
+    CUTOFF_FREQ_OFFSET(R.string.fxp_cutoff_offset, 0, 127, null, true),
+    RESONANCE(R.string.fxp_resonance, 10, 120, DataFormatUtil.eqTenthKHzFormatter, false),
+    AMP_TYPE(R.string.fxp_amp_type, 0, 3, DataFormatUtil.ampTypeFormatter, false),
+    PITCH(R.string.fxp_pitch, 40, 88, DataFormatUtil.pitchFormatter, false),
+    FINE(R.string.fxp_fine, 14, 114, DataFormatUtil.fineFormatter, false)
 
 }

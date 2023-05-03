@@ -704,6 +704,19 @@
     <string name="fxp_pan_direction">Dry/Wet</string>
     <string name="fxp_phase_shift_offset">Dry/Wet</string>
     <string name="fxp_stage">Dry/Wet</string>
+    <string name="fxp_gate_type">Type</string>
+    <string name="fxp_delay_time">Delay Time</string>
+    <string name="fxp_drive">Drive</string>
+    <string name="fxp_output_lvl">Output Level</string>
+    <string name="fxp_eq_mid_freq">Mid Freq.</string>
+    <string name="fxp_eq_mid_gain">Mid Gain</string>
+    <string name="fxp_eq_mid_width">Mid Width</string>
+    <string name="fxp_edge">Edge</string>
+    <string name="fxp_cutoff_offset">Cutoff Freq. Offset</string>
+    <string name="fxp_resonance">Resonance</string>
+    <string name="fxp_amp_type">Amp Type</string>
+    <string name="fxp_pitch">Pitch</string>
+    <string name="fxp_fine">Fine</string>
     <!-- Effect Parameters -->
 
     <!-- QS300 Element Parameter Descriptions -->
