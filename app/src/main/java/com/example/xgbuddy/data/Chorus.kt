@@ -13,5 +13,7 @@ enum class Chorus(val nameRes: Int, val msb: Byte, val lsb: Byte) {
     CELESTE4(R.string.vari_celeste_4, 0x42, 0x08),
     FLANGER1(R.string.vari_flanger_1, 0x43, 0),
     FLANGER2(R.string.vari_flanger_2, 0x43, 0x01),
-    FLANGER3(R.string.vari_flanger_3, 0x43, 0x08),
+    FLANGER3(R.string.vari_flanger_3, 0x43, 0x08);
+
+    fun getParameterList(): Array<EffectParameter?> = VariationParameterLists.chorus
 }
