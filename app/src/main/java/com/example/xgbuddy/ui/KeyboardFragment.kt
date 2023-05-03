@@ -1,14 +1,13 @@
 package com.example.xgbuddy.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.Note
+import com.example.xgbuddy.data.gm.Note
 import com.example.xgbuddy.databinding.FragmentKeyboardBinding
 import com.example.xgbuddy.ui.custom.KeyView
 import com.example.xgbuddy.util.EnumFinder.findBy

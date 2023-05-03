@@ -1,6 +1,7 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.gm
 
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.MidiControlChange
 
 enum class ChannelModeMessage(val nameRes: Int, val cc: MidiControlChange) {
     ALL_SOUND_OFF(R.string.cmm_all_sound_off, MidiControlChange.ALL_SOUND_OFF),

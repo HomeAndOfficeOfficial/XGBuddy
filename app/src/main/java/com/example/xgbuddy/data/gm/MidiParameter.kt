@@ -1,6 +1,7 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.gm
 
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.xg.NRPN
 import kotlin.reflect.KMutableProperty
 

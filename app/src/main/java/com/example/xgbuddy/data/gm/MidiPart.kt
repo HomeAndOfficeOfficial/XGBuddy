@@ -1,5 +1,8 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.gm
 
+import com.example.xgbuddy.data.MidiConstants
+import com.example.xgbuddy.data.MidiData
+import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.xg.XGNormalVoice
 
 data class MidiPart(val ch: Int) : MidiData() {

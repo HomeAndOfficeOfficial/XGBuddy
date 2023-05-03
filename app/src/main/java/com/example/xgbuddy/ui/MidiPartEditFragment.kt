@@ -10,8 +10,8 @@ import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.MidiParameter
-import com.example.xgbuddy.data.MidiPart
+import com.example.xgbuddy.data.gm.MidiParameter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.SwitchControlView

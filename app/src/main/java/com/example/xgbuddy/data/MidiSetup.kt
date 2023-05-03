@@ -1,5 +1,7 @@
 package com.example.xgbuddy.data
 
+import com.example.xgbuddy.data.gm.MidiPart
+
 data class MidiSetup(
     val mode: InstrumentMode,
     val parts: List<MidiPart>,
