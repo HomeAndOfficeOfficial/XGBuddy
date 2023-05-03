@@ -1,4 +1,4 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.xg
 
 object VariationParameterLists {
     val basicReverb: Array<EffectParameter?> = arrayOf(

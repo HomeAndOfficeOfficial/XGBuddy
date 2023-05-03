@@ -1,4 +1,4 @@
-package com.example.xgbuddy.data
+package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.R
 import com.example.xgbuddy.util.DataFormatUtil

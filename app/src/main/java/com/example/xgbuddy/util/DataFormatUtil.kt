@@ -1,6 +1,6 @@
 package com.example.xgbuddy.util
 
-import com.example.xgbuddy.data.EffectDataAssignTables
+import com.example.xgbuddy.data.xg.EffectDataAssignTables
 
 object DataFormatUtil {
 
