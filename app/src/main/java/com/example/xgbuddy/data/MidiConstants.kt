@@ -9,9 +9,14 @@ object MidiConstants {
 
     const val EXCLUSIVE_STATUS_BYTE: Byte = -16
     const val YAMAHA_ID_BYTE: Byte = 67
+    const val DEVICE_NUMBER: Byte = 0x10
     const val DEVICE_NUMBER_BULK_DUMP: Byte = 0
+    const val UNIVERSAL_NON_REALTIME: Byte = 0x7e
+    const val TARGET_ID: Byte = 0x7f
+    const val SUB_ID_GM_MSG: Byte = 9
+    const val SUB_ID_GM_ON: Byte = 1
 
-    const val END_BYTE: Byte = -9
+    const val SYSEX_END: Byte = -9 // 0xf7
 
     const val OFFSET_DEVICE_ID = 3
 
@@ -34,6 +39,28 @@ object MidiConstants {
     const val QS300_ELEMENT_DATA_SIZE = 80
 
     const val MODEL_ID_QS300: Byte = 0x4b
+    const val MODEL_ID_XG: Byte = 0x4c
 
     const val XG_NORMAL_VOICE_MSB: Byte = 0
+
+    val XY_SYSTEM_ON_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID_BYTE,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0x7e,
+        0,
+        SYSEX_END
+    )
+
+    val GM_MODE_ON_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        UNIVERSAL_NON_REALTIME,
+        TARGET_ID,
+        SUB_ID_GM_MSG,
+        SUB_ID_GM_ON,
+        SYSEX_END
+    )
 }

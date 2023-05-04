@@ -117,7 +117,7 @@ data class QS300Voice(var voiceName: String = "") : MidiData() {
                 dataSum = dataSum.plus(it[i]).toByte()
             }
             it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 2] = (0 - dataSum).toByte()
-            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.END_BYTE
+            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.SYSEX_END
         }
 
         return MidiMessage(bulkDumpArray, System.nanoTime() + 10)

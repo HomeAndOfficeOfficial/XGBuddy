@@ -84,6 +84,10 @@ object MidiMessageUtility {
         getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, 0x7f)
     )
 
+    fun getXGSystemOn(): MidiMessage = MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)
+
+    fun getGMModeOn(): MidiMessage = MidiMessage(MidiConstants.GM_MODE_ON_ARRAY, 0)
+
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
         val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {
@@ -135,7 +139,7 @@ object MidiMessageUtility {
                 dataSum = dataSum.plus(it[i]).toByte()
             }
             it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 2] = (0 - dataSum).toByte()
-            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.END_BYTE
+            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.SYSEX_END
         }
 
         return MidiMessage(bulkDumpArray, 0)
