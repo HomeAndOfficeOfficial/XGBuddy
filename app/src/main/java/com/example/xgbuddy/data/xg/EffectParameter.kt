@@ -3,6 +3,13 @@ package com.example.xgbuddy.data.xg
 import com.example.xgbuddy.R
 import com.example.xgbuddy.util.DataFormatUtil
 
+/**
+ * In addition to this, there will need to be an enum defining all the parameters as they pertain
+ * to the XG parameter change sysex message. I'm not quite sure how to handle mapping the parameters
+ * to the controls yet, but I know that the complete list will need to be defined. (Table 1-3 in the
+ * manual).
+ */
+
 enum class EffectParameter(
     val nameRes: Int,
     val min: Int,
@@ -96,7 +103,13 @@ enum class EffectParameter(
     LFO_FREQ(R.string.fxp_lfo_freq, 0, 127, DataFormatUtil.lfoFreqFormatter, true),
     LFO_DEPTH(R.string.fxp_lfo_depth, 0, 127, null, false),
     DELAY_OFFSET(R.string.fxp_delay_offset, 0, 127, DataFormatUtil.modDelayOffsetFormatter, false),
-    FLANGE_DELAY_OFFSET(R.string.fxp_delay_offset, 0, 63, DataFormatUtil.modDelayOffsetFormatter, false),
+    FLANGE_DELAY_OFFSET(
+        R.string.fxp_delay_offset,
+        0,
+        63,
+        DataFormatUtil.modDelayOffsetFormatter,
+        false
+    ),
     INPUT_MODE(R.string.fxp_input_mode, 0, 1, DataFormatUtil.monoSteroFormatter, false),
     AM_DEPTH(R.string.fxp_am_depth, 0, 127, null, false),
     PM_DEPTH(R.string.fxp_pm_depth, 0, 127, null, false),
