@@ -6,6 +6,7 @@ import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
+import com.example.xgbuddy.data.xg.NRPN
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.EnumFinder.findBy
 
@@ -56,6 +57,23 @@ object MidiMessageUtility {
     fun getXGParamChange(): MidiMessage {
         return MidiMessage(byteArrayOf(), 0)
     }
+
+    fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> =
+        listOf(
+            getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, nrpn.msb),
+            getControlChange(
+                channel,
+                MidiControlChange.NRPN_LSB.controlNumber,
+                drumNoteNumber ?: nrpn.lsb!!
+            )
+        )
+
+    fun getNRPNClear(channel: Int): List<MidiMessage> = listOf(
+        getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, 0x7f),
+        getControlChange(channel, MidiControlChange.NRPN_LSB.controlNumber, 0x7f)
+    )
+
+    // TODO Add function for sending subsequent nrpn data messages. Not sure how to do this exactly.
 
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
