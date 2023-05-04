@@ -20,6 +20,8 @@ class SliderControlView(context: Context) :
 
     private val slider: Slider
 
+    var shouldReportAllTouchEvents = false
+
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
         slider = view.findViewById<Slider?>(R.id.cpSlider).apply {
@@ -53,11 +55,15 @@ class SliderControlView(context: Context) :
 
     @SuppressLint("RestrictedApi")
     override fun onStartTrackingTouch(slider: Slider) {
+        if (shouldReportAllTouchEvents) {
+            this.value = value.toInt().toByte()
+            listener?.onParameterChanged(controlParameter!!)
+        }
     }
 
     @SuppressLint("RestrictedApi")
     override fun onStopTrackingTouch(slider: Slider) {
-        if (!isRealtimeControl) {
+        if (!isRealtimeControl || shouldReportAllTouchEvents) {
             this.value = slider.value.toInt().toByte()
             listener?.onParameterChanged(controlParameter!!)
         }
