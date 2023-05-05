@@ -30,7 +30,9 @@ class PartsFragment : Fragment() {
     }
 
     private fun initObservers() {
-        midiViewModel.channels.observe(viewLifecycleOwner) {}
+        midiViewModel.channels.observe(viewLifecycleOwner) {
+            partsAdapter.updateRow(it[midiViewModel.selectedChannel.value!!])
+        }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
         }

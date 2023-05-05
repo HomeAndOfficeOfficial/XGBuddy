@@ -158,4 +158,8 @@ data class MidiPart(val ch: Int) : MidiData() {
         bankLsb = xgVoice.bank
         voiceNameRes = xgVoice.nameRes
     }
+
+    override fun toString(): String {
+        return "MidiPart(ch=$ch, voiceNameRes=$voiceNameRes, elementReserve=$elementReserve, bankMsb=$bankMsb, bankLsb=$bankLsb, programNumber=$programNumber, receiveChannel=$receiveChannel)"
+    }
 }

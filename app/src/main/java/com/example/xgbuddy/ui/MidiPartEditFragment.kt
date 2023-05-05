@@ -122,6 +122,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
             currentParam!!.reflectedField,
             controlParameter.value
         )
+        midiViewModel.channels.value = midiViewModel.channels.value
         midiSession.send(getParamChangeMessage(controlParameter, isTouching))
     }
 

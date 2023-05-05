@@ -2,6 +2,7 @@ package com.example.xgbuddy.adapter
 
 import android.content.Context
 import android.view.ViewGroup
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.custom.PartsRowItem
 
@@ -20,20 +21,11 @@ class PartsListAdapter(
     private fun populateContainer(context: Context) {
         viewModel.channels.value?.forEach { midiChannel ->
             partsContainer.addView(PartsRowItem(context).apply {
-                val name = getVoiceName(
-                    midiChannel.programNumber,
-                    midiChannel.bankMsb,
-                    midiChannel.bankLsb
-                )
+                val name = context.getString(midiChannel.voiceNameRes)
                 setChannelInfo(midiChannel, name)
                 listener = this@PartsListAdapter
             })
         }
-    }
-
-    private fun getVoiceName(program: Byte, msb: Byte, lsb: Byte): String {
-        // TODO: Create a utility that maps voice name to program, msb, lsb
-        return "Grand Piano"
     }
 
     override fun onPartsRowTouched(partNumber: Int) {
@@ -49,6 +41,12 @@ class PartsListAdapter(
         }
         (partsContainer.getChildAt(rowNumber) as PartsRowItem).isRowSelected = true
         selectedRow = rowNumber
+    }
+
+    fun updateRow(midiPart: MidiPart) {
+        (partsContainer.getChildAt(midiPart.ch) as PartsRowItem).apply {
+            setChannelInfo(midiPart, context.getString(midiPart.voiceNameRes))
+        }
     }
 
     companion object {
