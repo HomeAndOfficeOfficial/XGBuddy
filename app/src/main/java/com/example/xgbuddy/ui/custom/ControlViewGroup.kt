@@ -9,15 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.MidiParameter
-import com.example.xgbuddy.data.MidiPart
+import com.example.xgbuddy.data.gm.MidiParameter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
-import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.util.EnumFinder.findBy
-import java.lang.reflect.TypeVariable
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KProperty1
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
     LinearLayout(context, attributeSet) {

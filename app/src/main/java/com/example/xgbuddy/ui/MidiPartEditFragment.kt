@@ -9,9 +9,10 @@ import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.MidiParameter
-import com.example.xgbuddy.data.MidiPart
+import com.example.xgbuddy.data.gm.MidiParameter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.SwitchControlView
@@ -23,6 +24,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private val midiViewModel: MidiViewModel by activityViewModels()
 
     private var currentParam: MidiParameter? = null
+    private var isNrpnActive = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,9 +127,16 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private fun getParamChangeMessage(controlParameter: ControlParameter): MidiMessage {
 
         // First check if nrpn param
-//        if (currentParam?.nrpn != null) {
-
-//        }
+        if (currentParam?.nrpn != null) {
+            if (!isNrpnActive) {
+                activateNRPN()
+            }
+            return MidiMessageUtility.getControlChange(
+                midiViewModel.selectedChannel.value!!,
+                MidiControlChange.DATA_ENTRY_MSB.controlNumber, // Todo: <- verify this is right
+                controlParameter.value
+            )
+        }
 
         // Then check if control change param
         if (currentParam?.controlChange != null) {
@@ -139,6 +148,21 @@ class MidiPartEditFragment : ControlBaseFragment() {
         }
 
         return MidiMessageUtility.getXGParamChange()
+    }
+
+    private fun activateNRPN() {
+        isNrpnActive = true
+        midiSession.send(
+            MidiMessageUtility.getNRPNSet(
+                midiViewModel.selectedChannel.value!!,
+                currentParam!!.nrpn!!
+            )
+        )
+    }
+
+    private fun deactivateNRPN() {
+        isNrpnActive = false
+        midiSession.send(MidiMessageUtility.getNRPNClear(midiViewModel.selectedChannel.value!!))
     }
 
     private fun findViews(v: View) {

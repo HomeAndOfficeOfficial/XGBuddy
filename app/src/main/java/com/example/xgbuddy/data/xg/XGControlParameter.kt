@@ -2,7 +2,7 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.MidiParameter
+import com.example.xgbuddy.data.gm.MidiParameter
 
 class XGControlParameter(
     override val name: String,

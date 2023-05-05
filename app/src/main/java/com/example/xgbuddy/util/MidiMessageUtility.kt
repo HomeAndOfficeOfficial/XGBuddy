@@ -6,6 +6,8 @@ import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
+import com.example.xgbuddy.data.xg.NRPN
+import com.example.xgbuddy.data.xg.RPN
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.EnumFinder.findBy
 
@@ -57,11 +59,48 @@ object MidiMessageUtility {
         return MidiMessage(byteArrayOf(), 0)
     }
 
+    fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> =
+        listOf(
+            getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, nrpn.msb),
+            getControlChange(
+                channel,
+                MidiControlChange.NRPN_LSB.controlNumber,
+                drumNoteNumber ?: nrpn.lsb!!
+            )
+        )
+
+    fun getNRPNClear(channel: Int): List<MidiMessage> = listOf(
+        getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, 0x7f),
+        getControlChange(channel, MidiControlChange.NRPN_LSB.controlNumber, 0x7f)
+    )
+
+    fun getRPNSet(channel: Int, rpn: RPN): List<MidiMessage> = listOf(
+        getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, rpn.msb),
+        getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, rpn.lsb)
+    )
+
+    fun getRPNClear(channel: Int): List<MidiMessage> = listOf(
+        getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, 0x7f),
+        getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, 0x7f)
+    )
+
+    fun getXGSystemOn(): MidiMessage = MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)
+
+    fun getGMModeOn(): MidiMessage = MidiMessage(MidiConstants.GM_MODE_ON_ARRAY, 0)
+
+    fun getDrumSetupReset(setupNumber: Int): MidiMessage {
+        val array = MidiConstants.DRUM_SETUP_RESET_ARRAY
+        array[7] = setupNumber.toByte()
+        return MidiMessage(array, 0)
+    }
+
+    fun getAllParameterReset(): MidiMessage = MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
+
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
         val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {
             it[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
-            it[1] = MidiConstants.YAMAHA_ID_BYTE
+            it[1] = MidiConstants.YAMAHA_ID
             it[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
             it[3] = MidiConstants.MODEL_ID_QS300
             it[4] = 1   // Byte count hi
@@ -108,7 +147,7 @@ object MidiMessageUtility {
                 dataSum = dataSum.plus(it[i]).toByte()
             }
             it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 2] = (0 - dataSum).toByte()
-            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.END_BYTE
+            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.SYSEX_END
         }
 
         return MidiMessage(bulkDumpArray, 0)

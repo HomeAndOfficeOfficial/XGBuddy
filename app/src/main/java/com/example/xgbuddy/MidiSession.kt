@@ -10,7 +10,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.xgbuddy.data.*
 import javax.inject.Inject
-import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
@@ -22,7 +21,7 @@ class MidiSession @Inject constructor(context: Context) {
         override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
             msg?.copyOfRange(offset, offset + count)?.forEach {
                 midiReceiveBuffer.add(it)
-                if (it == MidiConstants.END_BYTE) {
+                if (it == MidiConstants.SYSEX_END) {
                     Log.d(
                         TAG,
                         "OnSend at timestamp: $timestamp. Here's what it says ${
