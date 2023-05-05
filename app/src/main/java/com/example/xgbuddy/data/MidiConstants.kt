@@ -8,7 +8,7 @@ object MidiConstants {
     const val STATUS_PROGRAM_CHANGE = 0xC0
 
     const val EXCLUSIVE_STATUS_BYTE: Byte = -16
-    const val YAMAHA_ID_BYTE: Byte = 67
+    const val YAMAHA_ID: Byte = 67
     const val DEVICE_NUMBER: Byte = 0x10
     const val DEVICE_NUMBER_BULK_DUMP: Byte = 0
     const val UNIVERSAL_NON_REALTIME: Byte = 0x7e
@@ -45,7 +45,7 @@ object MidiConstants {
 
     val XY_SYSTEM_ON_ARRAY = byteArrayOf(
         EXCLUSIVE_STATUS_BYTE,
-        YAMAHA_ID_BYTE,
+        YAMAHA_ID,
         DEVICE_NUMBER,
         MODEL_ID_XG,
         0,
@@ -61,6 +61,30 @@ object MidiConstants {
         TARGET_ID,
         SUB_ID_GM_MSG,
         SUB_ID_GM_ON,
+        SYSEX_END
+    )
+
+    val DRUM_SETUP_RESET_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0x7d,
+        0, // Replace this with drum setup number
+        SYSEX_END
+    )
+
+    val ALL_PARAM_RESET_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0X7f,
+        0,
         SYSEX_END
     )
 }

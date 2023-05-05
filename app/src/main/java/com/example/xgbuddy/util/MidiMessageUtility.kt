@@ -88,11 +88,19 @@ object MidiMessageUtility {
 
     fun getGMModeOn(): MidiMessage = MidiMessage(MidiConstants.GM_MODE_ON_ARRAY, 0)
 
+    fun getDrumSetupReset(setupNumber: Int): MidiMessage {
+        val array = MidiConstants.DRUM_SETUP_RESET_ARRAY
+        array[7] = setupNumber.toByte()
+        return MidiMessage(array, 0)
+    }
+
+    fun getAllParameterReset(): MidiMessage = MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
+
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
         val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {
             it[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
-            it[1] = MidiConstants.YAMAHA_ID_BYTE
+            it[1] = MidiConstants.YAMAHA_ID
             it[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
             it[3] = MidiConstants.MODEL_ID_QS300
             it[4] = 1   // Byte count hi
