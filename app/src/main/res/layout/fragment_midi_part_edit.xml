@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:boxBackgroundColor="#00000000"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/spRcvCh"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -24,6 +24,15 @@
             android:hint="@string/qs_voice_name"
             android:inputType="textNoSuggestions" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spRcvCh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/mp_rcv_channel_entries"
+        app:layout_constraintBottom_toBottomOf="@id/tiPartVoiceName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tiPartVoiceName" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -44,21 +53,7 @@
                 android:id="@+id/cvgMidiMain"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_main"
-                app:cvgLabel="Main">
-
-                <LinearLayout
-                    android:id="@+id/midiMainExtras"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <com.example.xgbuddy.ui.custom.SpinnerControlView
-                        android:id="@+id/cvRcvChannel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:pcEntries="@array/mp_rcv_channel_entries"
-                        app:pcId="@string/midi_mp_RCV_CHANNEL" />
-                </LinearLayout>
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+                app:cvgLabel="Main" />
 
             <com.example.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiPitch"

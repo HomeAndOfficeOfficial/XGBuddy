@@ -1,11 +1,15 @@
 package com.example.xgbuddy.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
@@ -25,6 +29,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
 
     private var currentParam: MidiParameter? = null
     private var isNrpnActive = false
+    private var isSpinnerUpdating = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +45,46 @@ class MidiPartEditFragment : ControlBaseFragment() {
         }
         midiViewModel.channels.observe(viewLifecycleOwner) {
             val channel = midiViewModel.selectedChannel.value
+            // TODO: Find a way to change the edit text when the voice is selected.
             etPartVoiceName.setText(it[channel!!].voiceNameRes)
+            Log.d("MidiPartEdit", "Channels observed")
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             updateViews(midiViewModel.channels.value!![it])
+        }
+
+        // Todo: clean this up a little.
+        spRcvCh.setSelection(
+            midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
+                .receiveChannel.toInt()
+        )
+        spRcvCh.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                Log.d("MidiPartEdit", "onItemSelected")
+                if (isSpinnerUpdating) {
+                    isSpinnerUpdating = false
+                } else {
+                    midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].receiveChannel =
+                        position.toByte()
+                    midiViewModel.channels.value = midiViewModel.channels.value
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
         return v
     }
 
     private fun updateViews(midiPart: MidiPart) {
         etPartVoiceName.setText(midiPart.voiceNameRes)
+        Log.d("MidiPartEdit", "Setting selection from updateView")
+        isSpinnerUpdating = true
+        spRcvCh.setSelection(midiPart.receiveChannel.toInt())
         controlGroups.forEach {
             it.updateViews(midiPart)
         }
@@ -59,7 +94,6 @@ class MidiPartEditFragment : ControlBaseFragment() {
         initControlGroup(
             cvgMidiMain,
             shouldStartExpanded = true,
-            extraChildren = midiMainExtras,
             shouldReceiveAllTouchCallbacks = true
         )
         // TODO: Add detune as extra
@@ -179,7 +213,6 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private fun findViews(v: View) {
         etPartVoiceName = v.findViewById(R.id.etPartVoiceName)
         cvgMidiMain = v.findViewById(R.id.cvgMidiMain)
-        midiMainExtras = v.findViewById(R.id.midiMainExtras)
         cvgMidiPitch = v.findViewById(R.id.cvgMidiPitch)
         cvgMidiEG = v.findViewById(R.id.cvgMidiEG)
         cvgMidiFx = v.findViewById(R.id.cvgMidiFx)
@@ -194,11 +227,11 @@ class MidiPartEditFragment : ControlBaseFragment() {
         cvgMidiScale = v.findViewById(R.id.cvgMidiScale)
         cvgMidiRcv = v.findViewById(R.id.cvgMidiRcv)
         cvgMidiCh = v.findViewById(R.id.cvgMidiCh)
+        spRcvCh = v.findViewById(R.id.spRcvCh)
     }
 
     private lateinit var etPartVoiceName: EditText
     private lateinit var cvgMidiMain: ControlViewGroup
-    private lateinit var midiMainExtras: LinearLayout
     private lateinit var cvgMidiPitch: ControlViewGroup
     private lateinit var cvgMidiEG: ControlViewGroup
     private lateinit var cvgMidiFx: ControlViewGroup
@@ -213,4 +246,5 @@ class MidiPartEditFragment : ControlBaseFragment() {
     private lateinit var cvgMidiScale: ControlViewGroup
     private lateinit var cvgMidiRcv: ControlViewGroup
     private lateinit var cvgMidiCh: ControlViewGroup
+    private lateinit var spRcvCh: Spinner
 }
