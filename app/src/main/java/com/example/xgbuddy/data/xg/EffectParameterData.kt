@@ -74,6 +74,4 @@ enum class EffectParameterData(
     CAT_VARI_CTRL_DEPTH(0x5e, default = 0x40),
     AC1_VARI_CTRL_DEPTH(0x5f, default = 0x40),
     AC2_VARI_CTRL_DEPTH(0x60, default = 0x40)
-
-
 }
