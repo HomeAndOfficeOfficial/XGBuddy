@@ -25,7 +25,7 @@ class SwitchControlView(context: Context) :
                 val updatedValue: Byte = if (isChecked) 1 else 0
                 if (value != updatedValue) {
                     value = if (isChecked) 1 else 0
-                    listener?.onParameterChanged(controlParameter!!)
+                    listener?.onParameterChanged(controlParameter!!, true)
                 }
             }
             initializeCommonViews(view)

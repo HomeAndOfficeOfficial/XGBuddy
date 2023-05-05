@@ -59,11 +59,12 @@ class MidiPartEditFragment : ControlBaseFragment() {
         initControlGroup(
             cvgMidiMain,
             shouldStartExpanded = true,
-            extraChildren = midiMainExtras
+            extraChildren = midiMainExtras,
+            shouldReceiveAllTouchCallbacks = true
         )
         // TODO: Add detune as extra
-        initControlGroup(cvgMidiPitch)
-        initControlGroup(cvgMidiEG)
+        initControlGroup(cvgMidiPitch, shouldReceiveAllTouchCallbacks = true)
+        initControlGroup(cvgMidiEG, shouldReceiveAllTouchCallbacks = true)
         initControlGroup(cvgMidiFx)
         initControlGroup(cvgMidiNote, extraChildren = midiNoteExtras)
         initControlGroup(cvgMidiPat)
@@ -113,7 +114,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
         )
     }
 
-    override fun onParameterChanged(controlParameter: ControlParameter) {
+    override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
         if (controlParameter.name != currentParam?.name) {
             currentParam = MidiParameter::addrLo findBy controlParameter.addr.toByte()
         }
@@ -121,15 +122,24 @@ class MidiPartEditFragment : ControlBaseFragment() {
             currentParam!!.reflectedField,
             controlParameter.value
         )
-        midiSession.send(getParamChangeMessage(controlParameter))
+        midiSession.send(getParamChangeMessage(controlParameter, isTouching))
     }
 
-    private fun getParamChangeMessage(controlParameter: ControlParameter): MidiMessage {
+    private fun getParamChangeMessage(
+        controlParameter: ControlParameter,
+        isTouching: Boolean
+    ): MidiMessage {
 
         // First check if nrpn param
         if (currentParam?.nrpn != null) {
             if (!isNrpnActive) {
                 activateNRPN()
+            } else {
+                if (!isTouching) {
+                    isNrpnActive = false
+                    deactivateNRPN()
+                    return MidiMessage(null, 0)
+                }
             }
             return MidiMessageUtility.getControlChange(
                 midiViewModel.selectedChannel.value!!,

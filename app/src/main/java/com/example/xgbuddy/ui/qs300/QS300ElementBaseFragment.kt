@@ -81,7 +81,9 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         isInteractive: Boolean,
         shouldShowColoredHeader: Boolean,
         shouldStartExpanded: Boolean,
-        extraChildren: ViewGroup?
+        extraChildren: ViewGroup?,
+        shouldReceiveAllTouchCallbacks: Boolean
+
     ) {
         controlGroup.apply {
             if (shouldShowColoredHeader) {
@@ -93,7 +95,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             isInteractive,
             shouldShowColoredHeader,
             shouldStartExpanded,
-            extraChildren
+            extraChildren,
+            false
         )
     }
 
@@ -107,7 +110,7 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         )
     }
 
-    override fun onParameterChanged(controlParameter: ControlParameter) {
+    override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }

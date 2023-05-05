@@ -25,7 +25,8 @@ abstract class ControlBaseFragment: Fragment(), ParameterControlView.OnParameter
         isInteractive: Boolean = true,
         shouldShowColoredHeader: Boolean = true,
         shouldStartExpanded: Boolean = false,
-        extraChildren: ViewGroup? = null
+        extraChildren: ViewGroup? = null,
+        shouldReceiveAllTouchCallbacks: Boolean = false
     ) {
         controlGroup.apply {
             this.isInteractive = isInteractive
@@ -36,6 +37,7 @@ abstract class ControlBaseFragment: Fragment(), ParameterControlView.OnParameter
                 addControlView(SliderControlView(requireContext()).apply {
                     controlParameter = initParameter(it)
                     listener = this@ControlBaseFragment
+                    shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
                 })
             }
         }
@@ -56,5 +58,5 @@ abstract class ControlBaseFragment: Fragment(), ParameterControlView.OnParameter
         controlGroups.clear()
     }
 
-   abstract override fun onParameterChanged(controlParameter: ControlParameter)
+   abstract override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean)
 }

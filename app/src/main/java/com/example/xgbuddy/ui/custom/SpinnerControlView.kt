@@ -47,7 +47,7 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (value.toInt() != position) {
             value = position.toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 

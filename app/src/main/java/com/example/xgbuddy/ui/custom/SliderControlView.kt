@@ -49,7 +49,7 @@ class SliderControlView(context: Context) :
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (fromUser && isRealtimeControl) {
             this.value = value.toInt().toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 
@@ -57,7 +57,7 @@ class SliderControlView(context: Context) :
     override fun onStartTrackingTouch(slider: Slider) {
         if (shouldReportAllTouchEvents) {
             this.value = value.toInt().toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 
@@ -65,7 +65,7 @@ class SliderControlView(context: Context) :
     override fun onStopTrackingTouch(slider: Slider) {
         if (!isRealtimeControl || shouldReportAllTouchEvents) {
             this.value = slider.value.toInt().toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, false)
         }
     }
 }

@@ -64,6 +64,6 @@ abstract class ParameterControlView(context: Context) :
     }
 
     fun interface OnParameterChangedListener {
-        fun onParameterChanged(controlParameter: ControlParameter)
+        fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean)
     }
 }
