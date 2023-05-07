@@ -5,7 +5,7 @@ import com.example.xgbuddy.data.MidiData
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.xg.XGNormalVoice
 
-data class MidiPart(val ch: Int) : MidiData() {
+open class MidiPart(val ch: Int) : MidiData() {
     /**
      * Will probably need a field to specify whether this is a drum part, a qs300 voice, or a
      * regular instrument voice. May not be necessary to distinguish between GM, TG300B, etc at this
