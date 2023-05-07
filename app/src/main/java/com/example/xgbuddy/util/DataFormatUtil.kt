@@ -133,6 +133,31 @@ object DataFormatUtil {
         "${-50 + it - 14}"
     }
 
+    val zeroOffFormatter = DataAssignFormatter {
+        if (it == 0) {
+            "Off"
+        } else {
+            "$it"
+        }
+    }
+
+    val panFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "Random"
+            in 1..63 -> "L${64 - it}"
+            64 -> "C"
+            else -> "R${it - 64}"
+        }
+    }
+
+    val keyAssignFormatter = DataAssignFormatter {
+        if (it == 0) {
+            "Single"
+        } else {
+            "Multi"
+        }
+    }
+
     fun interface DataAssignFormatter {
         fun format(value: Int): String
     }
