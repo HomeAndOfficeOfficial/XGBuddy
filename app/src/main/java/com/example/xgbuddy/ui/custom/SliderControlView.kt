@@ -3,7 +3,6 @@ package com.example.xgbuddy.ui.custom
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
@@ -48,7 +47,6 @@ class SliderControlView(context: Context) :
     @SuppressLint("RestrictedApi")
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (fromUser && isRealtimeControl) {
-            Log.d("SliderControlView", "It was from user")
             this.value = value.toInt().toByte()
             listener?.onParameterChanged(controlParameter!!, true)
         }

@@ -10,6 +10,7 @@
         android:id="@+id/tiPartVoiceName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         app:boxBackgroundColor="#00000000"
         app:layout_constraintEnd_toStartOf="@id/spRcvCh"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,14 +26,24 @@
             android:inputType="textNoSuggestions" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rcv. Channel"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/spRcvCh"
+        app:layout_constraintStart_toStartOf="@id/spRcvCh" />
+
     <Spinner
         android:id="@+id/spRcvCh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:entries="@array/mp_rcv_channel_entries"
+        android:spinnerMode="dialog"
         app:layout_constraintBottom_toBottomOf="@id/tiPartVoiceName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tiPartVoiceName" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
