@@ -17,6 +17,7 @@ class SwitchControlView(context: Context) :
     }
 
     private val switch: SwitchMaterial
+    private var isUserUpdating = true
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.switch_control_view, this, true)
@@ -25,7 +26,12 @@ class SwitchControlView(context: Context) :
                 val updatedValue: Byte = if (isChecked) 1 else 0
                 if (value != updatedValue) {
                     value = if (isChecked) 1 else 0
-                    listener?.onParameterChanged(controlParameter!!, true)
+                    if (isUserUpdating) {
+                        listener?.onParameterChanged(controlParameter!!, true)
+                    } else {
+                        isUserUpdating = true
+                    }
+
                 }
             }
             initializeCommonViews(view)
@@ -35,6 +41,7 @@ class SwitchControlView(context: Context) :
     override fun updateControlBounds() {}
 
     override fun updateViews() {
+        isUserUpdating = false
         switch.isChecked = controlParameter?.value == 1.toByte()
     }
 }

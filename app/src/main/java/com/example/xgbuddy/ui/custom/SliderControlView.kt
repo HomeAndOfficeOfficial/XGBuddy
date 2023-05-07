@@ -48,6 +48,7 @@ class SliderControlView(context: Context) :
     @SuppressLint("RestrictedApi")
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (fromUser && isRealtimeControl) {
+            Log.d("SliderControlView", "It was from user")
             this.value = value.toInt().toByte()
             listener?.onParameterChanged(controlParameter!!, true)
         }

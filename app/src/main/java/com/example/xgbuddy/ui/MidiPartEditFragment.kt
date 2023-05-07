@@ -1,7 +1,6 @@
 package com.example.xgbuddy.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,6 @@ class MidiPartEditFragment : ControlBaseFragment() {
             val channel = midiViewModel.selectedChannel.value
             // TODO: Find a way to change the edit text when the voice is selected.
             etPartVoiceName.setText(it[channel!!].voiceNameRes)
-            Log.d("MidiPartEdit", "Channels observed")
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             updateViews(midiViewModel.channels.value!![it])
@@ -65,7 +63,6 @@ class MidiPartEditFragment : ControlBaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                Log.d("MidiPartEdit", "onItemSelected")
                 if (isSpinnerUpdating) {
                     isSpinnerUpdating = false
                 } else {
@@ -82,7 +79,6 @@ class MidiPartEditFragment : ControlBaseFragment() {
 
     private fun updateViews(midiPart: MidiPart) {
         etPartVoiceName.setText(midiPart.voiceNameRes)
-        Log.d("MidiPartEdit", "Setting selection from updateView")
         isSpinnerUpdating = true
         spRcvCh.setSelection(midiPart.receiveChannel.toInt())
         controlGroups.forEach {
