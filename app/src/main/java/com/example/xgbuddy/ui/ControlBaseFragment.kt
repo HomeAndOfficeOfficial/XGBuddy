@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-abstract class ControlBaseFragment: Fragment(), ParameterControlView.OnParameterChangedListener {
+abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParameterChangedListener {
 
     @Inject
     lateinit var midiSession: MidiSession
@@ -53,10 +53,15 @@ abstract class ControlBaseFragment: Fragment(), ParameterControlView.OnParameter
         controlGroups.add(controlGroup)
     }
 
-    override fun onStop() {
-        super.onStop()
-        controlGroups.clear()
-    }
+    // I think this was an attempt to fix the slider issue, but I don't think it did.
+    // And doing this makes it so views don't update when we resume app. So leave this out for now.
+//    override fun onStop() {
+//        super.onStop()
+//        controlGroups.clear()
+//    }
 
-   abstract override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean)
+    abstract override fun onParameterChanged(
+        controlParameter: ControlParameter,
+        isTouching: Boolean
+    )
 }
