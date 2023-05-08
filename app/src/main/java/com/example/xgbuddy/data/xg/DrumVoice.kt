@@ -2,7 +2,7 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.data.MidiData
 
-data class DrumVoice(val name: String): MidiData() {
+data class DrumVoice(var name: String) : MidiData() {
     var pitchCoarse: Byte = DrumVoiceParameter.PITCH_COARSE.default
     var pitchFine: Byte = DrumVoiceParameter.PITCH_FINE.default
     var level: Byte = DrumVoiceParameter.LEVEL.default
