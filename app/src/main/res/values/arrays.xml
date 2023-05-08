@@ -927,4 +927,18 @@
         <item>@color/blue_300</item>
     </integer-array>
 
+    <!-- XG Drum Kits -->
+    <string-array name="xg_drum_kits">
+        <item>@string/xgdk_standard1</item>
+        <item>@string/xgdk_standard2</item>
+        <item>@string/xgdk_room</item>
+        <item>@string/xgdk_rock</item>
+        <item>@string/xgdk_electro</item>
+        <item>@string/xgdk_analog</item>
+        <item>@string/xgdk_brush</item>
+        <item>@string/xgdk_jazz</item>
+        <item>@string/xgdk_classic</item>
+    </string-array>
+    <!-- XG Drum Kits -->
+
 </resources>
