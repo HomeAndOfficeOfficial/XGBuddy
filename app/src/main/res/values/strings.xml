@@ -458,6 +458,20 @@
     <string name="xgnv_helicopter">Helicptr</string>
     <string name="xgnv_applause">Applause</string>
     <string name="xgnv_gunshot">Gunshot</string>
+    <!-- XG Normal Voice -->
+
+    <!-- XG Drum Kit -->
+    <string name="xgdk_standard1">Standard Kit 1</string>
+    <string name="xgdk_standard2">Standard Kit 2</string>
+    <string name="xgdk_room">Room Kit</string>
+    <string name="xgdk_rock">Rock Kit</string>
+    <string name="xgdk_electro">Electro Kit</string>
+    <string name="xgdk_analog">Analog Kit</string>
+    <string name="xgdk_jazz">Jazz Kit</string>
+    <string name="xgdk_brush">Brush Kit</string>
+    <string name="xgdk_classic">Classic Kit</string>
+
+    <!-- XG Drum Kit -->
 
 
     <!-- MIDI Multi-Part Parameter Descriptions -->

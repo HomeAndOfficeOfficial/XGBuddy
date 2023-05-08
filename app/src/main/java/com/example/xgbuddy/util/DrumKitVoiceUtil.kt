@@ -269,6 +269,8 @@ object DrumKitVoiceUtil {
         DrumVoice(BELL_TREE)
     )
 
+    val standardKit1: List<DrumVoice> = standardKit.map { it.copy() }
+
     val standardKit2: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
         this[INDEX_SNARE_ROLL].name = SNARE_ROLL_2
         this[INDEX_SNARE_L].name = SNARE_L_2

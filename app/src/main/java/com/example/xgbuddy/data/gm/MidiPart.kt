@@ -3,6 +3,8 @@ package com.example.xgbuddy.data.gm
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiData
 import com.example.xgbuddy.data.MidiMessage
+import com.example.xgbuddy.data.xg.DrumVoice
+import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 
 open class MidiPart(val ch: Int) : MidiData() {
@@ -18,6 +20,7 @@ open class MidiPart(val ch: Int) : MidiData() {
      *  so it's fully understood.
      */
 
+    var voiceType: VoiceType = VoiceType.NORMAL
     var voiceNameRes: Int = XGNormalVoice.GRAND_PNO.nameRes
     var elementReserve: Byte = MidiParameter.ELEMENT_RESERVE.default
     var bankMsb: Byte = MidiParameter.BANK_MSB.default
@@ -122,6 +125,8 @@ open class MidiPart(val ch: Int) : MidiData() {
     var velocityLimitLo: Byte = MidiParameter.VEL_LIMIT_LOW.default
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
 
+    private var drumVoices: List<DrumVoice>? = null
+
     init {
         if (ch == 9) {
             // Drum channel by default. If this isn't a drum channel, these fields will be changed
@@ -133,11 +138,22 @@ open class MidiPart(val ch: Int) : MidiData() {
     }
 
     fun setXGNormalVoice(voice: XGNormalVoice) {
+        voiceType = VoiceType.NORMAL
         programNumber = voice.program
         bankMsb = 0
         bankLsb = voice.bank
         voiceNameRes = voice.nameRes
         // Set element reserve?
+    }
+
+    fun setDrumKit(drumKit: XGDrumKit) {
+        voiceType = VoiceType.DRUM
+        programNumber = drumKit.programNumber
+        // bankmsb
+        // banklsb
+        voiceNameRes = drumKit.nameRes
+        keyOnAssign = 2
+        partMode = 2
     }
 
     /**
@@ -161,5 +177,11 @@ open class MidiPart(val ch: Int) : MidiData() {
 
     override fun toString(): String {
         return "MidiPart(ch=$ch, voiceNameRes=$voiceNameRes, elementReserve=$elementReserve, bankMsb=$bankMsb, bankLsb=$bankLsb, programNumber=$programNumber, receiveChannel=$receiveChannel)"
+    }
+
+    enum class VoiceType {
+        NORMAL,
+        DRUM,
+        SFX
     }
 }
