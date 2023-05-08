@@ -169,6 +169,7 @@ open class MidiPart(val ch: Int) : MidiData() {
     }
 
     fun changeXGVoice(xgVoice: XGNormalVoice) {
+        voiceType = VoiceType.NORMAL
         programNumber = xgVoice.program
         bankMsb = 0
         bankLsb = xgVoice.bank

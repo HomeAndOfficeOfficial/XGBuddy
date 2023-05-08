@@ -5,9 +5,15 @@
         android:icon="@drawable/baseline_view_list_24"
         android:title="Parts" />
     <item
+        android:id="@+id/drumEditFragment"
+        android:icon="@drawable/baseline_sports_tennis_24"
+        android:title="Drum Edit"
+        android:visible="false" />
+    <item
         android:id="@+id/voiceEditFragment"
         android:icon="@drawable/baseline_tune_24"
-        android:title="Voice Edit" />
+        android:title="Voice Edit"
+        android:visible="false" />
     <item
         android:id="@+id/effectsFragment"
         android:icon="@drawable/baseline_auto_awesome_24"
