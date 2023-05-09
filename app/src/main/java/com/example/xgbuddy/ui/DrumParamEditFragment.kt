@@ -64,7 +64,9 @@ class DrumParamEditFragment : ControlBaseFragment() {
     override fun initParameter(paramId: Int): ControlParameter {
         val param = DrumVoiceParameter::nameRes findBy paramId
         val value =
-            viewModel.channels.value!![viewModel.selectedChannel.value!!].getPropertyValue(param!!.reflectedField)
+            viewModel.channels.value!![viewModel.selectedChannel.value!!].drumVoices!![viewModel.selectedDrumVoice.value!!].getPropertyValue(
+                param!!.reflectedField
+            )
         return DrumControlParameter(param, value)
     }
 

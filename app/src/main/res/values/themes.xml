@@ -3,6 +3,7 @@
     <style name="Theme.XGBuddy" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="backgroundColor">@color/background_light</item>
         <item name="backgroundContainer">@color/container_light</item>
+        <item name="backgroundContainerSelect">@color/green_200</item>
         <item name="colorControlNormal">@color/background_dark</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
         <!-- Primary brand color. -->
