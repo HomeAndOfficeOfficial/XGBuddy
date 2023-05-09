@@ -4,7 +4,7 @@ import com.example.xgbuddy.R
 import com.example.xgbuddy.util.DrumKitVoiceUtil
 
 // Todo: Verify programNumber values
-enum class XGDrumKit(val nameRes: Int, val programNumber: Byte, drumVoices: List<DrumVoice>) {
+enum class XGDrumKit(val nameRes: Int, val programNumber: Byte, val drumVoices: List<DrumVoice>) {
     STANDARD_KIT_1(R.string.xgdk_standard1, 0, DrumKitVoiceUtil.standardKit1),
     STANDARD_KIT_2(R.string.xgdk_standard2, 1, DrumKitVoiceUtil.standardKit2),
     ROOM_KIT(R.string.xgdk_room, 2, DrumKitVoiceUtil.roomKit),

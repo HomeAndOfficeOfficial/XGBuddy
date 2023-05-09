@@ -1,25 +1,12 @@
 package com.example.xgbuddy.data.gm
 
-import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiData
-import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.xg.DrumVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
+import com.example.xgbuddy.util.DrumKitVoiceUtil
 
 open class MidiPart(val ch: Int) : MidiData() {
-    /**
-     * Will probably need a field to specify whether this is a drum part, a qs300 voice, or a
-     * regular instrument voice. May not be necessary to distinguish between GM, TG300B, etc at this
-     * level.
-     */
-
-    /**
-     * TODO: Add enums for effect types. Might need separate ones for Reverb, Chorus, and Variation.
-     *  Maybe look into that after all the base midi stuff is in place? Maybe just add it all now
-     *  so it's fully understood.
-     */
-
     var voiceType: VoiceType = VoiceType.NORMAL
     var voiceNameRes: Int = XGNormalVoice.GRAND_PNO.nameRes
     var elementReserve: Byte = MidiParameter.ELEMENT_RESERVE.default
@@ -125,7 +112,7 @@ open class MidiPart(val ch: Int) : MidiData() {
     var velocityLimitLo: Byte = MidiParameter.VEL_LIMIT_LOW.default
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
 
-    private var drumVoices: List<DrumVoice>? = null
+    var drumVoices: List<DrumVoice>? = null
 
     init {
         if (ch == 9) {
@@ -134,6 +121,7 @@ open class MidiPart(val ch: Int) : MidiData() {
             elementReserve = 0
             bankMsb = 127
             partMode = 2
+            drumVoices = DrumKitVoiceUtil.standardKit1
         }
     }
 
@@ -143,29 +131,19 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankMsb = 0
         bankLsb = voice.bank
         voiceNameRes = voice.nameRes
-        // Set element reserve?
+        drumVoices = null
+        // TODO: Set element reserve
     }
 
     fun setDrumKit(drumKit: XGDrumKit) {
         voiceType = VoiceType.DRUM
         programNumber = drumKit.programNumber
-        // bankmsb
-        // banklsb
+        bankMsb = 127
+        bankLsb = 0
         voiceNameRes = drumKit.nameRes
         keyOnAssign = 2
         partMode = 2
-    }
-
-    /**
-     * TODO: Better solution for this may be have a utility class that contains a bunch of possible
-     *  midi message calls. Each method takes in a MidiPart as a param or whatever it needs to take.
-     *  That way these data classes don't have any knowledge of other classes/constants/etc. For
-     *  now just leave these message methods where they are since I'm still figuring it all out.
-     */
-
-    fun getProgramChangeMessage(): MidiMessage {
-        val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE and ch).toByte()
-        return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
+        drumVoices = drumKit.drumVoices
     }
 
     fun changeXGVoice(xgVoice: XGNormalVoice) {
