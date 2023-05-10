@@ -12,22 +12,19 @@ import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 object MidiMessageUtility {
-    /**
-     * Let's think about a utility class to do this kind of thing.
-     *
-     * Probably called MidiMessageUtility or something.
-     *
-     * It would have methods that create midimessages like:
-     *  - getQS300BulkDump(voice: QS300Voice)
-     *    - This would be called from QS300ElementBaseFragment by first updating the viewModel (like
-     *      it does already), then instead of calling the method below in this class, it would call
-     *      midiSession.send(MidiMessageUtility.getQS300BulkDump(viewModelVoice))
-     *  - getProgramChange(channel: Byte, programNumber: Byte)
-     *  - getControlChange(channel: Byte, control: ControlChange, value: Byte)
-     *
-     *  Basically, any time someone needs a midi message for something, this utility should have a
-     *  method for it.
-     */
+    fun getDrumHit(channel: Int, drumNote: Byte): List<MidiMessage> {
+        val noteOnData =
+            byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel).toByte(), drumNote, 100)
+        val noteOffData =
+            byteArrayOf((MidiConstants.STATUS_NOTE_OFF + channel).toByte(), drumNote, 0)
+        return listOf(
+            MidiMessage(noteOnData),
+            MidiMessage(
+                noteOffData,
+                System.nanoTime() + 1000000000
+            )
+        )
+    }
 
     fun getProgramChange(channel: Int, programNumber: Byte): MidiMessage {
         val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE or channel).toByte()

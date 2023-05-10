@@ -458,7 +458,38 @@
     <string name="xgnv_helicopter">Helicptr</string>
     <string name="xgnv_applause">Applause</string>
     <string name="xgnv_gunshot">Gunshot</string>
+    <!-- XG Normal Voice -->
 
+    <!-- XG Drum Kit -->
+    <string name="xgdk_standard1">Standard Kit 1</string>
+    <string name="xgdk_standard2">Standard Kit 2</string>
+    <string name="xgdk_room">Room Kit</string>
+    <string name="xgdk_rock">Rock Kit</string>
+    <string name="xgdk_electro">Electro Kit</string>
+    <string name="xgdk_analog">Analog Kit</string>
+    <string name="xgdk_jazz">Jazz Kit</string>
+    <string name="xgdk_brush">Brush Kit</string>
+    <string name="xgdk_classic">Classic Kit</string>
+    <!-- XG Drum Kit -->
+
+    <!-- XG Drum Param -->
+    <string name="xgdp_pitch_crs">Pitch Coarse</string>
+    <string name="xgdp_pitch_fine">Pitch Fine</string>
+    <string name="xgdp_level">Level</string>
+    <string name="xgdp_alt_group">Alternate Group</string>
+    <string name="xgdp_pan">Pan</string>
+    <string name="xgdp_reverb_send">Reverb Send</string>
+    <string name="xgdp_chorus_send">Chorus Send</string>
+    <string name="xgdp_vari_send">Variation Send</string>
+    <string name="xgdp_key_assign">Key Assign</string>
+    <string name="xgdp_rcv_noteoff">Rcv Note Off</string>
+    <string name="xgdp_rcv_noteon">Rcv Note On</string>
+    <string name="xgdp_cutoff">Cutoff Freq</string>
+    <string name="xgdp_resonance">Resonance</string>
+    <string name="xgdp_attack">EG Attack</string>
+    <string name="xgdp_decay1">EG Decay 1</string>
+    <string name="xgdp_decay2">EG Decay 2</string>
+    <!-- XG Drum Param -->
 
     <!-- MIDI Multi-Part Parameter Descriptions -->
     <string name="midi_mp_el_reserve">Element Reserve</string>
@@ -869,6 +900,7 @@
     <string name="pan">Pan</string>
     <string name="reverb">Reverb</string>
     <string name="chorus">Chorus</string>
+    <string name="drum_preview">Drum Preview</string>
     <!-- QS300 LFO Wave Names -->
 
 </resources>

@@ -1,8 +1,8 @@
 package com.example.xgbuddy.data.xg
 
-import com.example.xgbuddy.data.MidiData
+import kotlin.reflect.KMutableProperty
 
-data class DrumVoice(var name: String) : MidiData() {
+data class DrumVoice(var name: String) {
     var pitchCoarse: Byte = DrumVoiceParameter.PITCH_COARSE.default
     var pitchFine: Byte = DrumVoiceParameter.PITCH_FINE.default
     var level: Byte = DrumVoiceParameter.LEVEL.default
@@ -19,4 +19,11 @@ data class DrumVoice(var name: String) : MidiData() {
     var egAttack: Byte = DrumVoiceParameter.EG_ATTACK.default
     var egDecay1: Byte = DrumVoiceParameter.EG_DECAY1.default
     var egDecay2: Byte = DrumVoiceParameter.EG_DECAY2.default
+
+    fun setProperty(property: KMutableProperty<Byte>?, value: Byte) {
+        property?.setter!!.call(this, value)
+    }
+
+    fun getPropertyValue(property: KMutableProperty<Byte>?): Byte =
+        property?.getter!!.call(this)
 }

@@ -188,6 +188,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
             )
         }
 
+        // TODO: Send required params to param change
         return MidiMessageUtility.getXGParamChange()
     }
 

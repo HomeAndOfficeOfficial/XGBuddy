@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="midi_main">
-<!--        <item>@string/midi_mp_RCV_CHANNEL</item>-->
+        <!--        <item>@string/midi_mp_RCV_CHANNEL</item>-->
         <item>@string/midi_mp_VOLUME</item>
         <item>@string/midi_mp_PAN</item>
         <item>@string/midi_mp_CUTOFF_FREQ</item>
@@ -15,8 +15,8 @@
     </array>
 
     <array name="midi_note_general">
-<!--        <item>@string/midi_mp_POLY_MODE</item>-->
-<!--        <item>@string/midi_mp_PORTA_SWITCH</item>-->
+        <!--        <item>@string/midi_mp_POLY_MODE</item>-->
+        <!--        <item>@string/midi_mp_PORTA_SWITCH</item>-->
         <item>@string/midi_mp_PORTA_TIME</item>
         <item>@string/midi_mp_NOTE_SHIFT</item>
         <item>@string/midi_mp_NOTE_LIMIT_LOW</item>
@@ -141,6 +141,22 @@
         <item>@string/midi_mp_VARI_SEND</item>
         <item>@string/midi_mp_CHORUS_SEND</item>
         <item>@string/midi_mp_REVERB_SEND</item>
+    </array>
+
+    <array name="xg_drum_param">
+        <item>@string/xgdp_pitch_crs</item>
+        <item>@string/xgdp_pitch_fine</item>
+        <item>@string/xgdp_cutoff</item>
+        <item>@string/xgdp_resonance</item>
+        <item>@string/xgdp_level</item>
+        <item>@string/xgdp_pan</item>
+        <item>@string/xgdp_reverb_send</item>
+        <item>@string/xgdp_chorus_send</item>
+        <item>@string/xgdp_vari_send</item>
+        <item>@string/xgdp_attack</item>
+        <item>@string/xgdp_decay1</item>
+        <item>@string/xgdp_decay2</item>
+        <item>@string/xgdp_alt_group</item>
     </array>
 
     <array name="qs300_element_main">

@@ -4,6 +4,8 @@ object MidiConstants {
 
     const val SEND_SCHEDULE_INTERVAL_NANO = 2
 
+    const val STATUS_NOTE_OFF = 0x80
+    const val STATUS_NOTE_ON = 0x90
     const val STATUS_CONTROL_CHANGE = 0xB0
     const val STATUS_PROGRAM_CHANGE = 0xC0
 
@@ -42,6 +44,7 @@ object MidiConstants {
     const val MODEL_ID_XG: Byte = 0x4c
 
     const val XG_NORMAL_VOICE_MSB: Byte = 0
+    const val XG_INITIAL_DRUM_NOTE = 13
 
     val XY_SYSTEM_ON_ARRAY = byteArrayOf(
         EXCLUSIVE_STATUS_BYTE,

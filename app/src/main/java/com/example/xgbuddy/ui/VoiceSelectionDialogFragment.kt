@@ -13,6 +13,7 @@ import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
 import com.example.xgbuddy.adapter.VoiceListAdapter
 import com.example.xgbuddy.adapter.VoiceListAdapter.VoiceListCategory.*
+import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
@@ -59,10 +60,15 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
-            XGNormalVoice.values().toList(), // TODO: Add other voice types)
+            buildCompleteVoiceList(), // TODO: Add other voice types)
             this::updateSelectedVoice
         )
     }
+
+    private fun buildCompleteVoiceList(): List<Any> = mutableListOf<Any>().apply {
+        addAll(XGNormalVoice.values())
+        addAll(XGDrumKit.values())
+    }.toList()
 
     private fun setupCategoryButtons() {
         binding.rgVoiceCategory.setOnCheckedChangeListener { _, checkedId ->
@@ -99,18 +105,32 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         voiceIndex: Int,
         voiceCategory: VoiceListAdapter.VoiceListCategory
     ) {
+        val updatedPartsList = midiViewModel.channels.value!!
+        val updatedPart = updatedPartsList[midiViewModel.selectedChannel.value!!]
         when (voiceCategory) {
             XG_NORMAL -> {
                 (XGNormalVoice::ordinal findBy voiceIndex)?.let { xgVoice ->
-                    val updatedPartsList = midiViewModel.channels.value!!
-                    val updatedPart = updatedPartsList[midiViewModel.selectedChannel.value!!]
                     updatedPart.changeXGVoice(xgVoice)
                     updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
                     midiViewModel.channels.value = updatedPartsList
-                    midiSession.send(MidiMessageUtility.getXGNormalVoiceChange(updatedPart.ch, xgVoice))
+                    midiSession.send(
+                        MidiMessageUtility.getXGNormalVoiceChange(
+                            updatedPart.ch,
+                            xgVoice
+                        )
+                    )
                 }
             }
-            XG_DRUM -> TODO()
+            XG_DRUM -> {
+                (XGDrumKit::ordinal findBy voiceIndex)?.let { drumKit ->
+                    updatedPart.setDrumKit(drumKit)
+                    updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
+                    midiViewModel.channels.value = updatedPartsList
+
+                    // This might work the same for drum, we'll see
+                    // midiSession.send(MidiMessageUtility.getXGNormalVoiceChange(updatedPart.ch, xgVoice))
+                }
+            }
             SFX -> TODO()
             QS300 -> TODO()
         }

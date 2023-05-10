@@ -2,6 +2,7 @@
 <resources>
 
     <attr name="backgroundContainer" format="reference|color" />
+    <attr name="backgroundContainerSelect" format="reference|color" />
     <attr name="pcMin" format="integer" />
     <attr name="pcMax" format="integer" />
     <attr name="pcId" format="reference" />

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import kotlin.reflect.full.isSubclassOf
 
@@ -29,7 +30,7 @@ class VoiceListAdapter(
 
     enum class VoiceListCategory(val enumName: String) {
         XG_NORMAL(XGNormalVoice::class.java.name),
-        XG_DRUM("xgrum"),
+        XG_DRUM(XGDrumKit::class.java.name),
         SFX("sfx"),
         QS300("qs300voice")
     }
