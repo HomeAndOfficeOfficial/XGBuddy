@@ -44,10 +44,22 @@ class DrumVoiceRecyclerAdapter(
                 setOnClickListener { listener.onDrumClicked(position, true) }
                 text = drumVoice.name
             }
-            tvVolume.text = "${drumVoice.level}"
-            tvPan.text = DataFormatUtil.panFormatter.format(drumVoice.pan.toInt())
-            tvChorus.text = "${drumVoice.chorusSend}"
-            tvReverb.text = "${drumVoice.reverbSend}"
+            tvVolume.text = buildString {
+                append("V: ")
+                append(drumVoice.level)
+            }
+            tvPan.text = buildString {
+                append("P: ")
+                append(DataFormatUtil.panFormatter.format(drumVoice.pan.toInt()))
+            }
+            tvChorus.text = buildString {
+                append("Ch: ")
+                append(drumVoice.chorusSend)
+            }
+            tvReverb.text = buildString {
+                append("Rv: ")
+                append(drumVoice.reverbSend)
+            }
         }
     }
 
