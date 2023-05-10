@@ -39,6 +39,12 @@ class DrumParamEditFragment : ControlBaseFragment() {
                     .drumVoices!![it]
             )
         }
+        viewModel.channels.observe(viewLifecycleOwner) {
+            updateViews(
+                it[viewModel.selectedChannel.value!!]
+                    .drumVoices!![viewModel.selectedDrumVoice.value!!]
+            )
+        }
         return v
     }
 
