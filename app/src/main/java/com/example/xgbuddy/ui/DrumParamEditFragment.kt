@@ -80,6 +80,7 @@ class DrumParamEditFragment : ControlBaseFragment() {
             currentParam!!.reflectedField,
             controlParameter.value
         )
+        viewModel.channels.value = viewModel.channels.value
         midiSession.send(getParamChangeMessage(controlParameter, isTouching))
     }
 

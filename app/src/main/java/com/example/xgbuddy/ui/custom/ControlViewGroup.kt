@@ -117,7 +117,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
 
     fun updateViews(drumVoice: DrumVoice) {
         controlViewMap.keys.forEach {
-            val param = DrumVoiceParameter::getAddrLo findBy it
+            val param = DrumVoiceParameter::ordinal findBy it.toInt()
             controlViewMap[it]?.value =
                 if (param != null) drumVoice.getPropertyValue(param.reflectedField) else 0
         }
