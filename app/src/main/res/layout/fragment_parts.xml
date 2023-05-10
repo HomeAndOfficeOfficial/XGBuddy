@@ -12,7 +12,7 @@
         android:clickable="true"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/llParts"
+        app:layout_constraintEnd_toEndOf="@+id/svPartsContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -59,17 +59,24 @@
             android:text="@string/chorus" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/llParts"
+    <ScrollView
+        android:id="@+id/svPartsContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/partsControlFragmentContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llParts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </ScrollView>
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/partsControlFragmentContainer"
