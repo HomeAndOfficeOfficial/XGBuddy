@@ -158,7 +158,16 @@ class MidiSession @Inject constructor(context: Context) {
 
     fun send(midiMessage: MidiMessage) {
         if (midiMessage.msg != null) {
-            midiManager.inputPort?.send(midiMessage.msg, 0, midiMessage.msg!!.size)
+            if (midiMessage.timestamp > 0) {
+                midiManager.inputPort?.send(
+                    midiMessage.msg,
+                    0,
+                    midiMessage.msg.size,
+                    midiMessage.timestamp
+                )
+            } else {
+                midiManager.inputPort?.send(midiMessage.msg, 0, midiMessage.msg!!.size)
+            }
         }
     }
 

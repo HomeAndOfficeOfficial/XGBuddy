@@ -900,6 +900,7 @@
     <string name="pan">Pan</string>
     <string name="reverb">Reverb</string>
     <string name="chorus">Chorus</string>
+    <string name="drum_preview">Drum Preview</string>
     <!-- QS300 LFO Wave Names -->
 
 </resources>

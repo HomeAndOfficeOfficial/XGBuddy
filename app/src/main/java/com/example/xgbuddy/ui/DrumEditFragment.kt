@@ -9,13 +9,21 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.xgbuddy.R
+import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.adapter.DrumVoiceRecyclerAdapter
+import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.databinding.FragmentDrumEditBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListener {
+
+    @Inject
+    lateinit var midiSession: MidiSession
 
     private val midiViewModel: MidiViewModel by activityViewModels()
     private val binding: FragmentDrumEditBinding by lazy {
@@ -104,7 +112,14 @@ class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListene
     }
 
     override fun onDrumClicked(position: Int, fromButtonClick: Boolean) {
-        // If not muted and fromButtonClick, send drum note on signal
+        if (binding.swSendDrumHit.isChecked && fromButtonClick) {
+            midiSession.send(
+                MidiMessageUtility.getDrumHit(
+                    midiViewModel.selectedChannel.value!!,
+                    (position + MidiConstants.XG_INITIAL_DRUM_NOTE).toByte()
+                )
+            )
+        }
         midiViewModel.selectedDrumVoice.value = position
     }
 }
