@@ -70,7 +70,7 @@ data class QS300Voice(var voiceName: String = "") : MidiData() {
     fun generateBulkDump(): MidiMessage {
         bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {
             it[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
-            it[1] = MidiConstants.YAMAHA_ID_BYTE
+            it[1] = MidiConstants.YAMAHA_ID
             it[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
             it[3] = MidiConstants.MODEL_ID_QS300
             it[4] = 1   // Byte count hi
@@ -117,7 +117,7 @@ data class QS300Voice(var voiceName: String = "") : MidiData() {
                 dataSum = dataSum.plus(it[i]).toByte()
             }
             it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 2] = (0 - dataSum).toByte()
-            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.END_BYTE
+            it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.SYSEX_END
         }
 
         return MidiMessage(bulkDumpArray, System.nanoTime() + 10)

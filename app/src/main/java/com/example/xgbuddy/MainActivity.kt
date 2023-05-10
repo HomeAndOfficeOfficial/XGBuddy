@@ -11,13 +11,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.core.view.MenuProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.ConnectionStatusFragment
+import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.QS300PresetCaptureFragment
 import com.google.android.material.navigationrail.NavigationRailView
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,7 +92,10 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var midiSession: MidiSession
 
+    private val midiViewModel: MidiViewModel by viewModels()
     private var connectedDevices: Set<MidiDeviceInfo> = setOf()
+
+    private lateinit var navRail: NavigationRailView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,10 +103,17 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
             setupOptionsMenu()
             setupNavigation()
+            midiViewModel.selectedChannel.observe(this) {
+                showOrHideMenuItems()
+            }
+            midiViewModel.channels.observe(this) {
+                showOrHideMenuItems()
+            }
         } else {
             displayNoMidiCompatScreen()
         }
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -157,8 +170,16 @@ class MainActivity : AppCompatActivity() {
         val navHost: NavHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
-        val navRail = findViewById<NavigationRailView>(R.id.navRail)
+        navRail = findViewById(R.id.navRail)
         NavigationUI.setupWithNavController(navRail, navController)
+    }
+
+    private fun showOrHideMenuItems() {
+        val selectedPart = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
+//        navRail.menu.findItem(R.id.voiceEditFragment).isVisible =
+//            selectedPart.voiceType == MidiPart.VoiceType.QS300
+        navRail.menu.findItem(R.id.drumEditFragment).isVisible =
+            selectedPart.voiceType == MidiPart.VoiceType.DRUM
     }
 
     private fun displayNoMidiCompatScreen() {

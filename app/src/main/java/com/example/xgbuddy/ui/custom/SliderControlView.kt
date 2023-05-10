@@ -3,7 +3,6 @@ package com.example.xgbuddy.ui.custom
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
@@ -19,6 +18,8 @@ class SliderControlView(context: Context) :
     }
 
     private val slider: Slider
+
+    var shouldReportAllTouchEvents = false
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
@@ -47,19 +48,23 @@ class SliderControlView(context: Context) :
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         if (fromUser && isRealtimeControl) {
             this.value = value.toInt().toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 
     @SuppressLint("RestrictedApi")
     override fun onStartTrackingTouch(slider: Slider) {
+        if (shouldReportAllTouchEvents) {
+            this.value = value.toInt().toByte()
+            listener?.onParameterChanged(controlParameter!!, true)
+        }
     }
 
     @SuppressLint("RestrictedApi")
     override fun onStopTrackingTouch(slider: Slider) {
-        if (!isRealtimeControl) {
+        if (!isRealtimeControl || shouldReportAllTouchEvents) {
             this.value = slider.value.toInt().toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            listener?.onParameterChanged(controlParameter!!, false)
         }
     }
 }

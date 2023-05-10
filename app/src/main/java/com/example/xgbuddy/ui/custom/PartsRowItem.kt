@@ -1,5 +1,6 @@
 package com.example.xgbuddy.ui.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -9,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.MidiChannel
+import com.example.xgbuddy.data.gm.MidiPart
 
 class PartsRowItem(context: Context) :
     LinearLayout(context) {
@@ -58,17 +59,16 @@ class PartsRowItem(context: Context) :
         }
     }
 
-    fun setChannelInfo(channel: MidiChannel) {
+    @SuppressLint("SetTextI18n")
+    fun setChannelInfo(channel: MidiPart, name: String) {
         rowNumber = channel.ch
-        tvChannelNumber.text = "${channel.ch}"
-        /*
-        tvName.text = "${channel.voiceName}"
-        tvReceiving.text = "${channel.receiving}"
-        tvLevel.text = "${channel.level}"
+        tvChannelNumber.text = "${channel.ch + 1}"
+        tvName.text = name
+        tvReceiving.text = "${channel.receiveChannel + 1}"
+        tvLevel.text = "${channel.volume}"
         tvPan.text = "${channel.pan}"
-        tvReverb.text = "${channel.reverb}"
-        tvChorus.text = "${channel.chorus}"
-         */
+        tvReverb.text = "${channel.reverbSend}"
+        tvChorus.text = "${channel.chorusSend}"
         updateColor()
     }
 

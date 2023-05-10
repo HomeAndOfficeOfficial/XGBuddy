@@ -13,10 +13,6 @@ import com.example.xgbuddy.data.ControlParameter
 abstract class ParameterControlView(context: Context) :
     ConstraintLayout(context) {
 
-    // TODO: Add callbacks to all interface types
-    // TODO: Figure out a way to pass values to spinner views.
-    //  Wave select spinner will will need its own customized implementation since it has a hi/lo value
-
     constructor(context: Context, attributeSet: AttributeSet) : this(context)
 
     private var root: ConstraintLayout? = null
@@ -68,6 +64,6 @@ abstract class ParameterControlView(context: Context) :
     }
 
     fun interface OnParameterChangedListener {
-        fun onParameterChanged(controlParameter: ControlParameter)
+        fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean)
     }
 }

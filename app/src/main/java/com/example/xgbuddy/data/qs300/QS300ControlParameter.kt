@@ -10,6 +10,11 @@ import com.example.xgbuddy.data.MidiMessage
  * utility will make the correct type of instance based on the type of parameter
  * it receives. Then the control view can just use whatever message is associated
  * with the implementation of this method.
+ *
+ * todo: Actually I'm not totally sure subclasses of ControlParameter are necessary, because I think
+ *  there will be different methods for different types of controls (QS/XG). So I don't think there
+ *  is any practical use for specific subclasses. I guess as with the other things, just wait and
+ *  see what everything looks like once I have a full idea of the shape of things.
  */
 
 class QS300ControlParameter(

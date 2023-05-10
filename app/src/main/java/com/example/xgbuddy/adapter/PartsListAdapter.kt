@@ -2,6 +2,7 @@ package com.example.xgbuddy.adapter
 
 import android.content.Context
 import android.view.ViewGroup
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.custom.PartsRowItem
 
@@ -20,7 +21,8 @@ class PartsListAdapter(
     private fun populateContainer(context: Context) {
         viewModel.channels.value?.forEach { midiChannel ->
             partsContainer.addView(PartsRowItem(context).apply {
-                setChannelInfo(midiChannel)
+                val name = context.getString(midiChannel.voiceNameRes)
+                setChannelInfo(midiChannel, name)
                 listener = this@PartsListAdapter
             })
         }
@@ -39,6 +41,12 @@ class PartsListAdapter(
         }
         (partsContainer.getChildAt(rowNumber) as PartsRowItem).isRowSelected = true
         selectedRow = rowNumber
+    }
+
+    fun updateRow(midiPart: MidiPart) {
+        (partsContainer.getChildAt(midiPart.ch) as PartsRowItem).apply {
+            setChannelInfo(midiPart, context.getString(midiPart.voiceNameRes))
+        }
     }
 
     companion object {

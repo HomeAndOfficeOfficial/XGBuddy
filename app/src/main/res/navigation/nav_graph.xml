@@ -29,4 +29,8 @@
         android:name="com.example.xgbuddy.ui.KeyboardFragment"
         android:label="Keyboard"
         tools:layout="@layout/fragment_keyboard" />
+    <fragment
+        android:id="@+id/drumEditFragment"
+        android:name="com.example.xgbuddy.ui.DrumEditFragment"
+        android:label="DrumEditFragment" />
 </navigation>

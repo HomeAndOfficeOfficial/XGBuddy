@@ -10,7 +10,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.xgbuddy.data.*
 import javax.inject.Inject
-import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
@@ -22,7 +21,7 @@ class MidiSession @Inject constructor(context: Context) {
         override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
             msg?.copyOfRange(offset, offset + count)?.forEach {
                 midiReceiveBuffer.add(it)
-                if (it == MidiConstants.END_BYTE) {
+                if (it == MidiConstants.SYSEX_END) {
                     Log.d(
                         TAG,
                         "OnSend at timestamp: $timestamp. Here's what it says ${
@@ -147,47 +146,27 @@ class MidiSession @Inject constructor(context: Context) {
         }
     }
 
+    /**TODO: Create separate send method for bulk dump. I think everything else can be send
+     *  normally, but bulk dump is going to require some extra effort.
+     */
+
     fun send(midiMessages: List<MidiMessage>) {
         midiMessages.forEach {
             send(it)
         }
     }
 
-    // There is something weird happening and I'm not sure what the issue is.
-    /**
-     * First of all, the byte array attached to midiMessage is 392 bytes long and it appears to be
-     * structured properly. The full array is being passed to inputPort. On the receiving side however,
-     * sometimes only 240 bytes are received, sometimes 359 are received. Never any other amount.
-     *
-     * The longer message looks to be mostly complete and has the correct ending, but is just missing
-     * 33 bytes somewhere.
-     *
-     * I'm stumped.
-     */
     fun send(midiMessage: MidiMessage) {
-        midiManager.inputPort?.let { inputPort ->
-//            midiManager.inputPort?.flush() // Don't think this is needed
-            var bytesSent = 0
-//            var sendCount = 1
-            val buffer = ByteArray(3)
-            while (bytesSent < midiMessage.msg!!.size) {
-                for (i in 0 until 3) {
-                    if (bytesSent < midiMessage.msg.size) {
-                        buffer[i] = midiMessage.msg[bytesSent++]
-                    } else {
-                        inputPort.send(buffer.copyOf(i+1), 0, i+1)
-                        return@let
-                    }
-                }
-//                val buffer = ByteArray(min(midiMessage.msg.size - bytesSent, 3)) {
-//                    midiMessage.msg[bytesSent++]
-//                }
-                inputPort.send(
-                    buffer,
+        if (midiMessage.msg != null) {
+            if (midiMessage.timestamp > 0) {
+                midiManager.inputPort?.send(
+                    midiMessage.msg,
                     0,
-                    buffer.size
+                    midiMessage.msg.size,
+                    midiMessage.timestamp
                 )
-//                sendCount++
+            } else {
+                midiManager.inputPort?.send(midiMessage.msg, 0, midiMessage.msg!!.size)
             }
         }
     }

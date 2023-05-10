@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clDrumContainer"
+    android:layout_width="120dp"
+    android:layout_height="150dp"
+    android:layout_margin="2dp"
+    android:background="@drawable/container_bg_shape"
+    android:clickable="true"
+    android:padding="6dp">
+
+    <Button
+        android:id="@+id/bDrumHit"
+        android:layout_width="0dp"
+        android:layout_height="96dp"
+        android:text="Snare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDrumLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="V: 100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bDrumHit" />
+
+    <TextView
+        android:id="@+id/tvDrumPan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="P: -63"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bDrumHit" />
+
+    <TextView
+        android:id="@+id/tvDrumReverb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="R: 40"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDrumLevel" />
+
+    <TextView
+        android:id="@+id/tvDrumChorus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="C: 40"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDrumPan" />
+</androidx.constraintlayout.widget.ConstraintLayout>

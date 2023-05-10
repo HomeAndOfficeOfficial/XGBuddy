@@ -14,6 +14,7 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
 
     private var entriesResId: Int = 0
     private val spinner: Spinner
+    private var isUserUpdating = true
 
     constructor(context: Context, attributeSet: AttributeSet) : this(context) {
         val typedArray =
@@ -47,7 +48,11 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (value.toInt() != position) {
             value = position.toByte()
-            listener?.onParameterChanged(controlParameter!!)
+            if (isUserUpdating) {
+                listener?.onParameterChanged(controlParameter!!, true)
+            } else {
+                isUserUpdating = true
+            }
         }
     }
 
@@ -56,6 +61,7 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
     override fun updateControlBounds() {}
 
     override fun updateViews() {
+        isUserUpdating = false
         spinner.setSelection(value.toInt())
     }
 }

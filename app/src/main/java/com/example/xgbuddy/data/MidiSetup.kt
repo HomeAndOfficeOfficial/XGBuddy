@@ -1,16 +1,22 @@
 package com.example.xgbuddy.data
 
+import com.example.xgbuddy.data.gm.MidiPart
+
 data class MidiSetup(
     val mode: InstrumentMode,
-    val channels: List<MidiChannel>,
-    val variation: Variation,
+    val parts: List<MidiPart>,
+//    val variation: Variation,
     val name: String
 ) {
     companion object {
         fun getXGDefault() =
-            MidiSetup(InstrumentMode.XG, List(16) { MidiChannel(it) }, Variation(0), "XGDefault")
+            MidiSetup(InstrumentMode.XG, List(16) { MidiPart(it) }, /*Variation(0),*/ "XGDefault")
 
         fun getQSDefault() =
-            MidiSetup(InstrumentMode.QS300, List(16) { MidiChannel(it) }, Variation(0), "QSDefault")
+            MidiSetup(
+                InstrumentMode.QS300,
+                List(16) { MidiPart(it) }, /*Variation(0),*/
+                "QSDefault"
+            )
     }
 }

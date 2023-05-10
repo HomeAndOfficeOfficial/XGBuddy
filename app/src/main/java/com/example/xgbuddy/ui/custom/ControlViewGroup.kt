@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.gm.MidiParameter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
+import com.example.xgbuddy.data.xg.DrumVoice
+import com.example.xgbuddy.data.xg.DrumVoiceParameter
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
@@ -88,12 +92,34 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap[view.controlParameter!!.addr] = view
     }
 
-    // There will probably be multiple overloads of this to update views for whatever this group contains
+    /**
+     * These update methods are a little clumsy since they are nearly identical, but because they
+     * rely on completely separate enum types having the same "reflectedField" member, I'm not sure
+     * if there's a good way to combine these into a single function. At some point I can look into
+     * doing some fancy type checking, passing KProperties to some generic method that can handle
+     * any kind of type. This is fine for now.
+     */
+    fun updateViews(midipart: MidiPart) {
+        controlViewMap.keys.forEach {
+            val param = MidiParameter::addrLo findBy it.toByte()
+            controlViewMap[it]?.value =
+                if (param != null) midipart.getPropertyValue(param.reflectedField) else 0
+        }
+    }
+
     fun updateViews(qS300Element: QS300Element) {
         controlViewMap.keys.forEach {
             val param = QS300ElementParameter::baseAddress findBy it
             controlViewMap[it]?.value =
                 if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
+        }
+    }
+
+    fun updateViews(drumVoice: DrumVoice) {
+        controlViewMap.keys.forEach {
+            val param = DrumVoiceParameter::ordinal findBy it.toInt()
+            controlViewMap[it]?.value =
+                if (param != null) drumVoice.getPropertyValue(param.reflectedField) else 0
         }
     }
 

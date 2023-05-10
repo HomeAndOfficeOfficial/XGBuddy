@@ -14,7 +14,7 @@
 
         <Button
             android:id="@+id/bLabel"
-            style="@style/ControlViewGroupHeader"
+            style="@style/ControlViewGroupHeader.DefaultColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Group label"

@@ -4,11 +4,21 @@ object MidiConstants {
 
     const val SEND_SCHEDULE_INTERVAL_NANO = 2
 
-    const val EXCLUSIVE_STATUS_BYTE: Byte = -16
-    const val YAMAHA_ID_BYTE: Byte = 67
-    const val DEVICE_NUMBER_BULK_DUMP: Byte = 0
+    const val STATUS_NOTE_OFF = 0x80
+    const val STATUS_NOTE_ON = 0x90
+    const val STATUS_CONTROL_CHANGE = 0xB0
+    const val STATUS_PROGRAM_CHANGE = 0xC0
 
-    const val END_BYTE: Byte = -9
+    const val EXCLUSIVE_STATUS_BYTE: Byte = -16
+    const val YAMAHA_ID: Byte = 67
+    const val DEVICE_NUMBER: Byte = 0x10
+    const val DEVICE_NUMBER_BULK_DUMP: Byte = 0
+    const val UNIVERSAL_NON_REALTIME: Byte = 0x7e
+    const val TARGET_ID: Byte = 0x7f
+    const val SUB_ID_GM_MSG: Byte = 9
+    const val SUB_ID_GM_ON: Byte = 1
+
+    const val SYSEX_END: Byte = -9 // 0xf7
 
     const val OFFSET_DEVICE_ID = 3
 
@@ -31,4 +41,53 @@ object MidiConstants {
     const val QS300_ELEMENT_DATA_SIZE = 80
 
     const val MODEL_ID_QS300: Byte = 0x4b
+    const val MODEL_ID_XG: Byte = 0x4c
+
+    const val XG_NORMAL_VOICE_MSB: Byte = 0
+    const val XG_INITIAL_DRUM_NOTE = 13
+
+    val XY_SYSTEM_ON_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0x7e,
+        0,
+        SYSEX_END
+    )
+
+    val GM_MODE_ON_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        UNIVERSAL_NON_REALTIME,
+        TARGET_ID,
+        SUB_ID_GM_MSG,
+        SUB_ID_GM_ON,
+        SYSEX_END
+    )
+
+    val DRUM_SETUP_RESET_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0x7d,
+        0, // Replace this with drum setup number
+        SYSEX_END
+    )
+
+    val ALL_PARAM_RESET_ARRAY = byteArrayOf(
+        EXCLUSIVE_STATUS_BYTE,
+        YAMAHA_ID,
+        DEVICE_NUMBER,
+        MODEL_ID_XG,
+        0,
+        0,
+        0X7f,
+        0,
+        SYSEX_END
+    )
 }

@@ -6,28 +6,20 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.qs300.QS300ControlParameter
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Preset
+import com.example.xgbuddy.ui.ControlBaseFragment
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.viewmodel.QS300ViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
-abstract class QS300ElementBaseFragment : Fragment(),
-    ParameterControlView.OnParameterChangedListener {
-
-    @Inject
-    lateinit var midiSession: MidiSession
+abstract class QS300ElementBaseFragment : ControlBaseFragment() {
 
     protected val viewModel: QS300ViewModel by activityViewModels()
 
@@ -36,7 +28,6 @@ abstract class QS300ElementBaseFragment : Fragment(),
     protected abstract val elementAttrs: IntArray
     protected abstract val attrIndexElIndex: Int
 
-    private val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
     private var currentParam: QS300ElementParameter? = null
 
     override fun onInflate(context: Context, attrs: AttributeSet, savedInstanceState: Bundle?) {
@@ -80,52 +71,37 @@ abstract class QS300ElementBaseFragment : Fragment(),
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        controlGroups.clear()
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(ARG_EL_INDEX, elementIndex)
     }
 
-    protected fun initControlGroup(
+    override fun initControlGroup(
         controlGroup: ControlViewGroup,
-        isInteractive: Boolean = true,
-        shouldShowColoredHeader: Boolean = true,
-        shouldStartExpanded: Boolean = true,
-        extraChildren: ViewGroup? = null
+        isInteractive: Boolean,
+        shouldShowColoredHeader: Boolean,
+        shouldStartExpanded: Boolean,
+        extraChildren: ViewGroup?,
+        shouldReceiveAllTouchCallbacks: Boolean
+
     ) {
         controlGroup.apply {
-            this.isInteractive = isInteractive
             if (shouldShowColoredHeader) {
                 headerColor = resources.getIntArray(R.array.element_container_colors)[elementIndex]
             }
-            controlItemIds.forEach {
-                addControlView(SliderControlView(requireContext()).apply {
-                    controlParameter = initElementParam(it)
-                    listener = this@QS300ElementBaseFragment
-                })
-            }
-            if (!shouldStartExpanded) {
-                collapse()
-            }
         }
-        extraChildren?.apply {
-            for (i in 0 until childCount) {
-                (getChildAt(i) as ParameterControlView).apply {
-                    controlParameter = initElementParam(paramId)
-                    listener = this@QS300ElementBaseFragment
-                    controlGroup.mapUngroupedView(this)
-                }
-            }
-        }
-        controlGroups.add(controlGroup)
+        super.initControlGroup(
+            controlGroup,
+            isInteractive,
+            shouldShowColoredHeader,
+            shouldStartExpanded,
+            extraChildren,
+            false
+        )
     }
 
-    private fun initElementParam(descriptionRes: Int): QS300ControlParameter {
-        val param = QS300ElementParameter::descriptionRes findBy descriptionRes
+    override fun initParameter(paramId: Int): ControlParameter {
+        val param = QS300ElementParameter::descriptionRes findBy paramId
         return QS300ControlParameter(
             param!!,
             viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].getPropertyValue(
@@ -134,7 +110,7 @@ abstract class QS300ElementBaseFragment : Fragment(),
         )
     }
 
-    override fun onParameterChanged(controlParameter: ControlParameter) {
+    override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }
@@ -142,7 +118,12 @@ abstract class QS300ElementBaseFragment : Fragment(),
             currentParam!!.reflectedField,
             controlParameter.value
         )
-        midiSession.send(viewModel.preset.value!!.voices[viewModel.voice].getBulkDumpForParameterChange(controlParameter, currentParam!!))
+        midiSession.send(
+            viewModel.preset.value!!.voices[viewModel.voice].getBulkDumpForParameterChange(
+                controlParameter,
+                currentParam!!
+            )
+        )
     }
 
     companion object {
