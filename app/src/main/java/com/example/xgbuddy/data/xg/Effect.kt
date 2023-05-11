@@ -10,14 +10,14 @@ data class Effect(
     val effectType: EffectType
 ) {
 
-//    var parameterValues: IntArray = getEffectDefaults()
+    var parameterValues: IntArray? = getEffectDefaults()
 
-//    private fun getEffectDefaults(): ByteArray =
-//        when (effectType) {
-//            EffectType.REVERB -> (Reverb::nameRes findBy nameRes)!!.parameterDefaults
-//            EffectType.CHORUS -> (Chorus::nameRes findBy nameRes)!!.parameterDefaults
-//            EffectType.VARIATION -> (Variation::nameRes findBy nameRes)!!.parameterDefaults
-//        }
+    private fun getEffectDefaults(): IntArray? =
+        when (effectType) {
+            EffectType.REVERB -> (Reverb::nameRes findBy nameRes)!!.parameterDefaults
+            EffectType.CHORUS -> (Chorus::nameRes findBy nameRes)!!.parameterDefaults
+            EffectType.VARIATION -> (Variation::nameRes findBy nameRes)!!.parameterDefaults
+        }
 
     enum class EffectType { REVERB, CHORUS, VARIATION }
 
