@@ -8,6 +8,7 @@ import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
 import com.example.xgbuddy.data.xg.NRPN
 import com.example.xgbuddy.data.xg.RPN
+import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.EnumFinder.findBy
 
@@ -47,6 +48,21 @@ object MidiMessageUtility {
             channel,
             MidiControlChange.BANK_SELECT_LSB.controlNumber,
             xgNormalVoice.bank
+        )
+        return listOf(ccMsb, ccLsb, programChange)
+    }
+
+    fun getSFXNormalVoiceChange(channel: Int, sfxNormalVoice: SFXNormalVoice): List<MidiMessage> {
+        val programChange = getProgramChange(channel, sfxNormalVoice.program)
+        val ccMsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_MSB.controlNumber,
+            MidiConstants.XG_SFX_VOICE_MSB
+        )
+        val ccLsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_LSB.controlNumber,
+            MidiConstants.XG_SFX_VOICE_LSB
         )
         return listOf(ccMsb, ccLsb, programChange)
     }

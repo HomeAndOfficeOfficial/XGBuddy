@@ -2,6 +2,7 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.InstrumentGroup
+import com.example.xgbuddy.data.MidiConstants
 
 enum class XGNormalVoice(
     val nameRes: Int,
@@ -443,8 +444,8 @@ enum class XGNormalVoice(
     BrthNoize(R.string.xgnv_breath_noize, InstrumentGroup.SFX, 121, 0),
     Seashore(R.string.xgnv_sea_shore, InstrumentGroup.SFX, 122, 0),
     Tweet(R.string.xgnv_tweeet, InstrumentGroup.SFX, 123, 0),
-    Telphone(R.string.xgnv_telephne, InstrumentGroup.SFX, 124, 0),
+    Telphone(R.string.xgnv_telephone, InstrumentGroup.SFX, 124, 0),
     Helicptr(R.string.xgnv_helicopter, InstrumentGroup.SFX, 125, 0),
     Applause(R.string.xgnv_applause, InstrumentGroup.SFX, 126, 0),
-    Gunshot(R.string.xgnv_gunshot, InstrumentGroup.SFX, 127, 0),
+    Gunshot(R.string.xgnv_gunshot, InstrumentGroup.SFX, 127, 0);
 }
