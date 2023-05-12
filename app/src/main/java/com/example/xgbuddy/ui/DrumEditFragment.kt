@@ -38,6 +38,7 @@ class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListene
         )
     }
 
+    private var isSpinnerUpdating = true
     private var currentDrumProgram: Byte = -1
 
     @SuppressLint("NotifyDataSetChanged")
@@ -75,16 +76,27 @@ class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListene
                 GridLayoutManager(requireContext(), 6, GridLayoutManager.VERTICAL, false)
             adapter = drumVoiceAdapter
         }
-        setupSpinner()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupSpinner()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.spDrumKit.onItemSelectedListener = null
     }
 
     private fun setupSpinner() {
         // Program number for drum kits is just 0-8 sequentially
         binding.spDrumKit.apply {
-            setSelection(
+            val programNumber =
                 midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
-                    .programNumber.toInt()
+                    .programNumber
+            setSelection(
+                (XGDrumKit::programNumber findBy programNumber)!!.ordinal
             )
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -93,11 +105,21 @@ class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListene
                     position: Int,
                     id: Long
                 ) {
-                    midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setDrumKit(
-                        (XGDrumKit::programNumber findBy position.toByte())!!
-                    )
-                    midiViewModel.channels.value = midiViewModel.channels.value
-
+                    if (isSpinnerUpdating) {
+                        isSpinnerUpdating = false
+                    } else {
+                        val drumKit = XGDrumKit::ordinal findBy position
+                        midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setDrumKit(
+                            drumKit!!
+                        )
+                        midiViewModel.channels.value = midiViewModel.channels.value
+                        midiSession.send(
+                            MidiMessageUtility.getDrumKitChange(
+                                midiViewModel.selectedChannel.value!!,
+                                drumKit
+                            )
+                        )
+                    }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

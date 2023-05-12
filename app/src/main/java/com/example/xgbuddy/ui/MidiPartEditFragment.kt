@@ -188,8 +188,12 @@ class MidiPartEditFragment : ControlBaseFragment() {
             )
         }
 
-        // TODO: Send required params to param change
-        return MidiMessageUtility.getXGParamChange()
+        // TODO: Verify parameters are changing
+        return MidiMessageUtility.getXGParamChange(
+            midiViewModel.selectedChannel.value!!,
+            currentParam!!,
+            controlParameter.value
+        )
     }
 
     private fun activateNRPN() {

@@ -13,6 +13,7 @@ import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
 import com.example.xgbuddy.adapter.VoiceListAdapter
 import com.example.xgbuddy.adapter.VoiceListAdapter.VoiceListCategory.*
+import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
@@ -68,6 +69,7 @@ class VoiceSelectionDialogFragment : DialogFragment() {
     private fun buildCompleteVoiceList(): List<Any> = mutableListOf<Any>().apply {
         addAll(XGNormalVoice.values())
         addAll(XGDrumKit.values())
+        addAll(SFXNormalVoice.values())
     }.toList()
 
     private fun setupCategoryButtons() {
@@ -126,12 +128,22 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                     updatedPart.setDrumKit(drumKit)
                     updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
                     midiViewModel.channels.value = updatedPartsList
-
-                    // This might work the same for drum, we'll see
-                    // midiSession.send(MidiMessageUtility.getXGNormalVoiceChange(updatedPart.ch, xgVoice))
+                    midiSession.send(MidiMessageUtility.getDrumKitChange(updatedPart.ch, drumKit))
                 }
             }
-            SFX -> TODO()
+            SFX -> {
+                (SFXNormalVoice::ordinal findBy voiceIndex)?.let { sfx ->
+                    updatedPart.changeSFXVoice(sfx)
+                    updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
+                    midiViewModel.channels.value = updatedPartsList
+                    midiSession.send(
+                        MidiMessageUtility.getSFXNormalVoiceChange(
+                            updatedPart.ch,
+                            sfx
+                        )
+                    )
+                }
+            }
             QS300 -> TODO()
         }
         dismiss()

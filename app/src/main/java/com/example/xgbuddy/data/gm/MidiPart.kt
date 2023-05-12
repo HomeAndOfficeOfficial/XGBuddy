@@ -1,7 +1,9 @@
 package com.example.xgbuddy.data.gm
 
+import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiData
 import com.example.xgbuddy.data.xg.DrumVoice
+import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.util.DrumKitVoiceUtil
@@ -149,9 +151,18 @@ open class MidiPart(val ch: Int) : MidiData() {
     fun changeXGVoice(xgVoice: XGNormalVoice) {
         voiceType = VoiceType.NORMAL
         programNumber = xgVoice.program
-        bankMsb = 0
+        bankMsb = MidiConstants.XG_NORMAL_VOICE_MSB
         bankLsb = xgVoice.bank
         voiceNameRes = xgVoice.nameRes
+        // TODO: add element reserve here and to normal voice and sfx voice enums
+    }
+
+    fun changeSFXVoice(sfxNormalVoice: SFXNormalVoice) {
+        voiceType = VoiceType.NORMAL
+        programNumber = sfxNormalVoice.program
+        bankMsb = MidiConstants.XG_SFX_VOICE_MSB
+        bankLsb = MidiConstants.XG_SFX_VOICE_LSB
+        voiceNameRes = sfxNormalVoice.nameRes
     }
 
     override fun toString(): String {

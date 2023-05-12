@@ -3,13 +3,11 @@ package com.example.xgbuddy.util
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
+import com.example.xgbuddy.data.gm.MidiParameter
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
-import com.example.xgbuddy.data.xg.NRPN
-import com.example.xgbuddy.data.xg.RPN
-import com.example.xgbuddy.data.xg.SFXNormalVoice
-import com.example.xgbuddy.data.xg.XGNormalVoice
+import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 object MidiMessageUtility {
@@ -67,9 +65,58 @@ object MidiMessageUtility {
         return listOf(ccMsb, ccLsb, programChange)
     }
 
+    fun getDrumKitChange(channel: Int, drumKit: XGDrumKit): List<MidiMessage> {
+
+        // TODO: Verify differences between changing drumkits in GM mode and XG mode
+        val programChange = getProgramChange(channel, drumKit.programNumber)
+        val ccMsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_MSB.controlNumber,
+            MidiConstants.XG_DRUM_MSB
+        )
+        val ccLsb = getControlChange(
+            channel,
+            MidiControlChange.BANK_SELECT_LSB.controlNumber,
+            MidiConstants.XG_DRUM_LSB
+        )
+
+        return listOf(ccMsb, ccLsb, programChange)
+    }
+
     // TODO: Construct actual param change message
-    fun getXGParamChange(): MidiMessage {
-        return MidiMessage(byteArrayOf(), 0)
+    fun getXGParamChange(channel: Int, parameter: MidiParameter, value: Byte): MidiMessage {
+        val paramChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            MidiConstants.XG_MP_PARAM_ADDR_HI,
+            channel.toByte(),
+            parameter.addrLo,
+            value,
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(paramChange, 0)
+    }
+
+    fun getDrumParamChange(
+        param: DrumVoiceParameter,
+        drumSetup: Int,
+        drumNote: Int,
+        value: Byte
+    ): MidiMessage {
+        val paramChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            (0x30 or drumSetup).toByte(),
+            drumNote.toByte(),
+            param.getAddrLo(),
+            value,
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(paramChange, 0)
     }
 
     fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> =
