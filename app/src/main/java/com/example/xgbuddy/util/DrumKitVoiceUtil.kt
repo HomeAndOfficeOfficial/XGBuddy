@@ -1,6 +1,5 @@
 package com.example.xgbuddy.util
 
-import androidx.core.app.NotificationCompat.GroupAlertBehavior
 import com.example.xgbuddy.data.xg.DrumVoice
 
 object DrumKitVoiceUtil {
@@ -195,871 +194,205 @@ object DrumKitVoiceUtil {
     private const val INDEX_CUICA_OPEN = 66
 
     private val standardKit: List<DrumVoice> = listOf(
-        DrumVoice(SURDO_MUTE),
-        DrumVoice(SURDO_OPEN),
-        DrumVoice(HI_Q),
-        DrumVoice(WHIP_SLAP),
-        DrumVoice(SCRATCH_PUSH),
-        DrumVoice(SCRATCH_PULL),
-        DrumVoice(FINGER_SNAP),
-        DrumVoice(CLICK_NOISE),
-        DrumVoice(METR_CLICK),
-        DrumVoice(METR_BELL),
-        DrumVoice(SEQ_CLICK_L),
-        DrumVoice(SEQ_CLICK_H),
-        DrumVoice(BRUSH_TAP),
-        DrumVoice(BRUSH_SWIRL_L),
-        DrumVoice(BRUSH_SLAP),
-        DrumVoice(BRUSH_SWIRL_H),
-        DrumVoice(SNARE_ROLL),
-        DrumVoice(CASTANET),
-        DrumVoice(SNARE_L),
-        DrumVoice(STICKS),
-        DrumVoice(BASS_DRUM_L),
-        DrumVoice(OPEN_RIM),
-        DrumVoice(BASS_DRUM_M),
-        DrumVoice(BASS_DRUM_H),
-        DrumVoice(SIDE_STICK),
-        DrumVoice(SNARE_M),
-        DrumVoice(HAND_CLAP),
-        DrumVoice(SNARE_H),
-        DrumVoice(FLOOR_TOM_L),
-        DrumVoice(HH_CLOSE),
-        DrumVoice(FLOOR_TOM_H),
-        DrumVoice(HH_PEDAL),
-        DrumVoice(LOW_TOM),
-        DrumVoice(HH_OPEN),
-        DrumVoice(MID_TOM_L),
-        DrumVoice(MID_TOM_H),
-        DrumVoice(CRASH_CYM_1),
-        DrumVoice(HIGH_TOM),
-        DrumVoice(RIDE_CYM_1),
-        DrumVoice(CHINESE_CYM),
-        DrumVoice(RIDE_CYM_CUP),
-        DrumVoice(TAMBOURINE),
-        DrumVoice(SPLASH_CYM),
-        DrumVoice(COWBELL),
-        DrumVoice(CRASH_CYM_2),
-        DrumVoice(VIBRASLAP),
-        DrumVoice(RIDE_CYM_2),
-        DrumVoice(BONGO_H),
-        DrumVoice(BONGO_L),
-        DrumVoice(CONGA_H_MUTE),
-        DrumVoice(CONGA_H_OPEN),
-        DrumVoice(CONGA_L),
-        DrumVoice(TIMBALE_H),
-        DrumVoice(TIMBALE_L),
-        DrumVoice(AGOGO_H),
-        DrumVoice(AGOGO_L),
-        DrumVoice(CABASA),
-        DrumVoice(MARACAS),
-        DrumVoice(SAMBA_WHISTLE_H),
-        DrumVoice(SAMBA_WHISTLE_L),
-        DrumVoice(GUIRO_SHORT),
-        DrumVoice(GUIRO_LONG),
-        DrumVoice(CLAVES),
-        DrumVoice(WOOD_BLOCK_H),
-        DrumVoice(WOOD_BLOCK_L),
-        DrumVoice(CUICA_MUTE),
-        DrumVoice(CUICA_OPEN),
-        DrumVoice(TRIANGLE_MUTE),
-        DrumVoice(TRIANGLE_OPEN),
-        DrumVoice(SHAKER),
-        DrumVoice(JINGLE_BELL),
-        DrumVoice(BELL_TREE)
+        DrumVoice(SURDO_MUTE,64,64,102,3,51,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SURDO_OPEN,64,64,121,3,51,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HI_Q,64,64,63,0,51,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(WHIP_SLAP,64,64,127,0,51,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SCRATCH_PUSH,64,64,93,4,52,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SCRATCH_PULL,64,64,116,4,52,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(FINGER_SNAP,64,64,127,0,64,75,0,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CLICK_NOISE,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(METR_CLICK,64,64,94,0,64,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(METR_BELL,64,64,98,0,64,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SEQ_CLICK_L,64,64,87,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SEQ_CLICK_H,64,64,96,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BRUSH_TAP,64,64,49,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BRUSH_SWIRL_L,64,64,47,0,64,127,127,127,0,1,1,64,64,64,64,64),
+        DrumVoice(BRUSH_SLAP,64,64,52,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BRUSH_SWIRL_H,64,64,45,0,64,127,127,127,0,1,1,64,64,64,64,64),
+        DrumVoice(SNARE_ROLL,64,64,79,0,64,127,127,127,0,1,1,64,64,64,64,64),
+      DrumVoice(CASTANET,64,64,127,0,64,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SNARE_L,64,64,75,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(STICKS,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BASS_DRUM_L,64,64,116,0,64,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(OPEN_RIM,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BASS_DRUM_M,64,64,102,0,64,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BASS_DRUM_H,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SIDE_STICK,64,64,93,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SNARE_M,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HAND_CLAP,64,64,110,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SNARE_H,64,64,123,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(FLOOR_TOM_L,64,64,111,0,24,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HH_CLOSE,64,64,91,1,77,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(FLOOR_TOM_H,64,64,113,0,39,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HH_PEDAL,64,64,97,1,77,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(LOW_TOM,64,64,104,0,52,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HH_OPEN,64,64,96,1,77,32,32,127,0,0,1,64,64,64,64,64),
+        DrumVoice(MID_TOM_L,64,64,87,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(MID_TOM_H,64,64,103,0,83,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CRASH_CYM_1,64,64,127,0,69,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(HIGH_TOM,64,64,116,0,104,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(RIDE_CYM_1,64,64,105,0,34,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CHINESE_CYM,64,64,120,0,34,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(RIDE_CYM_CUP,64,64,107,0,46,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(TAMBOURINE,64,64,120,0,64,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SPLASH_CYM,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(COWBELL,64,64,118,0,77,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CRASH_CYM_2, 64,64,127,0,51,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(VIBRASLAP,64,64,106,0,25,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(RIDE_CYM_2, 64,64,110,0,46,127,127,127,0,0,1,64,64,64,64,64),
+       DrumVoice(BONGO_H,64,64,110,0,110,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BONGO_L,64,64,87,0,110,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CONGA_H_MUTE,64,64,73,0,39,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CONGA_H_OPEN,64,64,89,0,25,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CONGA_L,64,64,111,0,64,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(TIMBALE_H,64,64,91,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(TIMBALE_L,64,64,95,0,64,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(AGOGO_H,64,64,108,0,34,100,100,127,0,0,1,64,64,64,64,64),
+        DrumVoice(AGOGO_L,64,64,108,0,34,100,100,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CABASA,64,64,90,0,28,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(MARACAS,64,64,103,0,21,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SAMBA_WHISTLE_H,64,64,103,0,101,127,127,127,0,1,1,64,64,64,64,64),
+        DrumVoice(SAMBA_WHISTLE_L,64,64,110,0,101,127,127,127,0,1,1,64,64,64,64,64),
+        DrumVoice(GUIRO_SHORT,64,64,124,0,95,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(GUIRO_LONG,64,64,106,0,110,63,63,127,0,1,1,64,64,64,64,64),
+        DrumVoice(CLAVES,64,64,88,0,64,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(WOOD_BLOCK_H,64,64,107,0,104,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(WOOD_BLOCK_L,64,64,96,0,104,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CUICA_MUTE,64,64,97,0,21,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(CUICA_OPEN,64,64,107,0,34,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(TRIANGLE_MUTE,64,64,127,2,25,95,95,127,0,0,1,64,64,64,64,64),
+        DrumVoice(TRIANGLE_OPEN,64,64,127,2,25,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(SHAKER,64,64,106,0,83,63,63,127,0,0,1,64,64,64,64,64),
+        DrumVoice(JINGLE_BELL,64,64,123,0,105,127,127,127,0,0,1,64,64,64,64,64),
+        DrumVoice(BELL_TREE,64,64,68,0,64,127,127,127,0,0,1,64,64,64,64,64)
     )
 
     val standardKit1: List<DrumVoice> = standardKit.map { it.copy() }
 
     val standardKit2: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_SNARE_ROLL].name = SNARE_ROLL_2
-        this[INDEX_SNARE_L].name = SNARE_L_2
-        this[INDEX_OPEN_RIM].name = OPEN_RIM_2
-        this[INDEX_BD_M].name = BASS_DRUM_M_2
-        this[INDEX_BD_H].name = BASS_DRUM_H_2
-        this[INDEX_SNARE_M].name = SNARE_M_2
-        this[INDEX_SNARE_H].name = SNARE_H_2
+        this[INDEX_SNARE_ROLL] = DrumVoice(SNARE_ROLL_2, 64,64,79,0,64,127,127,0,0,1,1,64,64,64,64,64)
+        this[INDEX_SNARE_L] = DrumVoice(SNARE_L_2,64,64,75,0,64,127,127,0,0,0,1,64,64,64,64,64)
+        this[INDEX_OPEN_RIM] = DrumVoice(OPEN_RIM_2,64,64,127,0,64,127,127,0,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_M] = DrumVoice(BASS_DRUM_M_2,64,64,102,0,64,32,32,0,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(BASS_DRUM_H_2,64,64,127,0,64,32,32,0,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(SNARE_M_2,64,64,127,0,64,127,127,0,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(SNARE_H_2,64,64,123,0,64,127,127,0,0,0,1,64,64,64,64,64)
     }
 
     var roomKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_SNARE_M].name = SD_ROOM_L
-        this[INDEX_SNARE_H].name = SD_ROOM_H
-        this[INDEX_FL_TOM_L].name = ROOM_TOM_1
-        this[INDEX_FL_TOM_H].name = ROOM_TOM_2
-        this[INDEX_LOW_TOM].name = ROOM_TOM_3
-        this[INDEX_MID_TOM_L].name = ROOM_TOM_4
-        this[INDEX_MID_TOM_H].name = ROOM_TOM_5
-        this[INDEX_HI_TOM].name = ROOM_TOM_6
+        this[INDEX_SNARE_M] = DrumVoice(SD_ROOM_L,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(SD_ROOM_H,64,64,123,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(ROOM_TOM_1,64,64,123,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(ROOM_TOM_2,64,64,127,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(ROOM_TOM_3,64,64,117,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(ROOM_TOM_4,64,64,121,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(ROOM_TOM_5,64,64,126,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(ROOM_TOM_6,64,64,124,0,95,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var rockKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_SNARE_L].name = SD_ROCK_M
-        this[INDEX_BD_L].name = BASS_DRUM_M
-        this[INDEX_BD_M].name = BASS_DRUM_H_3
-        this[INDEX_BD_H].name = BD_ROCK
-        this[INDEX_SNARE_M].name = SD_ROCK
-        this[INDEX_SNARE_H].name = SD_ROCK_RIM
-        this[INDEX_FL_TOM_L].name = ROCK_TOM_1
-        this[INDEX_FL_TOM_H].name = ROCK_TOM_2
-        this[INDEX_LOW_TOM].name = ROCK_TOM_3
-        this[INDEX_MID_TOM_L].name = ROCK_TOM_4
-        this[INDEX_MID_TOM_H].name = ROCK_TOM_5
-        this[INDEX_HI_TOM].name = ROCK_TOM_6
+        this[INDEX_SNARE_L] = DrumVoice(SD_ROCK_M,64,64,121,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_L] = DrumVoice(BASS_DRUM_M,64,64,111,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_M] = DrumVoice(BASS_DRUM_H_3,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(BD_ROCK,64,64,119,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(SD_ROCK,64,64,110,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(SD_ROCK_RIM,64,64,119,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(ROCK_TOM_1,64,64,123,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(ROCK_TOM_2,64,64,127,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(ROCK_TOM_3,64,64,117,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(ROCK_TOM_4,64,64,121,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(ROCK_TOM_5,64,64,123,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(ROCK_TOM_6,64,64,124,0,95,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var electroKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_BRUSH_SWIRL_H].name = REVERSE_CYM
-        this[INDEX_CASTANET].name = HI_Q
-        this[INDEX_SNARE_L].name = SNARE_M
-        this[INDEX_BD_L].name = BASS_DRUM_H_4
-        this[INDEX_BD_M].name = BD_ROCK
-        this[INDEX_BD_H].name = BD_GATE
-        this[INDEX_SNARE_M].name = SD_ROCK_L
-        this[INDEX_SNARE_H].name = SD_ROCK_H
-        this[INDEX_FL_TOM_L].name = E_TOM_1
-        this[INDEX_FL_TOM_H].name = E_TOM_2
-        this[INDEX_LOW_TOM].name = E_TOM_3
-        this[INDEX_MID_TOM_L].name = E_TOM_4
-        this[INDEX_MID_TOM_H].name = E_TOM_5
-        this[INDEX_HI_TOM].name = E_TOM_6
-        this[INDEX_CUICA_MUTE].name = SCRATCH_PUSH
-        this[INDEX_CUICA_OPEN].name = SCRATCH_PULL
+        this[INDEX_BRUSH_SWIRL_H] = DrumVoice(REVERSE_CYM,64,64,100,0,64,127,127,127,0,1,1,64,64,64,64,64)
+        this[INDEX_CASTANET] = DrumVoice(HI_Q,64,64,127,0,64,63,63,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_L] = DrumVoice(SNARE_M,64,64,114,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_L] = DrumVoice(BASS_DRUM_H_4,64,64,123,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_M] = DrumVoice(BD_ROCK,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(BD_GATE,64,64,122,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(SD_ROCK_L,64,64,107,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(SD_ROCK_H,64,64,102,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(E_TOM_1,64,64,92,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(E_TOM_2,64,64,94,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(E_TOM_3,64,64,97,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(E_TOM_4,64,64,93,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(E_TOM_5,64,64,102,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(E_TOM_6,64,64,97,0,101,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CUICA_MUTE] = DrumVoice(SCRATCH_PUSH,64,64,89,4,21,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CUICA_OPEN] = DrumVoice(SCRATCH_PULL,64,64,94,4,34,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var analogKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_BRUSH_SWIRL_H].name = REVERSE_CYM
-        this[INDEX_CASTANET].name = HI_Q
-        this[INDEX_SNARE_L].name = SD_ROCK_H
-        this[INDEX_BD_L].name = BASS_DRUM_M
-        this[INDEX_BD_M].name = BD_ANALOG_L
-        this[INDEX_BD_H].name = BD_ANALOG_H
-        this[INDEX_SNARE_M].name = ANALOG_STICK
-        this[INDEX_SNARE_H].name = ANALOG_SNARE_H
-        this[INDEX_FL_TOM_L].name = ANALOG_TOM_1
-        this[INDEX_HH_CLOSE].name = ANALOG_HH_CLOSE
-        this[INDEX_FL_TOM_H].name = ANALOG_TOM_2
-        this[INDEX_HH_PEDL].name = ANALOG_HH_CLOSE_2
-        this[INDEX_LOW_TOM].name = ANALOG_TOM_3
-        this[INDEX_HH_OPEN].name = ANALOG_HH_OPEN
-        this[INDEX_MID_TOM_L].name = ANALOG_TOM_4
-        this[INDEX_MID_TOM_H].name = ANALOG_TOM_5
-        this[INDEX_CRASH_1].name = ANALOG_CYM
-        this[INDEX_HI_TOM].name = ANALOG_TOM_6
-        this[INDEX_COWBELL].name = ANALOG_COWBELL
-        this[INDEX_CONGA_H_MUTE].name = ANALOG_CONGA_H
-        this[INDEX_CONGA_H_OPEN].name = ANALOG_CONGA_M
-        this[INDEX_CONGA_L].name = ANALOG_CONGA_L
-        this[INDEX_MARACAS].name = ANALOG_MARACAS
-        this[INDEX_CLAVES].name = ANALOG_CLAVES
-        this[INDEX_CUICA_MUTE].name = SCRATCH_PUSH
-        this[INDEX_CUICA_OPEN].name = SCRATCH_PULL
+        this[INDEX_BRUSH_SWIRL_H] = DrumVoice(REVERSE_CYM,64,64,100,0,64,127,127,127,0,1,1,64,64,64,64,64)
+        this[INDEX_CASTANET] = DrumVoice(HI_Q,64,64,127,0,64,63,63,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_L] = DrumVoice(SD_ROCK_H,64,64,120,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_L] = DrumVoice(BASS_DRUM_M,64,64,111,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_M] = DrumVoice(BD_ANALOG_L,64,64,123,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(BD_ANALOG_H,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_STICK] = DrumVoice(ANALOG_STICK,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(ANALOG_SNARE_L,64,64,107,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(ANALOG_SNARE_H,64,64,102,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(ANALOG_TOM_1,64,64,127,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HH_CLOSE] = DrumVoice(ANALOG_HH_CLOSE,64,64,108,1,77,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(ANALOG_TOM_2,64,64,112,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HH_PEDL] = DrumVoice(ANALOG_HH_CLOSE_2,64,64,91,1,77,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(ANALOG_TOM_3,64,64,108,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HH_OPEN] = DrumVoice(ANALOG_HH_OPEN,64,64,96,1,77,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(ANALOG_TOM_4,64,64,112,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(ANALOG_TOM_5,64,64,109,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CRASH_1] = DrumVoice(ANALOG_CYM,64,64,109,0,69,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(ANALOG_TOM_6,64,64,109,0,101,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_COWBELL] = DrumVoice(ANALOG_COWBELL,64,64,118,0,77,63,63,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CONGA_H_MUTE] = DrumVoice(ANALOG_CONGA_H,64,64,89,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CONGA_H_OPEN] = DrumVoice(ANALOG_CONGA_M,64,64,89,0,25,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CONGA_L] = DrumVoice(ANALOG_CONGA_L,64,64,115,0,64,95,95,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MARACAS] = DrumVoice(ANALOG_MARACAS,64,64,96,0,21,63,63,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CLAVES] = DrumVoice(ANALOG_CLAVES,64,64,88,0,64,95,95,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CUICA_MUTE] = DrumVoice(SCRATCH_PUSH,64,64,89,4,21,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CUICA_OPEN] = DrumVoice(SCRATCH_PULL,64,64,94,4,34,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var jazzKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_BD_H].name = BD_JAZZ
-        this[INDEX_FL_TOM_L].name = JAZZ_TOM_1
-        this[INDEX_FL_TOM_H].name = JAZZ_TOM_2
-        this[INDEX_LOW_TOM].name = JAZZ_TOM_3
-        this[INDEX_MID_TOM_L].name = JAZZ_TOM_4
-        this[INDEX_MID_TOM_H].name = JAZZ_TOM_5
-        this[INDEX_HI_TOM].name = JAZZ_TOM_6
+        this[INDEX_BD_H] = DrumVoice(BD_JAZZ,64,64,120,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(JAZZ_TOM_1,64,64,113,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(JAZZ_TOM_2,64,64,122,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(JAZZ_TOM_3,64,64,112,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(JAZZ_TOM_4,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(JAZZ_TOM_5,64,64,110,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(JAZZ_TOM_6,64,64,116,0,104,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var brushKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_SNARE_L].name = BRUSH_SLAP_L
-        this[INDEX_BD_H].name = BD_SOFT
-        this[INDEX_SNARE_M].name = BRUSH_SLAP_M
-        this[INDEX_SNARE_H].name = BRUSH_TAP_H
-        this[INDEX_FL_TOM_L].name = BRUSH_TOM_1
-        this[INDEX_FL_TOM_H].name = BRUSH_TOM_2
-        this[INDEX_LOW_TOM].name = BRUSH_TOM_3
-        this[INDEX_MID_TOM_L].name = BRUSH_TOM_4
-        this[INDEX_MID_TOM_H].name = BRUSH_TOM_5
-        this[INDEX_HI_TOM].name = BRUSH_TOM_6
+        this[INDEX_SNARE_L] = DrumVoice(BRUSH_SLAP_L,64,64,85,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(BD_SOFT,64,64,117,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(BRUSH_SLAP_M,64,64,84,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(BRUSH_TAP_H,64,64,74,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(BRUSH_TOM_1,64,64,127,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(BRUSH_TOM_2,64,64,127,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(BRUSH_TOM_3,64,64,127,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(BRUSH_TOM_4,64,64,127,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(BRUSH_TOM_5,64,64,120,0,83,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(BRUSH_TOM_6,64,64,122,0,104,127,127,127,0,0,1,64,64,64,64,64)
     }
 
     var classicKit: List<DrumVoice> = standardKit.map { it.copy() }.toMutableList().apply {
-        this[INDEX_BD_L].name = BASS_DRUM_L_2
-        this[INDEX_BD_M].name = GRAN_CASSA
-        this[INDEX_BD_H].name = GRAN_CASSA_MUTE
-        this[INDEX_SNARE_M].name = MARCH_SNARE_M
-        this[INDEX_SNARE_H].name = MARCH_SNARE_H
-        this[INDEX_FL_TOM_L].name = JAZZ_TOM_1
-        this[INDEX_FL_TOM_H].name = JAZZ_TOM_2
-        this[INDEX_LOW_TOM].name = JAZZ_TOM_3
-        this[INDEX_MID_TOM_L].name = JAZZ_TOM_4
-        this[INDEX_MID_TOM_H].name = JAZZ_TOM_5
-        this[INDEX_CRASH_1].name = HAND_CYM_OPEN_L
-        this[INDEX_HI_TOM].name = JAZZ_TOM_6
-        this[INDEX_RIDE_CYM_1].name = HAND_CYM_CLOSED_L
-        this[INDEX_CRASH_2].name = HAND_CYM_OPEN_H
-        this[INDEX_RIDE_2].name = HAND_CYM_CLOSED_H
+        this[INDEX_BD_L] = DrumVoice(BASS_DRUM_L_2,64,64,116,0,64,32,32,127,0,0,1,64,64,64,64,64)
+       this[INDEX_BD_M] = DrumVoice(GRAN_CASSA,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_BD_H] = DrumVoice(GRAN_CASSA_MUTE,64,64,127,0,64,32,32,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_M] = DrumVoice(MARCH_SNARE_M,64,64,79,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_SNARE_H] = DrumVoice(MARCH_SNARE_H,64,64,79,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_L] = DrumVoice(JAZZ_TOM_1,64,64,111,0,24,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_FL_TOM_H] = DrumVoice(JAZZ_TOM_2,64,64,113,0,39,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_LOW_TOM] = DrumVoice(JAZZ_TOM_3,64,64,104,0,52,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_L] = DrumVoice(JAZZ_TOM_4,64,64,87,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_MID_TOM_H] = DrumVoice(JAZZ_TOM_5,64,64,103,0,83,127,127,127,0,0,1,64,64,64,64,64)
+       this[INDEX_CRASH_1] = DrumVoice(HAND_CYM_OPEN_L,64,64,123,0,64,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_HI_TOM] = DrumVoice(JAZZ_TOM_6,64,64,116,0,104,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_RIDE_CYM_1] = DrumVoice(HAND_CYM_CLOSED_L,64,64,124,0,34,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_CRASH_2] = DrumVoice(HAND_CYM_OPEN_H,64,64,127,0,51,127,127,127,0,0,1,64,64,64,64,64)
+        this[INDEX_RIDE_2] = DrumVoice(HAND_CYM_CLOSED_H,64,64,106,0,46,127,127,127,0,0,1,64,64,64,64,64)
     }
-
-    /*
-    Standard
-    C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare L 64 64 75 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Bass Drum M 64 64 102 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 Bass Drum H 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 Snare M 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 Snare H 64 64 123 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Floor Tom L 64 64 111 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Floor Tom H 64 64 113 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Low Tom 64 64 104 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Mid Tom L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Mid Tom H 64 64 103 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 High Tom 64 64 116 0 104 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Standard2
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 2 64 64 79 0 64 127 127 0 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare L 2 64 64 75 0 64 127 127 0 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 2 64 64 127 0 64 127 127 0 0 0 1 64 64 64 64 64
-B 0 Bass Drum M 2 64 64 102 0 64 32 32 0 0 0 1 64 64 64 64 64
-C 1 Bass Drum H 2 64 64 127 0 64 32 32 0 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 Snare M 2 64 64 127 0 64 127 127 0 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 Snare H 2 64 64 123 0 64 127 127 0 0 0 1 64 64 64 64 64
-F 1 Floor Tom L 64 64 111 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Floor Tom H 64 64 113 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Low Tom 64 64 104 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Mid Tom L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Mid Tom H 64 64 103 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 High Tom 64 64 116 0 104 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Room
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare L 64 64 75 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Bass Drum M 64 64 102 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 BD Room 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 SD Room L 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 SD Room H 64 64 123 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Room Tom 1 64 64 123 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Room Tom 2 64 64 127 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Room Tom 3 64 64 117 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Room Tom 4 64 64 121 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Room Tom 5 64 64 126 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 Room Tom 6 64 64 124 0 95 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Rock
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 SD Rock M 64 64 121 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum M 64 64 111 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Bass Drum H 3 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 BD Rock 64 64 119 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 SD Rock 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 SD Rock Rim 64 64 119 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Rock Tom 1 64 64 123 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Rock Tom 2 64 64 127 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Rock Tom 3 64 64 117 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Rock Tom 4 64 64 121 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Rock Tom 5 64 64 123 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 Rock Tom 6 64 64 124 0 95 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Electro
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Reverse Cymbal 64 64 100 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Hi Q 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare M 64 64 114 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum H 4 64 64 123 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 BD Rock 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 BD Gate 64 64 122 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 SD Rock L 64 64 107 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 SD Rock H 64 64 102 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 E Tom 1 64 64 92 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 E Tom 2 64 64 94 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 E Tom 3 64 64 97 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 E Tom 4 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 E Tom 5 64 64 102 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 E Tom 6 64 64 97 0 101 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Scratch Push 64 64 89 4 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Scratch Pull 64 64 94 4 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-    Analog
-    C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-    D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-    D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-    E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-    F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-    F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-    G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-    G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-    A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-    Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-    B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-    C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-    C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-    D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-    D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-    E 0 Reverse Cymbal 64 64 100 0 64 127 127 127 0 1 1 64 64 64 64 64
-    F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-    F#0 Hi Q 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-    G 0 SD Rock H 64 64 120 0 64 127 127 127 0 0 1 64 64 64 64 64
-    G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-    A 0 Bass Drum M 64 64 111 0 64 32 32 127 0 0 1 64 64 64 64 64
-    Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-    B 0 BD Analog L 64 64 123 0 64 32 32 127 0 0 1 64 64 64 64 64
-    C 1 BD Analog H 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-    C#1 Analog Side Stick 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-    D 1 Analog Snare L 64 64 107 0 64 127 127 127 0 0 1 64 64 64 64 64
-    D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-    E 1 Analog Snare H 64 64 102 0 64 127 127 127 0 0 1 64 64 64 64 64
-    F 1 Analog Tom 1 64 64 127 0 24 127 127 127 0 0 1 64 64 64 64 64
-    F#1 Analog HH Closed 1 64 64 108 1 77 32 32 127 0 0 1 64 64 64 64 64
-    G 1 Analog Tom 2 64 64 112 0 39 127 127 127 0 0 1 64 64 64 64 64
-    G#1 Analog HH Closed 2 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-    A 1 Analog Tom 3 64 64 108 0 52 127 127 127 0 0 1 64 64 64 64 64
-    Bb1 Analog HH Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-    B 1 Analog Tom 4 64 64 112 0 64 127 127 127 0 0 1 64 64 64 64 64
-    C 2 Analog Tom 5 64 64 109 0 83 127 127 127 0 0 1 64 64 64 64 64
-    C#2 Analog Cymbal 64 64 109 0 69 127 127 127 0 0 1 64 64 64 64 64
-    D 2 Analog Tom 6 64 64 109 0 101 127 127 127 0 0 1 64 64 64 64 64
-    D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-    E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-    F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-    F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-    G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-    G#2 Analog Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-    A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-    Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-    B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-    C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-    C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-    D 3 Analog Conga H 64 64 89 0 39 127 127 127 0 0 1 64 64 64 64 64
-    D#3 Analog Conga M 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-    E 3 Analog Conga L 64 64 115 0 64 95 95 127 0 0 1 64 64 64 64 64
-    F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-    F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-    G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-    G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-    A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-    Bb3 Analog Maracas 64 64 96 0 21 63 63 127 0 0 1 64 64 64 64 64
-    B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-    C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-    C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-    D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-    D#4 Analog Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-    E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-    F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-    F#4 Scratch Push 64 64 89 4 21 127 127 127 0 0 1 64 64 64 64 64
-    G 4 Scratch Pull 64 64 94 4 34 127 127 127 0 0 1 64 64 64 64 64
-    G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-    A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-    Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-    B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-    C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare L 64 64 75 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Bass Drum M 64 64 102 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 BD Jazz 64 64 120 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 Snare M 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 Snare H 64 64 123 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Jazz Tom 1 64 64 113 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Jazz Tom 2 64 64 122 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Jazz Tom 3 64 64 112 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Jazz Tom 4 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Jazz Tom 5 64 64 110 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 Jazz Tom 6 64 64 116 0 104 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Brush
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Brush Slap L 64 64 85 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Bass Drum M 64 64 102 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 BD Soft 64 64 117 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 Brush Slap 64 64 84 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 Brush Tap 64 64 74 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Brush Tom 1 64 64 127 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Brush Tom 2 64 64 127 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Brush Tom 3 64 64 127 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Brush Tom 4 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Brush Tom 5 64 64 120 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Crash Cymbal 1 64 64 127 0 69 127 127 127 0 0 1 64 64 64 64 64
-D 2 Brush Tom 6 64 64 122 0 104 127 127 127 0 0 1 64 64 64 64 64
-D#2 Ride Cymbal 1 64 64 105 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Crash Cymbal 2 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Ride Cymbal 2 64 64 110 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-
-Classic
-C#-1 Surdo Mute 64 64 102 3 51 95 95 127 0 0 1 64 64 64 64 64
-D -1 Surdo Open 64 64 121 3 51 95 95 127 0 0 1 64 64 64 64 64
-D#-1 Hi Q 64 64 63 0 51 127 127 127 0 0 1 64 64 64 64 64
-E -1 Whip Slap 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-F -1 Scratch Push 64 64 93 4 52 63 63 127 0 0 1 64 64 64 64 64
-F#-1 Scratch Pull 64 64 116 4 52 63 63 127 0 0 1 64 64 64 64 64
-G -1 Finger Snap 64 64 127 0 64 75 0 127 0 0 1 64 64 64 64 64
-G#-1 Click Noise 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A -1 Metronome Click 64 64 94 0 64 63 63 127 0 0 1 64 64 64 64 64
-Bb-1 Metronome Bell 64 64 98 0 64 63 63 127 0 0 1 64 64 64 64 64
-B -1 Seq Click L 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 0 Seq Click H 64 64 96 0 64 127 127 127 0 0 1 64 64 64 64 64
-C#0 Brush Tap 64 64 49 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 0 Brush Swirl L 64 64 47 0 64 127 127 127 0 1 1 64 64 64 64 64
-D#0 Brush Slap 64 64 52 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 0 Brush Swirl H 64 64 45 0 64 127 127 127 0 1 1 64 64 64 64 64
-F 0 Snare Roll 64 64 79 0 64 127 127 127 0 1 1 64 64 64 64 64
-F#0 Castanet 64 64 127 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 0 Snare L 64 64 75 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#0 Sticks 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-A 0 Bass Drum L2 64 64 116 0 64 32 32 127 0 0 1 64 64 64 64 64
-Bb0 Open Rim Shot 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-B 0 Gran Cassa 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C 1 Gran Cassa Mute 64 64 127 0 64 32 32 127 0 0 1 64 64 64 64 64
-C#1 Side Stick 64 64 93 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 1 Marching Sn M 64 64 79 0 64 127 127 127 0 0 1 64 64 64 64 64
-D#1 Hand Clap 64 64 110 0 64 127 127 127 0 0 1 64 64 64 64 64
-E 1 Marching Sn H 64 64 79 0 64 127 127 127 0 0 1 64 64 64 64 64
-F 1 Jazz Tom 1 64 64 111 0 24 127 127 127 0 0 1 64 64 64 64 64
-F#1 Hi-Hat Closed 64 64 91 1 77 32 32 127 0 0 1 64 64 64 64 64
-G 1 Jazz Tom 2 64 64 113 0 39 127 127 127 0 0 1 64 64 64 64 64
-G#1 Hi-Hat Pedal 64 64 97 1 77 32 32 127 0 0 1 64 64 64 64 64
-A 1 Jazz Tom 3 64 64 104 0 52 127 127 127 0 0 1 64 64 64 64 64
-Bb1 Hi-Hat Open 64 64 96 1 77 32 32 127 0 0 1 64 64 64 64 64
-B 1 Jazz Tom 4 64 64 87 0 64 127 127 127 0 0 1 64 64 64 64 64
-C 2 Jazz Tom 5 64 64 103 0 83 127 127 127 0 0 1 64 64 64 64 64
-C#2 Hand Cym.Open L 64 64 123 0 64 127 127 127 0 0 1 64 64 64 64 64
-D 2 Jazz Tom 6 64 64 116 0 104 127 127 127 0 0 1 64 64 64 64 64
-D#2 Hand Cym.Closed L 64 64 124 0 34 127 127 127 0 0 1 64 64 64 64 64
-E 2 Chinese Cymbal 64 64 120 0 34 127 127 127 0 0 1 64 64 64 64 64
-F 2 Ride Cymbal Cup 64 64 107 0 46 127 127 127 0 0 1 64 64 64 64 64
-F#2 Tambourine 64 64 120 0 64 63 63 127 0 0 1 64 64 64 64 64
-G 2 Splash Cymbal 64 64 127 0 64 127 127 127 0 0 1 64 64 64 64 64
-G#2 Cowbell 64 64 118 0 77 63 63 127 0 0 1 64 64 64 64 64
-A 2 Hand Cym.Open H 64 64 127 0 51 127 127 127 0 0 1 64 64 64 64 64
-Bb2 Vibraslap 64 64 106 0 25 127 127 127 0 0 1 64 64 64 64 64
-B 2 Hand Cym.Closed H 64 64 106 0 46 127 127 127 0 0 1 64 64 64 64 64
-C 3 Bongo H 64 64 110 0 110 95 95 127 0 0 1 64 64 64 64 64
-C#3 Bongo L 64 64 87 0 110 95 95 127 0 0 1 64 64 64 64 64
-D 3 Conga H Mute 64 64 73 0 39 127 127 127 0 0 1 64 64 64 64 64
-D#3 Conga H Open 64 64 89 0 25 127 127 127 0 0 1 64 64 64 64 64
-E 3 Conga L 64 64 111 0 64 95 95 127 0 0 1 64 64 64 64 64
-F 3 Timbale H 64 64 91 0 64 127 127 127 0 0 1 64 64 64 64 64
-F#3 Timbale L 64 64 95 0 64 127 127 127 0 0 1 64 64 64 64 64
-G 3 Agogo H 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-G#3 Agogo L 64 64 108 0 34 100 100 127 0 0 1 64 64 64 64 64
-A 3 Cabasa 64 64 90 0 28 63 63 127 0 0 1 64 64 64 64 64
-Bb3 Maracas 64 64 103 0 21 63 63 127 0 0 1 64 64 64 64 64
-B 3 Samba Whistle H 64 64 103 0 101 127 127 127 0 1 1 64 64 64 64 64
-C 4 Samba Whistle L 64 64 110 0 101 127 127 127 0 1 1 64 64 64 64 64
-C#4 Guiro Short 64 64 124 0 95 63 63 127 0 0 1 64 64 64 64 64
-D 4 Guiro Long 64 64 106 0 110 63 63 127 0 1 1 64 64 64 64 64
-D#4 Claves 64 64 88 0 64 95 95 127 0 0 1 64 64 64 64 64
-E 4 Wood Block H 64 64 107 0 104 95 95 127 0 0 1 64 64 64 64 64
-F 4 Wood Block L 64 64 96 0 104 95 95 127 0 0 1 64 64 64 64 64
-F#4 Cuica Mute 64 64 97 0 21 127 127 127 0 0 1 64 64 64 64 64
-G 4 Cuica Open 64 64 107 0 34 127 127 127 0 0 1 64 64 64 64 64
-G#4 Triangle Mute 64 64 127 2 25 95 95 127 0 0 1 64 64 64 64 64
-A 4 Triangle Open 64 64 127 2 25 127 127 127 0 0 1 64 64 64 64 64
-Bb4 Shaker 64 64 106 0 83 63 63 127 0 0 1 64 64 64 64 64
-B 4 Jingle Bell 64 64 123 0 105 127 127 127 0 0 1 64 64 64 64 64
-C 5 Bell Tree 64 64 68 0 64 127 127 127 0 0 1 64 64 64 64 64
-     */
 }
