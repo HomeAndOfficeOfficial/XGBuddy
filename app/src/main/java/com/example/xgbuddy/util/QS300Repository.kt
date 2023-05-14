@@ -2,6 +2,7 @@ package com.example.xgbuddy.util
 
 import android.content.Context
 import android.util.Log
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.*
 import com.example.xgbuddy.data.qs300.*
 import com.example.xgbuddy.util.EnumFinder.findBy
@@ -9,7 +10,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
 
-class MidiStoredDataUtility @Inject constructor(val context: Context) {
+class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
@@ -48,7 +49,7 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
     private fun parseQS300PresetsJSON(): List<QS300Preset> {
         var jsonString: String
         val presets = mutableListOf<QS300Preset>()
-        context.openFileInput(AppConstants.QS300_PRESET_FILE).apply {
+        context.resources.openRawResource(R.raw.qs300_presets).apply {
             val size = available()
             val buffer = ByteArray(size)
             read(buffer)

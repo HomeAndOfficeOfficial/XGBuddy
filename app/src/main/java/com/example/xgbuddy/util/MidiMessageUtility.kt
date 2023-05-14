@@ -158,7 +158,7 @@ object MidiMessageUtility {
 
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         var dataSum: Byte = 0
-        val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE) { 0 }.also {
+        val bulkDumpArray = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE).also {
             it[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
             it[1] = MidiConstants.YAMAHA_ID
             it[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
@@ -210,6 +210,6 @@ object MidiMessageUtility {
             it[MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 1] = MidiConstants.SYSEX_END
         }
 
-        return MidiMessage(bulkDumpArray, 0)
+        return MidiMessage(bulkDumpArray)
     }
 }

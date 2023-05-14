@@ -17,6 +17,7 @@ import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 abstract class QS300ElementBaseFragment : ControlBaseFragment() {
@@ -82,8 +83,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         shouldShowColoredHeader: Boolean,
         shouldStartExpanded: Boolean,
         extraChildren: ViewGroup?,
-        shouldReceiveAllTouchCallbacks: Boolean
-
+        shouldReceiveAllTouchCallbacks: Boolean,
+        isRealtime: Boolean
     ) {
         controlGroup.apply {
             if (shouldShowColoredHeader) {
@@ -96,7 +97,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             shouldShowColoredHeader,
             shouldStartExpanded,
             extraChildren,
-            false
+            shouldReceiveAllTouchCallbacks = false,
+            isRealtime = false
         )
     }
 
@@ -118,11 +120,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             currentParam!!.reflectedField,
             controlParameter.value
         )
-        midiSession.send(
-            viewModel.preset.value!!.voices[viewModel.voice].getBulkDumpForParameterChange(
-                controlParameter,
-                currentParam!!
-            )
+        midiSession.sendBulkMessage(
+            MidiMessageUtility.getQS300BulkDump(viewModel.preset.value!!.voices[viewModel.voice])
         )
     }
 

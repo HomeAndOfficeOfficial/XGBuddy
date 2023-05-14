@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.qs300.QS300Element
-import com.example.xgbuddy.util.MidiStoredDataUtility
+import com.example.xgbuddy.util.QS300Repository
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,17 +20,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class VoiceEditFragment : Fragment() {
 
-    @Inject
-    lateinit var dataUtility: MidiStoredDataUtility
+//    @Inject
+//    lateinit var dataUtility: QS300Repository
 
     private val viewModel: QS300ViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: This should be handled in the top level fragment (Probably QS300 Session?)
-        // The overall structure is still uncertain. Working from the bottom up.
-        viewModel.preset.value = dataUtility.getQS300Presets()[1]
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        // TODO: This should be handled in the top level fragment (Probably QS300 Session?)
+//        // The overall structure is still uncertain. Working from the bottom up.
+//        viewModel.preset.value = dataUtility.getQS300Presets()[1]
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

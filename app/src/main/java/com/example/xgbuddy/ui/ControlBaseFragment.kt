@@ -26,7 +26,8 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
         shouldShowColoredHeader: Boolean = true,
         shouldStartExpanded: Boolean = false,
         extraChildren: ViewGroup? = null,
-        shouldReceiveAllTouchCallbacks: Boolean = false
+        shouldReceiveAllTouchCallbacks: Boolean = false,
+        isRealtime: Boolean = true
     ) {
         controlGroup.apply {
             this.isInteractive = isInteractive
@@ -38,6 +39,7 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
                     controlParameter = initParameter(it)
                     listener = this@ControlBaseFragment
                     shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
+                    isRealtimeControl = isRealtime
                 })
             }
         }
