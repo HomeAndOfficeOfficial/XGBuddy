@@ -164,10 +164,28 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                  * send a bulk dump for that voice, and not every voice in the preset.
                  */
                 val preset = qs300ViewModel.presets[voiceIndex]
+                val selectedChannel = midiViewModel.selectedChannel.value!!
                 qs300ViewModel.preset.value = preset
                 updatedPart.changeQS300Voice(preset.voices[0])
+                if (preset.voices.size > 1) {
+                    val secondaryPartIndex =
+                        if (selectedChannel + 1 == updatedPartsList.size) {
+                            selectedChannel - 1
+                        } else {
+                            selectedChannel + 1
+                        }
+                    updatedPartsList[secondaryPartIndex].changeQS300Voice(preset.voices[1])
+                }
                 midiViewModel.channels.value = updatedPartsList
-                midiSession.send(MidiMessageUtility.getQS300BulkDump(preset.voices[0]))
+                preset.voices.forEach {
+                    /**
+                     * TODO: Along with sending a bulk dump, there will likely have to be some
+                     *  channel initialization messages. Like if there is more than one voice, make
+                     *  sure both midi part are receiving the same channel, set to the same mode,
+                     *  etc.
+                     */
+                    midiSession.send(MidiMessageUtility.getQS300BulkDump(it))
+                }
             }
         }
         dismiss()

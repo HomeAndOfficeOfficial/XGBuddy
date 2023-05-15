@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.adapter.PartsListAdapter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.databinding.FragmentPartsBinding
 
 class PartsFragment : Fragment() {
@@ -31,7 +32,19 @@ class PartsFragment : Fragment() {
 
     private fun initObservers() {
         midiViewModel.channels.observe(viewLifecycleOwner) {
-            partsAdapter.updateRow(it[midiViewModel.selectedChannel.value!!])
+            val selectedChannel = midiViewModel.selectedChannel.value!!
+            partsAdapter.updateRow(it[selectedChannel])
+
+            // Todo: Clean this up. This logic is duplicated from VoiceSelectionDialogFragment
+            if (it[selectedChannel].voiceType == MidiPart.VoiceType.QS300) {
+                val secondaryChannel =
+                    if (selectedChannel + 1 == midiViewModel.channels.value!!.size) {
+                        selectedChannel - 1
+                    } else {
+                        selectedChannel + 1
+                    }
+                partsAdapter.updateRow(it[secondaryChannel])
+            }
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
