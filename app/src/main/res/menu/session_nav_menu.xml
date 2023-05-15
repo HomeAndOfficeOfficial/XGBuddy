@@ -13,7 +13,7 @@
         android:id="@+id/voiceEditFragment"
         android:icon="@drawable/baseline_tune_24"
         android:title="Voice Edit"
-        android:visible="true" />
+        android:visible="false" />
     <item
         android:id="@+id/effectsFragment"
         android:icon="@drawable/baseline_auto_awesome_24"
