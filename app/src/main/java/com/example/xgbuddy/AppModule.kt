@@ -19,5 +19,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMidiStoredDataUtility(@ApplicationContext context: Context): QS300Repository = QS300Repository(context)
+    fun provideQS300Repository(@ApplicationContext context: Context): QS300Repository =
+        QS300Repository(context)
 }
