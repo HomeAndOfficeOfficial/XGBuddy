@@ -161,7 +161,7 @@ object MidiMessageUtility {
     fun getQS300BulkDump(voice: QS300Voice): List<MidiMessage> {
         val messages = mutableListOf<MidiMessage>()
         var bytesSent = 0
-        val packetSize = 64
+        val packetSize = 381
         while (bytesSent < MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 11) {
             val dataLength = min(
                 packetSize,
@@ -175,8 +175,8 @@ object MidiMessageUtility {
             data[1] = MidiConstants.YAMAHA_ID
             data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
             data[3] = MidiConstants.MODEL_ID_QS300
-            data[4] = 0 // Byte count hi (will always be zero unless packet size is greater than 7f)
-            data[5] = dataLength.toByte()
+            data[4] = 1 // Byte count hi (will always be zero unless packet size is greater than 7f)
+            data[5] = 0x7d
             data[6] = 17 // Addr hi
             data[7] = 0 // Addr mid : todo: This value changes depending on normal voice selection
 
@@ -232,12 +232,18 @@ object MidiMessageUtility {
             }
 
             // Checksum
-            var dataSum: Byte = 0
+            var dataSum: Int = 0
             for (i in 4 until data.size - 2) {
-                dataSum = dataSum.plus(data[i]).toByte()
+                dataSum += data[i]
+                Log.d("MidiMessageUtility", "Byte: $i ... Data sum = $dataSum")
             }
-            data[data.size - 2] = (0 - dataSum).toByte()
+            var checksum = 128 - (dataSum % 128)
+            if (checksum == 128) {
+                checksum = 0
+            }
+            data[data.size - 2] = checksum.toByte()
             data[data.size - 1] = MidiConstants.SYSEX_END
+
 
             messages.add(MidiMessage(data))
         }
