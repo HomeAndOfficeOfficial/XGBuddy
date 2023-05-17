@@ -1,6 +1,7 @@
 package com.example.xgbuddy.ui.qs300
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,24 +25,16 @@ class VoiceEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = layoutInflater.inflate(R.layout.fragment_voice_edit, container, false)
+        Log.d("VoiceEditFragment", "Creating view")
         findViews(v)
-        initListeners()
         initObservers()
         return v
     }
 
-    private fun initListeners() {
-        etVoiceName.addTextChangedListener {
-            it?.let {
-                viewModel.preset.value!!.voices[viewModel.voice].voiceName = it.toString()
-            }
-        }
-    }
-
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
-            // For now just work with single voice
-            preset.voices[0].let {
+            preset?.voices!![viewModel.voice].let {
+                Log.d("VoiceEditFragment", "Preset observed, voice is ${viewModel.voice}")
                 etVoiceName.setText(it.voiceName)
                 // TODO: Add VoiceCommon enum so param id can be added to layout element
 //                cvVoiceLevel.value = it.voiceLevel

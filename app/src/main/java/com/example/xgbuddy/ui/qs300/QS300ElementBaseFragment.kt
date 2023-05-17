@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
@@ -51,14 +50,12 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.preset.observe(viewLifecycleOwner) {
-            it?.let {
-                if (elementIndex < it.voices[viewModel.voice].elements.size) {
-                    Log.d(TAG, "Preset observed in ${this.javaClass.name}")
-                    updateViews(it)
-                }
+    override fun onResume() {
+        super.onResume()
+        viewModel.preset.value?.let {
+            if (elementIndex < it.voices[viewModel.voice].elements.size) {
+                Log.d(TAG, "Preset observed in ${this.javaClass.name}")
+                updateViews(it)
             }
         }
     }
@@ -104,9 +101,11 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         val param = QS300ElementParameter::descriptionRes findBy paramId
         return QS300ControlParameter(
             param!!,
-            viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].getPropertyValue(
-                param.reflectedField
-            )
+            viewModel.preset.value!!.voices[viewModel.voice]
+                .elements[elementIndex]
+                .getPropertyValue(
+                    param.reflectedField
+                )
         )
     }
 
@@ -114,13 +113,12 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }
-        viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].setProperty(
-            currentParam!!.reflectedField,
-            controlParameter.value
+        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+        voice.elements[elementIndex].setProperty(
+            currentParam!!.reflectedField, controlParameter.value
         )
-        midiSession.sendBulkMessage(
-            MidiMessageUtility.getQS300BulkDump(viewModel.preset.value!!.voices[viewModel.voice])
-        )
+
+        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice))
     }
 
     companion object {

@@ -9,10 +9,12 @@ import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.adapter.PartsListAdapter
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.databinding.FragmentPartsBinding
+import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 class PartsFragment : Fragment() {
 
     private val midiViewModel: MidiViewModel by activityViewModels()
+    private val qS300ViewModel: QS300ViewModel by activityViewModels()
 
     private lateinit var partsAdapter: PartsListAdapter
 
@@ -48,6 +50,9 @@ class PartsFragment : Fragment() {
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
+            if (midiViewModel.channels.value!![it].voiceType == MidiPart.VoiceType.QS300) {
+                qS300ViewModel.voice = midiViewModel.channels.value!![it].qs300VoiceNumber
+            }
         }
     }
 }

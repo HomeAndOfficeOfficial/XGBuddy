@@ -117,6 +117,7 @@ open class MidiPart(val ch: Int) : MidiData() {
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
 
     var drumVoices: List<DrumVoice>? = null
+    var qs300VoiceNumber = 0
 
     init {
         if (ch == 9) {
@@ -167,9 +168,10 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceNameRes = sfxNormalVoice.nameRes
     }
 
-    fun changeQS300Voice(qS300Voice: QS300Voice) {
+    fun changeQS300Voice(qS300Voice: QS300Voice, voiceNumber: Int) {
         voiceType = VoiceType.QS300
         voiceNameRes = R.string.qs300_voice_label
+        qs300VoiceNumber = voiceNumber
         // Do we need to change program number/bank if switching to qs300 voice?
         // What to set voice name to?
         // There might be a way to pass an argument to the "getString" method when updating the

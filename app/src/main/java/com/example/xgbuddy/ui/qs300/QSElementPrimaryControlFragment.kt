@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.custom.ControlViewGroup
+import com.example.xgbuddy.util.MidiMessageUtility
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
@@ -21,6 +22,8 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     override val attrIndexElIndex: Int =
         R.styleable.QSElementPrimaryControlFragment_MembersInjector_elementIndex
 
+    private var isSpinnerUpdating = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,15 +33,19 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
             layoutInflater.inflate(R.layout.fragment_qs_element_primary_control, container, false)
         v.backgroundTintList =
             ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
+        isSpinnerUpdating = true
         findViews(v)
         initControlGroup(cvgElementMain, isInteractive = false, shouldShowColoredHeader = false)
-        initListeners()
         return v
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         waveValues = resources.getIntArray(R.array.qs300_wave_values)
+    }
+    override fun onResume() {
+        super.onResume()
+        initListeners()
     }
 
     private fun initListeners() {
@@ -49,13 +56,16 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
                 position: Int,
                 id: Long
             ) {
-                val waveValue = waveValues[position]
-                val element =
-                    viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex]
-                if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
-                    element.setWaveValue(waveValue)
-                    // TODO: Call midi send method
+                if (!isSpinnerUpdating) {
+                    val waveValue = waveValues[position]
+                    val voice = viewModel.preset.value!!.voices[viewModel.voice]
+                    val element = voice.elements[elementIndex]
+                    if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
+                        element.setWaveValue(waveValue)
+                        midiSession.send(MidiMessageUtility.getQS300BulkDump(voice))
+                    }
                 }
+                isSpinnerUpdating = false
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -68,8 +78,8 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         val voice = preset.voices[voiceIndex]
         val element = preset.voices[voiceIndex].elements[elementIndex]
         val waveValue = decodeWave(element.waveHi, element.waveLo)
+        isSpinnerUpdating = spWave.onItemSelectedListener != null
         spWave.setSelection(waveValues.indexOfFirst { it == waveValue })
-
         // TODO: Verify element switch values when more than two elements are allowed
         swElementOn.isChecked = elementIndex <= voice.elementSwitch
     }

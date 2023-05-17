@@ -64,7 +64,7 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
-            buildCompleteVoiceList(), // TODO: Add other voice types)
+            buildCompleteVoiceList(),
             this::updateSelectedVoice
         )
     }
@@ -166,15 +166,18 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                 val preset = qs300ViewModel.presets[voiceIndex]
                 val selectedChannel = midiViewModel.selectedChannel.value!!
                 qs300ViewModel.preset.value = preset
-                updatedPart.changeQS300Voice(preset.voices[0])
+                qs300ViewModel.voice = 0
                 if (preset.voices.size > 1) {
-                    val secondaryPartIndex =
-                        if (selectedChannel + 1 == updatedPartsList.size) {
-                            selectedChannel - 1
-                        } else {
-                            selectedChannel + 1
-                        }
-                    updatedPartsList[secondaryPartIndex].changeQS300Voice(preset.voices[1])
+                    if (selectedChannel + 1 == updatedPartsList.size) {
+                        updatedPartsList[selectedChannel - 1].changeQS300Voice(preset.voices[0], 0)
+                        updatedPart.changeQS300Voice(preset.voices[1], 1)
+                        qs300ViewModel.voice = 1
+                    } else {
+                        updatedPart.changeQS300Voice(preset.voices[0], 0)
+                        updatedPartsList[selectedChannel + 1].changeQS300Voice(preset.voices[1], 1)
+                    }
+                } else {
+                    updatedPart.changeQS300Voice(preset.voices[0], 0)
                 }
                 midiViewModel.channels.value = updatedPartsList
                 preset.voices.forEach {

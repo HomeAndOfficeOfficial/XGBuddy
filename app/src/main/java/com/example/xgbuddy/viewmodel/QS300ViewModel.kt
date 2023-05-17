@@ -14,7 +14,6 @@ class QS300ViewModel @Inject constructor(
 
     val presets: List<QS300Preset> = repository.getQS300Presets()
 
-    val preset = MutableLiveData(presets[4])
-    var voice: Int = 0
-    var element: Int = 0
+    val preset = MutableLiveData<QS300Preset?>(null)
+    var voice = 0
 }
