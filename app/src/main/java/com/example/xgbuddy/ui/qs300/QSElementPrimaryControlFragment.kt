@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.Spinner
 import android.widget.TextView
 import com.example.xgbuddy.R
@@ -23,6 +25,7 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         R.styleable.QSElementPrimaryControlFragment_MembersInjector_elementIndex
 
     private var isSpinnerUpdating = false
+    private var isSwitchUpdating = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +37,7 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         v.backgroundTintList =
             ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
         isSpinnerUpdating = true
+        isSwitchUpdating = true
         findViews(v)
         initControlGroup(cvgElementMain, isInteractive = false, shouldShowColoredHeader = false)
         return v
@@ -43,6 +47,7 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         super.onCreate(savedInstanceState)
         waveValues = resources.getIntArray(R.array.qs300_wave_values)
     }
+
     override fun onResume() {
         super.onResume()
         initListeners()
@@ -69,6 +74,13 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+        swElementOn.setOnClickListener {
+            val isChecked = (it as SwitchMaterial).isChecked
+            viewModel.preset.value!!.voices[viewModel.voice].updateElementStatus(
+                elementIndex,
+                isChecked
+            )
         }
     }
 
