@@ -10,6 +10,4 @@ abstract class ControlParameter() {
     abstract val default: Byte
 
     var formatString: String? = null
-
-    abstract fun getParamChangeMessage(): MidiMessage
 }

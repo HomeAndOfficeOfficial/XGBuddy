@@ -1,6 +1,5 @@
 package com.example.xgbuddy.util
 
-import android.util.Log
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
@@ -10,7 +9,6 @@ import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
 import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.util.EnumFinder.findBy
-import kotlin.math.min
 
 object MidiMessageUtility {
     fun getDrumHit(channel: Int, drumNote: Byte): List<MidiMessage> {
@@ -158,113 +156,63 @@ object MidiMessageUtility {
 
     fun getAllParameterReset(): MidiMessage = MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
 
-    fun getQS300BulkDump(voice: QS300Voice): List<MidiMessage> {
-        val messages = mutableListOf<MidiMessage>()
-        var bytesSent = 0
-        val packetSize = 381
-        while (bytesSent < MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE - 11) {
-            val dataLength = min(
-                packetSize,
-                MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE
-                        - 11
-                        - bytesSent
-            )
-            var packetDataBytes = 0
-            val data = ByteArray(11 + dataLength) // header bytes + checksum + end byte = 11
-            data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
-            data[1] = MidiConstants.YAMAHA_ID
-            data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
-            data[3] = MidiConstants.MODEL_ID_QS300
-            data[4] = 1 // Byte count hi (will always be zero unless packet size is greater than 7f)
-            data[5] = 0x7d
-            data[6] = 17 // Addr hi
-            data[7] = 0 // Addr mid : todo: This value changes depending on normal voice selection
+    fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
+        val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
+        data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
+        data[1] = MidiConstants.YAMAHA_ID
+        data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
+        data[3] = MidiConstants.MODEL_ID_QS300
+        data[4] = 1 // Byte count hi (will always be zero unless packet size is greater than 7f)
+        data[5] = 0x7d
+        data[6] = 17 // Addr hi
+        data[7] = 0 // Addr mid : todo: This value changes depending on normal voice selection
+        data[8] = 0
 
-            // Todo: Verify how larger addresses are handled. Does it carry over to the addr mid byte?
-            data[8] = bytesSent.toByte()
-
-            // Check if in range of Voice name
-            if (bytesSent < MidiConstants.QS300_VOICE_NAME_SIZE) {
-                var nameIndex = bytesSent
-                while (nameIndex < MidiConstants.QS300_VOICE_NAME_SIZE && packetDataBytes < dataLength) {
-                    data[MidiConstants.OFFSET_QS300_BULK_DATA_START + packetDataBytes] =
-                        if (nameIndex < voice.voiceName.length) {
-                            voice.voiceName[nameIndex].code.toByte()
-                        } else {
-                            32
-                        }
-                    packetDataBytes++
-                    nameIndex++
-                    bytesSent++
+        // Voice Name
+        for (nameIndex in 0 until MidiConstants.QS300_VOICE_NAME_SIZE) {
+            data[MidiConstants.OFFSET_QS300_BULK_DATA_START + nameIndex] =
+                if (nameIndex < voice.voiceName.length) {
+                    voice.voiceName[nameIndex].code.toByte()
+                } else {
+                    32 // Space character
                 }
-            }
-
-            // Check if in range of Voice Common
-            if (bytesSent in MidiConstants.QS300_VOICE_NAME_SIZE
-                until
-                MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START
-                - MidiConstants.OFFSET_QS300_BULK_DATA_START
-            ) {
-                while (bytesSent < MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START
-                    - MidiConstants.OFFSET_QS300_BULK_DATA_START
-                    && packetDataBytes < dataLength
-                ) {
-                    val voiceParam = QS300VoiceParameter::baseAddress findBy bytesSent.toUByte()
-                    val property = voiceParam?.reflectedField
-                    data[MidiConstants.OFFSET_QS300_BULK_DATA_START + packetDataBytes] =
-                        voice.getPropertyValue(property)
-                    packetDataBytes++
-                    bytesSent++
-                }
-            }
-
-            // Element data
-            var elementIndex = (bytesSent - 61) / MidiConstants.QS300_ELEMENT_DATA_SIZE
-            while (elementIndex < MidiConstants.QS300_MAX_ELEMENTS && packetDataBytes < dataLength) {
-                val addr = bytesSent - (elementIndex * MidiConstants.QS300_ELEMENT_DATA_SIZE)
-                val elementParam = QS300ElementParameter::baseAddress findBy addr.toUByte()
-                val property = elementParam?.reflectedField
-                data[MidiConstants.OFFSET_QS300_BULK_DATA_START + packetDataBytes] =
-                    voice.elements[elementIndex].getPropertyValue(property)
-                packetDataBytes++
-                bytesSent++
-                elementIndex = (bytesSent - 61) / MidiConstants.QS300_ELEMENT_DATA_SIZE
-            }
-
-            // Checksum
-            var dataSum: Int = 0
-            for (i in 4 until data.size - 2) {
-                dataSum += data[i]
-                Log.d("MidiMessageUtility", "Byte: $i ... Data sum = $dataSum")
-            }
-            var checksum = 128 - (dataSum % 128)
-            if (checksum == 128) {
-                checksum = 0
-            }
-            data[data.size - 2] = checksum.toByte()
-            data[data.size - 1] = MidiConstants.SYSEX_END
-
-
-            messages.add(MidiMessage(data))
         }
 
-//        testMessages(messages, packetSize, bytesSent)
+        // Voice Common
+        for (voiceCommIndex in MidiConstants.OFFSET_QS300_BULK_VOICE_COMMON_START
+                until MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START) {
+            val addr = (voiceCommIndex - MidiConstants.OFFSET_QS300_BULK_DATA_START).toUByte()
+            val voiceParam = QS300VoiceParameter::baseAddress findBy addr
+            val property = voiceParam?.reflectedField
+            data[voiceCommIndex] = voice.getPropertyValue(property)
+        }
 
-        return messages
+        // Element data
+        for (i in 0 until MidiConstants.QS300_MAX_ELEMENTS) {
+            if (i < voice.elements.size) {
+                val startIndex =
+                    MidiConstants.OFFSET_QS300_BULK_ELEMENT_DATA_START + (i * MidiConstants.QS300_ELEMENT_DATA_SIZE)
+                for (j in startIndex until startIndex + MidiConstants.QS300_ELEMENT_DATA_SIZE) {
+                    val baseAddress =
+                        (j - MidiConstants.OFFSET_QS300_BULK_DATA_START - (i * MidiConstants.QS300_ELEMENT_DATA_SIZE)).toUByte()
+                    val elementParam = QS300ElementParameter::baseAddress findBy baseAddress
+                    data[j] = voice.elements[i].getPropertyValue(elementParam?.reflectedField)
+                }
+            }
+        }
+
+        // Checksum
+        var dataSum: Int = 0
+        for (i in 4 until data.size - 2) {
+            dataSum += data[i]
+        }
+        var checksum = 128 - (dataSum % 128)
+        if (checksum == 128) {
+            checksum = 0
+        }
+        data[data.size - 2] = checksum.toByte()
+        data[data.size - 1] = MidiConstants.SYSEX_END
+
+        return MidiMessage(data)
     }
-
-//    private fun testMessages(messages: List<MidiMessage>, packetSize: Int, bytesSent: Int) {
-//        val tag = "MidiMessageUtility"
-//        Log.d(tag, "Bytes sent = $bytesSent")
-//        Log.d(tag, "Packet size = $packetSize")
-//        var totalData = 0
-//        messages.forEachIndexed { i, message ->
-//            totalData += message.msg!![5]
-//            Log.d(
-//                tag,
-//                "Message $i: Length = ${message.msg.size}; Data length = ${message.msg[5]}; Start addr = ${message.msg[8]}"
-//            )
-//        }
-//        Log.d(tag, "Total data length: $totalData, Expected length: 381")
-//    }
 }

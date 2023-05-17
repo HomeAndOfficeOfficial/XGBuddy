@@ -158,26 +158,20 @@ class MidiSession @Inject constructor(context: Context) {
         }
     }
 
-    fun sendBulkMessage(bulkMessages: List<MidiMessage>) {
-        bulkMessages.forEach { bulkMessage ->
-            midiManager.inputPort?.let { inputPort ->
-                var bytesSent = 0
-                var sendCount = 0
-                while (bytesSent < bulkMessage.msg!!.size) {
-                    val buffer = ByteArray(min(bulkMessage.msg.size - bytesSent, 1)) {
-                        bulkMessage.msg[bytesSent++]
-                    }
-                    try {
-                        inputPort.send(
-                            buffer,
-                            0,
-                            buffer.size
-                        )
-                        sendCount++
-                    } catch (e: IOException) {
-                        Log.d(TAG, "Caught exception: ${e.message}")
-                    }
+    fun sendBulkMessage(bulkMessage: MidiMessage) {
+        midiManager.inputPort?.let { inputPort ->
+            var bytesSent = 0
+            var sendCount = 0
+            while (bytesSent < bulkMessage.msg!!.size) {
+                val buffer = ByteArray(min(bulkMessage.msg.size - bytesSent, 1)) {
+                    bulkMessage.msg[bytesSent++]
                 }
+                inputPort.send(
+                    buffer,
+                    0,
+                    buffer.size
+                )
+                sendCount++
             }
         }
     }

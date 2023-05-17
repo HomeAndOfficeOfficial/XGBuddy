@@ -14,8 +14,6 @@ import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.ControlBaseFragment
 import com.example.xgbuddy.ui.custom.ControlViewGroup
-import com.example.xgbuddy.ui.custom.ParameterControlView
-import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
