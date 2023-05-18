@@ -2,7 +2,10 @@ package com.example.xgbuddy.ui.custom
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.Slider
@@ -40,7 +43,8 @@ class SliderControlView(context: Context) :
     }
 
     override fun updateViews() {
-        slider.value = value.toFloat()
+        if (value.toFloat() in slider.valueFrom..slider.valueTo)
+            slider.value = value.toFloat()
         tvValue?.text = "$value"
     }
 

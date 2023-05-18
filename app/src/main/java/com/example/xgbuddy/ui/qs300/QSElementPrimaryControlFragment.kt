@@ -2,6 +2,7 @@ package com.example.xgbuddy.ui.qs300
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +41,12 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         isSpinnerUpdating = true
         isSwitchUpdating = true
         findViews(v)
-        initControlGroup(cvgElementMain, isInteractive = false, shouldShowColoredHeader = false)
+        initControlGroup(
+            cvgElementMain,
+            isInteractive = false,
+            shouldShowColoredHeader = false,
+            shouldStartExpanded = true
+        )
         viewModel.elementStatus.observe(viewLifecycleOwner) {
             swElementOn.isChecked =
                 (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())
@@ -56,6 +62,15 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     override fun onResume() {
         super.onResume()
         initListeners()
+        Log.d(TAG, "ControlGroups size = ${controlGroups.size}")
+        controlGroups.forEachIndexed { index, group ->
+            group.controlViewMap.forEach {
+                Log.d(
+                    TAG,
+                    "group $index Parameter: ${it.value.controlParameter?.name} from ${it.value.controlParameter?.min} to ${it.value.controlParameter?.max}"
+                )
+            }
+        }
     }
 
     private fun initListeners() {
