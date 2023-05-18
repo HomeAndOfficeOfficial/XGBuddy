@@ -57,16 +57,4 @@ data class QS300Voice(var voiceName: String = "") : MidiData() {
     var footCtrlFm: Byte = QS300VoiceParameter.FOOT_CTRL_FM.default
     var footCtrlAm: Byte = QS300VoiceParameter.FOOT_CTRL_AM.default
     var footCtrlVarEf: Byte = QS300VoiceParameter.FOOT_CTRL_VAR_EF.default
-
-    fun updateElementStatus(elementIndex: Int, isOn: Boolean) {
-        if (elementIndex < 2) { // Don't mess with 3 or 4 for now
-            // TODO : Figure out how to do this
-        }
-    }
-
-    companion object {
-        const val EL_1: Byte = 0
-        const val EL_2: Byte = 1
-        const val EL_12: Byte = 2
-    }
 }

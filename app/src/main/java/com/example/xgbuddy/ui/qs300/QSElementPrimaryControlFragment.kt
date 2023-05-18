@@ -15,6 +15,7 @@ import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.google.android.material.switchmaterial.SwitchMaterial
+import kotlin.experimental.and
 
 class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
 
@@ -40,6 +41,10 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         isSwitchUpdating = true
         findViews(v)
         initControlGroup(cvgElementMain, isInteractive = false, shouldShowColoredHeader = false)
+        viewModel.elementStatus.observe(viewLifecycleOwner) {
+            swElementOn.isChecked =
+                (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())
+        }
         return v
     }
 
@@ -77,9 +82,11 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         }
         swElementOn.setOnClickListener {
             val isChecked = (it as SwitchMaterial).isChecked
-            viewModel.preset.value!!.voices[viewModel.voice].updateElementStatus(
-                elementIndex,
-                isChecked
+            viewModel.updateElementStatus(elementIndex, isChecked)
+            midiSession.send(
+                MidiMessageUtility.getQS300BulkDump(
+                    viewModel.preset.value!!.voices[viewModel.voice]
+                )
             )
         }
     }
