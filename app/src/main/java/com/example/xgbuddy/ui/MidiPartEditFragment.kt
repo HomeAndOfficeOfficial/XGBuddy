@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -78,6 +77,13 @@ class MidiPartEditFragment : ControlBaseFragment() {
                         midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].receiveChannel =
                             position.toByte()
                         midiViewModel.channels.value = midiViewModel.channels.value
+                        midiSession.send(
+                            MidiMessageUtility.getXGParamChange(
+                                midiViewModel.selectedChannel.value!!,
+                                MidiParameter.RCV_CHANNEL,
+                                position.toByte()
+                            )
+                        )
                     }
                     wasSpinnerTouched = false
                 }

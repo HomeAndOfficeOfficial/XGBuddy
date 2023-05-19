@@ -75,7 +75,12 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
                     val element = voice.elements[elementIndex]
                     if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
                         element.setWaveValue(waveValue)
-                        midiSession.send(MidiMessageUtility.getQS300BulkDump(voice))
+                        midiSession.send(
+                            MidiMessageUtility.getQS300BulkDump(
+                                voice,
+                                viewModel.voice
+                            )
+                        )
                     }
                 }
                 isSpinnerUpdating = false
@@ -88,7 +93,8 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
             viewModel.updateElementStatus(elementIndex, isChecked)
             midiSession.send(
                 MidiMessageUtility.getQS300BulkDump(
-                    viewModel.preset.value!!.voices[viewModel.voice]
+                    viewModel.preset.value!!.voices[viewModel.voice],
+                    viewModel.voice
                 )
             )
         }

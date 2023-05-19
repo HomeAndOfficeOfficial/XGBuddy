@@ -25,20 +25,15 @@ class QS300ViewModel @Inject constructor(
 
     fun updateElementStatus(elementIndex: Int, isOn: Boolean) {
         if (elementIndex < 2) { // Don't worry about 3 or 4 for now
-            val updatedStatus = elementStatus.value!! xor ((1 shl elementIndex).toByte())
-            elementStatus.value = if (updatedStatus == 0.toByte()) {
-                elementStatus.value!!.inv() and 0x03
+            var updatedStatus = elementStatus.value!! xor ((1 shl elementIndex).toByte())
+            if (updatedStatus == 0.toByte()) {
+                elementStatus.value = elementStatus.value!!.inv() and 0x03
+                updatedStatus = elementStatus.value!!
             } else {
-                updatedStatus
+                elementStatus.value = updatedStatus
             }
-            preset.value!!.voices[voice].elementSwitch = (updatedStatus - 1).toByte()
+            preset.value!!.voices[voice].elementSwitch = updatedStatus
         }
 
-    }
-
-    companion object {
-        const val EL_1: Byte = 1  // 01
-        const val EL_2: Byte = 2  // 10
-        const val EL_12: Byte = 3 // 11
     }
 }

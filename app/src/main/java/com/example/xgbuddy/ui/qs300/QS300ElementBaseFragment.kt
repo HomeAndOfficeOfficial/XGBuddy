@@ -114,7 +114,7 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             currentParam!!.reflectedField, controlParameter.value
         )
 
-        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice))
+        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, viewModel.voice))
     }
 
     companion object {

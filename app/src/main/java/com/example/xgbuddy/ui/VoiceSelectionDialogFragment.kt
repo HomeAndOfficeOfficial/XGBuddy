@@ -187,11 +187,13 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                      *  sure both midi part are receiving the same channel, set to the same mode,
                      *  etc.
                      */
-                    midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice))
-                    midiSession.sendBulkMessage(MidiMessageUtility.getQS300VoiceSelection(
-                        selectedChannel + index,
-                        0,
-                    ))
+                    midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
+                    midiSession.sendBulkMessage(
+                        MidiMessageUtility.getQS300VoiceSelection(
+                            selectedChannel + index,
+                            index,
+                        )
+                    )
                 }
             }
         }

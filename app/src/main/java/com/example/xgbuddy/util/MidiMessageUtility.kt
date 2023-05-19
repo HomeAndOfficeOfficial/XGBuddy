@@ -201,7 +201,7 @@ object MidiMessageUtility {
         data[4] = 0
         data[5] = 3
         data[6] = 8
-        data[7] = 0
+        data[7] = channel.toByte()
         data[8] = 1
         data[9] = 0x3f
         data[10] = 0
@@ -212,8 +212,8 @@ object MidiMessageUtility {
         return MidiMessage(data)
     }
 
-    fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
-        Log.d(TAG, "getQS300BulkDump voice $voice")
+    fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int): MidiMessage {
+        Log.d(TAG, "getQS300BulkDump voice $voice, voiceNumber $voiceNumber")
         val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
@@ -222,7 +222,8 @@ object MidiMessageUtility {
         data[4] = 1 // Byte count hi (will always be zero unless packet size is greater than 7f)
         data[5] = 0x7d
         data[6] = 17 // Addr hi
-        data[7] = 0 // Addr mid : todo: This value changes depending on normal voice selection
+        data[7] =
+            voiceNumber.toByte() // Addr mid : todo: This value changes depending on normal voice selection
         data[8] = 0
 
         // Voice Name
