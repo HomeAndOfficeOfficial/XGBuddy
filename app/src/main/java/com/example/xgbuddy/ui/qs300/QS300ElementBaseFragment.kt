@@ -3,7 +3,6 @@ package com.example.xgbuddy.ui.qs300
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
-import android.util.Log
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
@@ -43,8 +42,6 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             with(savedInstanceState?.getInt(ARG_EL_INDEX)) {
                 if (this != null) {
                     elementIndex = this
-                } else {
-                    Log.e(TAG, "Element index was never saved or initialized")
                 }
             }
         }
@@ -54,7 +51,6 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         super.onResume()
         viewModel.preset.value?.let {
             if (elementIndex < it.voices[viewModel.voice].elements.size) {
-                Log.d(TAG, "Preset observed in ${this.javaClass.name}")
                 updateViews(it)
             }
         }

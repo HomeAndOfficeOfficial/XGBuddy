@@ -1,14 +1,12 @@
 package com.example.xgbuddy.ui.qs300
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.children
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
@@ -25,7 +23,6 @@ class VoiceEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = layoutInflater.inflate(R.layout.fragment_voice_edit, container, false)
-        Log.d("VoiceEditFragment", "Creating view")
         findViews(v)
         initObservers()
         return v
@@ -34,7 +31,6 @@ class VoiceEditFragment : Fragment() {
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
             preset?.voices!![viewModel.voice].let {
-                Log.d("VoiceEditFragment", "Preset observed, voice is ${viewModel.voice}")
                 etVoiceName.setText(it.voiceName)
                 // TODO: Add VoiceCommon enum so param id can be added to layout element
 //                cvVoiceLevel.value = it.voiceLevel
