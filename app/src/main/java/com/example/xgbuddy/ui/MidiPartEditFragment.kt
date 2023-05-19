@@ -1,8 +1,11 @@
 package com.example.xgbuddy.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -28,8 +31,9 @@ class MidiPartEditFragment : ControlBaseFragment() {
 
     private var currentParam: MidiParameter? = null
     private var isNrpnActive = false
-    private var isSpinnerUpdating = true
+    private var wasSpinnerTouched = false
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,30 +60,39 @@ class MidiPartEditFragment : ControlBaseFragment() {
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
                 .receiveChannel.toInt()
         )
-        spRcvCh.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (isSpinnerUpdating) {
-                    isSpinnerUpdating = false
-                } else {
-                    midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].receiveChannel =
-                        position.toByte()
-                    midiViewModel.channels.value = midiViewModel.channels.value
+        spRcvCh.apply {
+            setOnTouchListener { _, event ->
+                if (event?.action == MotionEvent.ACTION_DOWN) {
+                    wasSpinnerTouched = true
+                }
+                false
+            }
+            onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (wasSpinnerTouched) {
+                        midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].receiveChannel =
+                            position.toByte()
+                        midiViewModel.channels.value = midiViewModel.channels.value
+                    }
+                    wasSpinnerTouched = false
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    wasSpinnerTouched = false
                 }
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
         return v
     }
 
     private fun updateViews(midiPart: MidiPart) {
         etPartVoiceName.setText(midiPart.voiceNameRes)
-        isSpinnerUpdating = true
         spRcvCh.setSelection(midiPart.receiveChannel.toInt())
         controlGroups.forEach {
             it.updateViews(midiPart)
