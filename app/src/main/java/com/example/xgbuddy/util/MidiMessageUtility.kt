@@ -156,6 +156,26 @@ object MidiMessageUtility {
 
     fun getAllParameterReset(): MidiMessage = MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
 
+    fun getQS300VoiceSelection(channel: Int, userVoice: Int): MidiMessage {
+        val data = ByteArray(14)
+        data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
+        data[1] = MidiConstants.YAMAHA_ID
+        data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
+        data[3] = MidiConstants.MODEL_ID_XG
+        data[4] = 0
+        data[5] = 3
+        data[6] = 8
+        data[7] = 0
+        data[8] = 1
+        data[9] = 0x3f
+        data[10] = 0
+        data[11] = userVoice.toByte()
+        data[12] = getChecksum(data, 4)
+        data[13] = MidiConstants.SYSEX_END
+
+        return MidiMessage(data)
+    }
+
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
         val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
@@ -202,17 +222,21 @@ object MidiMessageUtility {
         }
 
         // Checksum
-        var dataSum: Int = 0
-        for (i in 4 until data.size - 2) {
-            dataSum += data[i]
-        }
-        var checksum = 128 - (dataSum % 128)
-        if (checksum == 128) {
-            checksum = 0
-        }
-        data[data.size - 2] = checksum.toByte()
+        data[data.size - 2] = getChecksum(data, 4)
         data[data.size - 1] = MidiConstants.SYSEX_END
 
         return MidiMessage(data)
+    }
+
+    private fun getChecksum(data: ByteArray, startIndex: Int): Byte {
+        var datasum = 0
+        for (i in startIndex until data.size - 2) {
+            datasum += data[i]
+        }
+        var checksum = 128 - (datasum % 128)
+        if (checksum == 128) {
+            checksum = 0
+        }
+        return checksum.toByte()
     }
 }
