@@ -1,5 +1,6 @@
 package com.example.xgbuddy.util
 
+import android.util.Log
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
@@ -11,7 +12,11 @@ import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 object MidiMessageUtility {
+
+    const val TAG = "MidiMessageUtility"
+
     fun getDrumHit(channel: Int, drumNote: Byte): List<MidiMessage> {
+        Log.d(TAG, "GetDrumHit: Ch $channel, drumNote $drumNote")
         val noteOnData =
             byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel).toByte(), drumNote, 100)
         val noteOffData =
@@ -26,16 +31,19 @@ object MidiMessageUtility {
     }
 
     fun getProgramChange(channel: Int, programNumber: Byte): MidiMessage {
+        Log.d(TAG, "getProgramChange: Ch $channel, program $programNumber")
         val statusByte = (MidiConstants.STATUS_PROGRAM_CHANGE or channel).toByte()
         return MidiMessage(byteArrayOf(statusByte, programNumber), 0)
     }
 
     fun getControlChange(channel: Int, controlNumber: Byte, value: Byte): MidiMessage {
+        Log.d(TAG, "getControlChange: Ch $channel, controlNumber $controlNumber")
         val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel).toByte()
         return MidiMessage(byteArrayOf(statusByte, controlNumber, value), 0)
     }
 
     fun getXGNormalVoiceChange(channel: Int, xgNormalVoice: XGNormalVoice): List<MidiMessage> {
+        Log.d(TAG, "getXGNormalVoiceChange: Ch $channel, xgNormalVoice $xgNormalVoice")
         val programChange = getProgramChange(channel, xgNormalVoice.program)
         val ccMsb = getControlChange(
             channel,
@@ -51,6 +59,7 @@ object MidiMessageUtility {
     }
 
     fun getSFXNormalVoiceChange(channel: Int, sfxNormalVoice: SFXNormalVoice): List<MidiMessage> {
+        Log.d(TAG, "getSFXNormalVoiceChange: Ch $channel, sfxNormalVoice $sfxNormalVoice")
         val programChange = getProgramChange(channel, sfxNormalVoice.program)
         val ccMsb = getControlChange(
             channel,
@@ -66,7 +75,7 @@ object MidiMessageUtility {
     }
 
     fun getDrumKitChange(channel: Int, drumKit: XGDrumKit): List<MidiMessage> {
-
+        Log.d(TAG, "getDrumKitChange: Ch $channel, drumKit $drumKit")
         // TODO: Verify differences between changing drumkits in GM mode and XG mode
         val programChange = getProgramChange(channel, drumKit.programNumber)
         val ccMsb = getControlChange(
@@ -85,6 +94,7 @@ object MidiMessageUtility {
 
     // TODO: Construct actual param change message
     fun getXGParamChange(channel: Int, parameter: MidiParameter, value: Byte): MidiMessage {
+        Log.d(TAG, "getXGParamChange: Ch $channel, parameter $parameter, value $value")
         val paramChange = byteArrayOf(
             MidiConstants.EXCLUSIVE_STATUS_BYTE,
             MidiConstants.YAMAHA_ID,
@@ -105,6 +115,10 @@ object MidiMessageUtility {
         drumNote: Int,
         value: Byte
     ): MidiMessage {
+        Log.d(
+            TAG,
+            "getDrumParamChange: param $param, drumSetup $drumSetup, drumNote $drumNote, value $value"
+        )
         val paramChange = byteArrayOf(
             MidiConstants.EXCLUSIVE_STATUS_BYTE,
             MidiConstants.YAMAHA_ID,
@@ -119,8 +133,9 @@ object MidiMessageUtility {
         return MidiMessage(paramChange, 0)
     }
 
-    fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> =
-        listOf(
+    fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> {
+        Log.d(TAG, "getNRPNSet, channel $channel, nrpn $nrpn, drumNoteNumber: $drumNoteNumber")
+        return listOf(
             getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, nrpn.msb),
             getControlChange(
                 channel,
@@ -128,25 +143,41 @@ object MidiMessageUtility {
                 drumNoteNumber ?: nrpn.lsb!!
             )
         )
+    }
 
-    fun getNRPNClear(channel: Int): List<MidiMessage> = listOf(
-        getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, 0x7f),
-        getControlChange(channel, MidiControlChange.NRPN_LSB.controlNumber, 0x7f)
-    )
+    fun getNRPNClear(channel: Int): List<MidiMessage> {
+        Log.d(TAG, "getNRPNClear, channel $channel")
+        return listOf(
+            getControlChange(channel, MidiControlChange.NRPN_MSB.controlNumber, 0x7f),
+            getControlChange(channel, MidiControlChange.NRPN_LSB.controlNumber, 0x7f)
+        )
+    }
 
-    fun getRPNSet(channel: Int, rpn: RPN): List<MidiMessage> = listOf(
-        getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, rpn.msb),
-        getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, rpn.lsb)
-    )
+    fun getRPNSet(channel: Int, rpn: RPN): List<MidiMessage> {
+        Log.d(TAG, "getRPNSet, channel $channel, rpn $rpn")
+        return listOf(
+            getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, rpn.msb),
+            getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, rpn.lsb)
+        )
+    }
 
-    fun getRPNClear(channel: Int): List<MidiMessage> = listOf(
-        getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, 0x7f),
-        getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, 0x7f)
-    )
+    fun getRPNClear(channel: Int): List<MidiMessage> {
+        Log.d(TAG, "getRPNClear, channel $channel")
+        return listOf(
+            getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, 0x7f),
+            getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, 0x7f)
+        )
+    }
 
-    fun getXGSystemOn(): MidiMessage = MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)
+    fun getXGSystemOn(): MidiMessage {
+        Log.d(TAG, "getXGSystemOn")
+        return MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)
+    }
 
-    fun getGMModeOn(): MidiMessage = MidiMessage(MidiConstants.GM_MODE_ON_ARRAY, 0)
+    fun getGMModeOn(): MidiMessage {
+        Log.d(TAG, "getGMModeOn")
+        return MidiMessage(MidiConstants.GM_MODE_ON_ARRAY, 0)
+    }
 
     fun getDrumSetupReset(setupNumber: Int): MidiMessage {
         val array = MidiConstants.DRUM_SETUP_RESET_ARRAY
@@ -154,9 +185,14 @@ object MidiMessageUtility {
         return MidiMessage(array, 0)
     }
 
-    fun getAllParameterReset(): MidiMessage = MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
+    fun getAllParameterReset(): MidiMessage {
+        Log.d(TAG, "getAllParameterReset")
+        return MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
+    }
+
 
     fun getQS300VoiceSelection(channel: Int, userVoice: Int): MidiMessage {
+        Log.d(TAG, "getQS300VoiceSelection channel $channel, userVoice $userVoice")
         val data = ByteArray(14)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
@@ -177,6 +213,7 @@ object MidiMessageUtility {
     }
 
     fun getQS300BulkDump(voice: QS300Voice): MidiMessage {
+        Log.d(TAG, "getQS300BulkDump voice $voice")
         val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
