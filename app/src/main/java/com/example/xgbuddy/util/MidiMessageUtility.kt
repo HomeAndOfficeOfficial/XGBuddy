@@ -92,7 +92,13 @@ object MidiMessageUtility {
         return listOf(ccMsb, ccLsb, programChange)
     }
 
-    // TODO: Construct actual param change message
+    /**
+     * I'll have to look at how the param change messages are structured. I'll probably just end up
+     * having to create another param change method for effect parameters, since there's a chance
+     * they could have multiple bytes being sent. I can't remember if that's based on the address
+     * and expected value or if a byte length is supposed to be specified.
+     */
+
     fun getXGParamChange(channel: Int, parameter: MidiParameter, value: Byte): MidiMessage {
         Log.d(TAG, "getXGParamChange: Ch $channel, parameter $parameter, value $value")
         val paramChange = byteArrayOf(

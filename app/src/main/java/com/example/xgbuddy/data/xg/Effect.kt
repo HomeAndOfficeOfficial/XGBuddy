@@ -2,48 +2,14 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-data class Effect(
+abstract class Effect(
     val nameRes: Int,
     val msb: Byte,
     val lsb: Byte,
     val parameterList: Array<EffectParameter?>?,
-    val effectType: EffectType
 ) {
 
-    constructor(reverb: Reverb) : this(
-        reverb.nameRes,
-        reverb.msb,
-        reverb.lsb,
-        reverb.parameterList,
-        EffectType.REVERB
-    )
-
-    constructor(chorus: Chorus) : this(
-        chorus.nameRes,
-        chorus.msb,
-        chorus.lsb,
-        chorus.getParameterList(),
-        EffectType.CHORUS
-    )
-
-    constructor(variation: Variation) : this(
-        variation.nameRes,
-        variation.msb,
-        variation.lsb,
-        variation.parameterList,
-        EffectType.VARIATION
-    )
-
-    var parameterValues: IntArray? = getEffectDefaults()
-
-    private fun getEffectDefaults(): IntArray? =
-        when (effectType) {
-            EffectType.REVERB -> (Reverb::nameRes findBy nameRes)!!.parameterDefaults
-            EffectType.CHORUS -> (Chorus::nameRes findBy nameRes)!!.parameterDefaults
-            EffectType.VARIATION -> (Variation::nameRes findBy nameRes)!!.parameterDefaults
-        }
-
-    enum class EffectType { REVERB, CHORUS, VARIATION }
+    protected abstract fun getEffectDefaults(): IntArray?
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

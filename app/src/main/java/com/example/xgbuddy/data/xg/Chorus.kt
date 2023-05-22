@@ -1,19 +1,37 @@
 package com.example.xgbuddy.data.xg
 
-import com.example.xgbuddy.R
+import com.example.xgbuddy.util.EnumFinder.findBy
 
-enum class Chorus(val nameRes: Int, val msb: Byte, val lsb: Byte, val parameterDefaults: IntArray?) {
-    CHORUS1(R.string.vari_chorus_1, 0x41, 0, EffectParameterDefaults.chorus1Defaults),
-    CHORUS2(R.string.vari_chorus_2, 0x41, 0x01, EffectParameterDefaults.chorus2Defaults),
-    CHORUS3(R.string.vari_chorus_3, 0x41, 0x02, EffectParameterDefaults.chorus3Defaults),
-    CHORUS4(R.string.vari_chorus_4, 0x41, 0x08, EffectParameterDefaults.chorus4Defaults),
-    CELESTE1(R.string.vari_celeste_1, 0x42, 0, EffectParameterDefaults.celeste1Defaults),
-    CELESTE2(R.string.vari_celeste_2, 0x42, 0x01, EffectParameterDefaults.celeste2Defaults),
-    CELESTE3(R.string.vari_celeste_3, 0x42, 0x02, EffectParameterDefaults.celeste3Defaults),
-    CELESTE4(R.string.vari_celeste_4, 0x42, 0x08, EffectParameterDefaults.celeste4Defaults),
-    FLANGER1(R.string.vari_flanger_1, 0x43, 0, EffectParameterDefaults.flanger1Defaults),
-    FLANGER2(R.string.vari_flanger_2, 0x43, 0x01, EffectParameterDefaults.flanger2Defaults),
-    FLANGER3(R.string.vari_flanger_3, 0x43, 0x08, EffectParameterDefaults.flanger3Defaults);
+class Chorus(chorusType: ChorusType) : Effect(
+    chorusType.nameRes,
+    chorusType.msb,
+    chorusType.lsb,
+    chorusType.getParameterList()
+) {
 
-    fun getParameterList(): Array<EffectParameter?> = VariationParameterLists.chorus
+    var chorusMsb = ChorusType.CHORUS1.msb
+    var chorusLsb = ChorusType.CHORUS1.lsb
+    var param1 = EffectParameterData.CHORUS_PARAMETER_1.default
+    var param2 = EffectParameterData.CHORUS_PARAMETER_2.default
+    var param3 = EffectParameterData.CHORUS_PARAMETER_3.default
+    var param4 = EffectParameterData.CHORUS_PARAMETER_4.default
+    var param5 = EffectParameterData.CHORUS_PARAMETER_5.default
+    var param6 = EffectParameterData.CHORUS_PARAMETER_6.default
+    var param7 = EffectParameterData.CHORUS_PARAMETER_7.default
+    var param8 = EffectParameterData.CHORUS_PARAMETER_8.default
+    var param9 = EffectParameterData.CHORUS_PARAMETER_9.default
+    var param10 = EffectParameterData.CHORUS_PARAMETER_10.default
+    var param11 = EffectParameterData.CHORUS_PARAMETER_11.default
+    var param12 = EffectParameterData.CHORUS_PARAMETER_12.default
+    var param13 = EffectParameterData.CHORUS_PARAMETER_13.default
+    var param14 = EffectParameterData.CHORUS_PARAMETER_14.default
+    var param15 = EffectParameterData.CHORUS_PARAMETER_15.default
+    var param16 = EffectParameterData.CHORUS_PARAMETER_16.default
+    var chorusReturn = EffectParameterData.CHORUS_RETURN.default
+    var chorusPan = EffectParameterData.CHORUS_PAN.default
+    var sendReverb = EffectParameterData.SEND_CHOR_TO_REV.default
+
+    override fun getEffectDefaults(): IntArray? =
+        (ChorusType::nameRes findBy nameRes)!!.parameterDefaults
+
 }

@@ -1,23 +1,36 @@
 package com.example.xgbuddy.data.xg
 
-import com.example.xgbuddy.R
+import com.example.xgbuddy.util.EnumFinder.findBy
 
-enum class Reverb(
-    val nameRes: Int,
-    val msb: Byte,
-    val lsb: Byte,
-    val parameterList: Array<EffectParameter?>?,
-    val parameterDefaults: IntArray?
+class Reverb(reverbType: ReverbType) : Effect(
+    reverbType.nameRes,
+    reverbType.msb,
+    reverbType.lsb,
+    reverbType.parameterList
 ) {
-    NO_EFFECT(R.string.vari_no_effect, 0, 0, null, null),
-    HALL1(R.string.vari_hall_1, 0x01, 0, VariationParameterLists.basicReverb, EffectParameterDefaults.hall1Defaults),
-    HALL2(R.string.vari_hall_2, 0x01, 0x01, VariationParameterLists.basicReverb, EffectParameterDefaults.hall2Defaults),
-    ROOM1(R.string.vari_room_1, 0x02, 0, VariationParameterLists.basicReverb, EffectParameterDefaults.room1Defaults),
-    ROOM2(R.string.vari_room_2, 0x02, 0x01, VariationParameterLists.basicReverb, EffectParameterDefaults.room2Defaults),
-    ROOM3(R.string.vari_room_3, 0x02, 0x02, VariationParameterLists.basicReverb, EffectParameterDefaults.room3Defaults),
-    STAGE1(R.string.vari_stage_1, 0x03, 0, VariationParameterLists.basicReverb, EffectParameterDefaults.stage1Defaults),
-    STAGE2(R.string.vari_stage_2, 0x03, 0x01, VariationParameterLists.basicReverb, EffectParameterDefaults.stage2Defaults),
-    PLATE(R.string.vari_plate, 0x04, 0, VariationParameterLists.basicReverb, EffectParameterDefaults.plateDefaults),
-    WHITE_ROOM(R.string.reverb_white, 0x10, 0, VariationParameterLists.dimensionalReverb, EffectParameterDefaults.whiteRoomDefaults),
-    TUNNEL(R.string.reverb_basement, 0x13, 0, VariationParameterLists.dimensionalReverb, EffectParameterDefaults.tunnelDefaults)
+
+    var reverbMsb = ReverbType.HALL1.msb
+    var reverbLsb = ReverbType.HALL1.lsb
+    var param1 = EffectParameterData.REVERB_PARAM_1.default
+    var param2 = EffectParameterData.REVERB_PARAM_2.default
+    var param3 = EffectParameterData.REVERB_PARAM_3.default
+    var param4 = EffectParameterData.REVERB_PARAM_4.default
+    var param5 = EffectParameterData.REVERB_PARAM_5.default
+    var param6 = EffectParameterData.REVERB_PARAM_6.default
+    var param7 = EffectParameterData.REVERB_PARAM_7.default
+    var param8 = EffectParameterData.REVERB_PARAM_8.default
+    var param9 = EffectParameterData.REVERB_PARAM_9.default
+    var param10 = EffectParameterData.REVERB_PARAM_10.default
+    var param11 = EffectParameterData.REVERB_PARAM_11.default
+    var param12 = EffectParameterData.REVERB_PARAM_12.default
+    var param13 = EffectParameterData.REVERB_PARAM_13.default
+    var param14 = EffectParameterData.REVERB_PARAM_14.default
+    var param15 = EffectParameterData.REVERB_PARAM_15.default
+    var param16 = EffectParameterData.REVERB_PARAM_16.default
+    var revReturn = EffectParameterData.REVERB_RETURN.default
+    var revPan = EffectParameterData.REVERB_PAN.default
+
+    override fun getEffectDefaults(): IntArray? =
+        (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
+
 }
