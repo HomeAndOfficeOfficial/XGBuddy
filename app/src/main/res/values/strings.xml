@@ -1016,7 +1016,5 @@
     <string name="fxpc_vari_cat_ctrl">CAT Ctrl. Depth</string>
     <string name="fxpc_vari_ac1_ctrl">AC1 Ctrl. Depth</string>
     <string name="fxpc_vari_ac2_ctrl">AC2 Wheel Ctrl. Depth</string>
-
-
     <!-- Effect Param Control Names -->
 </resources>

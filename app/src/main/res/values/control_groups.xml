@@ -260,4 +260,68 @@
         <item>@string/qs300_el_lvl_scale_off_4</item>
     </array>
 
+    <array name="fx_rev_params">
+        <item>@string/fxpc_rev_p1</item>
+        <item>@string/fxpc_rev_p2</item>
+        <item>@string/fxpc_rev_p3</item>
+        <item>@string/fxpc_rev_p4</item>
+        <item>@string/fxpc_rev_p5</item>
+        <item>@string/fxpc_rev_p6</item>
+        <item>@string/fxpc_rev_p7</item>
+        <item>@string/fxpc_rev_p8</item>
+        <item>@string/fxpc_rev_p9</item>
+        <item>@string/fxpc_rev_p10</item>
+        <item>@string/fxpc_rev_p11</item>
+        <item>@string/fxpc_rev_p12</item>
+        <item>@string/fxpc_rev_p13</item>
+        <item>@string/fxpc_rev_p14</item>
+        <item>@string/fxpc_rev_p15</item>
+        <item>@string/fxpc_rev_p16</item>
+    </array>
+
+    <array name="fx_chor_params">
+        <item>@string/fxpc_chor_p1</item>
+        <item>@string/fxpc_chor_p2</item>
+        <item>@string/fxpc_chor_p3</item>
+        <item>@string/fxpc_chor_p4</item>
+        <item>@string/fxpc_chor_p5</item>
+        <item>@string/fxpc_chor_p6</item>
+        <item>@string/fxpc_chor_p7</item>
+        <item>@string/fxpc_chor_p8</item>
+        <item>@string/fxpc_chor_p9</item>
+        <item>@string/fxpc_chor_p10</item>
+        <item>@string/fxpc_chor_p11</item>
+        <item>@string/fxpc_chor_p12</item>
+        <item>@string/fxpc_chor_p13</item>
+        <item>@string/fxpc_chor_p14</item>
+        <item>@string/fxpc_chor_p15</item>
+        <item>@string/fxpc_chor_p16</item>
+    </array>
+
+    <array name="fx_vari_params">
+        <item>@string/fxpc_vari_p1</item>
+        <item>@string/fxpc_vari_p2</item>
+        <item>@string/fxpc_vari_p3</item>
+        <item>@string/fxpc_vari_p4</item>
+        <item>@string/fxpc_vari_p5</item>
+        <item>@string/fxpc_vari_p6</item>
+        <item>@string/fxpc_vari_p7</item>
+        <item>@string/fxpc_vari_p8</item>
+        <item>@string/fxpc_vari_p9</item>
+        <item>@string/fxpc_vari_p10</item>
+        <item>@string/fxpc_vari_p11</item>
+        <item>@string/fxpc_vari_p12</item>
+        <item>@string/fxpc_vari_p13</item>
+        <item>@string/fxpc_vari_p14</item>
+        <item>@string/fxpc_vari_p15</item>
+        <item>@string/fxpc_vari_p16</item>
+    </array>
+
+    <array name="fx_vari_ctrl">
+        <item>@string/fxpc_vari_mw_ctrl</item>
+        <item>@string/fxpc_vari_bend_ctrl</item>
+        <item>@string/fxpc_vari_cat_ctrl</item>
+        <item>@string/fxpc_vari_ac1_ctrl</item>
+        <item>@string/fxpc_vari_ac2_ctrl</item>
+    </array>
 </resources>
