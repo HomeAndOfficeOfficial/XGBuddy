@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.xg.Reverb
 import com.example.xgbuddy.data.xg.ReverbType
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 
@@ -39,6 +41,14 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
     private fun setupSpinner() {
         spReverbType.apply {
             onItemSelectedListener = this@ReverbFragment
+            val reverbNames: List<String> = ReverbType.values().map { it.name }
+            adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                reverbNames
+            ).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
         }
     }
 
@@ -52,7 +62,8 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val preset = ReverbType.values()[position]
-
+        midiViewModel.reverb.value = Reverb(preset)
+        // Todo: Apply default preset values to viewmodel, send message, update views
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
