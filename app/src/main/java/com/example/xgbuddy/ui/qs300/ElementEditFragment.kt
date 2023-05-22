@@ -9,10 +9,10 @@ import android.widget.TextView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
-import org.w3c.dom.Text
 
 class ElementEditFragment : QS300ElementBaseFragment(),
     ParameterControlView.OnParameterChangedListener {
+
     override val elementAttrs: IntArray = R.styleable.ElementEditFragment_MembersInjector
     override val attrIndexElIndex: Int =
         R.styleable.ElementEditFragment_MembersInjector_elementIndex

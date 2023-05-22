@@ -46,7 +46,6 @@
     </array>
 
     <array name="midi_rcv_switch">
-        <item>@string/midi_mp_RCV_CHANNEL</item>
         <item>@string/midi_mp_RCV_BANK_SELECT</item>
         <item>@string/midi_mp_RCV_CH_AFTER_TOUCH</item>
         <item>@string/midi_mp_RCV_CONTROL_CHANGE</item>

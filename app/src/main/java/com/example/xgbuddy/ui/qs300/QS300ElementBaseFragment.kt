@@ -3,8 +3,6 @@ package com.example.xgbuddy.ui.qs300
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
-import android.util.Log
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
@@ -14,9 +12,8 @@ import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.ControlBaseFragment
 import com.example.xgbuddy.ui.custom.ControlViewGroup
-import com.example.xgbuddy.ui.custom.ParameterControlView
-import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 abstract class QS300ElementBaseFragment : ControlBaseFragment() {
@@ -45,21 +42,16 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             with(savedInstanceState?.getInt(ARG_EL_INDEX)) {
                 if (this != null) {
                     elementIndex = this
-                } else {
-                    Log.e(TAG, "Element index was never saved or initialized")
                 }
             }
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.preset.observe(viewLifecycleOwner) {
-            it?.let {
-                if (elementIndex < it.voices[viewModel.voice].elements.size) {
-                    Log.d(TAG, "Preset observed in ${this.javaClass.name}")
-                    updateViews(it)
-                }
+    override fun onResume() {
+        super.onResume()
+        viewModel.preset.value?.let {
+            if (elementIndex < it.voices[viewModel.voice].elements.size) {
+                updateViews(it)
             }
         }
     }
@@ -82,8 +74,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         shouldShowColoredHeader: Boolean,
         shouldStartExpanded: Boolean,
         extraChildren: ViewGroup?,
-        shouldReceiveAllTouchCallbacks: Boolean
-
+        shouldReceiveAllTouchCallbacks: Boolean,
+        isRealtime: Boolean
     ) {
         controlGroup.apply {
             if (shouldShowColoredHeader) {
@@ -96,7 +88,8 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
             shouldShowColoredHeader,
             shouldStartExpanded,
             extraChildren,
-            false
+            shouldReceiveAllTouchCallbacks = false,
+            isRealtime = false
         )
     }
 
@@ -104,9 +97,11 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         val param = QS300ElementParameter::descriptionRes findBy paramId
         return QS300ControlParameter(
             param!!,
-            viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].getPropertyValue(
-                param.reflectedField
-            )
+            viewModel.preset.value!!.voices[viewModel.voice]
+                .elements[elementIndex]
+                .getPropertyValue(
+                    param.reflectedField
+                )
         )
     }
 
@@ -114,16 +109,12 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }
-        viewModel.preset.value!!.voices[viewModel.voice].elements[elementIndex].setProperty(
-            currentParam!!.reflectedField,
-            controlParameter.value
+        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+        voice.elements[elementIndex].setProperty(
+            currentParam!!.reflectedField, controlParameter.value
         )
-        midiSession.send(
-            viewModel.preset.value!!.voices[viewModel.voice].getBulkDumpForParameterChange(
-                controlParameter,
-                currentParam!!
-            )
-        )
+
+        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, viewModel.voice))
     }
 
     companion object {

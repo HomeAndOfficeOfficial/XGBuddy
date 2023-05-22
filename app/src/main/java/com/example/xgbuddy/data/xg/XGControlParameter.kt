@@ -21,9 +21,4 @@ class XGControlParameter(
         elementParameter.max,
         elementParameter.default
     )
-
-    override fun getParamChangeMessage(): MidiMessage {
-        TODO("Not yet implemented")
-    }
-
 }

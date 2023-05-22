@@ -1,7 +1,7 @@
 package com.example.xgbuddy
 
 import android.content.Context
-import com.example.xgbuddy.util.MidiStoredDataUtility
+import com.example.xgbuddy.util.QS300Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +19,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMidiStoredDataUtility(@ApplicationContext context: Context): MidiStoredDataUtility = MidiStoredDataUtility(context)
+    fun provideQS300Repository(@ApplicationContext context: Context): QS300Repository =
+        QS300Repository(context)
 }

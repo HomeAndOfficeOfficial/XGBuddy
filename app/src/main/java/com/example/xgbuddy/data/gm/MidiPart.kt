@@ -1,7 +1,9 @@
 package com.example.xgbuddy.data.gm
 
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiData
+import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.xg.DrumVoice
 import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
@@ -115,6 +117,7 @@ open class MidiPart(val ch: Int) : MidiData() {
     var velocityLimitHi: Byte = MidiParameter.VEL_LIMIT_HIGH.default
 
     var drumVoices: List<DrumVoice>? = null
+    var qs300VoiceNumber = 0
 
     init {
         if (ch == 9) {
@@ -134,7 +137,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankLsb = voice.bank
         voiceNameRes = voice.nameRes
         drumVoices = null
-        // TODO: Set element reserve
+        // TODO: Set element reserve and part mode for this and other
     }
 
     fun setDrumKit(drumKit: XGDrumKit) {
@@ -154,7 +157,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankMsb = MidiConstants.XG_NORMAL_VOICE_MSB
         bankLsb = xgVoice.bank
         voiceNameRes = xgVoice.nameRes
-        // TODO: add element reserve here and to normal voice and sfx voice enums
+        // TODO: add element reserve here and to normal voice and sfx voice enums, and part mode
     }
 
     fun changeSFXVoice(sfxNormalVoice: SFXNormalVoice) {
@@ -165,6 +168,17 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceNameRes = sfxNormalVoice.nameRes
     }
 
+    fun changeQS300Voice(qS300Voice: QS300Voice, voiceNumber: Int) {
+        voiceType = VoiceType.QS300
+        voiceNameRes = R.string.qs300_voice_label
+        qs300VoiceNumber = voiceNumber
+        // Do we need to change program number/bank if switching to qs300 voice?
+        // What to set voice name to?
+        // There might be a way to pass an argument to the "getString" method when updating the
+        // label in the part list. Might be a good place to pass in the voice name or index
+        // Need to do more research into how the voices and stuff actually work.
+    }
+
     override fun toString(): String {
         return "MidiPart(ch=$ch, voiceNameRes=$voiceNameRes, elementReserve=$elementReserve, bankMsb=$bankMsb, bankLsb=$bankLsb, programNumber=$programNumber, receiveChannel=$receiveChannel)"
     }
@@ -172,6 +186,7 @@ open class MidiPart(val ch: Int) : MidiData() {
     enum class VoiceType {
         NORMAL,
         DRUM,
-        SFX
+        SFX,
+        QS300
     }
 }

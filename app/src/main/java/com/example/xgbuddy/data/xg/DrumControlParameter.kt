@@ -20,6 +20,4 @@ class DrumControlParameter(
         drumParameter.max,
         drumParameter.default
     )
-
-    override fun getParamChangeMessage(): MidiMessage = MidiMessage(null, 0)
 }

@@ -793,6 +793,8 @@
     <string name="fxp_fine">Fine</string>
     <!-- Effect Parameters -->
 
+    <string name="qs300_voice_label">QS300 Voice</string>
+
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
     <string name="qs300_el_wave_lo">Wave Mumber Lo</string>
