@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.qs300.QS300Preset
+import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import kotlin.reflect.full.isSubclassOf
@@ -17,22 +19,18 @@ class VoiceListAdapter(
 ) :
     RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
-    private val voiceList: List<VoiceListEntry>
+    private val voiceList: List<VoiceListEntry> = List(voiceEntries.size) {
+        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name)
+    }
 
     private var filteredList: List<VoiceListEntry>? = null
     private var selectedCategory: VoiceListCategory? = null
 
-    init {
-        voiceList = List(voiceEntries.size) {
-            VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name)
-        }
-    }
-
     enum class VoiceListCategory(val enumName: String) {
         XG_NORMAL(XGNormalVoice::class.java.name),
         XG_DRUM(XGDrumKit::class.java.name),
-        SFX("sfx"),
-        QS300("qs300voice")
+        SFX(SFXNormalVoice::class.java.name),
+        QS300(QS300Preset::class.java.name)
     }
 
     data class VoiceListEntry(val name: String, val typeName: String)
@@ -69,6 +67,8 @@ class VoiceListAdapter(
 
     private fun getVoiceName(item: Any) = if (item.isEnum()) {
         (item as Enum<*>).name
+    } else if (item is QS300Preset) {
+        item.name
     } else {
         "Invalid Item"
     }

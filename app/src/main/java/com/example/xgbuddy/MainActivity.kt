@@ -22,6 +22,7 @@ import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.ConnectionStatusFragment
 import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.QS300PresetCaptureFragment
+import com.example.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -93,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var midiSession: MidiSession
 
     private val midiViewModel: MidiViewModel by viewModels()
+    private val qs300ViewModel: QS300ViewModel by viewModels()
     private var connectedDevices: Set<MidiDeviceInfo> = setOf()
 
     private lateinit var navRail: NavigationRailView
@@ -109,6 +111,7 @@ class MainActivity : AppCompatActivity() {
             midiViewModel.channels.observe(this) {
                 showOrHideMenuItems()
             }
+            qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
         } else {
             displayNoMidiCompatScreen()
         }
@@ -176,8 +179,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showOrHideMenuItems() {
         val selectedPart = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
-//        navRail.menu.findItem(R.id.voiceEditFragment).isVisible =
-//            selectedPart.voiceType == MidiPart.VoiceType.QS300
+        navRail.menu.findItem(R.id.voiceEditFragment).isVisible =
+            selectedPart.voiceType == MidiPart.VoiceType.QS300
         navRail.menu.findItem(R.id.drumEditFragment).isVisible =
             selectedPart.voiceType == MidiPart.VoiceType.DRUM
     }

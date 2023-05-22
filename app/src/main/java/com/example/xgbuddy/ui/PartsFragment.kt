@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.adapter.PartsListAdapter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.databinding.FragmentPartsBinding
+import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 class PartsFragment : Fragment() {
 
     private val midiViewModel: MidiViewModel by activityViewModels()
+    private val qS300ViewModel: QS300ViewModel by activityViewModels()
 
     private lateinit var partsAdapter: PartsListAdapter
 
@@ -31,10 +34,25 @@ class PartsFragment : Fragment() {
 
     private fun initObservers() {
         midiViewModel.channels.observe(viewLifecycleOwner) {
-            partsAdapter.updateRow(it[midiViewModel.selectedChannel.value!!])
+            val selectedChannel = midiViewModel.selectedChannel.value!!
+            partsAdapter.updateRow(it[selectedChannel])
+
+            // Todo: Clean this up. This logic is duplicated from VoiceSelectionDialogFragment
+            if (it[selectedChannel].voiceType == MidiPart.VoiceType.QS300) {
+                val secondaryChannel =
+                    if (selectedChannel + 1 == midiViewModel.channels.value!!.size) {
+                        selectedChannel - 1
+                    } else {
+                        selectedChannel + 1
+                    }
+                partsAdapter.updateRow(it[secondaryChannel])
+            }
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
+            if (midiViewModel.channels.value!![it].voiceType == MidiPart.VoiceType.QS300) {
+                qS300ViewModel.voice = midiViewModel.channels.value!![it].qs300VoiceNumber
+            }
         }
     }
 }

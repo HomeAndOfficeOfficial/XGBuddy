@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.MidiMessage
@@ -33,7 +36,7 @@ class KeyboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        for (i in 0 until binding.keysContainer.childCount) {
+        for (i in 0 until binding.keysContainer.childCount - 1) {
             (binding.keysContainer.getChildAt(i) as KeyView).listener =
                 object : KeyView.OnKeyPressListener {
                     override fun onKeyDown(note: String) {
@@ -44,6 +47,26 @@ class KeyboardFragment : Fragment() {
                         sendMidiNote(note, false)
                     }
                 }
+        }
+        binding.spKeyCh.apply {
+            adapter = ArrayAdapter<Int>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                Array(16) { it + 1 }).apply {
+                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            }
+            onItemSelectedListener = object: OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    channel = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
         }
         return binding.root
     }

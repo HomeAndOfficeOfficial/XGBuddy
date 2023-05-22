@@ -2,6 +2,7 @@ package com.example.xgbuddy.util
 
 import android.content.Context
 import android.util.Log
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.*
 import com.example.xgbuddy.data.qs300.*
 import com.example.xgbuddy.util.EnumFinder.findBy
@@ -9,22 +10,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
 
-class MidiStoredDataUtility @Inject constructor(val context: Context) {
+class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
-
-    /**
-     * TODO: Consider an interface or an abstract class which would define the following methods.
-     * Since there will likely be a similar set of methods shared between QS300, XG, and maybe GM
-     * and TGB, it would probably make sense to have a general MidiDataParser class and separate
-     * implementations for QS300Parser, XGParser, etc.
-     *
-     * Will have to wait and see how the other data classes pan out. There will probably be a lot of
-     * refactoring to do as that develops.
-     *
-     * Anyway it would also be nice to not have all this extra code cluttering this class.
-     */
 
     fun getQS300Presets(): List<QS300Preset> {
         if (qs300Presets == null) {
@@ -33,22 +22,10 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
         return qs300Presets!!
     }
 
-    fun getQS300BulkDumpMessage(preset: QS300Preset): List<MidiMessage> {
-        val midiMessages = mutableListOf<MidiMessage>()
-        qs300PresetsJSON?.let { presetsJSON ->
-            val jsonArray = presetsJSON.getJSONArray(preset.name)
-            for (i in 0 until jsonArray.length()) {
-                val messageString = jsonArray.getString(i)
-                midiMessages.add(MidiMessage(messageString.toByteArray(), getBulkDumpTimeStamp(i)))
-            }
-        }
-        return midiMessages
-    }
-
     private fun parseQS300PresetsJSON(): List<QS300Preset> {
         var jsonString: String
         val presets = mutableListOf<QS300Preset>()
-        context.openFileInput(AppConstants.QS300_PRESET_FILE).apply {
+        context.resources.openRawResource(R.raw.qs300_presets).apply {
             val size = available()
             val buffer = ByteArray(size)
             read(buffer)
@@ -71,7 +48,6 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
         }
         return presets
     }
-
 
     private fun parseQS300PresetJSON(name: String, messageArray: JSONArray): QS300Preset =
         QS300Preset(name, voices = mutableListOf()).apply {
@@ -119,11 +95,7 @@ class MidiStoredDataUtility @Inject constructor(val context: Context) {
             }
         }
 
-    // TODO: Figure out best practice for scheduling messages
-    private fun getBulkDumpTimeStamp(messageIndex: Int): Long =
-        System.nanoTime() + messageIndex * MidiConstants.SEND_SCHEDULE_INTERVAL_NANO
-
     companion object {
-        private const val TAG = "MidiDataUtility"
+        private const val TAG = "QS300Repository"
     }
 }

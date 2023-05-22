@@ -25,13 +25,12 @@ class SwitchControlView(context: Context) :
             setOnCheckedChangeListener { _, isChecked ->
                 val updatedValue: Byte = if (isChecked) 1 else 0
                 if (value != updatedValue) {
-                    value = if (isChecked) 1 else 0
+                    value = updatedValue
                     if (isUserUpdating) {
                         listener?.onParameterChanged(controlParameter!!, true)
                     } else {
                         isUserUpdating = true
                     }
-
                 }
             }
             initializeCommonViews(view)
@@ -43,5 +42,6 @@ class SwitchControlView(context: Context) :
     override fun updateViews() {
         isUserUpdating = false
         switch.isChecked = controlParameter?.value == 1.toByte()
+        isUserUpdating = true
     }
 }

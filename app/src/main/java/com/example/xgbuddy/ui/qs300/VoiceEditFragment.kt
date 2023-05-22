@@ -7,30 +7,15 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.children
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.qs300.QS300Element
-import com.example.xgbuddy.util.MidiStoredDataUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
 class VoiceEditFragment : Fragment() {
 
-    @Inject
-    lateinit var dataUtility: MidiStoredDataUtility
-
     private val viewModel: QS300ViewModel by activityViewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: This should be handled in the top level fragment (Probably QS300 Session?)
-        // The overall structure is still uncertain. Working from the bottom up.
-        viewModel.preset.value = dataUtility.getQS300Presets()[1]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,23 +24,13 @@ class VoiceEditFragment : Fragment() {
     ): View? {
         val v = layoutInflater.inflate(R.layout.fragment_voice_edit, container, false)
         findViews(v)
-        initListeners()
         initObservers()
         return v
     }
 
-    private fun initListeners() {
-        etVoiceName.addTextChangedListener {
-            it?.let {
-                viewModel.preset.value!!.voices[viewModel.voice].voiceName = it.toString()
-            }
-        }
-    }
-
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
-            // For now just work with single voice
-            preset.voices[0].let {
+            preset?.voices!![viewModel.voice].let {
                 etVoiceName.setText(it.voiceName)
                 // TODO: Add VoiceCommon enum so param id can be added to layout element
 //                cvVoiceLevel.value = it.voiceLevel

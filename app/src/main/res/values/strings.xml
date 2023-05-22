@@ -454,10 +454,53 @@
     <string name="xgnv_breath_noize">BrthNoize</string>
     <string name="xgnv_sea_shore">Seashore</string>
     <string name="xgnv_tweeet">Tweet</string>
-    <string name="xgnv_telephne">Telphone</string>
+    <string name="xgnv_telephone">Telphone</string>
     <string name="xgnv_helicopter">Helicptr</string>
     <string name="xgnv_applause">Applause</string>
     <string name="xgnv_gunshot">Gunshot</string>
+    <string name="xgsfx_cutting_nz">Cutting Noise</string>
+    <string name="xgsfx_cutting_nz_2">Cutting Noise 2</string>
+    <string name="xgsfx_str_slap">String Slap</string>
+    <string name="xgsfx_fl_k_clk">Flanged Key Click</string>
+    <string name="xgsfx_rain">Rain</string>
+    <string name="xgsfx_thunder">Thunder</string>
+    <string name="xgsfx_wind">Wind</string>
+    <string name="xgsfx_stream">Steam</string>
+    <string name="xgsfx_bubble">Bubble</string>
+    <string name="xgsfx_feed">Feed</string>
+    <string name="xgsfx_dog">Dog</string>
+    <string name="xgsfx_horse">Horse</string>
+    <string name="xgsfx_bird_2">Bird 2</string>
+    <string name="xgsfx_ghost">Ghost</string>
+    <string name="xgsfx_maou">Maou</string>
+    <string name="xgsfx_tel_dial">Telephone Dial</string>
+    <string name="xgsfx_door_squeak">Door Squeak</string>
+    <string name="xgsfx_door_sla">Door Slam</string>
+    <string name="xgsfx_scratch">Scratch</string>
+    <string name="xgsfx_scratch_2">Scratch 2</string>
+    <string name="xgsfx_wind_chime">Wind Chime</string>
+    <string name="xgsfx_telephone_2">Telephone 2</string>
+    <string name="xgsfx_car_engine">Car Engine</string>
+    <string name="xgsfx_car_stop">Car Stop</string>
+    <string name="xgsfx_car_pass">Car Pass</string>
+    <string name="xgsfx_car_crash">Car Crash</string>
+    <string name="xgsfx_siren">Siren</string>
+    <string name="xgsfx_train">Train</string>
+    <string name="xgsfx_jetplane">Jetplane</string>
+    <string name="xgsfx_starship">Starship</string>
+    <string name="xgsfx_burst">Burst</string>
+    <string name="xgsfx_coaster">Coaster</string>
+    <string name="xgsfx_submarine">Submarine</string>
+    <string name="xgsfx_laughing">Laughing</string>
+    <string name="xgsfx_scream">Scream</string>
+    <string name="xgsfx_punch">Punch</string>
+    <string name="xgsfx_heart">Heart</string>
+    <string name="xgsfx_footstep">Footstep</string>
+    <string name="xgsfx_machine_gun">Machine Gun</string>
+    <string name="xgsfx_laser_gun">Laser Gun</string>
+    <string name="xgsfx_xplosion">Xplosion</string>
+    <string name="xgsfx_firework">Firework</string>
+
     <!-- XG Normal Voice -->
 
     <!-- XG Drum Kit -->
@@ -749,6 +792,8 @@
     <string name="fxp_pitch">Pitch</string>
     <string name="fxp_fine">Fine</string>
     <!-- Effect Parameters -->
+
+    <string name="qs300_voice_label">QS300 Voice</string>
 
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>

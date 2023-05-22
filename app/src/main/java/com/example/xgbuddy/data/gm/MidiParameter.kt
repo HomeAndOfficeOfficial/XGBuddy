@@ -5,16 +5,6 @@ import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.xg.NRPN
 import kotlin.reflect.KMutableProperty
 
-/**
- * Since this works a little different than the qs300 params in that some are just regular CC
- * parameters, some are RPN/NRPN parameters, and some are neither probably, I think I'll have to add
- * a few more fields to the constructor unfortunately.
- *
- * 1. ControlChange? <- if parameter is a CC param, it can use the controlChange to affect the voice
- * 2. NRPN? <- if parameter is controlled by NRPN, it should probabl y use it
- * 3. RPN?
- */
-
 enum class MidiParameter(
     val addrLo: Byte, // For use in bulk dump and XG Param Change sysex
     val descriptionRes: Int,

@@ -113,8 +113,12 @@ class DrumParamEditFragment : ControlBaseFragment() {
             )
         }
 
-        // TODO: Send required params to param change
-        return MidiMessageUtility.getXGParamChange()
+        return MidiMessageUtility.getDrumParamChange(
+            currentParam!!,
+            0,
+            viewModel.selectedDrumVoice.value!! + MidiConstants.XG_INITIAL_DRUM_NOTE,
+            controlParameter.value
+        )
     }
 
     private fun activateNRPN(drumNote: Int) {

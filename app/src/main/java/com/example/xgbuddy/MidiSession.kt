@@ -9,7 +9,9 @@ import android.media.midi.MidiReceiver
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.xgbuddy.data.*
+import java.io.IOException
 import javax.inject.Inject
+import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
@@ -153,6 +155,24 @@ class MidiSession @Inject constructor(context: Context) {
     fun send(midiMessages: List<MidiMessage>) {
         midiMessages.forEach {
             send(it)
+        }
+    }
+
+    fun sendBulkMessage(bulkMessage: MidiMessage) {
+        midiManager.inputPort?.let { inputPort ->
+            var bytesSent = 0
+            var sendCount = 0
+            while (bytesSent < bulkMessage.msg!!.size) {
+                val buffer = ByteArray(min(bulkMessage.msg.size - bytesSent, 1)) {
+                    bulkMessage.msg[bytesSent++]
+                }
+                inputPort.send(
+                    buffer,
+                    0,
+                    buffer.size
+                )
+                sendCount++
+            }
         }
     }
 

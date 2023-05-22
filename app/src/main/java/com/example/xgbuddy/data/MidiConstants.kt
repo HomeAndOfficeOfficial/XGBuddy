@@ -44,6 +44,11 @@ object MidiConstants {
     const val MODEL_ID_XG: Byte = 0x4c
 
     const val XG_NORMAL_VOICE_MSB: Byte = 0
+    const val XG_SFX_VOICE_MSB: Byte = 64
+    const val XG_SFX_VOICE_LSB: Byte = 0
+    const val XG_DRUM_MSB: Byte = 127
+    const val XG_DRUM_LSB: Byte = 0
+    const val XG_MP_PARAM_ADDR_HI: Byte = 8
     const val XG_INITIAL_DRUM_NOTE = 13
 
     val XY_SYSTEM_ON_ARRAY = byteArrayOf(

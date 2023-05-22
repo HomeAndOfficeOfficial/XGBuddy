@@ -13,11 +13,13 @@ import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
 import com.example.xgbuddy.adapter.VoiceListAdapter
 import com.example.xgbuddy.adapter.VoiceListAdapter.VoiceListCategory.*
+import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
 import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
+import com.example.xgbuddy.viewmodel.QS300ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,6 +30,8 @@ class VoiceSelectionDialogFragment : DialogFragment() {
     lateinit var midiSession: MidiSession
 
     private val midiViewModel: MidiViewModel by activityViewModels()
+    private val qs300ViewModel: QS300ViewModel by activityViewModels()
+
     private val binding: FragmentVoiceSelectionDialogBinding by lazy {
         FragmentVoiceSelectionDialogBinding.inflate(layoutInflater)
     }
@@ -60,7 +64,7 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
-            buildCompleteVoiceList(), // TODO: Add other voice types)
+            buildCompleteVoiceList(),
             this::updateSelectedVoice
         )
     }
@@ -68,6 +72,8 @@ class VoiceSelectionDialogFragment : DialogFragment() {
     private fun buildCompleteVoiceList(): List<Any> = mutableListOf<Any>().apply {
         addAll(XGNormalVoice.values())
         addAll(XGDrumKit.values())
+        addAll(SFXNormalVoice.values())
+        addAll(qs300ViewModel.presets)
     }.toList()
 
     private fun setupCategoryButtons() {
@@ -126,13 +132,70 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                     updatedPart.setDrumKit(drumKit)
                     updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
                     midiViewModel.channels.value = updatedPartsList
-
-                    // This might work the same for drum, we'll see
-                    // midiSession.send(MidiMessageUtility.getXGNormalVoiceChange(updatedPart.ch, xgVoice))
+                    midiSession.send(MidiMessageUtility.getDrumKitChange(updatedPart.ch, drumKit))
                 }
             }
-            SFX -> TODO()
-            QS300 -> TODO()
+            SFX -> {
+                (SFXNormalVoice::ordinal findBy voiceIndex)?.let { sfx ->
+                    updatedPart.changeSFXVoice(sfx)
+                    updatedPartsList[midiViewModel.selectedChannel.value!!] = updatedPart
+                    midiViewModel.channels.value = updatedPartsList
+                    midiSession.send(
+                        MidiMessageUtility.getSFXNormalVoiceChange(
+                            updatedPart.ch,
+                            sfx
+                        )
+                    )
+                }
+            }
+            QS300 -> {
+                /**
+                 * To account for multiple voices, I'll need to do some additional work here.
+                 * I believe there is one voice per midi part
+                 * I think some of the presets are made of multiple voices.
+                 *
+                 * I need to figure out the rules that dictate elements/voice, voice/part.
+                 *
+                 * I think i'll probably have to update adjacent parts when switching to a qs300
+                 * preset to accommodate multiple voices.
+                 *
+                 * If I change one voice back to an XG parameter, I don't think there will be much
+                 * of a problem when updating a parameter on the qs voice, because it should only
+                 * send a bulk dump for that voice, and not every voice in the preset.
+                 */
+                val preset = qs300ViewModel.presets[voiceIndex]
+                val selectedChannel = midiViewModel.selectedChannel.value!!
+                qs300ViewModel.preset.value = preset
+                qs300ViewModel.voice = 0
+                if (preset.voices.size > 1) {
+                    if (selectedChannel + 1 == updatedPartsList.size) {
+                        updatedPartsList[selectedChannel - 1].changeQS300Voice(preset.voices[0], 0)
+                        updatedPart.changeQS300Voice(preset.voices[1], 1)
+                        qs300ViewModel.voice = 1
+                    } else {
+                        updatedPart.changeQS300Voice(preset.voices[0], 0)
+                        updatedPartsList[selectedChannel + 1].changeQS300Voice(preset.voices[1], 1)
+                    }
+                } else {
+                    updatedPart.changeQS300Voice(preset.voices[0], 0)
+                }
+                midiViewModel.channels.value = updatedPartsList
+                preset.voices.forEachIndexed { index, voice ->
+                    /**
+                     * TODO: Along with sending a bulk dump, there will likely have to be some
+                     *  channel initialization messages. Like if there is more than one voice, make
+                     *  sure both midi part are receiving the same channel, set to the same mode,
+                     *  etc.
+                     */
+                    midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
+                    midiSession.sendBulkMessage(
+                        MidiMessageUtility.getQS300VoiceSelection(
+                            selectedChannel + index,
+                            index,
+                        )
+                    )
+                }
+            }
         }
         dismiss()
     }

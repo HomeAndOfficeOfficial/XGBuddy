@@ -4,14 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.qs300.QS300SessionFragment" >
+    tools:context=".ui.qs300.QS300SessionFragment">
 
-    <Spinner
-        android:id="@+id/sQSPresets"
+    <TextView
+        android:id="@+id/tvPresetName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/voiceEditContainer"
+        android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPresetName"
+        tools:layout="@layout/fragment_voice_edit" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
