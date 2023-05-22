@@ -6,9 +6,33 @@ data class Effect(
     val nameRes: Int,
     val msb: Byte,
     val lsb: Byte,
-    val parameterList: Array<EffectParameter?>,
+    val parameterList: Array<EffectParameter?>?,
     val effectType: EffectType
 ) {
+
+    constructor(reverb: Reverb) : this(
+        reverb.nameRes,
+        reverb.msb,
+        reverb.lsb,
+        reverb.parameterList,
+        EffectType.REVERB
+    )
+
+    constructor(chorus: Chorus) : this(
+        chorus.nameRes,
+        chorus.msb,
+        chorus.lsb,
+        chorus.getParameterList(),
+        EffectType.CHORUS
+    )
+
+    constructor(variation: Variation) : this(
+        variation.nameRes,
+        variation.msb,
+        variation.lsb,
+        variation.parameterList,
+        EffectType.VARIATION
+    )
 
     var parameterValues: IntArray? = getEffectDefaults()
 
