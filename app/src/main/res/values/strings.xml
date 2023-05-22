@@ -948,4 +948,75 @@
     <string name="drum_preview">Drum Preview</string>
     <!-- QS300 LFO Wave Names -->
 
+    <!-- Effect Param Control Names -->
+    <string name="fxpc_rev_type">Reverb Type</string>
+    <string name="fxpc_rev_p1">Reverb Type</string>
+    <string name="fxpc_rev_p2">Reverb Type</string>
+    <string name="fxpc_rev_p3">Reverb Type</string>
+    <string name="fxpc_rev_p4">Reverb Type</string>
+    <string name="fxpc_rev_p5">Reverb Type</string>
+    <string name="fxpc_rev_p6">Reverb Type</string>
+    <string name="fxpc_rev_p7">Reverb Type</string>
+    <string name="fxpc_rev_p8">Reverb Type</string>
+    <string name="fxpc_rev_p9">Reverb Type</string>
+    <string name="fxpc_rev_p10">Reverb Type</string>
+    <string name="fxpc_rev_p11">Reverb Type</string>
+    <string name="fxpc_rev_p12">Reverb Type</string>
+    <string name="fxpc_rev_p13">Reverb Type</string>
+    <string name="fxpc_rev_p14">Reverb Type</string>
+    <string name="fxpc_rev_p15">Reverb Type</string>
+    <string name="fxpc_rev_p16">Reverb Type</string>
+    <string name="fxpc_rev_ret">Reverb Return</string>
+    <string name="fxpc_rev_pan">Reverb Pan</string>
+    <string name="fxpc_chor_type">Chorus Type</string>
+    <string name="fxpc_chor_p1">Chorus Type</string>
+    <string name="fxpc_chor_p2">Chorus Type</string>
+    <string name="fxpc_chor_p3">Chorus Type</string>
+    <string name="fxpc_chor_p4">Chorus Type</string>
+    <string name="fxpc_chor_p5">Chorus Type</string>
+    <string name="fxpc_chor_p6">Chorus Type</string>
+    <string name="fxpc_chor_p7">Chorus Type</string>
+    <string name="fxpc_chor_p8">Chorus Type</string>
+    <string name="fxpc_chor_p9">Chorus Type</string>
+    <string name="fxpc_chor_p10">Chorus Type</string>
+    <string name="fxpc_chor_p11">Chorus Type</string>
+    <string name="fxpc_chor_p12">Chorus Type</string>
+    <string name="fxpc_chor_p13">Chorus Type</string>
+    <string name="fxpc_chor_p14">Chorus Type</string>
+    <string name="fxpc_chor_p15">Chorus Type</string>
+    <string name="fxpc_chor_p16">Chorus Type</string>
+    <string name="fxpc_chor_ret">Chorus Return</string>
+    <string name="fxpc_chor_pan">Chorus Pan</string>
+    <string name="fxpc_chor_send_rev">Send To Reverb</string>
+    <string name="fxpc_vari_type">Variation Type</string>
+    <string name="fxpc_vari_p1">Variation Type</string>
+    <string name="fxpc_vari_p2">Variation Type</string>
+    <string name="fxpc_vari_p3">Variation Type</string>
+    <string name="fxpc_vari_p4">Variation Type</string>
+    <string name="fxpc_vari_p5">Variation Type</string>
+    <string name="fxpc_vari_p6">Variation Type</string>
+    <string name="fxpc_vari_p7">Variation Type</string>
+    <string name="fxpc_vari_p8">Variation Type</string>
+    <string name="fxpc_vari_p9">Variation Type</string>
+    <string name="fxpc_vari_p10">Variation Type</string>
+    <string name="fxpc_vari_p11">Variation Type</string>
+    <string name="fxpc_vari_p12">Variation Type</string>
+    <string name="fxpc_vari_p13">Variation Type</string>
+    <string name="fxpc_vari_p14">Variation Type</string>
+    <string name="fxpc_vari_p15">Variation Type</string>
+    <string name="fxpc_vari_p16">Variation Type</string>
+    <string name="fxpc_vari_ret">Variation Return</string>
+    <string name="fxpc_vari_pan">Variation Pan</string>
+    <string name="fxpc_vari_send_chor">Send To Chorus</string>
+    <string name="fxpc_vari_send_rev">Send To Reverb</string>
+    <string name="fxpc_vari_conn">Connection</string>
+    <string name="fxpc_vari_part">Part</string>
+    <string name="fxpc_vari_mw_ctrl">Mod Wheel Ctrl. Depth</string>
+    <string name="fxpc_vari_bend_ctrl">Bend Ctrl. Depth</string>
+    <string name="fxpc_vari_cat_ctrl">CAT Ctrl. Depth</string>
+    <string name="fxpc_vari_ac1_ctrl">AC1 Ctrl. Depth</string>
+    <string name="fxpc_vari_ac2_ctrl">AC2 Wheel Ctrl. Depth</string>
+
+
+    <!-- Effect Param Control Names -->
 </resources>
