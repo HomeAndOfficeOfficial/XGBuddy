@@ -12,9 +12,9 @@ import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
-import com.example.xgbuddy.data.xg.Reverb
-import com.example.xgbuddy.data.xg.ReverbType
+import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.ui.custom.ControlViewGroup
+import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
 
@@ -53,7 +53,12 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
     }
 
     override fun initParameter(paramId: Int): ControlParameter {
-        TODO("Not yet implemented")
+        val vmReverb = midiViewModel.reverb.value!!
+        val effectParamData = EffectParameterData::resId findBy paramId
+        val value = vmReverb.getPropertyValue(effectParamData!!.reflectedField)
+        val reverbParam = vmReverb.parameterList?.get(effectParamData)!!
+        val defaultValue = vmReverb.defaultValues!![effectParamData.paramIndex!!]
+        return EffectControlParameter(effectParamData, reverbParam, value, defaultValue.toByte())
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
@@ -63,7 +68,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val preset = ReverbType.values()[position]
         midiViewModel.reverb.value = Reverb(preset)
-        // Todo: Apply default preset values to viewmodel, send message, update views
+        // Todo: send message, update views
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}

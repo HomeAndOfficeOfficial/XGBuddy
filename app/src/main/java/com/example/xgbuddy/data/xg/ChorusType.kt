@@ -1,6 +1,7 @@
 package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.R
+import java.util.*
 
 enum class ChorusType(val nameRes: Int, val msb: Byte, val lsb: Byte, val parameterDefaults: IntArray?) {
     CHORUS1(R.string.vari_chorus_1, 0x41, 0, EffectParameterDefaults.chorus1Defaults),
@@ -15,5 +16,5 @@ enum class ChorusType(val nameRes: Int, val msb: Byte, val lsb: Byte, val parame
     FLANGER2(R.string.vari_flanger_2, 0x43, 0x01, EffectParameterDefaults.flanger2Defaults),
     FLANGER3(R.string.vari_flanger_3, 0x43, 0x08, EffectParameterDefaults.flanger3Defaults);
 
-    fun getParameterList(): Array<EffectParameter?> = VariationParameterLists.chorus
+    fun getParameterList(): EnumMap<EffectParameterData, EffectParameter> = VariationParameterLists.chorus
 }

@@ -1,35 +1,51 @@
 package com.example.xgbuddy.data.xg
 
-import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.data.MidiData
+import java.util.*
 
 abstract class Effect(
     val nameRes: Int,
     val msb: Byte,
     val lsb: Byte,
-    val parameterList: Array<EffectParameter?>?,
-) {
+    val parameterList: EnumMap<EffectParameterData, EffectParameter>?,
+) : MidiData() {
 
-    protected abstract fun getEffectDefaults(): IntArray?
+    abstract val defaultValues: IntArray?
+    var param1: Int = 0
+    var param2: Int = 0
+    var param3: Int = 0
+    var param4: Int = 0
+    var param5: Int = 0
+    var param6: Int = 0
+    var param7: Int = 0
+    var param8: Int = 0
+    var param9: Int = 0
+    var param10: Int = 0
+    var param11: Int = 0
+    var param12: Int = 0
+    var param13: Int = 0
+    var param14: Int = 0
+    var param15: Int = 0
+    var param16: Int = 0
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Effect
-
-        if (nameRes != other.nameRes) return false
-        if (msb != other.msb) return false
-        if (lsb != other.lsb) return false
-        if (!parameterList.contentEquals(other.parameterList)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = nameRes
-        result = 31 * result + msb
-        result = 31 * result + lsb
-        result = 31 * result + parameterList.contentHashCode()
-        return result
+    protected fun initializeDefaultValues() {
+        defaultValues?.let {
+            param1 = it[0]
+            param2 = it[1]
+            param3 = it[2]
+            param4 = it[3]
+            param5 = it[4]
+            param6 = it[5]
+            param7 = it[6]
+            param8 = it[7]
+            param9 = it[8]
+            param10 = it[9]
+            param11 = it[10]
+            param12 = it[11]
+            param13 = it[12]
+            param14 = it[13]
+            param15 = it[14]
+            param16 = it[15]
+        }
     }
 }
