@@ -13,10 +13,7 @@ import com.example.xgbuddy.data.gm.MidiParameter
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
-import com.example.xgbuddy.data.xg.DrumVoice
-import com.example.xgbuddy.data.xg.DrumVoiceParameter
-import com.example.xgbuddy.data.xg.Effect
-import com.example.xgbuddy.data.xg.EffectParameterData
+import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
@@ -126,17 +123,27 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    fun updateViews(effect: Effect) {
+    fun updateViews(reverb: Reverb) {
         controlViewMap.keys.forEach {
             val param = EffectParameterData::addrLo findBy it.toByte()
-            controlViewMap[it]?.value =
-                if (param != null) {
-                    if (param.reflectedBigField != null) {
-                        effect.getPropertyValue(param.reflectedBigField)
-                    } else {
-                        effect.getPropertyValue(param.reflectedField).toInt()
-                    }
-                } else 0
+            controlViewMap[it]?.apply {
+                value =
+                    if (param != null) {
+                        if (param.reflectedBigField != null) {
+                            reverb.getPropertyValue(param.reflectedBigField)
+                        } else {
+                            reverb.getPropertyValue(param.reflectedField).toInt()
+                        }
+                    } else 0
+                val reverbParam = reverb.reverbType.parameterList?.get(param)
+                if (reverbParam == null) {
+                    this.visibility = View.GONE
+                } else {
+                    this.visibility = View.VISIBLE
+                    label = reverbParam.name
+                }
+            }
+
         }
     }
 

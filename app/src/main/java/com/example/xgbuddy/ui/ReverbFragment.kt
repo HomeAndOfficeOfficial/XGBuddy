@@ -32,6 +32,11 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
         val v = layoutInflater.inflate(R.layout.fragment_reverb, container, false)
         findViews(v)
         setupSpinner()
+        initControlGroups()
+        return v
+    }
+
+    private fun initControlGroups() {
         initControlGroup(
             cvgReverb,
             isInteractive = false,
@@ -40,7 +45,6 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             extraChildren = llReverbExtras
         )
         updateViews(midiViewModel.reverb)
-        return v
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -89,7 +93,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             )
         } else {
             val value = vmReverb.getPropertyValue(effectParamData!!.reflectedBigField)
-            val reverbParam = vmReverb.parameterList?.get(effectParamData) ?: return null
+            val reverbParam = vmReverb.parameterList?.get(effectParamData)
             val defaultValue = vmReverb.defaultValues!![effectParamData.paramIndex!!]
             return EffectControlParameter(
                 effectParamData,
@@ -120,7 +124,6 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             val preset = ReverbType.values()[position]
             val updateReverb = Reverb(preset)
             midiViewModel.reverb = updateReverb
-            // Actually instead of updating view, we have to repopulate everything
             updateViews(updateReverb)
             // Todo: send message
         }

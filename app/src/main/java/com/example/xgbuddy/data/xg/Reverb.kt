@@ -2,7 +2,7 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-class Reverb(reverbType: ReverbType) : Effect(
+class Reverb(val reverbType: ReverbType) : Effect(
     reverbType.nameRes,
     reverbType.msb,
     reverbType.lsb,

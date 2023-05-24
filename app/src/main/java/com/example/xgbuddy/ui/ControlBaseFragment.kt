@@ -35,15 +35,12 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
                 collapse()
             }
             controlItemIds.forEach {
-                val ctrlParam = initParameter(it)
-                if (ctrlParam != null) {
-                    addControlView(SliderControlView(requireContext()).apply {
-                        controlParameter = ctrlParam
-                        listener = this@ControlBaseFragment
-                        shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
-                        isRealtimeControl = isRealtime
-                    })
-                }
+                addControlView(SliderControlView(requireContext()).apply {
+                    controlParameter = initParameter(it)
+                    listener = this@ControlBaseFragment
+                    shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
+                    isRealtimeControl = isRealtime
+                })
             }
         }
         extraChildren?.apply {
@@ -56,6 +53,13 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
             }
         }
         controlGroups.add(controlGroup)
+    }
+
+    protected fun clearControlGroups() {
+        controlGroups.forEach {
+            it.removeAllViews()
+        }
+        controlGroups.clear()
     }
 
     // I think this was an attempt to fix the slider issue, but I don't think it did.
