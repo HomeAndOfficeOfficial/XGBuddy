@@ -135,15 +135,50 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                             reverb.getPropertyValue(param.reflectedField).toInt()
                         }
                     } else 0
-                val reverbParam = reverb.reverbType.parameterList?.get(param)
-                if (reverbParam == null) {
-                    this.visibility = View.GONE
-                } else {
-                    this.visibility = View.VISIBLE
-                    label = reverbParam.name
+                if (
+                    param != EffectParameterData.REVERB_RETURN
+                    && param != EffectParameterData.REVERB_PAN
+                ) {
+                    val reverbParam = reverb.reverbType.parameterList?.get(param)
+                    if (reverbParam == null) {
+                        this.visibility = View.GONE
+                    } else {
+                        this.visibility = View.VISIBLE
+                        label = reverbParam.name
+                    }
                 }
+
             }
 
+        }
+    }
+
+    fun updateViews(chorus: Chorus) {
+        controlViewMap.keys.forEach {
+            val param = EffectParameterData::addrLo findBy it.toByte()
+            controlViewMap[it]?.apply {
+                value =
+                    if (param != null) {
+                        if (param.reflectedBigField != null) {
+                            chorus.getPropertyValue(param.reflectedBigField)
+                        } else {
+                            chorus.getPropertyValue(param.reflectedField).toInt()
+                        }
+                    } else 0
+                if (
+                    param != EffectParameterData.CHORUS_PAN
+                    && param != EffectParameterData.CHORUS_RETURN
+                    && param != EffectParameterData.SEND_CHOR_TO_REV
+                ) {
+                    val chorusParam = chorus.chorusType.getParameterList()[param]
+                    if (chorusParam == null) {
+                        this.visibility = View.GONE
+                    } else {
+                        this.visibility = View.VISIBLE
+                        label = chorusParam.name
+                    }
+                }
+            }
         }
     }
 

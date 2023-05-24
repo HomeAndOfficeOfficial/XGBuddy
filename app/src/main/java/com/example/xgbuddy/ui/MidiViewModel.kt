@@ -10,6 +10,6 @@ class MidiViewModel : ViewModel() {
     val selectedChannel = MutableLiveData(0)
     val selectedDrumVoice = MutableLiveData(0)
     var reverb = Reverb(ReverbType.HALL1)
-    val chorus = MutableLiveData(Chorus(ChorusType.CHORUS1))
+    var chorus = Chorus(ChorusType.CHORUS1)
     val variation = MutableLiveData(Variation(VariationType.DELAY_LCR))
 }

@@ -20,6 +20,13 @@
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_reverb" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/chorusFragContainer"
+                android:name="com.example.xgbuddy.ui.ChorusFragment"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_chorus" />
         </LinearLayout>
     </HorizontalScrollView>
 

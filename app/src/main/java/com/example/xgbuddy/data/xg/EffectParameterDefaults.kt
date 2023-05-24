@@ -23,7 +23,7 @@ object EffectParameterDefaults {
     val chorus1Defaults = intArrayOf(6, 54, 77, 106, 0, 28, 64, 46, 64, 64, 46, 64, 10, 0, 0, 0)
     val chorus2Defaults = intArrayOf(8, 63, 64, 30, 0, 28, 62, 42, 58, 64, 46, 64, 10, 0, 0, 0)
     val chorus3Defaults = intArrayOf(4, 44, 64, 110, 0, 28, 64, 46, 66, 64, 46, 64, 10, 0, 0, 0)
-    val chorus4Defaults = intArrayOf(9, 32, 69, 104, 0, 28, 64, 46, 64, 64, 46, 64, 10, 0, 1, )
+    val chorus4Defaults = intArrayOf(9, 32, 69, 104, 0, 28, 64, 46, 64, 64, 46, 64, 10, 0, 1, 0)
     val celeste1Defaults = intArrayOf(12, 32, 64, 0, 0, 28, 64, 46, 64, 127, 40, 68, 10, 0, 0, 0)
     val celeste2Defaults = intArrayOf(28, 18, 90, 2, 0, 28, 62, 42, 60, 84, 40, 68, 10, 0, 0, 0)
     val celeste3Defaults = intArrayOf(4, 63, 44, 2, 0, 28, 64, 46, 68, 127, 40, 68, 10, 0, 0, 0)

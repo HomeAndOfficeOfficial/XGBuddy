@@ -2,7 +2,7 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-class Chorus(chorusType: ChorusType) : Effect(
+class Chorus(val chorusType: ChorusType) : Effect(
     chorusType.nameRes,
     chorusType.msb,
     chorusType.lsb,
