@@ -39,6 +39,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             isRealtime = false,
             extraChildren = llReverbExtras
         )
+
         return v
     }
 
@@ -60,6 +61,12 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
+
+            // This is awful but I just need to get these fx fragments working before I can figure
+            // out how to clean them up.
+            setSelection(
+                ReverbType.values().indexOf(ReverbType::nameRes findBy midiViewModel.reverb.nameRes)
+            )
         }
     }
 
@@ -69,18 +76,41 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
         }
     }
 
-    override fun initParameter(paramId: Int): ControlParameter {
-        val vmReverb = midiViewModel.reverb.value!!
+    override fun initParameter(paramId: Int): ControlParameter? {
+        val vmReverb = midiViewModel.reverb
         val effectParamData = EffectParameterData::resId findBy paramId
-        val value = vmReverb.getPropertyValue(effectParamData!!.reflectedField)
-        val reverbParam = vmReverb.parameterList?.get(effectParamData)!!
-        val defaultValue = vmReverb.defaultValues!![effectParamData.paramIndex!!]
-        return EffectControlParameter(effectParamData, reverbParam, value, defaultValue.toByte())
+        if (effectParamData == EffectParameterData.REVERB_RETURN || effectParamData == EffectParameterData.REVERB_PAN) {
+            val value = vmReverb.getPropertyValue(effectParamData.reflectedField)
+            return EffectControlParameter(
+                effectParamData,
+                null,
+                value.toInt(),
+                effectParamData.default
+            )
+        } else {
+            val value = vmReverb.getPropertyValue(effectParamData!!.reflectedBigField)
+            val reverbParam = vmReverb.parameterList?.get(effectParamData) ?: return null
+            val defaultValue = vmReverb.defaultValues!![effectParamData.paramIndex!!]
+            return EffectControlParameter(
+                effectParamData,
+                reverbParam,
+                value,
+                defaultValue.toByte()
+            )
+        }
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
         val param = EffectParameterData::addrLo findBy controlParameter.addr.toByte()
-        midiViewModel.reverb.value!!.setProperty(param!!.reflectedField, controlParameter.value.toByte())
+        val reverb = midiViewModel.reverb
+        if (param == EffectParameterData.REVERB_RETURN || param == EffectParameterData.REVERB_PAN) {
+            reverb.setProperty(param.reflectedField, controlParameter.value.toByte())
+        } else {
+            midiViewModel.reverb.setProperty(
+                param!!.reflectedBigField,
+                controlParameter.value
+            )
+        }
         // No need to update viewmodel explicitly I don't think?
         // Todo: Send message
     }
@@ -89,7 +119,8 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
         if (wasSpinnerTouched) {
             val preset = ReverbType.values()[position]
             val updateReverb = Reverb(preset)
-            midiViewModel.reverb.value = updateReverb
+            midiViewModel.reverb = updateReverb
+            // Actually instead of updating view, we have to repopulate everything
             updateViews(updateReverb)
             // Todo: send message
         }

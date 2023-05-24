@@ -18,7 +18,7 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
 
     protected val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
 
-    abstract fun initParameter(paramId: Int): ControlParameter
+    abstract fun initParameter(paramId: Int): ControlParameter?
 
     protected open fun initControlGroup(
         controlGroup: ControlViewGroup,
@@ -35,12 +35,15 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
                 collapse()
             }
             controlItemIds.forEach {
-                addControlView(SliderControlView(requireContext()).apply {
-                    controlParameter = initParameter(it)
-                    listener = this@ControlBaseFragment
-                    shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
-                    isRealtimeControl = isRealtime
-                })
+                val ctrlParam = initParameter(it)
+                if (ctrlParam != null) {
+                    addControlView(SliderControlView(requireContext()).apply {
+                        controlParameter = ctrlParam
+                        listener = this@ControlBaseFragment
+                        shouldReportAllTouchEvents = shouldReceiveAllTouchCallbacks
+                        isRealtimeControl = isRealtime
+                    })
+                }
             }
         }
         extraChildren?.apply {

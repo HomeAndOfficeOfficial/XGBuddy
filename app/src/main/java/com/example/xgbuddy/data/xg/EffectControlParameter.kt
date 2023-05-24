@@ -17,15 +17,15 @@ class EffectControlParameter(
     // Reverb parameter
     constructor(
         effectParam: EffectParameterData,
-        reverbParameter: EffectParameter,
-        value: Byte,
+        reverbParameter: EffectParameter?,
+        value: Int,
         defaultValue: Byte
     ) : this(
         effectParam.name,
         effectParam.addrLo.toUByte(),
-        value.toInt(),
-        reverbParameter.min.toByte(),
-        reverbParameter.max.toByte(),
+        value,
+        reverbParameter?.min?.toByte() ?: effectParam.min,
+        reverbParameter?.max?.toByte() ?: effectParam.max,
         defaultValue
     )
 }
