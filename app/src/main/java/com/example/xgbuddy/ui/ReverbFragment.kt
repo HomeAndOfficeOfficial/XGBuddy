@@ -39,7 +39,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             isRealtime = false,
             extraChildren = llReverbExtras
         )
-
+        updateViews(midiViewModel.reverb)
         return v
     }
 

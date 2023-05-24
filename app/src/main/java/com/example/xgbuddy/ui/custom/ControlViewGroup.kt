@@ -113,7 +113,8 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap.keys.forEach {
             val param = QS300ElementParameter::baseAddress findBy it
             controlViewMap[it]?.value =
-                if (param != null) qS300Element.getPropertyValue(param.reflectedField).toInt() else 0
+                if (param != null) qS300Element.getPropertyValue(param.reflectedField)
+                    .toInt() else 0
         }
     }
 
@@ -129,7 +130,13 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap.keys.forEach {
             val param = EffectParameterData::addrLo findBy it.toByte()
             controlViewMap[it]?.value =
-                if (param != null) effect.getPropertyValue(param.reflectedBigField) else 0
+                if (param != null) {
+                    if (param.reflectedBigField != null) {
+                        effect.getPropertyValue(param.reflectedBigField)
+                    } else {
+                        effect.getPropertyValue(param.reflectedField).toInt()
+                    }
+                } else 0
         }
     }
 
