@@ -7,7 +7,7 @@ import com.example.xgbuddy.data.gm.MidiParameter
 class XGControlParameter(
     override val name: String,
     override val addr: UByte,
-    override var value: Byte,
+    override var value: Int,
     override val min: Byte,
     override val max: Byte,
     override val default: Byte
@@ -16,7 +16,7 @@ class XGControlParameter(
     constructor(elementParameter: MidiParameter, value: Byte) : this(
         elementParameter.name,
         elementParameter.addrLo.toUByte(),
-        value,
+        value.toInt(),
         elementParameter.min,
         elementParameter.max,
         elementParameter.default

@@ -111,7 +111,7 @@ abstract class QS300ElementBaseFragment : ControlBaseFragment() {
         }
         val voice = viewModel.preset.value!!.voices[viewModel.voice]
         voice.elements[elementIndex].setProperty(
-            currentParam!!.reflectedField, controlParameter.value
+            currentParam!!.reflectedField, controlParameter.value.toByte()
         )
 
         midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, viewModel.voice))

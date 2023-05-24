@@ -15,6 +15,8 @@ import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.xg.DrumVoice
 import com.example.xgbuddy.data.xg.DrumVoiceParameter
+import com.example.xgbuddy.data.xg.Effect
+import com.example.xgbuddy.data.xg.EffectParameterData
 import com.example.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
@@ -103,7 +105,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap.keys.forEach {
             val param = MidiParameter::addrLo findBy it.toByte()
             controlViewMap[it]?.value =
-                if (param != null) midipart.getPropertyValue(param.reflectedField) else 0
+                if (param != null) midipart.getPropertyValue(param.reflectedField).toInt() else 0
         }
     }
 
@@ -111,7 +113,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap.keys.forEach {
             val param = QS300ElementParameter::baseAddress findBy it
             controlViewMap[it]?.value =
-                if (param != null) qS300Element.getPropertyValue(param.reflectedField) else 0
+                if (param != null) qS300Element.getPropertyValue(param.reflectedField).toInt() else 0
         }
     }
 
@@ -119,7 +121,15 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         controlViewMap.keys.forEach {
             val param = DrumVoiceParameter::ordinal findBy it.toInt()
             controlViewMap[it]?.value =
-                if (param != null) drumVoice.getPropertyValue(param.reflectedField) else 0
+                if (param != null) drumVoice.getPropertyValue(param.reflectedField).toInt() else 0
+        }
+    }
+
+    fun updateViews(effect: Effect) {
+        controlViewMap.keys.forEach {
+            val param = EffectParameterData::addrLo findBy it.toByte()
+            controlViewMap[it]?.value =
+                if (param != null) effect.getPropertyValue(param.reflectedBigField) else 0
         }
     }
 

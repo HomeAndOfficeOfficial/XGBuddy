@@ -33,7 +33,7 @@ abstract class ParameterControlView(context: Context) :
             label = value?.name ?: "Unnamed param"
             updateControlBounds()
         }
-    var value: Byte = -1
+    var value: Int = -1
         set(value) {
             controlParameter?.value = value
             if (field != value) {

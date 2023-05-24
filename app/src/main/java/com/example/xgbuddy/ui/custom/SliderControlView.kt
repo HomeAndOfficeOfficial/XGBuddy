@@ -40,27 +40,27 @@ class SliderControlView(context: Context) :
     }
 
     override fun updateViews() {
-        seekbar.progress = value.toInt()
+        seekbar.progress = value
         tvValue?.text = "$value"
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         if (fromUser && isRealtimeControl) {
-            this.value = progress.toByte()
+            this.value = progress
             listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {
         if (shouldReportAllTouchEvents) {
-            this.value = value.toInt().toByte()
+            this.value = value
             listener?.onParameterChanged(controlParameter!!, true)
         }
     }
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
         if (!isRealtimeControl || shouldReportAllTouchEvents) {
-            this.value = seekbar.progress.toByte()
+            this.value = seekbar.progress
             listener?.onParameterChanged(controlParameter!!, false)
         }
     }

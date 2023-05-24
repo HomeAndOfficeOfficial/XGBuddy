@@ -5,7 +5,7 @@ import com.example.xgbuddy.data.ControlParameter
 class EffectControlParameter(
     override val name: String,
     override val addr: UByte,
-    override var value: Byte,
+    override var value: Int,
     override val min: Byte,
     override val max: Byte,
     override val default: Byte
@@ -23,7 +23,7 @@ class EffectControlParameter(
     ) : this(
         effectParam.name,
         effectParam.addrLo.toUByte(),
-        value,
+        value.toInt(),
         reverbParameter.min.toByte(),
         reverbParameter.max.toByte(),
         defaultValue
