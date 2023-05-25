@@ -8,6 +8,11 @@
     <attr name="pcId" format="reference" />
     <attr name="pcEntries" format="integer" />
     <attr name="elementIndex" format="integer" />
+    <attr name="effectType" format="enum">
+        <enum name="reverb" value="0" />
+        <enum name="chorus" value="1" />
+        <enum name="variation" value="2" />
+    </attr>
     <declare-styleable name="ParameterControlView">
         <attr name="pcMin" />
         <attr name="pcMax" />
@@ -47,6 +52,9 @@
     </declare-styleable>
     <declare-styleable name="QSElementPrimaryControlFragment_MembersInjector">
         <attr name="elementIndex" />
+    </declare-styleable>
+    <declare-styleable name="EffectEditFragment_MembersInjector">
+        <attr name="effectType" />
     </declare-styleable>
     <declare-styleable name="KeyView">
         <attr name="note" format="string" />

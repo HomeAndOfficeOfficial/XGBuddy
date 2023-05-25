@@ -123,18 +123,18 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    fun updateViews(reverb: Reverb) {
+    fun updateViews(effect: Effect) {
+        when (effect) {
+            is Reverb -> updateViews(effect)
+            is Chorus -> updateViews(effect)
+            is Variation -> updateViews(effect)
+        }
+    }
+
+    private fun updateViews(reverb: Reverb) {
         controlViewMap.keys.forEach {
             val param = EffectParameterData::addrLo findBy it.toByte()
             controlViewMap[it]?.apply {
-                value =
-                    if (param != null) {
-                        if (param.reflectedBigField != null) {
-                            reverb.getPropertyValue(param.reflectedBigField)
-                        } else {
-                            reverb.getPropertyValue(param.reflectedField).toInt()
-                        }
-                    } else 0
                 if (
                     param != EffectParameterData.REVERB_RETURN
                     && param != EffectParameterData.REVERB_PAN
@@ -145,24 +145,25 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                     } else {
                         this.visibility = View.VISIBLE
                         label = reverbParam.name
+                        controlParameter?.min = reverbParam.min
+                        controlParameter?.max = reverbParam.max
+                        updateControlBounds()
                     }
                 }
+                value = if (param!!.reflectedBigField != null) {
+                    reverb.getPropertyValue(param.reflectedBigField)
+                } else {
+                    reverb.getPropertyValue(param.reflectedField).toInt()
+                }
+
             }
         }
     }
 
-    fun updateViews(chorus: Chorus) {
+    private fun updateViews(chorus: Chorus) {
         controlViewMap.keys.forEach {
             val param = EffectParameterData::addrLo findBy it.toByte()
             controlViewMap[it]?.apply {
-                value =
-                    if (param != null) {
-                        if (param.reflectedBigField != null) {
-                            chorus.getPropertyValue(param.reflectedBigField)
-                        } else {
-                            chorus.getPropertyValue(param.reflectedField).toInt()
-                        }
-                    } else 0
                 if (
                     param != EffectParameterData.CHORUS_PAN
                     && param != EffectParameterData.CHORUS_RETURN
@@ -174,24 +175,25 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                     } else {
                         this.visibility = View.VISIBLE
                         label = chorusParam.name
+                        controlParameter?.min = chorusParam.min
+                        controlParameter?.max = chorusParam.max
+                        updateControlBounds()
                     }
                 }
+                value =
+                    if (param!!.reflectedBigField != null) {
+                        chorus.getPropertyValue(param.reflectedBigField)
+                    } else {
+                        chorus.getPropertyValue(param.reflectedField).toInt()
+                    }
             }
         }
     }
 
-    fun updateViews(variation: Variation) {
+    private fun updateViews(variation: Variation) {
         controlViewMap.keys.forEach {
             val param = EffectParameterData::addrLo findBy it.toByte()
             controlViewMap[it]?.apply {
-                value =
-                    if (param != null) {
-                        if (param.reflectedBigField != null) {
-                            variation.getPropertyValue(param.reflectedBigField)
-                        } else {
-                            variation.getPropertyValue(param.reflectedField).toInt()
-                        }
-                    } else 0
                 if (param!!.ordinal <= EffectParameterData.VARIATION_PARAM_16.ordinal) {
                     val variationType = variation.variationType.parameterList?.get(param)
                     if (variationType == null) {
@@ -199,7 +201,15 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                     } else {
                         this.visibility = View.VISIBLE
                         label = variationType.name
+                        controlParameter?.min = variationType.min
+                        controlParameter?.max = variationType.max
+                        updateControlBounds()
                     }
+                }
+                value = if (param.reflectedBigField != null) {
+                    variation.getPropertyValue(param.reflectedBigField)
+                } else {
+                    variation.getPropertyValue(param.reflectedField).toInt()
                 }
             }
         }

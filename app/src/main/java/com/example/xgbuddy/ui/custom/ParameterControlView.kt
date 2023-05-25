@@ -50,7 +50,7 @@ abstract class ParameterControlView(context: Context) :
     var listener: OnParameterChangedListener? = null
     var isRealtimeControl = true
 
-    protected abstract fun updateControlBounds()
+    abstract fun updateControlBounds()
     protected abstract fun updateViews()
 
     protected fun getIdFromAttr(typedArray: TypedArray) {

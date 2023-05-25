@@ -1,42 +1,19 @@
 package com.example.xgbuddy.ui
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
 import android.widget.Spinner
-import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
-import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
+class ReverbFragment : EffectEditFragment() {
 
-    private val midiViewModel: MidiViewModel by activityViewModels()
+    override val effectType: Int = REVERB
 
-    private var wasSpinnerTouched = false
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val v = layoutInflater.inflate(R.layout.fragment_reverb, container, false)
-        findViews(v)
-        setupSpinner()
-        initControlGroups()
-        return v
-    }
-
-    private fun initControlGroups() {
+    override fun initControlGroups() {
         initControlGroup(
             cvgReverb,
             isInteractive = false,
@@ -44,18 +21,11 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             isRealtime = false,
             extraChildren = llReverbExtras
         )
-        updateViews(midiViewModel.reverb)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    private fun setupSpinner() {
+    override fun setupSpinner() {
         spReverbType.apply {
-            setOnTouchListener { _, event ->
-                if (event?.action == MotionEvent.ACTION_DOWN) {
-                    wasSpinnerTouched = true
-                }
-                false
-            }
+            setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@ReverbFragment
             adapter = ArrayAdapter(
                 requireContext(),
@@ -64,80 +34,30 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-
-            // This is awful but I just need to get these fx fragments working before I can figure
-            // out how to clean them up.
             setSelection(
                 ReverbType.values().indexOf(ReverbType::nameRes findBy midiViewModel.reverb.nameRes)
             )
         }
     }
 
-    private fun updateViews(reverb: Reverb) {
-        controlGroups.forEach {
-            it.updateViews(reverb)
-        }
+    override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
+        val preset = ReverbType.values()[index]
+        val updateReverb = Reverb(preset)
+        midiViewModel.reverb = updateReverb
+        return true
     }
 
-    override fun initParameter(paramId: Int): ControlParameter? {
-        val vmReverb = midiViewModel.reverb
-        val effectParamData = EffectParameterData::resId findBy paramId
-        if (effectParamData == EffectParameterData.REVERB_RETURN || effectParamData == EffectParameterData.REVERB_PAN) {
-            val value = vmReverb.getPropertyValue(effectParamData.reflectedField)
-            return EffectControlParameter(
-                effectParamData,
-                null,
-                value.toInt(),
-                effectParamData.default.toInt()
-            )
-        } else {
-            val value = vmReverb.getPropertyValue(effectParamData!!.reflectedBigField)
-            val reverbParam = vmReverb.parameterList?.get(effectParamData)
-            val defaultValue = vmReverb.defaultValues!![effectParamData.paramIndex!!]
-            return EffectControlParameter(
-                effectParamData,
-                reverbParam,
-                value,
-                defaultValue
-            )
-        }
+    override fun findViews(root: View) {
+        spReverbType = root.findViewById(R.id.spReverbType)
+        cvgReverb = root.findViewById(R.id.cvgReverb)
+        llReverbExtras = root.findViewById(R.id.llReverbExtras)
     }
 
-    override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
-        val param = EffectParameterData::addrLo findBy controlParameter.addr.toByte()
-        val reverb = midiViewModel.reverb
-        if (param == EffectParameterData.REVERB_RETURN || param == EffectParameterData.REVERB_PAN) {
-            reverb.setProperty(param.reflectedField, controlParameter.value.toByte())
-        } else {
-            midiViewModel.reverb.setProperty(
-                param!!.reflectedBigField,
-                controlParameter.value
-            )
-        }
-        // No need to update viewmodel explicitly I don't think?
-        // Todo: Send message
-    }
+    override fun isBigParameter(effectParameterData: EffectParameterData): Boolean =
+        effectParameterData != EffectParameterData.REVERB_RETURN
+                && effectParameterData != EffectParameterData.REVERB_PAN
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        if (wasSpinnerTouched) {
-            val preset = ReverbType.values()[position]
-            val updateReverb = Reverb(preset)
-            midiViewModel.reverb = updateReverb
-            updateViews(updateReverb)
-            // Todo: send message
-        }
-        wasSpinnerTouched = false
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        wasSpinnerTouched = false
-    }
-
-    private fun findViews(v: View) {
-        spReverbType = v.findViewById(R.id.spReverbType)
-        cvgReverb = v.findViewById(R.id.cvgReverb)
-        llReverbExtras = v.findViewById(R.id.llReverbExtras)
-    }
+    override fun getViewModelEffect(): Effect = midiViewModel.reverb
 
     private lateinit var spReverbType: Spinner
     private lateinit var cvgReverb: ControlViewGroup

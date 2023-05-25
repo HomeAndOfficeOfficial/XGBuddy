@@ -6,9 +6,9 @@ class EffectControlParameter(
     override val name: String,
     override val addr: UByte,
     override var value: Int,
-    override val min: Int,
-    override val max: Int,
-    override val default: Int
+    override var min: Int,
+    override var max: Int,
+    override var default: Int
 ) : ControlParameter() {
 
     // TODO: Will probably have to have an additional field to account for

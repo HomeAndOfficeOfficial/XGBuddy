@@ -6,9 +6,9 @@ class DrumControlParameter(
     override val name: String,
     override val addr: UByte,
     override var value: Int,
-    override val min: Int,
-    override val max: Int,
-    override val default: Int
+    override var min: Int,
+    override var max: Int,
+    override var default: Int
 ) : ControlParameter() {
 
     constructor(drumParameter: DrumVoiceParameter, value: Byte) : this(
