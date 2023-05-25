@@ -6,9 +6,9 @@ class EffectControlParameter(
     override val name: String,
     override val addr: UByte,
     override var value: Int,
-    override val min: Byte,
-    override val max: Byte,
-    override val default: Byte
+    override val min: Int,
+    override val max: Int,
+    override val default: Int
 ) : ControlParameter() {
 
     // TODO: Will probably have to have an additional field to account for
@@ -19,13 +19,13 @@ class EffectControlParameter(
         effectParam: EffectParameterData,
         reverbParameter: EffectParameter?,
         value: Int,
-        defaultValue: Byte
+        defaultValue: Int
     ) : this(
         effectParam.name,
         effectParam.addrLo.toUByte(),
         value,
-        reverbParameter?.min?.toByte() ?: effectParam.min,
-        reverbParameter?.max?.toByte() ?: effectParam.max,
+        reverbParameter?.min ?: effectParam.min.toInt(),
+        reverbParameter?.max ?: effectParam.max.toInt(),
         defaultValue
     )
 }

@@ -13,6 +13,7 @@ class Variation(variationType: VariationType) : Effect(
     var variationType = variationType
         set(value) {
             field = value
+            updateEffectType(value)
             defaultValues = (VariationType::nameRes findBy nameRes)!!.parameterDefaults
             initializeDefaultValues()
         }

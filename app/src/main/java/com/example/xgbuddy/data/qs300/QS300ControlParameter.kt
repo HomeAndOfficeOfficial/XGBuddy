@@ -6,17 +6,17 @@ class QS300ControlParameter(
     override val name: String,
     override val addr: UByte,
     override var value: Int,
-    override val min: Byte,
-    override val max: Byte,
-    override val default: Byte
+    override val min: Int,
+    override val max: Int,
+    override val default: Int
 ) : ControlParameter() {
 
     constructor(elementParameter: QS300ElementParameter, value: Byte) : this(
         elementParameter.name,
         elementParameter.baseAddress,
         value.toInt(),
-        elementParameter.min,
-        elementParameter.max,
-        elementParameter.default
+        elementParameter.min.toInt(),
+        elementParameter.max.toInt(),
+        elementParameter.default.toInt()
     )
 }

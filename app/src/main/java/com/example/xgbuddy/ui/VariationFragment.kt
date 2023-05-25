@@ -109,7 +109,7 @@ class VariationFragment : ControlBaseFragment(), OnItemSelectedListener {
                 effectParamData,
                 null,
                 value.toInt(),
-                effectParamData.default
+                effectParamData.default.toInt()
             )
         } else {
             val value = vmVari.getPropertyValue(effectParamData.reflectedBigField)
@@ -119,7 +119,7 @@ class VariationFragment : ControlBaseFragment(), OnItemSelectedListener {
                 effectParamData,
                 variParam,
                 value,
-                defaultValue.toByte()
+                defaultValue
             )
         }
     }

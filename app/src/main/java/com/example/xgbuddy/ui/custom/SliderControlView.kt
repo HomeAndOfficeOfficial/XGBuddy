@@ -35,8 +35,8 @@ class SliderControlView(context: Context) :
     }
 
     override fun updateControlBounds() {
-        seekbar.min = controlParameter?.min?.toInt() ?: 0
-        seekbar.max = controlParameter?.max?.toInt() ?: 127
+        seekbar.min = controlParameter?.min ?: 0
+        seekbar.max = controlParameter?.max ?: 127
     }
 
     override fun updateViews() {

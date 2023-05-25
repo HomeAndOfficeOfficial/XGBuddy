@@ -4,10 +4,10 @@ import com.example.xgbuddy.data.MidiData
 import java.util.*
 
 abstract class Effect(
-    val nameRes: Int,
-    val msb: Byte,
-    val lsb: Byte,
-    val parameterList: EnumMap<EffectParameterData, EffectParameter>?,
+    var nameRes: Int,
+    var msb: Byte,
+    var lsb: Byte,
+    var parameterList: EnumMap<EffectParameterData, EffectParameter>?,
 ) : MidiData() {
 
     abstract var defaultValues: IntArray?
@@ -48,4 +48,26 @@ abstract class Effect(
             param16 = it[15]
         }
     }
+
+    protected fun updateEffectType(effectType: ReverbType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.parameterList
+    }
+
+    protected fun updateEffectType(effectType: ChorusType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.getParameterList()
+    }
+
+    protected fun updateEffectType(effectType: VariationType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.parameterList
+    }
+
 }

@@ -88,7 +88,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
                 effectParamData,
                 null,
                 value.toInt(),
-                effectParamData.default
+                effectParamData.default.toInt()
             )
         } else {
             val value = vmReverb.getPropertyValue(effectParamData!!.reflectedBigField)
@@ -98,7 +98,7 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
                 effectParamData,
                 reverbParam,
                 value,
-                defaultValue.toByte()
+                defaultValue
             )
         }
     }

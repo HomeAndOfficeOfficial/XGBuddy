@@ -12,6 +12,7 @@ class Reverb(reverbType: ReverbType) : Effect(
     var reverbType = reverbType
         set(value) {
             field = value
+            updateEffectType(value)
             defaultValues = (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
             initializeDefaultValues()
         }

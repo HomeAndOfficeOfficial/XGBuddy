@@ -12,6 +12,7 @@ class Chorus(chorusType: ChorusType) : Effect(
     var chorusType = chorusType
         set(value) {
             field = value
+            updateEffectType(value)
             defaultValues = (ChorusType::nameRes findBy nameRes)!!.parameterDefaults
             initializeDefaultValues()
         }

@@ -24,7 +24,12 @@ enum class EffectParameterData(
     REVERB_PARAM_7(R.string.fxpc_rev_p7, 8, reflectedBigField = Effect::param7, paramIndex = 6),
     REVERB_PARAM_8(R.string.fxpc_rev_p8, 9, reflectedBigField = Effect::param8, paramIndex = 7),
     REVERB_PARAM_9(R.string.fxpc_rev_p9, 0x0a, reflectedBigField = Effect::param9, paramIndex = 8),
-    REVERB_PARAM_10(R.string.fxpc_rev_p10, 0x0b, reflectedBigField = Effect::param10, paramIndex = 9),
+    REVERB_PARAM_10(
+        R.string.fxpc_rev_p10,
+        0x0b,
+        reflectedBigField = Effect::param10,
+        paramIndex = 9
+    ),
     REVERB_RETURN(R.string.fxpc_rev_ret, 0x0c, default = 0x40, reflectedField = Reverb::revReturn),
     REVERB_PAN(
         R.string.fxpc_rev_pan,
@@ -33,12 +38,42 @@ enum class EffectParameterData(
         default = 0x40,
         reflectedField = Reverb::revPan
     ),
-    REVERB_PARAM_11(R.string.fxpc_rev_p11, 0x10, reflectedBigField = Effect::param11, paramIndex = 10),
-    REVERB_PARAM_12(R.string.fxpc_rev_p12, 0x11, reflectedBigField = Effect::param12, paramIndex = 11),
-    REVERB_PARAM_13(R.string.fxpc_rev_p13, 0x12, reflectedBigField = Effect::param13, paramIndex = 12),
-    REVERB_PARAM_14(R.string.fxpc_rev_p14, 0x13, reflectedBigField = Effect::param14, paramIndex = 13),
-    REVERB_PARAM_15(R.string.fxpc_rev_p15, 0x14, reflectedBigField = Effect::param15, paramIndex = 14),
-    REVERB_PARAM_16(R.string.fxpc_rev_p16, 0x15, reflectedBigField = Effect::param16, paramIndex = 15),
+    REVERB_PARAM_11(
+        R.string.fxpc_rev_p11,
+        0x10,
+        reflectedBigField = Effect::param11,
+        paramIndex = 10
+    ),
+    REVERB_PARAM_12(
+        R.string.fxpc_rev_p12,
+        0x11,
+        reflectedBigField = Effect::param12,
+        paramIndex = 11
+    ),
+    REVERB_PARAM_13(
+        R.string.fxpc_rev_p13,
+        0x12,
+        reflectedBigField = Effect::param13,
+        paramIndex = 12
+    ),
+    REVERB_PARAM_14(
+        R.string.fxpc_rev_p14,
+        0x13,
+        reflectedBigField = Effect::param14,
+        paramIndex = 13
+    ),
+    REVERB_PARAM_15(
+        R.string.fxpc_rev_p15,
+        0x14,
+        reflectedBigField = Effect::param15,
+        paramIndex = 14
+    ),
+    REVERB_PARAM_16(
+        R.string.fxpc_rev_p16,
+        0x15,
+        reflectedBigField = Effect::param16,
+        paramIndex = 15
+    ),
     CHORUS_TYPE(R.string.fxpc_chor_type, 0x20, default = 0x41, size = 2),
     CHORUS_PARAMETER_1(
         R.string.fxpc_chor_p1,
@@ -136,7 +171,12 @@ enum class EffectParameterData(
         reflectedBigField = Effect::param16,
         paramIndex = 15
     ),
-    CHORUS_RETURN(R.string.fxpc_chor_ret, 0x2c, default = 0x40, reflectedField = Chorus::chorusReturn),
+    CHORUS_RETURN(
+        R.string.fxpc_chor_ret,
+        0x2c,
+        default = 0x40,
+        reflectedField = Chorus::chorusReturn
+    ),
     CHORUS_PAN(
         R.string.fxpc_chor_pan,
         0x2d,

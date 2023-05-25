@@ -85,7 +85,7 @@ class ChorusFragment : ControlBaseFragment(), AdapterView.OnItemSelectedListener
                 effectParamData,
                 null,
                 value.toInt(),
-                effectParamData.default
+                effectParamData.default.toInt()
             )
         } else {
             val value = vmChorus.getPropertyValue(effectParamData!!.reflectedBigField)
@@ -95,7 +95,7 @@ class ChorusFragment : ControlBaseFragment(), AdapterView.OnItemSelectedListener
                 effectParamData,
                 chorusParam,
                 value,
-                defaultValue.toByte()
+                defaultValue
             )
         }
     }
