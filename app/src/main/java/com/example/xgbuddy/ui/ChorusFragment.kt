@@ -53,9 +53,7 @@ class ChorusFragment : EffectEditFragment() {
     }
 
     override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
-        val preset = ChorusType.values()[index]
-        val updateChorus = Chorus(preset)
-        midiViewModel.chorus = updateChorus
+        midiViewModel.chorus.chorusType = ChorusType.values()[index]
         return true
     }
 

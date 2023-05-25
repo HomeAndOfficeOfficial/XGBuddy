@@ -41,9 +41,7 @@ class ReverbFragment : EffectEditFragment() {
     }
 
     override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
-        val preset = ReverbType.values()[index]
-        val updateReverb = Reverb(preset)
-        midiViewModel.reverb = updateReverb
+        midiViewModel.reverb.reverbType = ReverbType.values()[index]
         return true
     }
 
