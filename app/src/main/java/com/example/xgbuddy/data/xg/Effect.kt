@@ -10,7 +10,7 @@ abstract class Effect(
     val parameterList: EnumMap<EffectParameterData, EffectParameter>?,
 ) : MidiData() {
 
-    abstract val defaultValues: IntArray?
+    abstract var defaultValues: IntArray?
     var param1: Int = 0
     var param2: Int = 0
     var param3: Int = 0

@@ -2,14 +2,21 @@ package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-class Reverb(val reverbType: ReverbType) : Effect(
+class Reverb(reverbType: ReverbType) : Effect(
     reverbType.nameRes,
     reverbType.msb,
     reverbType.lsb,
     reverbType.parameterList
 ) {
 
-    override val defaultValues: IntArray? = (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
+    var reverbType = reverbType
+        set(value) {
+            field = value
+            defaultValues = (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
+            initializeDefaultValues()
+        }
+
+    override var defaultValues: IntArray? = (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
 
     init {
         initializeDefaultValues()

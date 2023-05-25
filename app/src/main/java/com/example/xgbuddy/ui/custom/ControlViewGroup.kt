@@ -147,9 +147,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                         label = reverbParam.name
                     }
                 }
-
             }
-
         }
     }
 
@@ -176,6 +174,31 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                     } else {
                         this.visibility = View.VISIBLE
                         label = chorusParam.name
+                    }
+                }
+            }
+        }
+    }
+
+    fun updateViews(variation: Variation) {
+        controlViewMap.keys.forEach {
+            val param = EffectParameterData::addrLo findBy it.toByte()
+            controlViewMap[it]?.apply {
+                value =
+                    if (param != null) {
+                        if (param.reflectedBigField != null) {
+                            variation.getPropertyValue(param.reflectedBigField)
+                        } else {
+                            variation.getPropertyValue(param.reflectedField).toInt()
+                        }
+                    } else 0
+                if (param!!.ordinal <= EffectParameterData.VARIATION_PARAM_16.ordinal) {
+                    val variationType = variation.variationType.parameterList?.get(param)
+                    if (variationType == null) {
+                        this.visibility = View.GONE
+                    } else {
+                        this.visibility = View.VISIBLE
+                        label = variationType.name
                     }
                 }
             }

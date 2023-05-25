@@ -57,11 +57,10 @@ class ReverbFragment : ControlBaseFragment(), OnItemSelectedListener {
                 false
             }
             onItemSelectedListener = this@ReverbFragment
-            val reverbNames: List<String> = ReverbType.values().map { it.name }
             adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                reverbNames
+                ReverbType.values().map { getString(it.nameRes) }
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }

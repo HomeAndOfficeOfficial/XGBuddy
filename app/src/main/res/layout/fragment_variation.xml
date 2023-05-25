@@ -17,6 +17,7 @@
         android:id="@+id/spVariPart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:entries="@array/vari_part_entries"
         android:spinnerMode="dialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spVariType" />

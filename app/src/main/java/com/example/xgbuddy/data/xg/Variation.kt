@@ -1,6 +1,7 @@
 package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.util.EnumFinder.findBy
+import kotlinx.coroutines.test.withTestContext
 
 class Variation(variationType: VariationType) : Effect(
     variationType.nameRes,
@@ -9,7 +10,14 @@ class Variation(variationType: VariationType) : Effect(
     variationType.parameterList
 ) {
 
-    override val defaultValues: IntArray? =
+    var variationType = variationType
+        set(value) {
+            field = value
+            defaultValues = (VariationType::nameRes findBy nameRes)!!.parameterDefaults
+            initializeDefaultValues()
+        }
+
+    override var defaultValues: IntArray? =
         (VariationType::nameRes findBy nameRes)!!.parameterDefaults
 
     init {
@@ -27,4 +35,14 @@ class Variation(variationType: VariationType) : Effect(
     var catDepth = EffectParameterData.CAT_VARI_CTRL_DEPTH.default
     var ac1Depth = EffectParameterData.AC1_VARI_CTRL_DEPTH.default
     var ac2Depth = EffectParameterData.AC2_VARI_CTRL_DEPTH.default
+
+    companion object {
+        val partValues = ByteArray(18) {
+            if (it == 16)
+                0x40.toByte()
+            if (it == 17)
+                0x7f.toByte()
+            it.toByte()
+        }
+    }
 }

@@ -56,11 +56,10 @@ class ChorusFragment : ControlBaseFragment(), AdapterView.OnItemSelectedListener
                 false
             }
             onItemSelectedListener = this@ChorusFragment
-            val chorusNames: List<String> = ChorusType.values().map { it.name }
             adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                chorusNames
+                ChorusType.values().map { getString(it.nameRes) }
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
