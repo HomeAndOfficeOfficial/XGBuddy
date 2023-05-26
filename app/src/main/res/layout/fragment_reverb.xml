@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/container_bg_shape">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/reverbTitle"
@@ -35,7 +34,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/container_bg_shape"
+            android:layout_marginEnd="32dp">
 
             <com.example.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgReverb"

@@ -1,34 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/container_bg_shape">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/variationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/variation"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spVariType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:spinnerMode="dialog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/variationTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/variationTitle" />
 
     <Spinner
         android:id="@+id/spVariPart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:entries="@array/vari_part_entries"
         android:spinnerMode="dialog"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spVariType" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spVariType" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/swVariConnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/spVariPart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/spVariType" />
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spVariPart"
+        app:layout_constraintEnd_toStartOf="@+id/spVariPart"
+        app:layout_constraintTop_toTopOf="@+id/spVariPart" />
 
     <ScrollView
         android:layout_width="0dp"
@@ -36,11 +49,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spVariPart">
+        app:layout_constraintTop_toBottomOf="@+id/swVariConnect">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/container_bg_shape"
             android:orientation="vertical">
 
             <com.example.xgbuddy.ui.custom.ControlViewGroup
