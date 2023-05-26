@@ -34,22 +34,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spVariType" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/swVariConnect"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/bgVariConnect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
+        app:checkedButton="@id/toggleInsert"
         app:layout_constraintBottom_toBottomOf="@+id/spVariPart"
         app:layout_constraintEnd_toStartOf="@+id/spVariPart"
-        app:layout_constraintTop_toTopOf="@+id/spVariPart" />
+        app:layout_constraintTop_toTopOf="@+id/spVariPart"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/toggleInsert"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insertion" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/toggleSystem"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="System" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/swVariConnect">
+        app:layout_constraintTop_toBottomOf="@+id/bgVariConnect">
 
         <LinearLayout
             android:layout_width="match_parent"
