@@ -11,6 +11,7 @@ abstract class Effect(
 ) : MidiData() {
 
     abstract var defaultValues: IntArray?
+    abstract val baseAddr: Byte
     var param1: Int = 0
     var param2: Int = 0
     var param3: Int = 0

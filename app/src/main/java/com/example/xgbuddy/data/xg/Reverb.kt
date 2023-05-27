@@ -17,6 +17,7 @@ class Reverb(reverbType: ReverbType) : Effect(
             initializeDefaultValues()
         }
 
+    override val baseAddr: Byte = 0
     override var defaultValues: IntArray? = (ReverbType::nameRes findBy nameRes)!!.parameterDefaults
 
     init {

@@ -18,12 +18,13 @@ import com.example.xgbuddy.data.xg.Effect
 import com.example.xgbuddy.data.xg.EffectControlParameter
 import com.example.xgbuddy.data.xg.EffectParameterData
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 
 abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListener {
 
     abstract val effectType: Int
     protected val midiViewModel: MidiViewModel by activityViewModels()
-    protected var wasSpinnerTouched = false
+    private var wasSpinnerTouched = false
 
     @SuppressLint("ClickableViewAccessibility")
     protected val spinnerTouchListener = OnTouchListener { v, event ->
@@ -100,13 +101,16 @@ abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListene
             vmEffect.setProperty(param.reflectedField, controlParameter.value.toByte())
             // Todo Send message
         }
+        midiSession.send(MidiMessageUtility.getEffectParamChange(param, controlParameter.value))
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (wasSpinnerTouched) {
             val shouldUpdateViews = onEffectPresetSelected(position, parent as Spinner)
             if (shouldUpdateViews) {
-                updateViews(getViewModelEffect())
+                val effect = getViewModelEffect()
+                updateViews(effect)
+                midiSession.send(MidiMessageUtility.getEffectPresetChange(effect))
             }
         }
         wasSpinnerTouched = false

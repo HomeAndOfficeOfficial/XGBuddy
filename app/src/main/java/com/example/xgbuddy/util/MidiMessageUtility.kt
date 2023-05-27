@@ -175,6 +175,40 @@ object MidiMessageUtility {
         )
     }
 
+    fun getEffectPresetChange(effect: Effect): MidiMessage {
+        Log.d(TAG, "getEffectPresetChange")
+        val presetChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_HI,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_MID,
+            effect.baseAddr,
+            effect.msb,
+            effect.lsb,
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(presetChange)
+    }
+
+    fun getEffectParamChange(effectParameterData: EffectParameterData, value: Int): MidiMessage {
+        Log.d(TAG, "getEffectParamChange param: ${effectParameterData.name} value $value")
+        val paramChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_HI,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_MID,
+            effectParameterData.addrLo,
+            (value and 0xff).toByte(),
+            (value shr 8).toByte(),
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(paramChange)
+    }
+
     fun getXGSystemOn(): MidiMessage {
         Log.d(TAG, "getXGSystemOn")
         return MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)

@@ -18,6 +18,7 @@ class Variation(variationType: VariationType) : Effect(
             initializeDefaultValues()
         }
 
+    override val baseAddr: Byte = 0x40
     override var defaultValues: IntArray? =
         (VariationType::nameRes findBy nameRes)!!.parameterDefaults
 

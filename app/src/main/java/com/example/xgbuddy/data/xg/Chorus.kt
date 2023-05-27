@@ -17,6 +17,7 @@ class Chorus(chorusType: ChorusType) : Effect(
             initializeDefaultValues()
         }
 
+    override val baseAddr: Byte = 0x20
     override var defaultValues: IntArray? = (ChorusType::nameRes findBy nameRes)!!.parameterDefaults
 
     init {

@@ -11,6 +11,7 @@ import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.util.MidiMessageUtility
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.switchmaterial.SwitchMaterial
 
@@ -34,8 +35,15 @@ class VariationFragment : EffectEditFragment() {
             addOnButtonCheckedListener { _, checkedId, isChecked ->
                 if (isChecked) {
                     Log.d("VariationFragment", "Check listenere")
-                    midiViewModel.variation.connection =
+                    val connectionValue =
                         if (checkedId == R.id.toggleSystem) 1.toByte() else 0.toByte()
+                    midiViewModel.variation.connection = connectionValue
+                    midiSession.send(
+                        MidiMessageUtility.getEffectParamChange(
+                            EffectParameterData.VARIATION_CONNECTION,
+                            connectionValue.toInt()
+                        )
+                    )
                     // Todo: Send message and disable certain controls
                 }
             }
@@ -109,7 +117,13 @@ class VariationFragment : EffectEditFragment() {
 
     override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
         return if (spinner == spVariPart) {
-            midiViewModel.variation.part = Variation.partValues[index]
+            val partValue = Variation.partValues[index]
+            midiViewModel.variation.part = partValue
+            midiSession.send(
+                MidiMessageUtility.getEffectParamChange(
+                    EffectParameterData.VARIATION_PART, partValue.toInt()
+                )
+            )
             false
         } else {
             midiViewModel.variation.variationType = VariationType.values()[index]
