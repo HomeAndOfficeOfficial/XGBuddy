@@ -26,8 +26,10 @@ class VariationFragment : EffectEditFragment() {
 
     private fun setupToggleGroup() {
         bgVariConnect.apply {
+            val connectionMode = midiViewModel.variation.connection
+            changeConnectionControls(connectionMode)
             check(
-                if (midiViewModel.variation.connection == 0.toByte())
+                if (connectionMode == 0.toByte())
                     R.id.toggleInsert
                 else
                     R.id.toggleSystem
@@ -37,6 +39,7 @@ class VariationFragment : EffectEditFragment() {
                     Log.d("VariationFragment", "Check listenere")
                     val connectionValue =
                         if (checkedId == R.id.toggleSystem) 1.toByte() else 0.toByte()
+                    changeConnectionControls(connectionValue)
                     midiViewModel.variation.connection = connectionValue
                     midiSession.send(
                         MidiMessageUtility.getEffectParamChange(
@@ -44,9 +47,26 @@ class VariationFragment : EffectEditFragment() {
                             connectionValue.toInt()
                         )
                     )
-                    // Todo: Send message and disable certain controls
                 }
             }
+        }
+    }
+
+    /**
+     * A lot of hardcoding going on here. Until I have a better system in place for enabling and
+     * disabling controls, I think this is okay for now. Eventually I would like to do this a little
+     * more gracefully - like when XG mode, QS300 mode, etc can be disabled in settings, some things
+     * will have to be disabled so it's clear what can and can't be done.
+     */
+    private fun changeConnectionControls(connection: Byte) {
+        val isInSystemMode = connection == 1.toByte()
+        spVariPart.isEnabled = !isInSystemMode
+        val controls = controlGroups[0].controlViewMap
+        controls.apply {
+            get(EffectParameterData.SEND_VARI_TO_CHOR.addrLo.toUByte())?.izEnabled = isInSystemMode
+            get(EffectParameterData.SEND_VARI_TO_REV.addrLo.toUByte())?.izEnabled = isInSystemMode
+            get(EffectParameterData.VARIATION_RETURN.addrLo.toUByte())?.izEnabled = isInSystemMode
+            get(EffectParameterData.VARIATION_PAN.addrLo.toUByte())?.izEnabled = isInSystemMode
         }
     }
 

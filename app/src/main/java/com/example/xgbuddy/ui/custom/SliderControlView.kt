@@ -22,6 +22,13 @@ class SliderControlView(context: Context) :
 
     var shouldReportAllTouchEvents = false
 
+    override var izEnabled: Boolean = true
+        get() = super.izEnabled
+        set(value) {
+            field = value
+            seekbar.isEnabled = value
+        }
+
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.slider_control_view, this, true)
         seekbar = view.findViewById<SeekBar?>(R.id.cpSeekbar).apply {

@@ -49,6 +49,7 @@ abstract class ParameterControlView(context: Context) :
     var paramId: Int = 0
     var listener: OnParameterChangedListener? = null
     var isRealtimeControl = true
+    open var izEnabled = true // I don't know what the accidental override is for isEnabled
 
     abstract fun updateControlBounds()
     protected abstract fun updateViews()
