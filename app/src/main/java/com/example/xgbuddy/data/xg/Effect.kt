@@ -1,45 +1,74 @@
 package com.example.xgbuddy.data.xg
 
-import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.data.MidiData
+import java.util.*
 
-data class Effect(
-    val nameRes: Int,
-    val msb: Byte,
-    val lsb: Byte,
-    val parameterList: Array<EffectParameter?>,
-    val effectType: EffectType
-) {
+abstract class Effect(
+    var nameRes: Int,
+    var msb: Byte,
+    var lsb: Byte,
+    var parameterList: EnumMap<EffectParameterData, EffectParameter>?,
+) : MidiData() {
 
-    var parameterValues: IntArray? = getEffectDefaults()
+    abstract var defaultValues: IntArray?
+    abstract val baseAddr: Byte
+    var param1: Int = 0
+    var param2: Int = 0
+    var param3: Int = 0
+    var param4: Int = 0
+    var param5: Int = 0
+    var param6: Int = 0
+    var param7: Int = 0
+    var param8: Int = 0
+    var param9: Int = 0
+    var param10: Int = 0
+    var param11: Int = 0
+    var param12: Int = 0
+    var param13: Int = 0
+    var param14: Int = 0
+    var param15: Int = 0
+    var param16: Int = 0
 
-    private fun getEffectDefaults(): IntArray? =
-        when (effectType) {
-            EffectType.REVERB -> (Reverb::nameRes findBy nameRes)!!.parameterDefaults
-            EffectType.CHORUS -> (Chorus::nameRes findBy nameRes)!!.parameterDefaults
-            EffectType.VARIATION -> (Variation::nameRes findBy nameRes)!!.parameterDefaults
+    protected fun initializeDefaultValues() {
+        defaultValues?.let {
+            param1 = it[0]
+            param2 = it[1]
+            param3 = it[2]
+            param4 = it[3]
+            param5 = it[4]
+            param6 = it[5]
+            param7 = it[6]
+            param8 = it[7]
+            param9 = it[8]
+            param10 = it[9]
+            param11 = it[10]
+            param12 = it[11]
+            param13 = it[12]
+            param14 = it[13]
+            param15 = it[14]
+            param16 = it[15]
         }
-
-    enum class EffectType { REVERB, CHORUS, VARIATION }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Effect
-
-        if (nameRes != other.nameRes) return false
-        if (msb != other.msb) return false
-        if (lsb != other.lsb) return false
-        if (!parameterList.contentEquals(other.parameterList)) return false
-
-        return true
     }
 
-    override fun hashCode(): Int {
-        var result = nameRes
-        result = 31 * result + msb
-        result = 31 * result + lsb
-        result = 31 * result + parameterList.contentHashCode()
-        return result
+    protected fun updateEffectType(effectType: ReverbType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.parameterList
     }
+
+    protected fun updateEffectType(effectType: ChorusType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.getParameterList()
+    }
+
+    protected fun updateEffectType(effectType: VariationType) {
+        nameRes = effectType.nameRes
+        msb = effectType.msb
+        lsb = effectType.lsb
+        parameterList = effectType.parameterList
+    }
+
 }

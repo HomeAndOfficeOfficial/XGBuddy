@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/reverbTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/reverb"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spReverbType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@id/reverbTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/reverbTitle" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reverbTitle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/container_bg_shape"
+            android:layout_marginEnd="32dp">
+
+            <com.example.xgbuddy.ui.custom.ControlViewGroup
+                android:id="@+id/cvgReverb"
+                style="@style/ControlViewGroupElement"
+                android:entries="@array/fx_rev_params"
+                app:cvgLabel="Reverb">
+
+                <LinearLayout
+                    android:id="@+id/llReverbExtras"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.example.xgbuddy.ui.custom.SliderControlView
+                        android:id="@+id/cvReverbReturn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:pcId="@string/fxpc_rev_ret" />
+
+                    <com.example.xgbuddy.ui.custom.SliderControlView
+                        android:id="@+id/cvReverbPan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:pcId="@string/fxpc_rev_pan" />
+                </LinearLayout>
+
+            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
 
     protected val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
 
-    abstract fun initParameter(paramId: Int): ControlParameter
+    abstract fun initParameter(paramId: Int): ControlParameter?
 
     protected open fun initControlGroup(
         controlGroup: ControlViewGroup,
@@ -53,6 +53,13 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
             }
         }
         controlGroups.add(controlGroup)
+    }
+
+    protected fun clearControlGroups() {
+        controlGroups.forEach {
+            it.removeAllViews()
+        }
+        controlGroups.clear()
     }
 
     // I think this was an attempt to fix the slider issue, but I don't think it did.

@@ -1,23 +1,22 @@
 package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.data.ControlParameter
-import com.example.xgbuddy.data.MidiMessage
 
 class DrumControlParameter(
     override val name: String,
     override val addr: UByte,
-    override var value: Byte,
-    override val min: Byte,
-    override val max: Byte,
-    override val default: Byte
+    override var value: Int,
+    override var min: Int,
+    override var max: Int,
+    override var default: Int
 ) : ControlParameter() {
 
     constructor(drumParameter: DrumVoiceParameter, value: Byte) : this(
         drumParameter.name,
         drumParameter.ordinal.toUByte(),
-        value,
+        value.toInt(),
         0,
-        drumParameter.max,
-        drumParameter.default
+        drumParameter.max.toInt(),
+        drumParameter.default.toInt()
     )
 }

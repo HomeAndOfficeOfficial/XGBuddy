@@ -33,7 +33,7 @@ abstract class ParameterControlView(context: Context) :
             label = value?.name ?: "Unnamed param"
             updateControlBounds()
         }
-    var value: Byte = -1
+    var value: Int = -1
         set(value) {
             controlParameter?.value = value
             if (field != value) {
@@ -49,8 +49,9 @@ abstract class ParameterControlView(context: Context) :
     var paramId: Int = 0
     var listener: OnParameterChangedListener? = null
     var isRealtimeControl = true
+    open var izEnabled = true // I don't know what the accidental override is for isEnabled
 
-    protected abstract fun updateControlBounds()
+    abstract fun updateControlBounds()
     protected abstract fun updateViews()
 
     protected fun getIdFromAttr(typedArray: TypedArray) {

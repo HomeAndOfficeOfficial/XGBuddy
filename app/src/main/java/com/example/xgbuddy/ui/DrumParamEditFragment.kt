@@ -84,7 +84,7 @@ class DrumParamEditFragment : ControlBaseFragment() {
             .drumVoices!![viewModel.selectedDrumVoice.value!!]
         drumVoice.setProperty(
             currentParam!!.reflectedField,
-            controlParameter.value
+            controlParameter.value.toByte()
         )
         viewModel.channels.value = viewModel.channels.value
         midiSession.send(getParamChangeMessage(controlParameter, isTouching))
@@ -109,7 +109,7 @@ class DrumParamEditFragment : ControlBaseFragment() {
             return MidiMessageUtility.getControlChange(
                 viewModel.selectedChannel.value!!,
                 MidiControlChange.DATA_ENTRY_MSB.controlNumber, // Todo: <- verify this is right
-                controlParameter.value
+                controlParameter.value.toByte()
             )
         }
 
@@ -117,7 +117,7 @@ class DrumParamEditFragment : ControlBaseFragment() {
             currentParam!!,
             0,
             viewModel.selectedDrumVoice.value!! + MidiConstants.XG_INITIAL_DRUM_NOTE,
-            controlParameter.value
+            controlParameter.value.toByte()
         )
     }
 

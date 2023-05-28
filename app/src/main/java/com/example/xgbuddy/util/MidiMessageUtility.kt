@@ -92,7 +92,13 @@ object MidiMessageUtility {
         return listOf(ccMsb, ccLsb, programChange)
     }
 
-    // TODO: Construct actual param change message
+    /**
+     * I'll have to look at how the param change messages are structured. I'll probably just end up
+     * having to create another param change method for effect parameters, since there's a chance
+     * they could have multiple bytes being sent. I can't remember if that's based on the address
+     * and expected value or if a byte length is supposed to be specified.
+     */
+
     fun getXGParamChange(channel: Int, parameter: MidiParameter, value: Byte): MidiMessage {
         Log.d(TAG, "getXGParamChange: Ch $channel, parameter $parameter, value $value")
         val paramChange = byteArrayOf(
@@ -167,6 +173,40 @@ object MidiMessageUtility {
             getControlChange(channel, MidiControlChange.RPN_MSB.controlNumber, 0x7f),
             getControlChange(channel, MidiControlChange.RPN_LSB.controlNumber, 0x7f)
         )
+    }
+
+    fun getEffectPresetChange(effect: Effect): MidiMessage {
+        Log.d(TAG, "getEffectPresetChange")
+        val presetChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_HI,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_MID,
+            effect.baseAddr,
+            effect.msb,
+            effect.lsb,
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(presetChange)
+    }
+
+    fun getEffectParamChange(effectParameterData: EffectParameterData, value: Int): MidiMessage {
+        Log.d(TAG, "getEffectParamChange param: ${effectParameterData.name} value $value")
+        val paramChange = byteArrayOf(
+            MidiConstants.EXCLUSIVE_STATUS_BYTE,
+            MidiConstants.YAMAHA_ID,
+            MidiConstants.DEVICE_NUMBER,
+            MidiConstants.MODEL_ID_XG,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_HI,
+            MidiConstants.XG_EFFECT_PARAM_ADDR_MID,
+            effectParameterData.addrLo,
+            (value and 0xff).toByte(),
+            (value shr 8).toByte(),
+            MidiConstants.SYSEX_END
+        )
+        return MidiMessage(paramChange)
     }
 
     fun getXGSystemOn(): MidiMessage {

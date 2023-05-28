@@ -169,7 +169,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
         }
         midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setProperty(
             currentParam!!.reflectedField,
-            controlParameter.value
+            controlParameter.value.toByte()
         )
         midiViewModel.channels.value = midiViewModel.channels.value
         midiSession.send(getParamChangeMessage(controlParameter, isTouching))
@@ -194,7 +194,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
             return MidiMessageUtility.getControlChange(
                 midiViewModel.selectedChannel.value!!,
                 MidiControlChange.DATA_ENTRY_MSB.controlNumber, // Todo: <- verify this is right
-                controlParameter.value
+                controlParameter.value.toByte()
             )
         }
 
@@ -203,7 +203,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
             return MidiMessageUtility.getControlChange(
                 midiViewModel.selectedChannel.value!!,
                 currentParam!!.controlChange!!.controlNumber,
-                controlParameter.value
+                controlParameter.value.toByte()
             )
         }
 
@@ -211,7 +211,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
         return MidiMessageUtility.getXGParamChange(
             midiViewModel.selectedChannel.value!!,
             currentParam!!,
-            controlParameter.value
+            controlParameter.value.toByte()
         )
     }
 

@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Effects fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/reverbFragContainer"
+                android:name="com.example.xgbuddy.ui.ReverbFragment"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_reverb" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/chorusFragContainer"
+                android:name="com.example.xgbuddy.ui.ChorusFragment"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_chorus" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/variFragContainer"
+                android:name="com.example.xgbuddy.ui.VariationFragment"
+                android:layout_width="@dimen/qs300_element_edit_width"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_variation" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
+</FrameLayout>

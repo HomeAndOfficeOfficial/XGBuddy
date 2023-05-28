@@ -4,10 +4,10 @@ abstract class ControlParameter() {
 
     abstract val name: String
     abstract val addr: UByte
-    abstract var value: Byte
-    abstract val min: Byte
-    abstract val max: Byte
-    abstract val default: Byte
+    abstract var value: Int
+    abstract var min: Int
+    abstract var max: Int
+    abstract var default: Int
 
     var formatString: String? = null
 }

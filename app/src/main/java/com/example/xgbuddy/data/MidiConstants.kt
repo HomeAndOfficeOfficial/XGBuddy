@@ -49,6 +49,8 @@ object MidiConstants {
     const val XG_DRUM_MSB: Byte = 127
     const val XG_DRUM_LSB: Byte = 0
     const val XG_MP_PARAM_ADDR_HI: Byte = 8
+    const val XG_EFFECT_PARAM_ADDR_HI: Byte = 2
+    const val XG_EFFECT_PARAM_ADDR_MID: Byte = 1
     const val XG_INITIAL_DRUM_NOTE = 13
 
     val XY_SYSTEM_ON_ARRAY = byteArrayOf(
