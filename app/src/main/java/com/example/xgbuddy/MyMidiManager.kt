@@ -3,18 +3,15 @@ package com.example.xgbuddy
 import android.content.Context
 import android.media.midi.MidiDevice
 import android.media.midi.MidiDeviceInfo
-import android.media.midi.MidiDeviceStatus
 import android.media.midi.MidiInputPort
 import android.media.midi.MidiManager
 import android.media.midi.MidiManager.DeviceCallback
-import android.media.midi.MidiManager.OnDeviceOpenedListener
 import android.media.midi.MidiOutputPort
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import com.example.xgbuddy.data.DeviceError
-import java.util.concurrent.Executor
 
 /**
  * For now, it's unclear to me what I'm supposed to do with the device callbacks because they don't
@@ -46,7 +43,7 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
     DeviceCallback() {
     private val midiManager: MidiManager =
         context.getSystemService(Context.MIDI_SERVICE) as MidiManager
-    private var devices: Set<MidiDeviceInfo>
+    private lateinit var devices: Set<MidiDeviceInfo>
 
     var inputDevice: MidiDeviceInfo? = null
     var outputDevice: MidiDeviceInfo? = null
@@ -67,22 +64,33 @@ class MyMidiManager(context: Context, private val callback: MyMidiDeviceCallback
                     callback.onConnectionStatusChanged(devices)
                 }, this
             )
+            initDeviceList()
+        } else {
+            initDeviceList()
+            midiManager.registerDeviceCallback(this, Handler(Looper.getMainLooper()))
+        }
+    }
+
+    private fun initDeviceList() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             devices = midiManager.getDevicesForTransport(MidiManager.TRANSPORT_MIDI_BYTE_STREAM)
             if (devices.isNotEmpty()) {
                 callback.onConnectionStatusChanged(devices)
             }
         } else {
             devices = midiManager.devices.toSet()
-            midiManager.registerDeviceCallback(this, Handler(Looper.getMainLooper()))
+            callback.onConnectionStatusChanged(devices)
         }
     }
 
-    override fun onDeviceStatusChanged(status: MidiDeviceStatus?) {
-        super.onDeviceStatusChanged(status)
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            devices = midiManager.devices.toSet()
-            callback.onConnectionStatusChanged(devices)
-        }
+    override fun onDeviceAdded(device: MidiDeviceInfo?) {
+        super.onDeviceAdded(device)
+        initDeviceList()
+    }
+
+    override fun onDeviceRemoved(device: MidiDeviceInfo?) {
+        super.onDeviceRemoved(device)
+        initDeviceList()
     }
 
     fun openInputDevice(deviceInfo: MidiDeviceInfo) {

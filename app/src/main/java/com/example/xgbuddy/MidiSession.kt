@@ -72,6 +72,8 @@ class MidiSession @Inject constructor(context: Context) {
         override fun onConnectionStatusChanged(devices: Set<MidiDeviceInfo>) {
             connectedDeviceList.postValue(devices)
             if (devices.isEmpty()) {
+                inputDevices.clear()
+                outputDevices.clear()
                 outputDeviceOpened.postValue(false)
                 inputDeviceOpened.postValue(false)
             }
