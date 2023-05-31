@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.xgbuddy.databinding.FragmentMidiSettingsBinding
 
-class MidiSettingsFragment : Fragment() {
+class SystemFragment : Fragment() {
 
     private val binding: FragmentMidiSettingsBinding by lazy {
         FragmentMidiSettingsBinding.inflate(layoutInflater)

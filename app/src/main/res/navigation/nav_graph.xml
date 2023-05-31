@@ -21,9 +21,9 @@
         tools:layout="@layout/fragment_effects" />
     <fragment
         android:id="@+id/midiSettingsFragment"
-        android:name="com.example.xgbuddy.ui.MidiSettingsFragment"
+        android:name="com.example.xgbuddy.ui.SystemFragment"
         android:label="Settings"
-        tools:layout="@layout/fragment_midi_settings" />
+        tools:layout="@layout/fragment_system" />
     <fragment
         android:id="@+id/keyboardFragment"
         android:name="com.example.xgbuddy.ui.KeyboardFragment"

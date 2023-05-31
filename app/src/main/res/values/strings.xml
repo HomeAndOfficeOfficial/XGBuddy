@@ -1018,4 +1018,15 @@
     <string name="fxpc_vari_ac2_ctrl">AC2 Wheel Ctrl. Depth</string>
     <string name="variation">Variation</string>
     <!-- Effect Param Control Names -->
+
+    <!-- System Param Control Names -->
+    <string name="sys_master_tune">Master Tuning</string>
+    <string name="sys_master_vol">Master Volume</string>
+    <string name="sys_transpose">Transpose</string>
+    <string name="sys_reset_drum">Reset All Drums</string>
+    <string name="sys_reset_params">Reset All Voice Parameters</string>
+    <string name="sys_init">Send Default Setup</string>
+    <string name="sys_all_sounds_off">All Sounds/Notes Off</string>
+    <!-- System Param Control Names -->
+
 </resources>
