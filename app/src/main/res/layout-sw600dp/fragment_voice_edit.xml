@@ -7,8 +7,7 @@
     android:baselineAligned="false"
     android:divider="@drawable/vertical_divider"
     android:orientation="horizontal"
-    android:showDividers="middle"
-    tools:viewBindingIgnore="true">
+    android:showDividers="middle">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"

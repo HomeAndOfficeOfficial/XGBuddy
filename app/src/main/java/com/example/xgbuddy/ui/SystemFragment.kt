@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
-import com.example.xgbuddy.R
-import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.xg.SystemControlParameter
 import com.example.xgbuddy.data.xg.SystemParameter
+import com.example.xgbuddy.databinding.FragmentSystemBinding
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
 import com.example.xgbuddy.util.MidiMessageUtility
@@ -25,23 +23,26 @@ class SystemFragment : Fragment() {
     lateinit var midiSession: MidiSession
 
     private val midiViewModel: MidiViewModel by activityViewModels()
+    private val binding: FragmentSystemBinding by lazy {
+        FragmentSystemBinding.inflate(layoutInflater)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val v = layoutInflater.inflate(R.layout.fragment_system, container, false)
-        findViews(v)
         setupViewParams()
         initControlListeners()
-        return v
+        return binding.root
     }
 
     private fun setupViewParams() {
-        setupControlView(scvMasterVol, SystemParameter.MASTER_VOLUME, midiViewModel.volume)
-        setupControlView(scvMasterTune, SystemParameter.MASTER_TUNE, midiViewModel.tuning)
-        setupControlView(scvTranspose, SystemParameter.TRANSPOSE, midiViewModel.transpose)
+        binding.apply {
+            setupControlView(scvMasterVolume, SystemParameter.MASTER_VOLUME, midiViewModel.volume)
+            setupControlView(scvMasterTune, SystemParameter.MASTER_TUNE, midiViewModel.tuning)
+            setupControlView(scvTranspose, SystemParameter.TRANSPOSE, midiViewModel.transpose)
+        }
     }
 
     private fun setupControlView(view: SliderControlView, param: SystemParameter, value: Int) {
@@ -54,29 +55,31 @@ class SystemFragment : Fragment() {
     }
 
     private fun initControlListeners() {
-        scvMasterVol.listener =
-            ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
-                val volume = controlParameter.value
-                midiViewModel.volume = volume
-                midiSession.send(MidiMessageUtility.getMasterVolumeChange(volume))
-            }
-        scvTranspose.listener =
-            ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
-                val transpose = controlParameter.value
-                midiViewModel.transpose = transpose
-                midiSession.send(MidiMessageUtility.getTransposeChange(transpose))
-            }
-        scvMasterTune.listener =
-            ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
-                val tuning = controlParameter.value
-                midiViewModel.tuning = tuning
-                midiSession.send(MidiMessageUtility.getTuningChange(tuning))
-            }
-        bResetDrum.setOnClickListener(this@SystemFragment::resetDrums)
-        bResetParams.setOnClickListener(this@SystemFragment::resetParams)
-        bInitSetup.setOnClickListener(this@SystemFragment::resetSetup)
-        bPanic.setOnClickListener(this@SystemFragment::sendAllOff)
-        bResetControls.setOnClickListener(this@SystemFragment::resetSystemControls)
+        binding.apply {
+            scvMasterVolume.listener =
+                ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
+                    val volume = controlParameter.value
+                    midiViewModel.volume = volume
+                    midiSession.send(MidiMessageUtility.getMasterVolumeChange(volume))
+                }
+            scvTranspose.listener =
+                ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
+                    val transpose = controlParameter.value
+                    midiViewModel.transpose = transpose
+                    midiSession.send(MidiMessageUtility.getTransposeChange(transpose))
+                }
+            scvMasterTune.listener =
+                ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
+                    val tuning = controlParameter.value
+                    midiViewModel.tuning = tuning
+                    midiSession.send(MidiMessageUtility.getTuningChange(tuning))
+                }
+            bResetDrum.setOnClickListener(this@SystemFragment::resetDrums)
+            bResetParams.setOnClickListener(this@SystemFragment::resetParams)
+            bInitSetup.setOnClickListener(this@SystemFragment::resetSetup)
+            bPanic.setOnClickListener(this@SystemFragment::sendAllOff)
+            bResetControls.setOnClickListener(this@SystemFragment::resetSystemControls)
+        }
     }
 
     private fun resetDrums(v: View) {
@@ -114,29 +117,10 @@ class SystemFragment : Fragment() {
     }
 
     private fun updateViews() {
-        scvMasterVol.value = midiViewModel.volume
-        scvTranspose.value = midiViewModel.transpose
-        scvMasterTune.value = midiViewModel.tuning
+        binding.apply {
+            scvMasterVolume.value = midiViewModel.volume
+            scvTranspose.value = midiViewModel.transpose
+            scvMasterTune.value = midiViewModel.tuning
+        }
     }
-
-    private fun findViews(v: View) {
-        scvMasterVol = v.findViewById(R.id.scvMasterVolume)
-        scvMasterTune = v.findViewById(R.id.scvMasterTune)
-        scvTranspose = v.findViewById(R.id.scvTranspose)
-        bPanic = v.findViewById(R.id.bPanic)
-        bInitSetup = v.findViewById(R.id.bInitSetup)
-        bResetDrum = v.findViewById(R.id.bResetDrum)
-        bResetParams = v.findViewById(R.id.bResetParams)
-        bResetControls = v.findViewById(R.id.bResetControls)
-    }
-
-    private lateinit var scvMasterVol: SliderControlView
-    private lateinit var scvMasterTune: SliderControlView
-    private lateinit var scvTranspose: SliderControlView
-    private lateinit var bPanic: Button
-    private lateinit var bInitSetup: Button
-    private lateinit var bResetDrum: Button
-    private lateinit var bResetParams: Button
-    private lateinit var bResetControls: Button
-
 }
