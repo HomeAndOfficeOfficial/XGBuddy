@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.xg.SystemControlParameter
 import com.example.xgbuddy.data.xg.SystemParameter
 import com.example.xgbuddy.ui.custom.ParameterControlView
@@ -75,7 +76,7 @@ class SystemFragment : Fragment() {
         bResetParams.setOnClickListener(this@SystemFragment::resetParams)
         bInitSetup.setOnClickListener(this@SystemFragment::resetSetup)
         bPanic.setOnClickListener(this@SystemFragment::sendAllOff)
-
+        bResetControls.setOnClickListener(this@SystemFragment::resetSystemControls)
     }
 
     private fun resetDrums(v: View) {
@@ -88,11 +89,34 @@ class SystemFragment : Fragment() {
     }
 
     private fun resetSetup(v: View) {
-        // I think I may have a default setup method somewhere already?
+        midiViewModel.resetToDefaultSetup()
+        midiSession.send(MidiMessageUtility.getXGSystemOn())
     }
 
     private fun sendAllOff(v: View) {
-        // Just need to send a message
+        midiSession.send(MidiMessageUtility.getAllOff())
+    }
+
+    private fun resetSystemControls(v: View) {
+        midiViewModel.apply {
+            volume = SystemParameter.MASTER_VOLUME.default
+            tuning = SystemParameter.MASTER_TUNE.default
+            transpose = SystemParameter.TRANSPOSE.default
+            midiSession.send(
+                listOf(
+                    MidiMessageUtility.getMasterVolumeChange(volume),
+                    MidiMessageUtility.getTuningChange(tuning),
+                    MidiMessageUtility.getTransposeChange(transpose)
+                )
+            )
+        }
+        updateViews()
+    }
+
+    private fun updateViews() {
+        scvMasterVol.value = midiViewModel.volume
+        scvTranspose.value = midiViewModel.transpose
+        scvMasterTune.value = midiViewModel.tuning
     }
 
     private fun findViews(v: View) {
@@ -103,6 +127,7 @@ class SystemFragment : Fragment() {
         bInitSetup = v.findViewById(R.id.bInitSetup)
         bResetDrum = v.findViewById(R.id.bResetDrum)
         bResetParams = v.findViewById(R.id.bResetParams)
+        bResetControls = v.findViewById(R.id.bResetControls)
     }
 
     private lateinit var scvMasterVol: SliderControlView
@@ -112,5 +137,6 @@ class SystemFragment : Fragment() {
     private lateinit var bInitSetup: Button
     private lateinit var bResetDrum: Button
     private lateinit var bResetParams: Button
+    private lateinit var bResetControls: Button
 
 }

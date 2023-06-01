@@ -332,4 +332,9 @@ object MidiMessageUtility {
         //Todo: Add data to message
         return MidiMessage(null)
     }
+
+    fun getAllOff(): MidiMessage {
+        //Todo: Add data to message
+        return MidiMessage(null)
+    }
 }
