@@ -9,14 +9,17 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import com.example.xgbuddy.R
 
 @SuppressLint("ClickableViewAccessibility")
-class SliderControlView(context: Context) :
-    ParameterControlView(context), OnSeekBarChangeListener {
-    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+class SliderControlView :
+    ParameterControlView, OnSeekBarChangeListener {
+
+    constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SliderControlView, 0, 0)
         getIdFromAttr(typedArray)
         typedArray.recycle()
     }
+
+    constructor(context: Context) : this(context, null) {}
 
     private val seekbar: SeekBar
 

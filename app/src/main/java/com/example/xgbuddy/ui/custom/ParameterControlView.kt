@@ -10,10 +10,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 
-abstract class ParameterControlView(context: Context) :
-    ConstraintLayout(context) {
+abstract class ParameterControlView :
+    ConstraintLayout {
 
-    constructor(context: Context, attributeSet: AttributeSet) : this(context)
+    constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet)
+
+    constructor(context: Context) : this(context, null)
 
     private var root: ConstraintLayout? = null
     override fun addView(child: View?, index: Int, params: ViewGroup.LayoutParams?) {
