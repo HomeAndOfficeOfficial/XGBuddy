@@ -48,6 +48,7 @@ class SystemFragment : Fragment() {
             controlParameter = SystemControlParameter(param, value)
             shouldReportAllTouchEvents = false
             isRealtimeControl = false
+            this.value = value
         }
     }
 
