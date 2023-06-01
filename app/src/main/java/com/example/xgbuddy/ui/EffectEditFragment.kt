@@ -38,18 +38,10 @@ abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListene
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val layoutRes = when (effectType) {
-            REVERB -> R.layout.fragment_reverb
-            CHORUS -> R.layout.fragment_chorus
-            VARIATION -> R.layout.fragment_variation
-            else -> 0
-        }
-        val v = layoutInflater.inflate(layoutRes, container, false)
-        findViews(v)
+    ): View {
         setupSpinner()
         initControlGroups()
-        return v
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onResume() {
@@ -122,7 +114,6 @@ abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListene
 
     abstract fun getViewModelEffect(): Effect
     abstract fun isBigParameter(effectParameterData: EffectParameterData): Boolean
-    abstract fun findViews(root: View)
     abstract fun setupSpinner()
     abstract fun initControlGroups()
     abstract fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean
