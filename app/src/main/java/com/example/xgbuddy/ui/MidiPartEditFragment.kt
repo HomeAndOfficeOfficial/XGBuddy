@@ -8,23 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
-import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.gm.MidiParameter
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.xg.XGControlParameter
-import com.example.xgbuddy.ui.custom.ControlViewGroup
+import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
 import com.example.xgbuddy.ui.custom.SwitchControlView
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 
 class MidiPartEditFragment : ControlBaseFragment() {
+
+    override val binding: FragmentMidiPartEditBinding by lazy {
+        FragmentMidiPartEditBinding.inflate(layoutInflater)
+    }
 
     private val midiViewModel: MidiViewModel by activityViewModels()
 
@@ -38,28 +38,26 @@ class MidiPartEditFragment : ControlBaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val v = layoutInflater.inflate(R.layout.fragment_midi_part_edit, container, false)
-        findViews(v)
         initControlGroups()
-        etPartVoiceName.apply {
+        binding.etPartVoiceName.apply {
             showSoftInputOnFocus = false
             setOnClickListener { openVoiceSelectionDialog() }
         }
         midiViewModel.channels.observe(viewLifecycleOwner) {
             val channel = midiViewModel.selectedChannel.value
             // TODO: Find a way to change the edit text when the voice is selected.
-            etPartVoiceName.setText(it[channel!!].voiceNameRes)
+            binding.etPartVoiceName.setText(it[channel!!].voiceNameRes)
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             updateViews(midiViewModel.channels.value!![it])
         }
 
         // Todo: clean this up a little.
-        spRcvCh.setSelection(
+        binding.spRcvCh.setSelection(
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
                 .receiveChannel.toInt()
         )
-        spRcvCh.apply {
+        binding.spRcvCh.apply {
             setOnTouchListener { _, event ->
                 if (event?.action == MotionEvent.ACTION_DOWN) {
                     wasSpinnerTouched = true
@@ -94,41 +92,43 @@ class MidiPartEditFragment : ControlBaseFragment() {
             }
         }
 
-        return v
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun updateViews(midiPart: MidiPart) {
-        etPartVoiceName.setText(midiPart.voiceNameRes)
-        spRcvCh.setSelection(midiPart.receiveChannel.toInt())
+        binding.etPartVoiceName.setText(midiPart.voiceNameRes)
+        binding.spRcvCh.setSelection(midiPart.receiveChannel.toInt())
         controlGroups.forEach {
             it.updateViews(midiPart)
         }
     }
 
     private fun initControlGroups() {
-        initControlGroup(
-            cvgMidiMain,
-            shouldStartExpanded = true,
-            shouldReceiveAllTouchCallbacks = true
-        )
-        // TODO: Add detune as extra
-        initControlGroup(cvgMidiPitch, shouldReceiveAllTouchCallbacks = true)
-        initControlGroup(cvgMidiEG, shouldReceiveAllTouchCallbacks = true)
-        initControlGroup(cvgMidiFx)
-        initControlGroup(cvgMidiNote, extraChildren = midiNoteExtras)
-        initControlGroup(cvgMidiPat)
-        initControlGroup(cvgMidiCat)
-        initControlGroup(cvgMidiBend)
-        initControlGroup(cvgMidiMod)
-        initControlGroup(cvgMidiAc1)
-        initControlGroup(cvgMidiAc2)
-        initControlGroup(cvgMidiScale)
-        initControlGroup(cvgMidiCh)
+        binding.apply {
+            initControlGroup(
+                cvgMidiMain,
+                shouldStartExpanded = true,
+                shouldReceiveAllTouchCallbacks = true
+            )
+            // TODO: Add detune as extra
+            initControlGroup(cvgMidiPitch, shouldReceiveAllTouchCallbacks = true)
+            initControlGroup(cvgMidiEG, shouldReceiveAllTouchCallbacks = true)
+            initControlGroup(cvgMidiFx)
+            initControlGroup(cvgMidiNote, extraChildren = midiNoteExtras)
+            initControlGroup(cvgMidiPat)
+            initControlGroup(cvgMidiCat)
+            initControlGroup(cvgMidiBend)
+            initControlGroup(cvgMidiMod)
+            initControlGroup(cvgMidiAc1)
+            initControlGroup(cvgMidiAc2)
+            initControlGroup(cvgMidiScale)
+            initControlGroup(cvgMidiCh)
+        }
         initReceiveSwitches()
     }
 
     private fun initReceiveSwitches() {
-        cvgMidiRcv.apply {
+        binding.cvgMidiRcv.apply {
             isInteractive = true
             collapse()
             controlItemIds.forEach {
@@ -138,7 +138,7 @@ class MidiPartEditFragment : ControlBaseFragment() {
                 })
             }
         }
-        controlGroups.add(cvgMidiRcv)
+        controlGroups.add(binding.cvgMidiRcv)
     }
 
     private fun openVoiceSelectionDialog() {
@@ -229,42 +229,4 @@ class MidiPartEditFragment : ControlBaseFragment() {
         isNrpnActive = false
         midiSession.send(MidiMessageUtility.getNRPNClear(midiViewModel.selectedChannel.value!!))
     }
-
-    private fun findViews(v: View) {
-        etPartVoiceName = v.findViewById(R.id.etPartVoiceName)
-        cvgMidiMain = v.findViewById(R.id.cvgMidiMain)
-        cvgMidiPitch = v.findViewById(R.id.cvgMidiPitch)
-        cvgMidiEG = v.findViewById(R.id.cvgMidiEG)
-        cvgMidiFx = v.findViewById(R.id.cvgMidiFx)
-        cvgMidiNote = v.findViewById(R.id.cvgMidiNote)
-        midiNoteExtras = v.findViewById(R.id.midiNoteExtras)
-        cvgMidiPat = v.findViewById(R.id.cvgMidiPat)
-        cvgMidiCat = v.findViewById(R.id.cvgMidiCat)
-        cvgMidiBend = v.findViewById(R.id.cvgMidiBend)
-        cvgMidiMod = v.findViewById(R.id.cvgMidiMod)
-        cvgMidiAc1 = v.findViewById(R.id.cvgMidiAc1)
-        cvgMidiAc2 = v.findViewById(R.id.cvgMidiAc2)
-        cvgMidiScale = v.findViewById(R.id.cvgMidiScale)
-        cvgMidiRcv = v.findViewById(R.id.cvgMidiRcv)
-        cvgMidiCh = v.findViewById(R.id.cvgMidiCh)
-        spRcvCh = v.findViewById(R.id.spRcvCh)
-    }
-
-    private lateinit var etPartVoiceName: EditText
-    private lateinit var cvgMidiMain: ControlViewGroup
-    private lateinit var cvgMidiPitch: ControlViewGroup
-    private lateinit var cvgMidiEG: ControlViewGroup
-    private lateinit var cvgMidiFx: ControlViewGroup
-    private lateinit var cvgMidiNote: ControlViewGroup
-    private lateinit var midiNoteExtras: LinearLayout
-    private lateinit var cvgMidiPat: ControlViewGroup
-    private lateinit var cvgMidiCat: ControlViewGroup
-    private lateinit var cvgMidiBend: ControlViewGroup
-    private lateinit var cvgMidiMod: ControlViewGroup
-    private lateinit var cvgMidiAc1: ControlViewGroup
-    private lateinit var cvgMidiAc2: ControlViewGroup
-    private lateinit var cvgMidiScale: ControlViewGroup
-    private lateinit var cvgMidiRcv: ControlViewGroup
-    private lateinit var cvgMidiCh: ControlViewGroup
-    private lateinit var spRcvCh: Spinner
 }

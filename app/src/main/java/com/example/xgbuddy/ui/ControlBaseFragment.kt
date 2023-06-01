@@ -1,7 +1,11 @@
 package com.example.xgbuddy.ui
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewbinding.ViewBinding
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.ui.custom.ControlViewGroup
@@ -16,9 +20,17 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
     @Inject
     lateinit var midiSession: MidiSession
 
+    abstract val binding: ViewBinding
+
     protected val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
 
     abstract fun initParameter(paramId: Int): ControlParameter?
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = binding.root
 
     protected open fun initControlGroup(
         controlGroup: ControlViewGroup,
@@ -61,13 +73,6 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
         }
         controlGroups.clear()
     }
-
-    // I think this was an attempt to fix the slider issue, but I don't think it did.
-    // And doing this makes it so views don't update when we resume app. So leave this out for now.
-//    override fun onStop() {
-//        super.onStop()
-//        controlGroups.clear()
-//    }
 
     abstract override fun onParameterChanged(
         controlParameter: ControlParameter,

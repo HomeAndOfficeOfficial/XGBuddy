@@ -4,20 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import android.widget.Spinner
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.*
-import com.example.xgbuddy.ui.custom.ControlViewGroup
+import com.example.xgbuddy.databinding.FragmentVariationBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.switchmaterial.SwitchMaterial
 
 class VariationFragment : EffectEditFragment() {
 
     override val effectType: Int = VARIATION
+    override val binding: FragmentVariationBinding by lazy {
+        FragmentVariationBinding.inflate(layoutInflater)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +25,7 @@ class VariationFragment : EffectEditFragment() {
     }
 
     private fun setupToggleGroup() {
-        bgVariConnect.apply {
+        binding.bgVariConnect.apply {
             val connectionMode = midiViewModel.variation.connection
             changeConnectionControls(connectionMode)
             check(
@@ -60,7 +60,7 @@ class VariationFragment : EffectEditFragment() {
      */
     private fun changeConnectionControls(connection: Byte) {
         val isInSystemMode = connection == 1.toByte()
-        spVariPart.isEnabled = !isInSystemMode
+        binding.spVariPart.isEnabled = !isInSystemMode
         val controls = controlGroups[0].controlViewMap
         controls.apply {
             get(EffectParameterData.SEND_VARI_TO_CHOR.addrLo.toUByte())?.izEnabled = isInSystemMode
@@ -71,12 +71,12 @@ class VariationFragment : EffectEditFragment() {
     }
 
     override fun setupSpinner() {
-        spVariPart.apply {
+        binding.spVariPart.apply {
             setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@VariationFragment
             setSelection(Variation.partValues.indexOf(midiViewModel.variation.part))
         }
-        spVariType.apply {
+        binding.spVariType.apply {
             setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@VariationFragment
             adapter = ArrayAdapter(
@@ -95,13 +95,13 @@ class VariationFragment : EffectEditFragment() {
 
     override fun initControlGroups() {
         initControlGroup(
-            cvgVari,
+            binding.cvgVari,
             shouldStartExpanded = true,
             isRealtime = false,
-            extraChildren = llVariExtras
+            extraChildren = binding.llVariExtras
         )
         initControlGroup(
-            cvgVariCtrl,
+            binding.cvgVariCtrl,
             isRealtime = false
         )
     }
@@ -136,7 +136,7 @@ class VariationFragment : EffectEditFragment() {
         effectParameterData.ordinal <= EffectParameterData.VARIATION_PARAM_16.ordinal
 
     override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
-        return if (spinner == spVariPart) {
+        return if (spinner == binding.spVariPart) {
             val partValue = Variation.partValues[index]
             midiViewModel.variation.part = partValue
             midiSession.send(
@@ -150,20 +150,4 @@ class VariationFragment : EffectEditFragment() {
             true
         }
     }
-
-    override fun findViews(root: View) {
-        spVariType = root.findViewById(R.id.spVariType)
-        spVariPart = root.findViewById(R.id.spVariPart)
-        bgVariConnect = root.findViewById(R.id.bgVariConnect)
-        cvgVari = root.findViewById(R.id.cvgVari)
-        llVariExtras = root.findViewById(R.id.llVariExtras)
-        cvgVariCtrl = root.findViewById(R.id.cvgVariCtrl)
-    }
-
-    private lateinit var spVariType: Spinner
-    private lateinit var spVariPart: Spinner
-    private lateinit var bgVariConnect: MaterialButtonToggleGroup
-    private lateinit var cvgVari: ControlViewGroup
-    private lateinit var llVariExtras: LinearLayout
-    private lateinit var cvgVariCtrl: ControlViewGroup
 }

@@ -10,13 +10,13 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.example.xgbuddy.R
 
-class SpinnerControlView(context: Context) : ParameterControlView(context), OnItemSelectedListener {
+class SpinnerControlView : ParameterControlView, OnItemSelectedListener {
 
     private var entriesResId: Int = 0
     private val spinner: Spinner
     private var isUserUpdating = true
 
-    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+    constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SpinnerControlView, 0, 0)
         entriesResId = typedArray.getResourceId(R.styleable.SpinnerControlView_pcEntries, 0)
@@ -24,6 +24,8 @@ class SpinnerControlView(context: Context) : ParameterControlView(context), OnIt
         setupSpinner()
         typedArray.recycle()
     }
+
+    constructor(context: Context) : this(context, null)
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.spinner_control_view, this, true)
