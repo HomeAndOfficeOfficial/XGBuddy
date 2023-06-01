@@ -19,7 +19,7 @@ class SliderControlView :
         typedArray.recycle()
     }
 
-    constructor(context: Context) : this(context, null) {}
+    constructor(context: Context) : this(context, null)
 
     private val seekbar: SeekBar
 

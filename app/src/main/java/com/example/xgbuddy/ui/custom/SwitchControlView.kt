@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-class SwitchControlView(context: Context) :
-    ParameterControlView(context) {
+class SwitchControlView : ParameterControlView {
 
-    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
+    constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet) {
         val typedArray =
             context.obtainStyledAttributes(attributeSet, R.styleable.SwitchControlView, 0, 0)
         getIdFromAttr(typedArray)
         typedArray.recycle()
     }
+
+    constructor(context: Context) : this(context, null)
 
     private val switch: SwitchMaterial
     private var isUserUpdating = true

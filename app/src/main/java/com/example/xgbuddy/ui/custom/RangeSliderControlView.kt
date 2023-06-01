@@ -6,14 +6,16 @@ import android.view.LayoutInflater
 import com.example.xgbuddy.R
 import com.google.android.material.slider.RangeSlider
 
-class RangeSliderControlView(context: Context) :
-    ParameterControlView(context) {
+class RangeSliderControlView : ParameterControlView {
 
-    constructor(context: Context, attributeSet: AttributeSet) : this(context) {
-        val typedArray = context.obtainStyledAttributes(attributeSet, R.styleable.RangeSliderControlView, 0, 0)
+    constructor(context: Context, attributeSet: AttributeSet?) : super(context, attributeSet) {
+        val typedArray =
+            context.obtainStyledAttributes(attributeSet, R.styleable.RangeSliderControlView, 0, 0)
         getIdFromAttr(typedArray)
         typedArray.recycle()
     }
+
+    constructor(context: Context) : this(context, null)
 
     private val rangeSlider: RangeSlider
 
