@@ -12,4 +12,7 @@ class MidiViewModel : ViewModel() {
     var reverb = Reverb(ReverbType.HALL1)
     var chorus = Chorus(ChorusType.CHORUS1)
     val variation = Variation(VariationType.DELAY_LCR)
+    var tuning = SystemParameter.MASTER_TUNE.default
+    var volume = SystemParameter.MASTER_VOLUME.default
+    var transpose = SystemParameter.TRANSPOSE.default
 }

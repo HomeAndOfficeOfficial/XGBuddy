@@ -19,9 +19,9 @@
         android:icon="@drawable/baseline_auto_awesome_24"
         android:title="Effects" />
     <item
-        android:id="@+id/midiSettingsFragment"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="Settings" />
+        android:id="@+id/systemFragment"
+        android:icon="@drawable/baseline_computer_24"
+        android:title="System" />
     <item
         android:id="@+id/keyboardFragment"
         android:icon="@drawable/baseline_piano_24"

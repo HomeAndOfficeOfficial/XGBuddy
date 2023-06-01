@@ -20,9 +20,9 @@
         android:label="Effects"
         tools:layout="@layout/fragment_effects" />
     <fragment
-        android:id="@+id/midiSettingsFragment"
+        android:id="@+id/systemFragment"
         android:name="com.example.xgbuddy.ui.SystemFragment"
-        android:label="Settings"
+        android:label="System"
         tools:layout="@layout/fragment_system" />
     <fragment
         android:id="@+id/keyboardFragment"

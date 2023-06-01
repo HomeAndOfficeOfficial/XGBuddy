@@ -317,4 +317,19 @@ object MidiMessageUtility {
         }
         return checksum.toByte()
     }
+
+    fun getMasterVolumeChange(volume: Int): MidiMessage {
+        //Todo: Add data to message
+        return MidiMessage(null)
+    }
+
+    fun getTransposeChange(transpose: Int): MidiMessage {
+        //Todo: Add data to message
+        return MidiMessage(null)
+    }
+
+    fun getTuningChange(tuning: Int): MidiMessage {
+        //Todo: Add data to message
+        return MidiMessage(null)
+    }
 }
