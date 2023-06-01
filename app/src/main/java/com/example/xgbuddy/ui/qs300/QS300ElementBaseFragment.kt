@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.viewbinding.ViewBinding
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.qs300.QS300ControlParameter
@@ -16,7 +17,7 @@ import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 
-abstract class QS300ElementBaseFragment : ControlBaseFragment() {
+abstract class QS300ElementBaseFragment<VB: ViewBinding> : ControlBaseFragment<VB>() {
 
     protected val viewModel: QS300ViewModel by activityViewModels()
 

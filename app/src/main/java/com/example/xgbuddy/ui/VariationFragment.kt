@@ -2,7 +2,9 @@ package com.example.xgbuddy.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.example.xgbuddy.R
@@ -12,12 +14,11 @@ import com.example.xgbuddy.databinding.FragmentVariationBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 
-class VariationFragment : EffectEditFragment() {
+class VariationFragment : EffectEditFragment<FragmentVariationBinding>() {
 
     override val effectType: Int = VARIATION
-    override val binding: FragmentVariationBinding by lazy {
-        FragmentVariationBinding.inflate(layoutInflater)
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentVariationBinding =
+        FragmentVariationBinding::inflate
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,7 +26,7 @@ class VariationFragment : EffectEditFragment() {
     }
 
     private fun setupToggleGroup() {
-        binding.bgVariConnect.apply {
+        binding!!.bgVariConnect.apply {
             val connectionMode = midiViewModel.variation.connection
             changeConnectionControls(connectionMode)
             check(
@@ -60,7 +61,7 @@ class VariationFragment : EffectEditFragment() {
      */
     private fun changeConnectionControls(connection: Byte) {
         val isInSystemMode = connection == 1.toByte()
-        binding.spVariPart.isEnabled = !isInSystemMode
+        binding!!.spVariPart.isEnabled = !isInSystemMode
         val controls = controlGroups[0].controlViewMap
         controls.apply {
             get(EffectParameterData.SEND_VARI_TO_CHOR.addrLo.toUByte())?.izEnabled = isInSystemMode
@@ -71,39 +72,44 @@ class VariationFragment : EffectEditFragment() {
     }
 
     override fun setupSpinner() {
-        binding.spVariPart.apply {
-            setOnTouchListener(spinnerTouchListener)
-            onItemSelectedListener = this@VariationFragment
-            setSelection(Variation.partValues.indexOf(midiViewModel.variation.part))
-        }
-        binding.spVariType.apply {
-            setOnTouchListener(spinnerTouchListener)
-            onItemSelectedListener = this@VariationFragment
-            adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_item,
-                VariationType.values().map { getString(it.nameRes) }
-            ).apply {
-                setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding!!.apply {
+            spVariPart.apply {
+                setOnTouchListener(spinnerTouchListener)
+                onItemSelectedListener = this@VariationFragment
+                setSelection(Variation.partValues.indexOf(midiViewModel.variation.part))
             }
-            setSelection(
-                VariationType.values()
-                    .indexOf(VariationType::nameRes findBy midiViewModel.variation.nameRes)
-            )
+            spVariType.apply {
+                setOnTouchListener(spinnerTouchListener)
+                onItemSelectedListener = this@VariationFragment
+                adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    VariationType.values().map { getString(it.nameRes) }
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+                setSelection(
+                    VariationType.values()
+                        .indexOf(VariationType::nameRes findBy midiViewModel.variation.nameRes)
+                )
+            }
         }
+
     }
 
     override fun initControlGroups() {
-        initControlGroup(
-            binding.cvgVari,
-            shouldStartExpanded = true,
-            isRealtime = false,
-            extraChildren = binding.llVariExtras
-        )
-        initControlGroup(
-            binding.cvgVariCtrl,
-            isRealtime = false
-        )
+        binding!!.apply {
+            initControlGroup(
+                cvgVari,
+                shouldStartExpanded = true,
+                isRealtime = false,
+                extraChildren = llVariExtras
+            )
+            initControlGroup(
+                cvgVariCtrl,
+                isRealtime = false
+            )
+        }
     }
 
     override fun initParameter(paramId: Int): ControlParameter {
@@ -136,7 +142,7 @@ class VariationFragment : EffectEditFragment() {
         effectParameterData.ordinal <= EffectParameterData.VARIATION_PARAM_16.ordinal
 
     override fun onEffectPresetSelected(index: Int, spinner: Spinner): Boolean {
-        return if (spinner == binding.spVariPart) {
+        return if (spinner == binding!!.spVariPart) {
             val partValue = Variation.partValues[index]
             midiViewModel.variation.part = partValue
             midiSession.send(

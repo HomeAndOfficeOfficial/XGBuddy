@@ -1,29 +1,22 @@
 package com.example.xgbuddy.ui.qs300
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentElementEditBinding
 import com.example.xgbuddy.ui.custom.ParameterControlView
 
-class ElementEditFragment : QS300ElementBaseFragment(),
+class ElementEditFragment : QS300ElementBaseFragment<FragmentElementEditBinding>(),
     ParameterControlView.OnParameterChangedListener {
 
-    override val binding: FragmentElementEditBinding by lazy {
-        FragmentElementEditBinding.inflate(layoutInflater)
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentElementEditBinding =
+        FragmentElementEditBinding::inflate
     override val elementAttrs: IntArray = R.styleable.ElementEditFragment_MembersInjector
     override val attrIndexElIndex: Int =
         R.styleable.ElementEditFragment_MembersInjector_elementIndex
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding.apply {
+    override fun setupViews() {
+        binding!!.apply {
             tvElementNum.text = buildString {
                 append("Element ")
                 append(elementIndex + 1)
@@ -33,7 +26,7 @@ class ElementEditFragment : QS300ElementBaseFragment(),
                 isInteractive = true,
                 shouldShowColoredHeader = true,
                 shouldStartExpanded = true,
-                binding.cvgLfo.findViewById(R.id.lfoExtras) // lfoExtras
+                cvgLfo.findViewById(R.id.lfoExtras) // lfoExtras
             )
             initControlGroup(cvgAeg)
             initControlGroup(cvgPitch)
@@ -43,6 +36,5 @@ class ElementEditFragment : QS300ElementBaseFragment(),
             initControlGroup(cvgFilterScale)
             initControlGroup(cvgMisc)
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 }

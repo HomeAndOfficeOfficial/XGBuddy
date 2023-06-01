@@ -15,22 +15,37 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParameterChangedListener {
+abstract class ControlBaseFragment<VB : ViewBinding?> : Fragment(),
+    ParameterControlView.OnParameterChangedListener {
 
     @Inject
     lateinit var midiSession: MidiSession
 
-    abstract val binding: ViewBinding
+    protected var binding: VB? = null
+    abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     protected val controlGroups: MutableList<ControlViewGroup> = mutableListOf()
 
+    abstract fun setupViews()
     abstract fun initParameter(paramId: Int): ControlParameter?
+
+    protected fun initBinding(inflater: LayoutInflater, container: ViewGroup?) {
+        binding = bindingInflater.invoke(inflater, container, false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = binding.root
+    ): View {
+        binding = bindingInflater.invoke(inflater, container, false)
+        return binding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViews()
+    }
 
     protected open fun initControlGroup(
         controlGroup: ControlViewGroup,
@@ -65,6 +80,11 @@ abstract class ControlBaseFragment : Fragment(), ParameterControlView.OnParamete
             }
         }
         controlGroups.add(controlGroup)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     protected fun clearControlGroups() {

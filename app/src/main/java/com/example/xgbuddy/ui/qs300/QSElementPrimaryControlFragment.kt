@@ -13,13 +13,13 @@ import com.example.xgbuddy.util.MidiMessageUtility
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlin.experimental.and
 
-class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
+class QSElementPrimaryControlFragment :
+    QS300ElementBaseFragment<FragmentQsElementPrimaryControlBinding>() {
 
     private lateinit var waveValues: IntArray
 
-    override val binding: FragmentQsElementPrimaryControlBinding by lazy {
-        FragmentQsElementPrimaryControlBinding.inflate(layoutInflater)
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentQsElementPrimaryControlBinding =
+        FragmentQsElementPrimaryControlBinding::inflate
     override val elementAttrs: IntArray = R.styleable.ElementEditFragment_MembersInjector
     override val attrIndexElIndex: Int =
         R.styleable.QSElementPrimaryControlFragment_MembersInjector_elementIndex
@@ -27,30 +27,27 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     private var isSpinnerUpdating = false
     private var isSwitchUpdating = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding.tvPrimElementNum.text = buildString {
-            append("Element ")
-            append(elementIndex + 1)
+    override fun setupViews() {
+        binding!!.apply {
+            tvPrimElementNum.text = buildString {
+                append("Element ")
+                append(elementIndex + 1)
+            }
+            root.backgroundTintList =
+                ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
+            isSpinnerUpdating = true
+            isSwitchUpdating = true
+            initControlGroup(
+                cvgElementMain,
+                isInteractive = false,
+                shouldShowColoredHeader = false,
+                shouldStartExpanded = true
+            )
+            viewModel.elementStatus.observe(viewLifecycleOwner) {
+                swElementOn.isChecked =
+                    (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())
+            }
         }
-        binding.root.backgroundTintList =
-            ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
-        isSpinnerUpdating = true
-        isSwitchUpdating = true
-        initControlGroup(
-            binding.cvgElementMain,
-            isInteractive = false,
-            shouldShowColoredHeader = false,
-            shouldStartExpanded = true
-        )
-        viewModel.elementStatus.observe(viewLifecycleOwner) {
-            binding.swElementOn.isChecked =
-                (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,41 +61,43 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
     }
 
     private fun initListeners() {
-        binding.spQsWave.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (!isSpinnerUpdating) {
-                    val waveValue = waveValues[position]
-                    val voice = viewModel.preset.value!!.voices[viewModel.voice]
-                    val element = voice.elements[elementIndex]
-                    if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
-                        element.setWaveValue(waveValue)
-                        midiSession.send(
-                            MidiMessageUtility.getQS300BulkDump(
-                                voice,
-                                viewModel.voice
+        binding!!.apply {
+            spQsWave.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (!isSpinnerUpdating) {
+                        val waveValue = waveValues[position]
+                        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+                        val element = voice.elements[elementIndex]
+                        if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
+                            element.setWaveValue(waveValue)
+                            midiSession.send(
+                                MidiMessageUtility.getQS300BulkDump(
+                                    voice,
+                                    viewModel.voice
+                                )
                             )
-                        )
+                        }
                     }
+                    isSpinnerUpdating = false
                 }
-                isSpinnerUpdating = false
-            }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
-        binding.swElementOn.setOnClickListener {
-            val isChecked = (it as SwitchMaterial).isChecked
-            viewModel.updateElementStatus(elementIndex, isChecked)
-            midiSession.send(
-                MidiMessageUtility.getQS300BulkDump(
-                    viewModel.preset.value!!.voices[viewModel.voice],
-                    viewModel.voice
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
+            swElementOn.setOnClickListener {
+                val isChecked = (it as SwitchMaterial).isChecked
+                viewModel.updateElementStatus(elementIndex, isChecked)
+                midiSession.send(
+                    MidiMessageUtility.getQS300BulkDump(
+                        viewModel.preset.value!!.voices[viewModel.voice],
+                        viewModel.voice
+                    )
                 )
-            )
+            }
         }
     }
 
@@ -108,10 +107,10 @@ class QSElementPrimaryControlFragment : QS300ElementBaseFragment() {
         val voice = preset.voices[voiceIndex]
         val element = preset.voices[voiceIndex].elements[elementIndex]
         val waveValue = decodeWave(element.waveHi, element.waveLo)
-        isSpinnerUpdating = binding.spQsWave.onItemSelectedListener != null
-        binding.spQsWave.setSelection(waveValues.indexOfFirst { it == waveValue })
+        isSpinnerUpdating = binding!!.spQsWave.onItemSelectedListener != null
+        binding!!.spQsWave.setSelection(waveValues.indexOfFirst { it == waveValue })
         // TODO: Verify element switch values when more than two elements are allowed
-        binding.swElementOn.isChecked = elementIndex <= voice.elementSwitch
+        binding!!.swElementOn.isChecked = elementIndex <= voice.elementSwitch
     }
 
     private fun decodeWave(waveHi: Byte, waveLo: Byte): Int =

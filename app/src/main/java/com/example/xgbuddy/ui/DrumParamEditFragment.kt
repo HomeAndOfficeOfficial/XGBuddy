@@ -1,8 +1,6 @@
 package com.example.xgbuddy.ui
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
@@ -17,22 +15,16 @@ import com.example.xgbuddy.databinding.FragmentDrumParamEditBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 
-class DrumParamEditFragment : ControlBaseFragment() {
+class DrumParamEditFragment : ControlBaseFragment<FragmentDrumParamEditBinding>() {
 
-    override val binding: FragmentDrumParamEditBinding by lazy {
-        FragmentDrumParamEditBinding.inflate(layoutInflater)
-    }
-
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDrumParamEditBinding =
+        FragmentDrumParamEditBinding::inflate
     private val viewModel: MidiViewModel by activityViewModels()
 
     private var currentParam: DrumVoiceParameter? = null
     private var isNrpnActive = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun setupViews() {
         initControlGroups()
         viewModel.selectedDrumVoice.observe(viewLifecycleOwner) {
             updateViews(
@@ -46,19 +38,18 @@ class DrumParamEditFragment : ControlBaseFragment() {
                     .drumVoices!![viewModel.selectedDrumVoice.value!!]
             )
         }
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun initControlGroups() {
         initControlGroup(
-            binding.cvgDrumParam,
+            binding!!.cvgDrumParam,
             shouldStartExpanded = true,
             shouldReceiveAllTouchCallbacks = true
         )
         initControlGroup(
-            binding.cvgDrumParam2,
+            binding!!.cvgDrumParam2,
             shouldStartExpanded = true,
-            extraChildren = binding.cvgDrumParam2.findViewById(R.id.drumParam2Extras) // llDrumParam2Extras
+            extraChildren = binding!!.cvgDrumParam2.findViewById(R.id.drumParam2Extras) // llDrumParam2Extras
         )
     }
 

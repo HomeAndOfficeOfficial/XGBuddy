@@ -12,6 +12,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
+import androidx.viewbinding.ViewBinding
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.Effect
@@ -20,7 +21,7 @@ import com.example.xgbuddy.data.xg.EffectParameterData
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 
-abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListener {
+abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), OnItemSelectedListener {
 
     abstract val effectType: Int
     protected val midiViewModel: MidiViewModel by activityViewModels()
@@ -34,14 +35,9 @@ abstract class EffectEditFragment : ControlBaseFragment(), OnItemSelectedListene
         false
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun setupViews() {
         setupSpinner()
         initControlGroups()
-        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onResume() {

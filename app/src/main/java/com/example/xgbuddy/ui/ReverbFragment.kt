@@ -1,30 +1,31 @@
 package com.example.xgbuddy.ui
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.example.xgbuddy.data.xg.*
 import com.example.xgbuddy.databinding.FragmentReverbBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 
-class ReverbFragment : EffectEditFragment() {
+class ReverbFragment : EffectEditFragment<FragmentReverbBinding>() {
 
     override val effectType: Int = REVERB
-    override val binding: FragmentReverbBinding by lazy {
-        FragmentReverbBinding.inflate(layoutInflater)
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentReverbBinding =
+        FragmentReverbBinding::inflate
 
     override fun initControlGroups() {
         initControlGroup(
-            binding.cvgReverb,
+            binding!!.cvgReverb,
             isInteractive = false,
             shouldStartExpanded = true,
             isRealtime = false,
-            extraChildren = binding.llReverbExtras
+            extraChildren = binding!!.llReverbExtras
         )
     }
 
     override fun setupSpinner() {
-        binding.spReverbType.apply {
+        binding!!.spReverbType.apply {
             setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@ReverbFragment
             adapter = ArrayAdapter(
