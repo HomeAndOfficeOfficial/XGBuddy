@@ -4,22 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.ui.custom.ControlViewGroup
 import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.ui.custom.SliderControlView
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
-abstract class ControlBaseFragment<VB : ViewBinding?> : Fragment(),
+abstract class ControlBaseFragment<VB : ViewBinding?> : MidiBaseFragment(),
     ParameterControlView.OnParameterChangedListener {
-
-    @Inject
-    lateinit var midiSession: MidiSession
 
     protected var binding: VB? = null
     abstract val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB

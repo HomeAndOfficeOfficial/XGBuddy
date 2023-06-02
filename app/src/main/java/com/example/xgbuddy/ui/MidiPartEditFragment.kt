@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
@@ -24,7 +23,6 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMidiPartEditBinding =
         FragmentMidiPartEditBinding::inflate
-    private val midiViewModel: MidiViewModel by activityViewModels()
 
     private var currentParam: MidiParameter? = null
     private var isNrpnActive = false

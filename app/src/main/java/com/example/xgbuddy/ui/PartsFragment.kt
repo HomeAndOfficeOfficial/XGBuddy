@@ -18,18 +18,22 @@ class PartsFragment : Fragment() {
 
     private lateinit var partsAdapter: PartsListAdapter
 
-    private val binding: FragmentPartsBinding by lazy {
-        FragmentPartsBinding.inflate(layoutInflater)
-    }
+    private var binding: FragmentPartsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        partsAdapter = PartsListAdapter(requireContext(), midiViewModel, binding.llParts)
+        binding = FragmentPartsBinding.inflate(layoutInflater)
+        partsAdapter = PartsListAdapter(requireContext(), midiViewModel, binding!!.llParts)
         initObservers()
-        return binding.root
+        return binding!!.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     private fun initObservers() {

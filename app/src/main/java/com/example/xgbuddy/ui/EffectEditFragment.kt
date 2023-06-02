@@ -1,19 +1,14 @@
 package com.example.xgbuddy.ui
 
 import android.annotation.SuppressLint
-import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Spinner
-import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
-import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.Effect
 import com.example.xgbuddy.data.xg.EffectControlParameter
@@ -24,7 +19,6 @@ import com.example.xgbuddy.util.MidiMessageUtility
 abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), OnItemSelectedListener {
 
     abstract val effectType: Int
-    protected val midiViewModel: MidiViewModel by activityViewModels()
     private var wasSpinnerTouched = false
 
     @SuppressLint("ClickableViewAccessibility")
