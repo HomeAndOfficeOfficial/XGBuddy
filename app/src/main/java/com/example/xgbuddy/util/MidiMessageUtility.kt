@@ -318,23 +318,58 @@ object MidiMessageUtility {
         return checksum.toByte()
     }
 
-    fun getMasterVolumeChange(volume: Int): MidiMessage {
-        //Todo: Add data to message
-        return MidiMessage(null)
+    fun getSystemParamChange(addr: Byte, data: ByteArray?): MidiMessage {
+        val msg = ByteArray(11 + (data?.size ?: 0))
+        msg[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
+        msg[1] = MidiConstants.YAMAHA_ID
+        msg[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
+        msg[3] = MidiConstants.MODEL_ID_XG
+        msg[4] = 0
+        msg[5] = data?.size?.toByte() ?: 0
+        msg[6] = 0
+        msg[7] = 0
+        msg[8] = addr
+
+        var dataIndex = 9
+        data?.forEach {
+            msg[dataIndex++] = it
+        }
+        msg[msg.size - 2] = getChecksum(msg, 4)
+        msg[msg.size - 1] = MidiConstants.SYSEX_END
+        return MidiMessage(msg)
     }
 
-    fun getTransposeChange(transpose: Int): MidiMessage {
-        //Todo: Add data to message
-        return MidiMessage(null)
-    }
+    fun getMasterVolumeChange(volume: Int): MidiMessage =
+        getSystemParamChange(MidiConstants.XG_SYS_ADDR_VOLUME, byteArrayOf(volume.toByte()))
+
+    fun getTransposeChange(transpose: Int): MidiMessage =
+        getSystemParamChange(MidiConstants.XG_SYS_ADDR_TRANSPOSE, byteArrayOf(transpose.toByte()))
 
     fun getTuningChange(tuning: Int): MidiMessage {
-        //Todo: Add data to message
-        return MidiMessage(null)
+        val tuningBytes = byteArrayOf(
+            0,
+            ((tuning shr 16) and 0x0f).toByte(),
+            ((tuning shr 8) and 0x0f).toByte(),
+            (tuning and 0x0f).toByte()
+        )
+        return getSystemParamChange(0, tuningBytes)
     }
 
-    fun getAllOff(): MidiMessage {
-        //Todo: Add data to message
-        return MidiMessage(null)
+    fun getAllOff(): List<MidiMessage> {
+        // Send All sounds off and all notes off for channels 1-16
+        val messages = mutableListOf<MidiMessage>()
+        for (i in 0 until 16) {
+            messages.add(getControlChange(i, MidiControlChange.ALL_SOUND_OFF.controlNumber, 0))
+            messages.add(getControlChange(i, MidiControlChange.ALL_NOTE_OFF.controlNumber, 0))
+        }
+        return messages
+    }
+
+    fun getResetControllers(): List<MidiMessage> {
+        val messages = mutableListOf<MidiMessage>()
+        for (i in 0 until 16) {
+            messages.add(getControlChange(i, MidiControlChange.RESET_ALL_CTRL.controlNumber, 0))
+        }
+        return messages
     }
 }

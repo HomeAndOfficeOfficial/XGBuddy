@@ -53,6 +53,10 @@ object MidiConstants {
     const val XG_EFFECT_PARAM_ADDR_MID: Byte = 1
     const val XG_INITIAL_DRUM_NOTE = 13
 
+    const val XG_SYS_ADDR_TUNE: Byte = 0
+    const val XG_SYS_ADDR_VOLUME: Byte = 4
+    const val XG_SYS_ADDR_TRANSPOSE: Byte = 6
+
     val XY_SYSTEM_ON_ARRAY = byteArrayOf(
         EXCLUSIVE_STATUS_BYTE,
         YAMAHA_ID,
