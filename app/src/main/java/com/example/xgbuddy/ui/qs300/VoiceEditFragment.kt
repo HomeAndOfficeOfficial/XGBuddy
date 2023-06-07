@@ -8,8 +8,12 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.ControlParameter
+import com.example.xgbuddy.data.qs300.QS300ControlParameter
 import com.example.xgbuddy.data.qs300.QS300Element
+import com.example.xgbuddy.data.qs300.QS300VoiceParameter
 import com.example.xgbuddy.databinding.FragmentVoiceEditBinding
+import com.example.xgbuddy.ui.custom.ParameterControlView
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 class VoiceEditFragment : Fragment() {
@@ -23,17 +27,18 @@ class VoiceEditFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val v = layoutInflater.inflate(R.layout.fragment_voice_edit, container, false)
+    ): View {
         initObservers()
-        return v
+        binding.cvVoiceLevel.apply {
+            controlParameter =
+        }
+        return binding.root
     }
 
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
             preset?.voices!![viewModel.voice].let {
                 binding.etVoiceName.setText(it.voiceName)
-                // TODO: Add VoiceCommon enum so param id can be added to layout element
 //                cvVoiceLevel.value = it.voiceLevel
                 setElementContainerVisibilities(binding.llElementEditContainer, it.elements)
                 setElementContainerVisibilities(binding.llPrimaryControlContainer, it.elements)

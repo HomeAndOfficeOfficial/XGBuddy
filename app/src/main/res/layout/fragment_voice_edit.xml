@@ -12,41 +12,40 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.4"
+        android:layout_weight="0.25"
         android:padding="8dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiVoiceName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="#00000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/etVoiceName"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/qs_voice_name" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--        <com.example.xgbuddy.ui.custom.SliderControlView-->
-        <!--            android:id="@+id/cvVoiceLevel"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/etVoiceName" />-->
+
+        <com.example.xgbuddy.ui.custom.SliderControlView
+            android:id="@+id/cvVoiceLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tiVoiceName" />
 
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingEnd="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tiVoiceName">
+            app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel">
 
             <LinearLayout
                 android:id="@+id/llPrimaryControlContainer"
@@ -93,14 +92,14 @@
     <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.6">
+        android:layout_weight="0.75">
 
         <LinearLayout
             android:id="@+id/llElementEditContainer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:divider="@drawable/vertical_divider"
-            android:dividerPadding="8dp"
+            android:dividerPadding="16dp"
             android:orientation="horizontal"
             android:showDividers="middle">
 
@@ -128,13 +127,13 @@
                 app:elementIndex="2"
                 tools:layout="@layout/fragment_element_edit" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/elementEditContainer3"
-                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
-                android:layout_width="@dimen/qs300_element_edit_width"
-                android:layout_height="match_parent"
-                app:elementIndex="3"
-                tools:layout="@layout/fragment_element_edit" />
+            <!--            <androidx.fragment.app.FragmentContainerView-->
+            <!--                android:id="@+id/elementEditContainer3"-->
+            <!--                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"-->
+            <!--                android:layout_width="@dimen/qs300_element_edit_width"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                app:elementIndex="3"-->
+            <!--                tools:layout="@layout/fragment_element_edit" />-->
 
         </LinearLayout>
     </HorizontalScrollView>
