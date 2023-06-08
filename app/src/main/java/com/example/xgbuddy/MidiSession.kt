@@ -17,6 +17,10 @@ class MidiSession @Inject constructor(context: Context) {
 
     private val midiReceiveBuffer = mutableListOf<Byte>()
 
+    /**
+    Maybe need to make a MidiReceiver wrapper class.
+     */
+
     //TODO: This needs to be fleshed out. Need to determine what type of message it is to know where
     // the message starts/ends.
     private val midiReceiver = object : MidiReceiver(381) {
