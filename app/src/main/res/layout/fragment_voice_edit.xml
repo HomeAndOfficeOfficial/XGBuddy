@@ -73,21 +73,6 @@
                     app:elementIndex="1"
                     tools:layout="@layout/fragment_qs_element_primary_control" />
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/elementPrimaryContainer2"
-                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:elementIndex="2"
-                    tools:layout="@layout/fragment_qs_element_primary_control" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/elementPrimaryContainer3"
-                    android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:elementIndex="3"
-                    tools:layout="@layout/fragment_qs_element_primary_control" />
             </LinearLayout>
         </ScrollView>
 
@@ -122,22 +107,6 @@
                 android:layout_height="match_parent"
                 app:elementIndex="1"
                 tools:layout="@layout/fragment_element_edit" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/elementEditContainer2"
-                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
-                android:layout_width="@dimen/qs300_element_edit_width"
-                android:layout_height="match_parent"
-                app:elementIndex="2"
-                tools:layout="@layout/fragment_element_edit" />
-
-            <!--            <androidx.fragment.app.FragmentContainerView-->
-            <!--                android:id="@+id/elementEditContainer3"-->
-            <!--                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"-->
-            <!--                android:layout_width="@dimen/qs300_element_edit_width"-->
-            <!--                android:layout_height="match_parent"-->
-            <!--                app:elementIndex="3"-->
-            <!--                tools:layout="@layout/fragment_element_edit" />-->
 
         </LinearLayout>
     </HorizontalScrollView>

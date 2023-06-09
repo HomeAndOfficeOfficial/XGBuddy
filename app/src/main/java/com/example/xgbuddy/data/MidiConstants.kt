@@ -24,7 +24,7 @@ object MidiConstants {
 
     // QS300 Bulk Dump
     const val QS300_BULK_DUMP_TOTAL_SIZE = 392
-    const val QS300_MAX_ELEMENTS = 4
+    const val QS300_MAX_ELEMENTS = 2
     const val QS300_BULK_DUMP_ELEMENTS = 4
     const val QS300_PARAM_CHANGE_ADDR_HI = 0x2eu
     const val QS300_PARAM_CHANGE_ADDR_MID = 0u
