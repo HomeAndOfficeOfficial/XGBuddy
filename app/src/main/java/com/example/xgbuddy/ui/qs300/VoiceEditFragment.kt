@@ -30,7 +30,7 @@ class VoiceEditFragment : Fragment() {
     ): View {
         initObservers()
         binding.cvVoiceLevel.apply {
-            controlParameter =
+//            controlParameter =
         }
         return binding.root
     }
