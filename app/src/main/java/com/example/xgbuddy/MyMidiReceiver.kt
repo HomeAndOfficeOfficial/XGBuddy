@@ -5,7 +5,6 @@ import android.media.midi.MidiReceiver
 import android.util.Log
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
-import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.util.EnumFinder.findBy
 import kotlinx.coroutines.*
 import kotlin.experimental.and
@@ -14,7 +13,6 @@ const val RECEIVER_MAX_LENGTH = MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE
 const val SYSEX_TIMEOUT_MS = 500L
 
 class MyMidiReceiver(
-    private val inputPort: MidiInputPort?,
     private val receiverListener: MidiReceiverListener
 ) : MidiReceiver(RECEIVER_MAX_LENGTH) {
 
@@ -25,6 +23,8 @@ class MyMidiReceiver(
     private val sysexTimeoutJob = startSysexTimer {
         resetSysexStatus()
     }
+
+    var inputPort: MidiInputPort? = null
 
     override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
         if (msg != null) {

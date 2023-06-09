@@ -15,44 +15,11 @@ import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
-    private val midiReceiveBuffer = mutableListOf<Byte>()
+    private val midiReceiver = MyMidiReceiver(object : MidiReceiverListener() {
 
-    /**
-    Maybe need to make a MidiReceiver wrapper class.
-     */
-
-    //TODO: This needs to be fleshed out. Need to determine what type of message it is to know where
-    // the message starts/ends.
-    private val midiReceiver = object : MidiReceiver(381) {
-        override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
-            msg?.copyOfRange(offset, offset + count)?.forEach {
-                midiReceiveBuffer.add(it)
-                if (it == MidiConstants.SYSEX_END) {
-                    Log.d(
-                        TAG,
-                        "OnSend at timestamp: $timestamp. Here's what it says ${
-                            midiReceiveBuffer.joinToString { b ->
-                                String.format(
-                                    "%02x ",
-                                    b
-                                )
-                            }
-                        }"
-                    )
-                    midiReceivedListener?.onMidiMessageReceived(
-                        MidiMessage(
-                            midiReceiveBuffer.toByteArray(),
-                            timestamp
-                        )
-                    )
-                    midiReceiveBuffer.clear()
-                }
-            }
-        }
-    }
+    })
 
     private var midiReceivedListener: OnMidiReceivedListener? = null
-
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
     private var outputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
 
@@ -62,6 +29,7 @@ class MidiSession @Inject constructor(context: Context) {
 
     val midiManager = MyMidiManager(context, object : MyMidiManager.MyMidiDeviceCallback {
         override fun onInputDeviceOpened(device: MidiDevice, inputPort: MidiInputPort) {
+            midiReceiver.inputPort = inputPort
             inputDeviceOpened.postValue(true)
             inputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
         }
