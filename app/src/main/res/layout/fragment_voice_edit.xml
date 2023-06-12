@@ -24,49 +24,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvVoiceName" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementPrimaryContainer0"
-        android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:elementIndex="0"
-        app:layout_constraintEnd_toEndOf="@id/elementEditContainer0"
-        app:layout_constraintStart_toStartOf="@id/elementEditContainer0"
-        app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel"
-        tools:layout="@layout/fragment_qs_element_primary_control" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementPrimaryContainer1"
-        android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:elementIndex="1"
-        app:layout_constraintEnd_toEndOf="@id/elementEditContainer1"
-        app:layout_constraintStart_toStartOf="@id/elementEditContainer1"
-        app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel"
-        tools:layout="@layout/fragment_qs_element_primary_control" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementEditContainer0"
-        android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
-        android:layout_width="@dimen/qs300_element_edit_width"
         android:layout_height="0dp"
-        app:elementIndex="0"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer0"
-        tools:layout="@layout/fragment_element_edit" />
+        app:layout_constraintTop_toBottomOf="@id/cvVoiceLevel">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/elementEditContainer1"
-        android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
-        android:layout_width="@dimen/qs300_element_edit_width"
-        android:layout_height="0dp"
-        app:elementIndex="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/elementEditContainer0"
-        app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer1"
-        tools:layout="@layout/fragment_element_edit" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementPrimaryContainer0"
+                android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:elementIndex="0"
+                tools:layout="@layout/fragment_qs_element_primary_control"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer0"
+                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:elementIndex="0"
+                tools:layout="@layout/fragment_element_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer0"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementPrimaryContainer1"
+                android:name="com.example.xgbuddy.ui.qs300.QSElementPrimaryControlFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:elementIndex="1"
+                tools:layout="@layout/fragment_qs_element_primary_control"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/elementEditContainer1"
+                android:name="com.example.xgbuddy.ui.qs300.ElementEditFragment"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:elementIndex="1"
+                tools:layout="@layout/fragment_element_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer1"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
