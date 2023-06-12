@@ -37,12 +37,6 @@ class QSElementPrimaryControlFragment :
                 ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
             isSpinnerUpdating = true
             isSwitchUpdating = true
-            initControlGroup(
-                cvgElementMain,
-                isInteractive = false,
-                shouldShowColoredHeader = false,
-                shouldStartExpanded = true
-            )
             viewModel.elementStatus.observe(viewLifecycleOwner) {
                 swElementOn.isChecked =
                     (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())

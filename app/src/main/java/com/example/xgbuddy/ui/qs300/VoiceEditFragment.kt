@@ -6,11 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
-import com.example.xgbuddy.data.qs300.QS300Element
 import com.example.xgbuddy.databinding.FragmentVoiceEditBinding
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
@@ -42,25 +40,9 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener {
     private fun initObservers() {
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
             preset?.voices!![viewModel.voice].let {
-                binding.etVoiceName.setText(it.voiceName)
+                binding.tvVoiceName.text = it.voiceName
                 isSeekbarUpdating = true
                 binding.cvVoiceLevel.progress = it.voiceLevel.toInt()
-//                cvVoiceLevel.value = it.voiceLevel
-                setElementContainerVisibilities(binding.llElementEditContainer, it.elements)
-                setElementContainerVisibilities(binding.llPrimaryControlContainer, it.elements)
-            }
-        }
-    }
-
-    private fun setElementContainerVisibilities(
-        container: ViewGroup,
-        elements: List<QS300Element>
-    ) {
-        container.children.forEachIndexed { index, view ->
-            view.visibility = if (index + 1 > elements.size) {
-                View.GONE
-            } else {
-                View.VISIBLE
             }
         }
     }

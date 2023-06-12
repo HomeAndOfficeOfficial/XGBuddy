@@ -36,16 +36,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/spQsWave" />
 
-    <com.example.xgbuddy.ui.custom.ControlViewGroup
-        android:id="@+id/cvgElementMain"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:entries="@array/qs300_element_main"
-        app:cvgLabel=""
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/swElementOn" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
