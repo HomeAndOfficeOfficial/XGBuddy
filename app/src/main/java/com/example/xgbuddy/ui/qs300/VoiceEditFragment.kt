@@ -38,8 +38,9 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener {
     }
 
     private fun initObservers() {
+//        viewModel.voice.observe(viewLifecycleOwner) {}
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
-            preset?.voices!![viewModel.voice].let {
+            preset?.voices!![viewModel.voice.value!!].let {
                 binding.tvVoiceName.text = it.voiceName
                 isSeekbarUpdating = true
                 binding.cvVoiceLevel.progress = it.voiceLevel.toInt()
@@ -53,8 +54,9 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener {
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
         val voiceLevel = seekBar!!.progress
-        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+        val voiceIndex = viewModel.voice.value!!
+        val voice = viewModel.preset.value!!.voices[voiceIndex]
         voice.voiceLevel = voiceLevel.toByte()
-        midiSession.send(MidiMessageUtility.getQS300BulkDump(voice, viewModel.voice))
+        midiSession.send(MidiMessageUtility.getQS300BulkDump(voice, voiceIndex))
     }
 }

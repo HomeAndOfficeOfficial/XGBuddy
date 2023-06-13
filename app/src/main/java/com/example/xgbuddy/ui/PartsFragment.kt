@@ -55,7 +55,7 @@ class PartsFragment : Fragment() {
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
             if (midiViewModel.channels.value!![it].voiceType == MidiPart.VoiceType.QS300) {
-                qS300ViewModel.voice = midiViewModel.channels.value!![it].qs300VoiceNumber
+                qS300ViewModel.voice.value = midiViewModel.channels.value!![it].qs300VoiceNumber
             }
         }
     }
