@@ -6,23 +6,33 @@
     android:layout_height="match_parent"
     android:padding="8dp">
 
+    <Spinner
+        android:id="@+id/spQsVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvVoiceName" />
+
     <TextView
         android:id="@+id/tvVoiceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/qs300_voice_label"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/spQsVoice" />
 
     <SeekBar
         android:id="@+id/cvVoiceLevel"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/qs300_voice_seek_length"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:max="127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvVoiceName" />
+        app:layout_constraintBottom_toBottomOf="@id/spQsVoice"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spQsVoice" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -44,10 +54,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:elementIndex="0"
-                tools:layout="@layout/fragment_qs_element_primary_control"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout="@layout/fragment_qs_element_primary_control" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer0"
@@ -55,11 +65,11 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:elementIndex="0"
-                tools:layout="@layout/fragment_element_edit"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer0"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:layout="@layout/fragment_element_edit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,10 +84,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:elementIndex="1"
-                tools:layout="@layout/fragment_qs_element_primary_control"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout="@layout/fragment_qs_element_primary_control" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/elementEditContainer1"
@@ -85,11 +95,11 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:elementIndex="1"
-                tools:layout="@layout/fragment_element_edit"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/elementPrimaryContainer1"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                tools:layout="@layout/fragment_element_edit" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
