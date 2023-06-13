@@ -65,14 +65,15 @@ class QSElementPrimaryControlFragment :
                 ) {
                     if (!isSpinnerUpdating) {
                         val waveValue = waveValues[position]
-                        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+                        val voiceIndex = viewModel.voice.value!!
+                        val voice = viewModel.preset.value!!.voices[voiceIndex]
                         val element = voice.elements[elementIndex]
                         if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
                             element.setWaveValue(waveValue)
                             midiSession.send(
                                 MidiMessageUtility.getQS300BulkDump(
                                     voice,
-                                    viewModel.voice
+                                    voiceIndex
                                 )
                             )
                         }
@@ -84,11 +85,12 @@ class QSElementPrimaryControlFragment :
             }
             swElementOn.setOnClickListener {
                 val isChecked = (it as SwitchMaterial).isChecked
+                val voiceIndex = viewModel.voice.value!!
                 viewModel.updateElementStatus(elementIndex, isChecked)
                 midiSession.send(
                     MidiMessageUtility.getQS300BulkDump(
-                        viewModel.preset.value!!.voices[viewModel.voice],
-                        viewModel.voice
+                        viewModel.preset.value!!.voices[voiceIndex],
+                        voiceIndex
                     )
                 )
             }
@@ -97,7 +99,7 @@ class QSElementPrimaryControlFragment :
 
     override fun updateViews(preset: QS300Preset) {
         super.updateViews(preset)
-        val voiceIndex = viewModel.voice
+        val voiceIndex = viewModel.voice.value!!
         val voice = preset.voices[voiceIndex]
         val element = preset.voices[voiceIndex].elements[elementIndex]
         val waveValue = decodeWave(element.waveHi, element.waveLo)
