@@ -139,5 +139,8 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
 
     private fun updatePreset(presetIndex: Int) {
         viewModel.preset.value = viewModel.presets[presetIndex]
+        viewModel.preset.value!!.voices.forEachIndexed { index, voice ->
+            midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
+        }
     }
 }
