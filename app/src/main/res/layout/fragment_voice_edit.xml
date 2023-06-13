@@ -7,12 +7,30 @@
     android:padding="8dp">
 
     <Spinner
-        android:id="@+id/spQsVoice"
+        android:id="@+id/spQsPreset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:spinnerMode="dialog"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPresetName" />
+
+    <TextView
+        android:id="@+id/tvPresetName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qs300_preset_label"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/spQsPreset" />
+
+    <Spinner
+        android:id="@+id/spQsVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:spinnerMode="dialog"
+        app:layout_constraintStart_toEndOf="@id/spQsPreset"
         app:layout_constraintTop_toBottomOf="@id/tvVoiceName" />
 
     <TextView

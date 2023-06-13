@@ -29,7 +29,6 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
     private val binding: FragmentVoiceEditBinding by lazy {
         FragmentVoiceEditBinding.inflate(layoutInflater)
     }
-    private var isSeekbarUpdating = true
     private var wasSpinnerTouched = false
 
     @SuppressLint("ClickableViewAccessibility")
@@ -58,10 +57,22 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
     private fun initObservers() {
 //        viewModel.voice.observe(viewLifecycleOwner) {}
         viewModel.preset.observe(viewLifecycleOwner) { preset ->
+            if (viewModel.voice.value!! > 0 && preset?.voices!!.size == 1) {
+                viewModel.voice.value = 0
+            }
             preset?.voices!![viewModel.voice.value!!].let {
-                isSeekbarUpdating = true
                 binding.cvVoiceLevel.progress = it.voiceLevel.toInt()
-                binding.spQsVoice.setSelection(viewModel.voice.value!!)
+                binding.spQsVoice.apply {
+                    adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_spinner_item,
+                        preset.voices.map { v -> v.voiceName }
+                    ).apply {
+                        setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                    }
+                    setSelection(viewModel.voice.value!!)
+                }
+                binding.spQsPreset.setSelection(viewModel.presets.indexOf(preset))
             }
         }
     }
@@ -70,15 +81,29 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
         val voiceNames = viewModel.preset.value!!.voices.map { it.voiceName }
         binding.spQsVoice.apply {
             setOnTouchListener(spinnerTouchListener)
+            onItemSelectedListener = this@VoiceEditFragment
+            if (adapter == null) {
+                adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_spinner_item,
+                    voiceNames
+                ).apply {
+                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                }
+            }
             setSelection(viewModel.voice.value ?: 0)
+        }
+        binding.spQsPreset.apply {
+            setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@VoiceEditFragment
             adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                voiceNames
+                viewModel.presets.map { it.name }
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
+            setSelection(viewModel.presets.indexOf(viewModel.preset.value!!))
         }
     }
 
@@ -96,12 +121,23 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (wasSpinnerTouched) {
-            viewModel.voice.value = position
-            binding.cvVoiceLevel.progress =
-                viewModel.preset.value!!.voices[position].voiceLevel.toInt()
+            when (parent) {
+                binding.spQsVoice -> updateVoice(position)
+                binding.spQsPreset -> updatePreset(position)
+            }
         }
         wasSpinnerTouched = false
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    private fun updateVoice(voiceIndex: Int) {
+        viewModel.voice.value = voiceIndex
+        binding.cvVoiceLevel.progress =
+            viewModel.preset.value!!.voices[voiceIndex].voiceLevel.toInt()
+    }
+
+    private fun updatePreset(presetIndex: Int) {
+        viewModel.preset.value = viewModel.presets[presetIndex]
+    }
 }
