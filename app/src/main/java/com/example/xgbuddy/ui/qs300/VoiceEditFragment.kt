@@ -10,29 +10,23 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.databinding.FragmentVoiceEditBinding
+import com.example.xgbuddy.ui.MidiBaseFragment
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
-@AndroidEntryPoint
-class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnItemSelectedListener {
+class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
+    AdapterView.OnItemSelectedListener {
 
-    @Inject
-    lateinit var midiSession: MidiSession
-
-    private val viewModel: QS300ViewModel by activityViewModels()
+    private val qS300ViewModel: QS300ViewModel by activityViewModels()
     private val binding: FragmentVoiceEditBinding by lazy {
         FragmentVoiceEditBinding.inflate(layoutInflater)
     }
     private var wasSpinnerTouched = false
 
     @SuppressLint("ClickableViewAccessibility")
-    protected val spinnerTouchListener = View.OnTouchListener { v, event ->
+    private val spinnerTouchListener = View.OnTouchListener { v, event ->
         if (event.action == MotionEvent.ACTION_DOWN) {
             wasSpinnerTouched = true
         }
@@ -56,11 +50,11 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
 
     private fun initObservers() {
 //        viewModel.voice.observe(viewLifecycleOwner) {}
-        viewModel.preset.observe(viewLifecycleOwner) { preset ->
-            if (viewModel.voice.value!! > 0 && preset?.voices!!.size == 1) {
-                viewModel.voice.value = 0
+        qS300ViewModel.preset.observe(viewLifecycleOwner) { preset ->
+            if (qS300ViewModel.voice.value!! > 0 && preset?.voices!!.size == 1) {
+                qS300ViewModel.voice.value = 0
             }
-            preset?.voices!![viewModel.voice.value!!].let {
+            preset?.voices!![qS300ViewModel.voice.value!!].let {
                 binding.cvVoiceLevel.progress = it.voiceLevel.toInt()
                 binding.spQsVoice.apply {
                     adapter = ArrayAdapter(
@@ -70,15 +64,15 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
                     ).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
-                    setSelection(viewModel.voice.value!!)
+                    setSelection(qS300ViewModel.voice.value!!)
                 }
-                binding.spQsPreset.setSelection(viewModel.presets.indexOf(preset))
+                binding.spQsPreset.setSelection(qS300ViewModel.presets.indexOf(preset))
             }
         }
     }
 
     private fun setupSpinner() {
-        val voiceNames = viewModel.preset.value!!.voices.map { it.voiceName }
+        val voiceNames = qS300ViewModel.preset.value!!.voices.map { it.voiceName }
         binding.spQsVoice.apply {
             setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@VoiceEditFragment
@@ -91,7 +85,7 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
                     setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 }
             }
-            setSelection(viewModel.voice.value ?: 0)
+            setSelection(qS300ViewModel.voice.value ?: 0)
         }
         binding.spQsPreset.apply {
             setOnTouchListener(spinnerTouchListener)
@@ -99,11 +93,11 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
             adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                viewModel.presets.map { it.name }
+                qS300ViewModel.presets.map { it.name }
             ).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-            setSelection(viewModel.presets.indexOf(viewModel.preset.value!!))
+            setSelection(qS300ViewModel.presets.indexOf(qS300ViewModel.preset.value!!))
         }
     }
 
@@ -113,8 +107,8 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
 
     override fun onStopTrackingTouch(seekBar: SeekBar?) {
         val voiceLevel = seekBar!!.progress
-        val voiceIndex = viewModel.voice.value!!
-        val voice = viewModel.preset.value!!.voices[voiceIndex]
+        val voiceIndex = qS300ViewModel.voice.value!!
+        val voice = qS300ViewModel.preset.value!!.voices[voiceIndex]
         voice.voiceLevel = voiceLevel.toByte()
         midiSession.send(MidiMessageUtility.getQS300BulkDump(voice, voiceIndex))
     }
@@ -132,15 +126,27 @@ class VoiceEditFragment : Fragment(), OnSeekBarChangeListener, AdapterView.OnIte
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun updateVoice(voiceIndex: Int) {
-        viewModel.voice.value = voiceIndex
+        val currentVoiceIndex = qS300ViewModel.voice.value!!
+        qS300ViewModel.voice.value = voiceIndex
+        updateSelectedMidiPart(currentVoiceIndex, voiceIndex)
         binding.cvVoiceLevel.progress =
-            viewModel.preset.value!!.voices[voiceIndex].voiceLevel.toInt()
+            qS300ViewModel.preset.value!!.voices[voiceIndex].voiceLevel.toInt()
     }
 
     private fun updatePreset(presetIndex: Int) {
-        viewModel.preset.value = viewModel.presets[presetIndex]
-        viewModel.preset.value!!.voices.forEachIndexed { index, voice ->
+        val currentVoiceCount = qS300ViewModel.preset.value!!.voices.size
+
+        qS300ViewModel.preset.value = qS300ViewModel.presets[presetIndex]
+        qS300ViewModel.preset.value!!.voices.forEachIndexed { index, voice ->
             midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
+        }
+    }
+
+    private fun updateSelectedMidiPart(currentIndex: Int, newIndex: Int) {
+        if (newIndex > currentIndex) {
+            midiViewModel.selectedChannel.value = midiViewModel.selectedChannel.value!! + 1
+        } else if (newIndex < currentIndex) {
+            midiViewModel.selectedChannel.value = midiViewModel.selectedChannel.value!! - 1
         }
     }
 }
