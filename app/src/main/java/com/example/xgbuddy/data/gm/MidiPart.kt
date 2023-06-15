@@ -137,6 +137,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankLsb = voice.bank
         voiceNameRes = voice.nameRes
         drumVoices = null
+        partMode = 0
         // TODO: Set element reserve and part mode for this and other
     }
 
