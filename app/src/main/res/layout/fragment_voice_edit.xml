@@ -42,6 +42,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="@id/spQsVoice" />
 
+    <TextView
+        android:id="@+id/tvLevelLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qs300_voice_voice_lvl"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/cvVoiceLevel"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <SeekBar
         android:id="@+id/cvVoiceLevel"
         android:layout_width="@dimen/qs300_voice_seek_length"
