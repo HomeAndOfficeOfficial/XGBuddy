@@ -17,16 +17,17 @@ class ElementEditFragment : QS300ElementBaseFragment<FragmentElementEditBinding>
 
     override fun setupViews() {
         binding!!.apply {
-            tvElementNum.text = buildString {
-                append("Element ")
-                append(elementIndex + 1)
-            }
+            initControlGroup(
+                cvgElementMain,
+                isInteractive = true,
+                shouldShowColoredHeader = true,
+                shouldStartExpanded = true
+            )
             initControlGroup(
                 cvgLfo,
                 isInteractive = true,
                 shouldShowColoredHeader = true,
-                shouldStartExpanded = true,
-                cvgLfo.findViewById(R.id.lfoExtras) // lfoExtras
+                extraChildren = cvgLfo.findViewById(R.id.lfoExtras) // lfoExtras
             )
             initControlGroup(cvgAeg)
             initControlGroup(cvgPitch)

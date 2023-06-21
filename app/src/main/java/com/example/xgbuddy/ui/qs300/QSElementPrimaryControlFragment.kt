@@ -37,12 +37,6 @@ class QSElementPrimaryControlFragment :
                 ColorStateList.valueOf(resources.getIntArray(R.array.element_container_colors)[elementIndex])
             isSpinnerUpdating = true
             isSwitchUpdating = true
-            initControlGroup(
-                cvgElementMain,
-                isInteractive = false,
-                shouldShowColoredHeader = false,
-                shouldStartExpanded = true
-            )
             viewModel.elementStatus.observe(viewLifecycleOwner) {
                 swElementOn.isChecked =
                     (it and (elementIndex + 1).toByte() == (elementIndex + 1).toByte())
@@ -71,14 +65,15 @@ class QSElementPrimaryControlFragment :
                 ) {
                     if (!isSpinnerUpdating) {
                         val waveValue = waveValues[position]
-                        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+                        val voiceIndex = viewModel.voice.value!!
+                        val voice = viewModel.preset.value!!.voices[voiceIndex]
                         val element = voice.elements[elementIndex]
                         if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
                             element.setWaveValue(waveValue)
                             midiSession.send(
                                 MidiMessageUtility.getQS300BulkDump(
                                     voice,
-                                    viewModel.voice
+                                    voiceIndex
                                 )
                             )
                         }
@@ -90,11 +85,12 @@ class QSElementPrimaryControlFragment :
             }
             swElementOn.setOnClickListener {
                 val isChecked = (it as SwitchMaterial).isChecked
+                val voiceIndex = viewModel.voice.value!!
                 viewModel.updateElementStatus(elementIndex, isChecked)
                 midiSession.send(
                     MidiMessageUtility.getQS300BulkDump(
-                        viewModel.preset.value!!.voices[viewModel.voice],
-                        viewModel.voice
+                        viewModel.preset.value!!.voices[voiceIndex],
+                        voiceIndex
                     )
                 )
             }
@@ -103,14 +99,15 @@ class QSElementPrimaryControlFragment :
 
     override fun updateViews(preset: QS300Preset) {
         super.updateViews(preset)
-        val voiceIndex = viewModel.voice
+        val voiceIndex = viewModel.voice.value!!
         val voice = preset.voices[voiceIndex]
         val element = preset.voices[voiceIndex].elements[elementIndex]
         val waveValue = decodeWave(element.waveHi, element.waveLo)
         isSpinnerUpdating = binding!!.spQsWave.onItemSelectedListener != null
         binding!!.spQsWave.setSelection(waveValues.indexOfFirst { it == waveValue })
         // TODO: Verify element switch values when more than two elements are allowed
-        binding!!.swElementOn.isChecked = elementIndex <= voice.elementSwitch
+        val elSwitchBit = (voice.elementSwitch.toInt() shr elementIndex) and 1
+        binding!!.swElementOn.isChecked = elSwitchBit == 1
     }
 
     private fun decodeWave(waveHi: Byte, waveLo: Byte): Int =

@@ -3,6 +3,7 @@ package com.example.xgbuddy.ui.qs300
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
@@ -17,7 +18,7 @@ import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 
-abstract class QS300ElementBaseFragment<VB: ViewBinding> : ControlBaseFragment<VB>() {
+abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<VB>() {
 
     protected val viewModel: QS300ViewModel by activityViewModels()
 
@@ -48,17 +49,30 @@ abstract class QS300ElementBaseFragment<VB: ViewBinding> : ControlBaseFragment<V
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.preset.value?.let {
-            if (elementIndex < it.voices[viewModel.voice].elements.size) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.voice.observe(viewLifecycleOwner) {
+            viewModel.preset.value?.let {
                 updateViews(it)
             }
         }
+        viewModel.preset.observe(viewLifecycleOwner) {
+            updateViews(it!!)
+        }
+
     }
 
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.preset.value?.let {
+//            if (elementIndex < it.voices[viewModel.voice].elements.size) {
+//                updateViews(it)
+//            }
+//        }
+//    }
+
     protected open fun updateViews(preset: QS300Preset) {
-        val element = preset.voices[viewModel.voice].elements[elementIndex]
+        val element = preset.voices[viewModel.voice.value!!].elements[elementIndex]
         controlGroups.forEach { controlGroup ->
             controlGroup.updateViews(element)
         }
@@ -98,7 +112,7 @@ abstract class QS300ElementBaseFragment<VB: ViewBinding> : ControlBaseFragment<V
         val param = QS300ElementParameter::descriptionRes findBy paramId
         return QS300ControlParameter(
             param!!,
-            viewModel.preset.value!!.voices[viewModel.voice]
+            viewModel.preset.value!!.voices[viewModel.voice.value!!]
                 .elements[elementIndex]
                 .getPropertyValue(
                     param.reflectedField
@@ -110,12 +124,13 @@ abstract class QS300ElementBaseFragment<VB: ViewBinding> : ControlBaseFragment<V
         if (controlParameter.name != currentParam?.name) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }
-        val voice = viewModel.preset.value!!.voices[viewModel.voice]
+        val voiceIndex = viewModel.voice.value!!
+        val voice = viewModel.preset.value!!.voices[voiceIndex]
         voice.elements[elementIndex].setProperty(
             currentParam!!.reflectedField, controlParameter.value.toByte()
         )
 
-        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, viewModel.voice))
+        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, voiceIndex))
     }
 
     companion object {

@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_parts" />
     <fragment
         android:id="@+id/voiceEditFragment"
-        android:name="com.example.xgbuddy.ui.qs300.QS300SessionFragment"
+        android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
         android:label="Voice Edit"
         tools:layout="@layout/fragment_voice_edit" />
     <fragment

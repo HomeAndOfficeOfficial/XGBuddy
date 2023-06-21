@@ -166,12 +166,12 @@ class VoiceSelectionDialogFragment : DialogFragment() {
                 val preset = qs300ViewModel.presets[voiceIndex]
                 val selectedChannel = midiViewModel.selectedChannel.value!!
                 qs300ViewModel.preset.value = preset
-                qs300ViewModel.voice = 0
+                qs300ViewModel.voice.value = 0
                 if (preset.voices.size > 1) {
                     if (selectedChannel + 1 == updatedPartsList.size) {
                         updatedPartsList[selectedChannel - 1].changeQS300Voice(preset.voices[0], 0)
                         updatedPart.changeQS300Voice(preset.voices[1], 1)
-                        qs300ViewModel.voice = 1
+                        qs300ViewModel.voice.value = 1
                     } else {
                         updatedPart.changeQS300Voice(preset.voices[0], 0)
                         updatedPartsList[selectedChannel + 1].changeQS300Voice(preset.voices[1], 1)

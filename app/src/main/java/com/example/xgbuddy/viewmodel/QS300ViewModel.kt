@@ -18,9 +18,11 @@ class QS300ViewModel @Inject constructor(
     val presets: List<QS300Preset> = repository.getQS300Presets()
 
     val preset = MutableLiveData<QS300Preset?>(null)
-    var voice = 0
+    var voice = MutableLiveData(0)
     var elementStatus =
-        (MutableLiveData(((preset.value?.voices?.get(voice)?.elementSwitch ?: 2) + 1).toByte()))
+        (MutableLiveData(
+            ((preset.value?.voices?.get(voice.value ?: 0)?.elementSwitch ?: 2) + 1).toByte()
+        ))
     // ^ Long way of saying set it to the element switch value or EL_12 if null
 
     fun updateElementStatus(elementIndex: Int, isOn: Boolean) {
@@ -32,7 +34,7 @@ class QS300ViewModel @Inject constructor(
             } else {
                 elementStatus.value = updatedStatus
             }
-            preset.value!!.voices[voice].elementSwitch = updatedStatus
+            preset.value!!.voices[voice.value!!].elementSwitch = updatedStatus
         }
 
     }
