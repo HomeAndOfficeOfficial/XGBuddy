@@ -5,50 +5,47 @@
     android:layout_width="@dimen/voice_select_dialog_width"
     android:layout_height="@dimen/voice_select_dialog_height">
 
-    <RadioGroup
-        android:id="@+id/rgVoiceCategory"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/bgVoiceCategory"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
+        app:checkedButton="@id/bXGVoice"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionRequired="true"
+        app:singleSelection="true">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGVoice"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XG Voice"/>
 
-        <RadioButton
-            android:id="@+id/rbXGVoice"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGDrum"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="XG Normal" />
+            android:text="XG Drum"/>
 
-        <RadioButton
-            android:id="@+id/rbXGDrum"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGSfx"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="XG Drum" />
+            android:text="SFX"/>
 
-        <RadioButton
-            android:id="@+id/rbXGSfx"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bQs300"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SFX" />
+            android:text="QS300"/>
 
-        <RadioButton
-            android:id="@+id/rbQs300"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="QS300" />
-    </RadioGroup>
-
-    <!--    <com.google.android.material.navigationrail.NavigationRailView-->
-    <!--        android:id="@+id/navRailVoiceSelect"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:labelVisibilityMode="labeled"-->
-    <!--        app:menu="@menu/voice_select_menu"/>-->
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVoiceSelect"
@@ -56,7 +53,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rgVoiceCategory"
+        app:layout_constraintStart_toEndOf="@+id/bgVoiceCategory"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/voice_list_item" />
 

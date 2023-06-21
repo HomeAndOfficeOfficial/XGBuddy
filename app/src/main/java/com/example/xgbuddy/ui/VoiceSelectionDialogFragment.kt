@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
@@ -20,6 +19,7 @@ import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -77,8 +77,9 @@ class VoiceSelectionDialogFragment : DialogFragment() {
     }.toList()
 
     private fun setupCategoryButtons() {
-        binding.rgVoiceCategory.setOnCheckedChangeListener { _, checkedId ->
-            updateAdapterCategory(checkedId)
+        binding.bgVoiceCategory.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked)
+                updateAdapterCategory(checkedId)
         }
         setInitialCategory()
     }
@@ -86,13 +87,13 @@ class VoiceSelectionDialogFragment : DialogFragment() {
     private fun setInitialCategory() {
         val startCategoryId = arguments?.getInt(ARG_START_CATEGORY) ?: 0
         var categorySelected = false
-        binding.rgVoiceCategory.children.forEach {
+        binding.bgVoiceCategory.children.forEach {
             val isCategoryId = startCategoryId == it.id
-            (it as RadioButton).isChecked = isCategoryId
+            (it as MaterialButton).isChecked = isCategoryId
             categorySelected = categorySelected || isCategoryId
         }
         if (!categorySelected) {
-            binding.rbXGVoice.isSelected = true
+            binding.bgVoiceCategory.check(binding.bXGVoice.id)
         }
     }
 
@@ -204,9 +205,9 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         const val TAG = "VoiceSelectionDialogFragment"
         const val ARG_START_CATEGORY = "argStartCategoryId"
         const val ARG_START_VOICE = "argStartVoice"
-        const val CATEGORY_ID_NORMAL = R.id.rbXGVoice
-        const val CATEGORY_ID_XGDRUM = R.id.rbXGDrum
-        const val CATEGORY_ID_SFX = R.id.rbXGSfx
-        const val CATEGORY_ID_QS300 = R.id.rbQs300
+        const val CATEGORY_ID_NORMAL = R.id.bXGVoice
+        const val CATEGORY_ID_XGDRUM = R.id.bXGDrum
+        const val CATEGORY_ID_SFX = R.id.bXGSfx
+        const val CATEGORY_ID_QS300 = R.id.bQs300
     }
 }
