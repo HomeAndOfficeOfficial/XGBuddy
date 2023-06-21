@@ -106,7 +106,8 @@ class QSElementPrimaryControlFragment :
         isSpinnerUpdating = binding!!.spQsWave.onItemSelectedListener != null
         binding!!.spQsWave.setSelection(waveValues.indexOfFirst { it == waveValue })
         // TODO: Verify element switch values when more than two elements are allowed
-        binding!!.swElementOn.isChecked = elementIndex <= voice.elementSwitch
+        val elSwitchBit = (voice.elementSwitch.toInt() shr elementIndex) and 1
+        binding!!.swElementOn.isChecked = elSwitchBit == 1
     }
 
     private fun decodeWave(waveHi: Byte, waveLo: Byte): Int =
