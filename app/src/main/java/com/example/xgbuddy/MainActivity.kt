@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.midi.MidiDeviceInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -123,18 +124,10 @@ class MainActivity : AppCompatActivity() {
         midiSession.apply {
             connectedDeviceList.observe(this@MainActivity) {
                 connectedDevices = it
-                Log.d(TAG, "Devices = ${it.joinToString(" ")}")
-
-                // Open connection status fragment if no inputs or outputs are open
                 if (connectedDevices.isEmpty() || (midiSession.getInputDevices()
                         .isEmpty() && midiSession.getOutputDevices().isEmpty())
                 ) {
-                    if (supportFragmentManager.findFragmentByTag(ConnectionStatusFragment.TAG) == null) {
-                        ConnectionStatusFragment().show(
-                            supportFragmentManager,
-                            ConnectionStatusFragment.TAG
-                        )
-                    }
+                    showConnectionStatusDialog()
                 }
             }
             inputDeviceOpened.observe(this@MainActivity) {
@@ -163,6 +156,10 @@ class MainActivity : AppCompatActivity() {
                         }
                         true
                     }
+                    R.id.connect_status -> {
+                        showConnectionStatusDialog()
+                        true
+                    }
                     else -> false
                 }
             }
@@ -185,6 +182,15 @@ class MainActivity : AppCompatActivity() {
             selectedPart.voiceType == MidiPart.VoiceType.DRUM
     }
 
+    private fun showConnectionStatusDialog() {
+        if (supportFragmentManager.findFragmentByTag(ConnectionStatusFragment.TAG) == null) {
+            ConnectionStatusFragment().show(
+                supportFragmentManager,
+                ConnectionStatusFragment.TAG
+            )
+        }
+    }
+
     private fun displayNoMidiCompatScreen() {
         setContentView(R.layout.activity_main_no_midi)
         findViewById<ImageView?>(R.id.leftHand).apply { (drawable as AnimatedVectorDrawable).start() }
@@ -203,5 +209,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "MainActivity"
+        const val ARG_RESUMED = "argResumed"
     }
 }

@@ -12,11 +12,12 @@
         android:title="@string/open_existing"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/connect_status"
+        android:icon="@drawable/baseline_cable_24"
+        android:title="@string/connection_status"
+        app:showAsAction="ifRoom"/>
+    <item
         android:id="@+id/qs_capture"
         android:icon="@drawable/baseline_import_export_24"
         android:title="@string/import_qs300_presets" />
-    <item
-        android:id="@+id/connect_status"
-        android:icon="@drawable/baseline_cable_48"
-        android:title="@string/connection_status" />
 </menu>
