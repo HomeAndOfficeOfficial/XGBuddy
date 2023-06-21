@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.InstrumentGroup
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.data.xg.SFXNormalVoice
 import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
+import com.example.xgbuddy.util.EnumFinder.findBy
 import kotlin.reflect.full.isSubclassOf
 
 class VoiceListAdapter(
@@ -20,7 +22,12 @@ class VoiceListAdapter(
     RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
     private val voiceList: List<VoiceListEntry> = List(voiceEntries.size) {
-        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name)
+        val group =
+            if (voiceEntries[it] is XGNormalVoice)
+                (voiceEntries[it] as XGNormalVoice).instrumentGroup
+            else
+                null
+        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name, group)
     }
 
     private var filteredList: List<VoiceListEntry>? = null
@@ -33,7 +40,11 @@ class VoiceListAdapter(
         QS300(QS300Preset::class.java.name)
     }
 
-    data class VoiceListEntry(val name: String, val typeName: String)
+    data class VoiceListEntry(
+        val name: String,
+        val typeName: String,
+        val instrumentGroup: InstrumentGroup? = null
+    )
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -88,5 +99,22 @@ class VoiceListAdapter(
             it.typeName == category.enumName
         }
         notifyDataSetChanged()
+    }
+
+    fun updateSecondaryFilter() {}
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterByInstrumentGroup(group: InstrumentGroup) {
+        filteredList = voiceList.filter {
+            it.typeName == selectedCategory!!.enumName && it.instrumentGroup == group
+        }
+        notifyDataSetChanged()
+    }
+
+    fun filterByAlphabet(regex: String) {
+        filteredList = voiceList.filter {
+            it.typeName == selectedCategory!!.enumName && it.name.substring(0, 1)
+                .matches(regex.toRegex())
+        }
     }
 }

@@ -22,30 +22,55 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XG Voice"/>
+            android:text="XG Voice" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bXGDrum"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="XG Drum"/>
+            android:text="XG Drum" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bXGSfx"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SFX"/>
+            android:text="SFX" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bQs300"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="QS300"/>
+            android:text="QS300" />
 
     </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <ScrollView
+        android:id="@+id/svSecondaryFilter"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bgVoiceCategory"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/bgSecFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkedButton="@id/bSecAll"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bSecAll"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+    </ScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVoiceSelect"
@@ -53,7 +78,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bgVoiceCategory"
+        app:layout_constraintStart_toEndOf="@+id/svSecondaryFilter"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/voice_list_item" />
 

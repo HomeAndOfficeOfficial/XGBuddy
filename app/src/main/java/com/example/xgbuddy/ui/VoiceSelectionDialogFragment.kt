@@ -78,8 +78,15 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun setupCategoryButtons() {
         binding.bgVoiceCategory.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked)
+            if (isChecked) {
+                updateFilterButtons(checkedId)
                 updateAdapterCategory(checkedId)
+            }
+        }
+        binding.bgSecFilter.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                voiceListAdapter.updateSecondaryFilter()
+            }
         }
         setInitialCategory()
     }
@@ -94,6 +101,59 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         }
         if (!categorySelected) {
             binding.bgVoiceCategory.check(binding.bXGVoice.id)
+        }
+    }
+
+    private fun updateFilterButtons(categoryId: Int) {
+        binding.bgSecFilter.check(binding.bSecAll.id)
+        when (categoryId) {
+
+            /*
+               Need some kind of data model that contains a list of values to map to buttons for the
+               button group.
+               For qs300, this is symbols (!@#$), nunmbers (0-9), and one for each alpha letter
+               For xg voice, instrument group names would be used.
+               Might just be as simple as defining two lists with the appropriate values
+
+               The problem comes when trying to identify which button was pressed based on an id.
+               I guess I'll need to maintain a list of pairs - id, filter value
+
+             Another option is to create multiple buitton groups in xml.
+             Just define all the buttons there and... maybe create some kind of filter item enum.
+             Actually, this would be a good exercise to figure out sealed classes.
+             There would be two types an XGVoiceFilterItem and a QS300PresetFilterItem or something.
+
+             Each member of both classes would have an id field. This would be the view id of the
+             corresponding button. QS type would have a regex field, defining the regex to use for
+             the filter. XG type would have an instrument group field.
+
+             So that's the path forward, I'll need to investigate sealed classes a little bit.
+
+             The only downside is its like 30-40 buttons in the xml, but whatever.
+
+             */
+            CATEGORY_ID_NORMAL -> populateSecondaryFilterGroup(normalVoiceStuff)
+            CATEGORY_ID_QS300 -> populateSecondaryFilterGroup(qs300Stuff)
+            else -> depopulateSecondaryFilterGroup()
+
+        }
+        if (categoryId == CATEGORY_ID_NORMAL || categoryId == CATEGORY_ID_QS300) {
+            binding.svSecondaryFilter.visibility = View.VISIBLE
+            while (binding.bgSecFilter.childCount > 1) {
+                binding.bgSecFilter.removeViewAt(1)
+            }
+
+        }
+    }
+
+    private fun populateSecondaryFilterGroup() {
+        //
+    }
+
+    private fun depopulateSecondaryFilterGroup() {
+        binding.svSecondaryFilter.visibility = View.INVISIBLE
+        while (binding.bgSecFilter.childCount > 1) {
+            binding.bgSecFilter.removeViewAt(1)
         }
     }
 
@@ -209,5 +269,10 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         const val CATEGORY_ID_XGDRUM = R.id.bXGDrum
         const val CATEGORY_ID_SFX = R.id.bXGSfx
         const val CATEGORY_ID_QS300 = R.id.bQs300
+        private val qs300FilterLabels = listOf(
+            "!@#$%",
+            "0-9",
+            "a",
+        )
     }
 }
