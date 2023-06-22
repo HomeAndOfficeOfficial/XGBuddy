@@ -30,6 +30,7 @@ class VoiceListAdapter(
         VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name, group)
     }
 
+    private var typedList: List<VoiceListEntry>? = null
     private var filteredList: List<VoiceListEntry>? = null
     private var selectedCategory: VoiceListCategory? = null
 
@@ -72,7 +73,12 @@ class VoiceListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         filteredList?.let {
-            holder.bind(position, it[position].name, selectedCategory, listener)
+            holder.bind(
+                typedList!!.indexOf(it[position]),
+                it[position].name,
+                selectedCategory,
+                listener
+            )
         }
     }
 
@@ -95,25 +101,26 @@ class VoiceListAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun updateCategory(category: VoiceListCategory) {
         selectedCategory = category
-        filteredList = voiceList.filter {
+        typedList = voiceList.filter {
             it.typeName == category.enumName
         }
+        filteredList = typedList!!.toList()
         notifyDataSetChanged()
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun filterByInstrumentGroup(group: InstrumentGroup?) {
-        filteredList = voiceList.filter {
-            it.typeName == selectedCategory!!.enumName && it.instrumentGroup == group
+        filteredList = typedList!!.filter {
+            it.instrumentGroup == group
         }
         notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun filterByAlphabet(regex: String) {
-        filteredList = voiceList.filter {
-            it.typeName == selectedCategory!!.enumName && it.name.substring(0, 1)
-                .matches(regex.toRegex())
+        filteredList = typedList!!.filter {
+            it.name.substring(0, 1).matches(regex.toRegex())
         }
         notifyDataSetChanged()
     }
