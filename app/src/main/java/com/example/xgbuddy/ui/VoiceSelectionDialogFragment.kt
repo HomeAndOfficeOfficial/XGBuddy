@@ -258,7 +258,7 @@ class VoiceSelectionDialogFragment : DialogFragment() {
         const val CATEGORY_ID_SFX = R.id.bXGSfx
         const val CATEGORY_ID_QS300 = R.id.bQs300
         private val qs300FilterMap: Map<Int, String> = mapOf(
-            R.id.bFiltSpec to "^[a-zA-Z0-9]",
+            R.id.bFiltSpec to "[^a-zA-Z0-9]",
             R.id.bFiltNum to "[0-9]",
             R.id.bFiltA to "[aA]",
             R.id.bFiltB to "[bB]",
