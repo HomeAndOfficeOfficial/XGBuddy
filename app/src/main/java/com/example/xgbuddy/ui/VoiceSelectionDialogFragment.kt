@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +19,6 @@ import com.example.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
 import com.example.xgbuddy.viewmodel.QS300ViewModel
-import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -113,14 +111,18 @@ class VoiceSelectionDialogFragment : DialogFragment() {
 
     private fun setInitialCategory() {
         val startCategoryId = arguments?.getInt(ARG_START_CATEGORY) ?: 0
-        var categorySelected = false
-        binding.bgVoiceCategory.children.forEach {
-            val isCategoryId = startCategoryId == it.id
-            (it as MaterialButton).isChecked = isCategoryId
-            categorySelected = categorySelected || isCategoryId
-        }
-        if (!categorySelected) {
-            binding.bgVoiceCategory.check(binding.bXGVoice.id)
+        if (startCategoryId != 0 && startCategoryId != CATEGORY_ID_NORMAL) {
+            binding.bgVoiceCategory.check(startCategoryId)
+        } else {
+            // Since it is checked by default, the onCheckChange listener may not be called, so
+            //  set visibility of filter buttons explicitly
+            if (binding.bgVoiceCategory.checkedButtonId == binding.bXGVoice.id) {
+                binding.svQSFilter.visibility = View.GONE
+                binding.svXGFilter.visibility = View.VISIBLE
+                updateAdapterCategory(CATEGORY_ID_NORMAL)
+            } else {
+                binding.bgVoiceCategory.check(binding.bXGVoice.id)
+            }
         }
     }
 
