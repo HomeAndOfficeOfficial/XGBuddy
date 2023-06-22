@@ -135,10 +135,16 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
 
     private fun openVoiceSelectionDialog() {
         val voiceSelectFragment = VoiceSelectionDialogFragment().apply {
+            val voiceCategory = when (midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceType) {
+                MidiPart.VoiceType.NORMAL -> VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
+                MidiPart.VoiceType.DRUM -> VoiceSelectionDialogFragment.CATEGORY_ID_XGDRUM
+                MidiPart.VoiceType.QS300 -> VoiceSelectionDialogFragment.CATEGORY_ID_QS300
+                MidiPart.VoiceType.SFX -> VoiceSelectionDialogFragment.CATEGORY_ID_SFX
+            }
             arguments = Bundle().apply {
                 putInt(
                     VoiceSelectionDialogFragment.ARG_START_CATEGORY,
-                    VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
+                    voiceCategory
                 )
             }
         }

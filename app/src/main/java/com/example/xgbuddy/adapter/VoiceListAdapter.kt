@@ -101,20 +101,20 @@ class VoiceListAdapter(
         notifyDataSetChanged()
     }
 
-    fun updateSecondaryFilter() {}
-
     @SuppressLint("NotifyDataSetChanged")
-    fun filterByInstrumentGroup(group: InstrumentGroup) {
+    fun filterByInstrumentGroup(group: InstrumentGroup?) {
         filteredList = voiceList.filter {
             it.typeName == selectedCategory!!.enumName && it.instrumentGroup == group
         }
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun filterByAlphabet(regex: String) {
         filteredList = voiceList.filter {
             it.typeName == selectedCategory!!.enumName && it.name.substring(0, 1)
                 .matches(regex.toRegex())
         }
+        notifyDataSetChanged()
     }
 }
