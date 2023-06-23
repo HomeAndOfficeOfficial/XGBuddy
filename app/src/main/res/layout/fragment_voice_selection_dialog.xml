@@ -3,61 +3,488 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/voice_select_dialog_width"
-    android:layout_height="@dimen/voice_select_dialog_height">
+    android:layout_height="@dimen/voice_select_dialog_height"
+    android:padding="@dimen/popup_padding">
 
-    <RadioGroup
-        android:id="@+id/rgVoiceCategory"
+    <TextView
+        android:id="@+id/tvVoiceSelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="@string/midi_voice_select"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/dividerVoiceSel"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvVoiceSelTitle" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/bgVoiceCategory"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:checkedButton="@id/bXGVoice"
+        app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel"
+        app:selectionRequired="true"
+        app:singleSelection="true">
 
-
-        <RadioButton
-            android:id="@+id/rbXGVoice"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGVoice"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XG Normal" />
+            android:text="XG Voice" />
 
-        <RadioButton
-            android:id="@+id/rbXGDrum"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGDrum"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="XG Drum" />
 
-        <RadioButton
-            android:id="@+id/rbXGSfx"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bXGSfx"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="SFX" />
 
-        <RadioButton
-            android:id="@+id/rbQs300"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bQs300"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="QS300" />
-    </RadioGroup>
 
-    <!--    <com.google.android.material.navigationrail.NavigationRailView-->
-    <!--        android:id="@+id/navRailVoiceSelect"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:labelVisibilityMode="labeled"-->
-    <!--        app:menu="@menu/voice_select_menu"/>-->
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <FrameLayout
+        android:id="@+id/filterContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
+        app:layout_constraintStart_toEndOf="@+id/bgVoiceCategory"
+        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel">
+
+        <ScrollView
+            android:id="@+id/svXGFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/bgXGFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                app:checkedButton="@id/bSecAll"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bSecAll"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="All" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltPiano"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Piano" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltChromPerc"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chrom. Perc." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltOrgan"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Organ" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltGuitar"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guitar" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltBass"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bass" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltStrings"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Strings" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltEnsemble"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ensemble" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltBrass"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brass" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltReed"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Reed" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltPipe"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pipe" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltSynLd"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SynLead" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltSynPad"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SynPad" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltSynFX"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SynFX" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltEthnic"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ethnic" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltPerc"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Perc." />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltSFX"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SFX" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </ScrollView>
+
+        <ScrollView
+            android:id="@+id/svQSFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/bgQSFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                app:checkedButton="@id/bQSAll"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bQSAll"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="All" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltSpec"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="!@#$%" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltNum"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0-9" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltA"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="A" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltB"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="B" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltC"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="C" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltD"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="D" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltE"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="E" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltF"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="F" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltG"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="G" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltH"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="H" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltI"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="I" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltJ"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="J" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltK"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="K" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltL"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="L" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltM"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="M" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltN"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="N" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltO"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="O" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltP"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="P" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltQ"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Q" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltR"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltS"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="S" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltT"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="T" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltU"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="U" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltV"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="V" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltW"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="W" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltX"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="X" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltY"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Y" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bFiltZ"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Z" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+        </ScrollView>
+
+    </FrameLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvVoiceSelect"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/rgVoiceCategory"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/filterContainer"
+        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel"
         tools:listitem="@layout/voice_list_item" />
 
+    <View
+        android:id="@+id/dividerVoiceSel2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/bVoiceSelClose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/bVoiceSelClose"
+        android:text="Close"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Voice:"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVoiceSelTitle"
+        app:layout_constraintStart_toEndOf="@+id/filterContainer" />
+
+    <TextView
+        android:id="@+id/tvCurrentVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintStart_toEndOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

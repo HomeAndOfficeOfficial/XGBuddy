@@ -7,33 +7,37 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
+import com.example.xgbuddy.data.InstrumentGroup
 import com.example.xgbuddy.data.qs300.QS300Preset
-import com.example.xgbuddy.data.xg.SFXNormalVoice
-import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
+import com.example.xgbuddy.data.voiceselect.VoiceListCategory
+import com.example.xgbuddy.ui.voiceselect.OnVoiceItemSelectedListener
 import kotlin.reflect.full.isSubclassOf
 
 class VoiceListAdapter(
     voiceEntries: List<Any>,
-    private val listener: OnVoiceItemClickListener
+    private val listener: OnVoiceItemSelectedListener
 ) :
     RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
     private val voiceList: List<VoiceListEntry> = List(voiceEntries.size) {
-        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name)
+        val group =
+            if (voiceEntries[it] is XGNormalVoice)
+                (voiceEntries[it] as XGNormalVoice).instrumentGroup
+            else
+                null
+        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name, group)
     }
 
+    private var typedList: List<VoiceListEntry>? = null
     private var filteredList: List<VoiceListEntry>? = null
     private var selectedCategory: VoiceListCategory? = null
 
-    enum class VoiceListCategory(val enumName: String) {
-        XG_NORMAL(XGNormalVoice::class.java.name),
-        XG_DRUM(XGDrumKit::class.java.name),
-        SFX(SFXNormalVoice::class.java.name),
-        QS300(QS300Preset::class.java.name)
-    }
-
-    data class VoiceListEntry(val name: String, val typeName: String)
+    data class VoiceListEntry(
+        val name: String,
+        val typeName: String,
+        val instrumentGroup: InstrumentGroup? = null
+    )
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -43,11 +47,11 @@ class VoiceListAdapter(
             position: Int,
             voiceName: String,
             category: VoiceListCategory?,
-            listener: OnVoiceItemClickListener
+            listener: OnVoiceItemSelectedListener
         ) {
             tvVoice.text = voiceName
             itemView.setOnClickListener {
-                listener.onVoiceItemClicked(position, category!!)
+                listener.onVoiceItemSelected(position, category!!, voiceName)
             }
         }
     }
@@ -61,7 +65,12 @@ class VoiceListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         filteredList?.let {
-            holder.bind(position, it[position].name, selectedCategory, listener)
+            holder.bind(
+                typedList!!.indexOf(it[position]),
+                it[position].name,
+                selectedCategory,
+                listener
+            )
         }
     }
 
@@ -77,16 +86,34 @@ class VoiceListAdapter(
         return this != null && this::class.isSubclassOf(Enum::class)
     }
 
-    fun interface OnVoiceItemClickListener {
-        fun onVoiceItemClicked(position: Int, category: VoiceListCategory)
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     fun updateCategory(category: VoiceListCategory) {
         selectedCategory = category
-        filteredList = voiceList.filter {
+        typedList = voiceList.filter {
             it.typeName == category.enumName
         }
+        filteredList = typedList!!.toList()
         notifyDataSetChanged()
+
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterByInstrumentGroup(group: InstrumentGroup?) {
+        filteredList = typedList!!.filter {
+            it.instrumentGroup == group
+        }
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterByAlphabet(regex: String) {
+        filteredList = typedList!!.filter {
+            it.name.substring(0, 1).matches(regex.toRegex())
+        }
+        notifyDataSetChanged()
+    }
+
+    fun interface OnVoiceItemSelectedListener {
+        fun onVoiceItemSelected(index: Int, category: VoiceListCategory, voiceName: String)
     }
 }

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
@@ -16,13 +17,18 @@ import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
 import com.example.xgbuddy.ui.custom.SwitchControlView
+import com.example.xgbuddy.ui.voiceselect.OnVoiceItemSelectedListenerImpl
+import com.example.xgbuddy.ui.voiceselect.VoiceSelectionDialogFragment
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
+import com.example.xgbuddy.viewmodel.QS300ViewModel
 
 class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() {
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMidiPartEditBinding =
         FragmentMidiPartEditBinding::inflate
+
+    private val qs300ViewModel: QS300ViewModel by activityViewModels()
 
     private var currentParam: MidiParameter? = null
     private var isNrpnActive = false
@@ -134,11 +140,32 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
     }
 
     private fun openVoiceSelectionDialog() {
-        val voiceSelectFragment = VoiceSelectionDialogFragment().apply {
+        val voiceSelectFragment = VoiceSelectionDialogFragment(
+            OnVoiceItemSelectedListenerImpl.MidiPartImpl(
+                qs300ViewModel,
+                midiViewModel,
+                midiSession
+            )
+        ).apply {
+            val selectedPart = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
+            val voiceType = selectedPart.voiceType
+            val voiceCategory =
+                when (voiceType) {
+                    MidiPart.VoiceType.NORMAL -> VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
+                    MidiPart.VoiceType.DRUM -> VoiceSelectionDialogFragment.CATEGORY_ID_XGDRUM
+                    MidiPart.VoiceType.QS300 -> VoiceSelectionDialogFragment.CATEGORY_ID_QS300
+                    MidiPart.VoiceType.SFX -> VoiceSelectionDialogFragment.CATEGORY_ID_SFX
+                }
             arguments = Bundle().apply {
                 putInt(
                     VoiceSelectionDialogFragment.ARG_START_CATEGORY,
-                    VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
+                    voiceCategory
+                )
+                putString(
+                    VoiceSelectionDialogFragment.ARG_START_VOICE,
+                    if (voiceType == MidiPart.VoiceType.QS300) qs300ViewModel.preset.value!!.name else this@MidiPartEditFragment.getString(
+                        selectedPart.voiceNameRes
+                    )
                 )
             }
         }

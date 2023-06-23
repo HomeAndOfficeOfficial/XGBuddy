@@ -1028,6 +1028,7 @@
     <string name="sys_reset_params">Reset All Voice Parameters</string>
     <string name="sys_init">Send Default Setup</string>
     <string name="sys_all_sounds_off">All Sounds/Notes Off</string>
+    <string name="midi_voice_select">Select MIDI Voice</string>
     <!-- System Param Control Names -->
 
 </resources>
