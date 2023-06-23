@@ -132,6 +132,7 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
                     VoiceSelectionDialogFragment.ARG_START_VOICE,
                     qS300ViewModel.preset.value!!.name
                 )
+                putBoolean(VoiceSelectionDialogFragment.ARG_QS_EXCLUSIVE, true)
             }
         }
         voiceSelectFragment.show(childFragmentManager, VoiceSelectionDialogFragment.TAG)

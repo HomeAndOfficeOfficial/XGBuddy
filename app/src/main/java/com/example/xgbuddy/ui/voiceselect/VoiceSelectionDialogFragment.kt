@@ -74,6 +74,12 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
     }.toList()
 
     private fun setupCategoryButtons() {
+        val isQSExclusive = arguments?.getBoolean(ARG_QS_EXCLUSIVE) ?: false
+        if (isQSExclusive) {
+            binding.bXGVoice.visibility = View.GONE
+            binding.bXGDrum.visibility = View.GONE
+            binding.bXGSfx.visibility = View.GONE
+        }
         binding.bgVoiceCategory.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 updateAdapterCategory(checkedId)
@@ -154,6 +160,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
         const val TAG = "VoiceSelectionDialogFragment"
         const val ARG_START_CATEGORY = "argStartCategoryId"
         const val ARG_START_VOICE = "argStartVoice"
+        const val ARG_QS_EXCLUSIVE = "argQSExclusive"
         const val CATEGORY_ID_NORMAL = R.id.bXGVoice
         const val CATEGORY_ID_XGDRUM = R.id.bXGDrum
         const val CATEGORY_ID_SFX = R.id.bXGSfx
