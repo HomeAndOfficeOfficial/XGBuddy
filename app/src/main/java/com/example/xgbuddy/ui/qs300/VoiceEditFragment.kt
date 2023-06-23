@@ -108,7 +108,7 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (wasSpinnerTouched) {
-          updateVoice(position)
+            updateVoice(position)
         }
         wasSpinnerTouched = false
     }
@@ -127,6 +127,10 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
                 putInt(
                     VoiceSelectionDialogFragment.ARG_START_CATEGORY,
                     VoiceSelectionDialogFragment.CATEGORY_ID_QS300
+                )
+                putString(
+                    VoiceSelectionDialogFragment.ARG_START_VOICE,
+                    qS300ViewModel.preset.value!!.name
                 )
             }
         }

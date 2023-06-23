@@ -51,7 +51,7 @@ class VoiceListAdapter(
         ) {
             tvVoice.text = voiceName
             itemView.setOnClickListener {
-                listener.onVoiceItemSelected(position, category!!)
+                listener.onVoiceItemSelected(position, category!!, voiceName)
             }
         }
     }
@@ -111,5 +111,9 @@ class VoiceListAdapter(
             it.name.substring(0, 1).matches(regex.toRegex())
         }
         notifyDataSetChanged()
+    }
+
+    fun interface OnVoiceItemSelectedListener {
+        fun onVoiceItemSelected(index: Int, category: VoiceListCategory, voiceName: String)
     }
 }

@@ -468,4 +468,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Voice:"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvVoiceSelTitle"
+        app:layout_constraintStart_toEndOf="@+id/filterContainer" />
+
+    <TextView
+        android:id="@+id/tvCurrentVoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintStart_toEndOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,12 +37,14 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             adapter = voiceListAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+        binding.tvCurrentVoice.text = arguments?.getString(ARG_START_VOICE) ?: ""
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupCategoryButtons()
+        binding.bVoiceSelClose.setOnClickListener { dismiss() }
     }
 
     override fun onResume() {
@@ -57,9 +59,11 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
 
     private fun initAdapter() {
         voiceListAdapter = VoiceListAdapter(
-            buildCompleteVoiceList(),
-            listener
-        )
+            buildCompleteVoiceList()
+        ) { index, category, voiceName ->
+            binding.tvCurrentVoice.text = voiceName
+            listener.onVoiceItemSelected(index, category)
+        }
     }
 
     private fun buildCompleteVoiceList(): List<Any> = mutableListOf<Any>().apply {

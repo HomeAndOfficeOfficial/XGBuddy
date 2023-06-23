@@ -147,8 +147,10 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
                 midiSession
             )
         ).apply {
+            val selectedPart = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
+            val voiceType = selectedPart.voiceType
             val voiceCategory =
-                when (midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceType) {
+                when (voiceType) {
                     MidiPart.VoiceType.NORMAL -> VoiceSelectionDialogFragment.CATEGORY_ID_NORMAL
                     MidiPart.VoiceType.DRUM -> VoiceSelectionDialogFragment.CATEGORY_ID_XGDRUM
                     MidiPart.VoiceType.QS300 -> VoiceSelectionDialogFragment.CATEGORY_ID_QS300
@@ -158,6 +160,12 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
                 putInt(
                     VoiceSelectionDialogFragment.ARG_START_CATEGORY,
                     voiceCategory
+                )
+                putString(
+                    VoiceSelectionDialogFragment.ARG_START_VOICE,
+                    if (voiceType == MidiPart.VoiceType.QS300) qs300ViewModel.preset.value!!.name else this@MidiPartEditFragment.getString(
+                        selectedPart.voiceNameRes
+                    )
                 )
             }
         }
