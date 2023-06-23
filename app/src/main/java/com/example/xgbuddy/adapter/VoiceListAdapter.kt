@@ -9,15 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.InstrumentGroup
 import com.example.xgbuddy.data.qs300.QS300Preset
-import com.example.xgbuddy.data.xg.SFXNormalVoice
-import com.example.xgbuddy.data.xg.XGDrumKit
 import com.example.xgbuddy.data.xg.XGNormalVoice
-import com.example.xgbuddy.util.EnumFinder.findBy
+import com.example.xgbuddy.data.voiceselect.VoiceListCategory
+import com.example.xgbuddy.ui.voiceselect.OnVoiceItemSelectedListener
 import kotlin.reflect.full.isSubclassOf
 
 class VoiceListAdapter(
     voiceEntries: List<Any>,
-    private val listener: OnVoiceItemClickListener
+    private val listener: OnVoiceItemSelectedListener
 ) :
     RecyclerView.Adapter<VoiceListAdapter.ViewHolder>() {
 
@@ -34,13 +33,6 @@ class VoiceListAdapter(
     private var filteredList: List<VoiceListEntry>? = null
     private var selectedCategory: VoiceListCategory? = null
 
-    enum class VoiceListCategory(val enumName: String) {
-        XG_NORMAL(XGNormalVoice::class.java.name),
-        XG_DRUM(XGDrumKit::class.java.name),
-        SFX(SFXNormalVoice::class.java.name),
-        QS300(QS300Preset::class.java.name)
-    }
-
     data class VoiceListEntry(
         val name: String,
         val typeName: String,
@@ -55,11 +47,11 @@ class VoiceListAdapter(
             position: Int,
             voiceName: String,
             category: VoiceListCategory?,
-            listener: OnVoiceItemClickListener
+            listener: OnVoiceItemSelectedListener
         ) {
             tvVoice.text = voiceName
             itemView.setOnClickListener {
-                listener.onVoiceItemClicked(position, category!!)
+                listener.onVoiceItemSelected(position, category!!)
             }
         }
     }
@@ -92,10 +84,6 @@ class VoiceListAdapter(
 
     private fun Any?.isEnum(): Boolean {
         return this != null && this::class.isSubclassOf(Enum::class)
-    }
-
-    fun interface OnVoiceItemClickListener {
-        fun onVoiceItemClicked(position: Int, category: VoiceListCategory)
     }
 
     @SuppressLint("NotifyDataSetChanged")
