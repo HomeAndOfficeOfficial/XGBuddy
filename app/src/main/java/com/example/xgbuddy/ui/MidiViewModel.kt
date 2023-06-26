@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.xgbuddy.data.MidiSetup
 import com.example.xgbuddy.data.gm.MidiPart
+import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.data.xg.*
 
 class MidiViewModel : ViewModel() {
@@ -16,6 +17,7 @@ class MidiViewModel : ViewModel() {
     var tuning = SystemParameter.MASTER_TUNE.default
     var volume = SystemParameter.MASTER_VOLUME.default
     var transpose = SystemParameter.TRANSPOSE.default
+    var qsPartMap = mutableMapOf<Int, QS300Preset>()
 
     fun resetToDefaultSetup() {
         val defaultSetup = MidiSetup.getXGDefault()
@@ -26,5 +28,6 @@ class MidiViewModel : ViewModel() {
         tuning = SystemParameter.MASTER_TUNE.default
         volume = SystemParameter.MASTER_VOLUME.default
         transpose = SystemParameter.TRANSPOSE.default
+        qsPartMap.clear()
     }
 }

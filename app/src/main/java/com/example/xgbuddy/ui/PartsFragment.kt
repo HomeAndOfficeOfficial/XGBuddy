@@ -55,6 +55,12 @@ class PartsFragment : Fragment() {
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
             if (midiViewModel.channels.value!![it].voiceType == MidiPart.VoiceType.QS300) {
+                if (midiViewModel.qsPartMap.containsKey(it)) {
+                    qS300ViewModel.preset.value = midiViewModel.qsPartMap[it]
+                } else {
+                    // We're on a secondary channel. The selectedChannel - 1 must have a map entry
+                    qS300ViewModel.preset.value = midiViewModel.qsPartMap[it-1]
+                }
                 qS300ViewModel.voice.value = midiViewModel.channels.value!![it].qs300VoiceNumber
             }
         }
