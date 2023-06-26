@@ -80,20 +80,6 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     }
                 }
                 VoiceListCategory.QS300 -> {
-                    /**
-                     * To account for multiple voices, I'll need to do some additional work here.
-                     * I believe there is one voice per midi part
-                     * I think some of the presets are made of multiple voices.
-                     *
-                     * I need to figure out the rules that dictate elements/voice, voice/part.
-                     *
-                     * I think i'll probably have to update adjacent parts when switching to a qs300
-                     * preset to accommodate multiple voices.
-                     *
-                     * If I change one voice back to an XG parameter, I don't think there will be much
-                     * of a problem when updating a parameter on the qs voice, because it should only
-                     * send a bulk dump for that voice, and not every voice in the preset.
-                     */
                     val preset = qs300ViewModel.presets[index].clone()
                     midiViewModel.qsPartMap[selectedChannel]?.let { prevPreset ->
                         if (preset.voices.size == 1 && prevPreset.voices.size > 1) {
@@ -109,20 +95,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                         }
                     }
 
-                    /* When selecting a preset, and setting the value in the viewmodel, I need to
-                    make a copy of the preset instead of setting the value directly, otherwise if I
-                    have two midi parts that use the same preset, any changes made to one will
-                    also be applied to the other.
-
-                    Essentially, just need to make sure the map and the qs300Viewmodel "preset"
-                    are referencing the same object, and the master presets list should be copied
-                    from.
-
-                    I may have to make a custom clone method or something.
-                     */
-
                     midiViewModel.qsPartMap[selectedChannel] = preset
-
                     qs300ViewModel.preset.value = preset
                     qs300ViewModel.voice.value = 0
                     if (preset.voices.size > 1) {
@@ -178,7 +151,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
         override fun onVoiceItemSelected(index: Int, category: VoiceListCategory) {
             val currentVoiceCount = qs300ViewModel.preset.value!!.voices.size
             var currentVoice = qs300ViewModel.voice.value!!
-            val updatePreset = qs300ViewModel.presets[index]
+            val updatePreset = qs300ViewModel.presets[index].clone()
             val selectedChannel = midiViewModel.selectedChannel.value!!
             val updateVoiceCount = updatePreset.voices.size
             if (currentVoiceCount == 2 && updateVoiceCount == 1) {
