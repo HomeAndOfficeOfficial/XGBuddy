@@ -94,7 +94,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                      * of a problem when updating a parameter on the qs voice, because it should only
                      * send a bulk dump for that voice, and not every voice in the preset.
                      */
-                    val preset = qs300ViewModel.presets[index]
+                    val preset = qs300ViewModel.presets[index].clone()
                     midiViewModel.qsPartMap[selectedChannel]?.let { prevPreset ->
                         if (preset.voices.size == 1 && prevPreset.voices.size > 1) {
                             midiViewModel.channels.value!![selectedChannel + 1].changeXGVoice(
@@ -108,6 +108,18 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             )
                         }
                     }
+
+                    /* When selecting a preset, and setting the value in the viewmodel, I need to
+                    make a copy of the preset instead of setting the value directly, otherwise if I
+                    have two midi parts that use the same preset, any changes made to one will
+                    also be applied to the other.
+
+                    Essentially, just need to make sure the map and the qs300Viewmodel "preset"
+                    are referencing the same object, and the master presets list should be copied
+                    from.
+
+                    I may have to make a custom clone method or something.
+                     */
 
                     midiViewModel.qsPartMap[selectedChannel] = preset
 
