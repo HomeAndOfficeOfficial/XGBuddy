@@ -163,9 +163,13 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
                 )
                 putString(
                     VoiceSelectionDialogFragment.ARG_START_VOICE,
-                    if (voiceType == MidiPart.VoiceType.QS300) qs300ViewModel.preset.value!!.name else this@MidiPartEditFragment.getString(
-                        selectedPart.voiceNameRes
-                    )
+                    if (voiceType == MidiPart.VoiceType.QS300) {
+                        qs300ViewModel.preset.value!!.name
+                    } else {
+                        this@MidiPartEditFragment.requireContext().getString(
+                            selectedPart.voiceNameRes
+                        )
+                    }
                 )
             }
         }

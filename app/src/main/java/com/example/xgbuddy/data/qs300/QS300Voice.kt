@@ -4,7 +4,7 @@ import com.example.xgbuddy.data.MidiData
 
 data class QS300Voice(var voiceName: String = "") : MidiData() {
 
-    val elements: MutableList<QS300Element> = mutableListOf()
+    var elements: MutableList<QS300Element> = mutableListOf()
 
     var voiceLevel: Byte = QS300VoiceParameter.VOICE_LVL.default
     var elementSwitch: Byte = QS300VoiceParameter.EL_SWITCH.default
@@ -57,4 +57,6 @@ data class QS300Voice(var voiceName: String = "") : MidiData() {
     var footCtrlFm: Byte = QS300VoiceParameter.FOOT_CTRL_FM.default
     var footCtrlAm: Byte = QS300VoiceParameter.FOOT_CTRL_AM.default
     var footCtrlVarEf: Byte = QS300VoiceParameter.FOOT_CTRL_VAR_EF.default
+
+
 }

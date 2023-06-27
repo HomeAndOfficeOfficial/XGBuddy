@@ -38,23 +38,17 @@ class PartsFragment : Fragment() {
 
     private fun initObservers() {
         midiViewModel.channels.observe(viewLifecycleOwner) {
-            val selectedChannel = midiViewModel.selectedChannel.value!!
-            partsAdapter.updateRow(it[selectedChannel])
-
-            // Todo: Clean this up. This logic is duplicated from VoiceSelectionDialogFragment
-            if (it[selectedChannel].voiceType == MidiPart.VoiceType.QS300) {
-                val secondaryChannel =
-                    if (selectedChannel + 1 == midiViewModel.channels.value!!.size) {
-                        selectedChannel - 1
-                    } else {
-                        selectedChannel + 1
-                    }
-                partsAdapter.updateRow(it[secondaryChannel])
-            }
+            partsAdapter.updateAll(it)
         }
         midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
             partsAdapter.selectRow(it)
             if (midiViewModel.channels.value!![it].voiceType == MidiPart.VoiceType.QS300) {
+                if (midiViewModel.qsPartMap.containsKey(it)) {
+                    qS300ViewModel.preset.value = midiViewModel.qsPartMap[it]
+                } else {
+                    // We're on a secondary channel. The selectedChannel - 1 must have a map entry
+                    qS300ViewModel.preset.value = midiViewModel.qsPartMap[it-1]
+                }
                 qS300ViewModel.voice.value = midiViewModel.channels.value!![it].qs300VoiceNumber
             }
         }

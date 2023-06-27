@@ -160,6 +160,12 @@ class MainActivity : AppCompatActivity() {
                         showConnectionStatusDialog()
                         true
                     }
+                    R.id.save_setup -> {
+                        Log.d(TAG, "QS Map: ${midiViewModel.qsPartMap.entries.joinToString(", ") { 
+                            "{${it.key}: ${it.value.name}}"
+                        }}")
+                        true
+                    }
                     else -> false
                 }
             }
