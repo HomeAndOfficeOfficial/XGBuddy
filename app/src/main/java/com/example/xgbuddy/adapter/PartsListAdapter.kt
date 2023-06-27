@@ -49,6 +49,14 @@ class PartsListAdapter(
         }
     }
 
+    fun updateAll(parts: List<MidiPart>) {
+        parts.forEachIndexed { index, part ->
+            (partsContainer.getChildAt(index) as PartsRowItem).apply {
+                setChannelInfo(part, context.getString(part.voiceNameRes))
+            }
+        }
+    }
+
     companion object {
         private const val NOT_SET = -1
     }

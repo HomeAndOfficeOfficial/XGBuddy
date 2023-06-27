@@ -83,7 +83,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     val preset = qs300ViewModel.presets[index].clone()
                     midiViewModel.qsPartMap[selectedChannel]?.let { prevPreset ->
                         if (preset.voices.size == 1 && prevPreset.voices.size > 1) {
-                            midiViewModel.channels.value!![selectedChannel + 1].changeXGVoice(
+                            midiViewModel.channels.value!![selectedChannel + 1].setXGNormalVoice(
                                 XGNormalVoice.GRAND_PNO
                             )
                             midiSession.send(
@@ -99,6 +99,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     qs300ViewModel.voice.value = 0
                     if (preset.voices.size > 1) {
                         if (selectedChannel + 1 == updatedPartsList.size) {
+                            midiViewModel.qsPartMap.remove(selectedChannel - 1)
                             updatedPartsList[selectedChannel - 1].changeQS300Voice(
                                 preset.voices[0],
                                 0
@@ -106,6 +107,18 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             updatedPart.changeQS300Voice(preset.voices[1], 1)
                             qs300ViewModel.voice.value = 1
                         } else {
+                            midiViewModel.qsPartMap.remove(selectedChannel + 1)?.let {
+                                if (it.voices.size == 2) {
+                                    updatedPartsList[selectedChannel + 2].setXGNormalVoice(
+                                        XGNormalVoice.GRAND_PNO
+                                    )
+                                    midiSession.send(
+                                        MidiMessageUtility.getXGNormalVoiceChange(
+                                            selectedChannel + 2, XGNormalVoice.GRAND_PNO
+                                        )
+                                    )
+                                }
+                            }
                             updatedPart.changeQS300Voice(preset.voices[0], 0)
                             updatedPartsList[selectedChannel + 1].changeQS300Voice(
                                 preset.voices[1],
@@ -182,6 +195,8 @@ sealed class OnVoiceItemSelectedListenerImpl(
                         )
                     )
                 }
+            } else if (currentVoiceCount == 1 && updateVoiceCount == 2) {
+                midiViewModel.qsPartMap.remove(selectedChannel + 1)
             }
             val firstChannel =
                 if (currentVoice == 1)
