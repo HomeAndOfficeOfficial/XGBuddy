@@ -94,6 +94,18 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             )
                         }
                     }
+                    if (midiViewModel.qsPartMap.containsKey(selectedChannel - 1)) {
+                        if (midiViewModel.qsPartMap[selectedChannel - 1]!!.voices.size > 1) {
+                            midiViewModel.qsPartMap.remove(selectedChannel - 1)
+                            updatedPartsList[selectedChannel - 1].setXGNormalVoice(XGNormalVoice.GRAND_PNO)
+                            midiSession.send(
+                                MidiMessageUtility.getXGNormalVoiceChange(
+                                    selectedChannel - 1,
+                                    XGNormalVoice.GRAND_PNO
+                                )
+                            )
+                        }
+                    }
                     midiViewModel.qsPartMap[selectedChannel] = preset
                     qs300ViewModel.preset.value = preset
                     qs300ViewModel.voice.value = 0
@@ -164,7 +176,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
             val currentVoiceCount = qs300ViewModel.preset.value!!.voices.size
             var currentVoice = qs300ViewModel.voice.value!!
             val updatePreset = qs300ViewModel.presets[index].clone()
-            val selectedChannel = midiViewModel.selectedChannel.value!!
+            var selectedChannel = midiViewModel.selectedChannel.value!!
             val updateVoiceCount = updatePreset.voices.size
             if (currentVoiceCount == 2 && updateVoiceCount == 1) {
                 // One of qs voices needs to be unselected - aka midi part for the second qs300 channel
@@ -184,6 +196,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                         )
                     )
                     currentVoice = 0
+                    selectedChannel = updateSelectedChannel
                 } else {
                     midiViewModel.channels.value!![selectedChannel + 1].setXGNormalVoice(
                         XGNormalVoice.GRAND_PNO
