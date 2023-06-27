@@ -94,7 +94,6 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             )
                         }
                     }
-
                     midiViewModel.qsPartMap[selectedChannel] = preset
                     qs300ViewModel.preset.value = preset
                     qs300ViewModel.voice.value = 0
@@ -189,11 +188,12 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     selectedChannel - 1
                 else
                     selectedChannel
-            qs300ViewModel.preset.value = qs300ViewModel.presets[index]
+            midiViewModel.qsPartMap[firstChannel] = updatePreset
+            qs300ViewModel.preset.value = updatePreset
             qs300ViewModel.preset.value!!.voices.forEachIndexed { voiceIndex, voice ->
                 midiViewModel.channels.value!![firstChannel + voiceIndex].changeQS300Voice(
                     voice,
-                    index
+                    voiceIndex
                 )
                 midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
                 midiSession.sendBulkMessage(
@@ -205,5 +205,4 @@ sealed class OnVoiceItemSelectedListenerImpl(
             }
         }
     }
-
 }
