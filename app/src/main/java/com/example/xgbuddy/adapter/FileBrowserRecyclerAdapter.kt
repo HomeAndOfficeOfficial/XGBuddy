@@ -56,7 +56,7 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
     private fun filterFiles(files: Array<String>): List<String> =
         files.filter {
             !it.contains(".") || with(it.substringAfter(".")) {
-                this == "xbx" || this == "xbq"
+                this == "xgb" || this == "xbq"
             }
         }
 

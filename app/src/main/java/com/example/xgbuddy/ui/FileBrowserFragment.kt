@@ -1,14 +1,20 @@
 package com.example.xgbuddy.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +23,9 @@ import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
 import java.io.File
+import java.io.IOException
+import java.io.OutputStream
+import java.io.OutputStreamWriter
 
 class FileBrowserFragment : DialogFragment() {
 
@@ -25,6 +34,8 @@ class FileBrowserFragment : DialogFragment() {
     private lateinit var backCallback: OnBackPressedCallback
     private var currentDir = ""
     private var mode = READ
+    private var setupJsonString = ""
+    private var selectedSetupFile = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +44,13 @@ class FileBrowserFragment : DialogFragment() {
         }
         backCallback.isEnabled = false
         fileAdapter = FileBrowserRecyclerAdapter(requireContext().fileList(), this::openOrNavigate)
+        arguments?.let {
+            mode = it.getInt(ARG_MODE)
+            setupJsonString = it.getString(ARG_JSON) ?: ""
+        }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +61,20 @@ class FileBrowserFragment : DialogFragment() {
             text = "..."
             setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_folder, 0, 0, 0)
             setOnClickListener { navigateUp() }
+        }
+        if (mode == READ) {
+            binding.bSaveSetup.text = "Open"
+            binding.etSetupName.apply {
+                isFocusable = false
+                setOnTouchListener { _, _ -> true }
+            }
+        }
+        binding.bSaveSetup.setOnClickListener {
+            if (mode == READ) {
+                loadSetup()
+            } else {
+                saveSetup()
+            }
         }
         setupRecyclerView()
         return binding.root
@@ -90,20 +120,32 @@ class FileBrowserFragment : DialogFragment() {
                 updateBreadcrumb()
             }
         } else {
-            if (mode == READ) {
-                loadSession(fileName)
-            } else {
-                overwriteSession(fileName)
-            }
+            selectedSetupFile = fileName
+            binding.etSetupName.setText(fileName)
+            binding.bSaveSetup.isEnabled = true
         }
     }
 
-    private fun loadSession(setupName: String) {
-
+    private fun loadSetup() {
+        Log.d(TAG, "Load setup file: $selectedSetupFile")
     }
 
-    private fun overwriteSession(setupName: String) {
-
+    private fun saveSetup() {
+        Log.d(TAG, "Save setup file: $selectedSetupFile")
+        try {
+            val fileName = binding.etSetupName.text.toString() + ".xgb"
+            OutputStreamWriter(
+                requireContext()
+                    .openFileOutput(fileName, Context.MODE_PRIVATE)
+            )
+                .apply {
+                    write(setupJsonString)
+                    close()
+                }
+        } catch (e: IOException) {
+            Log.e(TAG, "Caught IOException: ${e.message}")
+        }
+        dismiss()
     }
 
     private fun updateBreadcrumb() {
