@@ -3,9 +3,12 @@ package com.example.xgbuddy.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.xgbuddy.data.MidiSetup
+import com.example.xgbuddy.data.SetupModel
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.data.xg.*
+import com.google.gson.Gson
+import org.json.JSONStringer
 
 class MidiViewModel : ViewModel() {
     val channels = MutableLiveData(MutableList(16) { MidiPart(it) })
@@ -30,4 +33,12 @@ class MidiViewModel : ViewModel() {
         transpose = SystemParameter.TRANSPOSE.default
         qsPartMap.clear()
     }
+
+    fun toSetupModel(): SetupModel = SetupModel(
+        channels.value!!,
+        reverb,
+        chorus,
+        variation,
+        qsPartMap
+    )
 }

@@ -8,7 +8,11 @@
         android:id="@+id/partsFragment"
         android:name="com.example.xgbuddy.ui.PartsFragment"
         android:label="Parts"
-        tools:layout="@layout/fragment_parts" />
+        tools:layout="@layout/fragment_parts" >
+<!--        <action-->
+<!--            android:id="@+id/action_partsFragment_to_fileBrowserFragment2"-->
+<!--            app:destination="@id/fileBrowserFragment2" />-->
+    </fragment>
     <fragment
         android:id="@+id/voiceEditFragment"
         android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
@@ -33,4 +37,13 @@
         android:id="@+id/drumEditFragment"
         android:name="com.example.xgbuddy.ui.DrumEditFragment"
         android:label="DrumEditFragment" />
+<!--    <fragment-->
+<!--        android:id="@+id/fileBrowserFragment2"-->
+<!--        android:name="com.example.xgbuddy.ui.FileBrowserFragment"-->
+<!--        android:label="FileBrowserFragment">-->
+<!--        <argument-->
+<!--            android:name="modeArg"-->
+<!--            app:argType="integer"-->
+<!--            android:defaultValue="0"/>-->
+<!--    </fragment>-->
 </navigation>

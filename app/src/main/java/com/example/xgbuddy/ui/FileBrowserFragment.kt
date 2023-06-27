@@ -9,7 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xgbuddy.adapter.FileBrowserRecyclerAdapter
@@ -18,7 +18,7 @@ import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
 import java.io.File
 
-class FileBrowserFragment : Fragment() {
+class FileBrowserFragment : DialogFragment() {
 
     private lateinit var fileAdapter: FileBrowserRecyclerAdapter
     private lateinit var binding: FragmentFileBrowserBinding
@@ -48,6 +48,16 @@ class FileBrowserFragment : Fragment() {
         }
         setupRecyclerView()
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val width = resources.getDimensionPixelSize(R.dimen.file_browser_dialog_width)
+        val height = resources.getDimensionPixelSize(R.dimen.file_browser_dialog_height)
+        dialog?.window?.let {
+            it.setLayout(width, height)
+            it.setBackgroundDrawableResource(R.drawable.popup_bg)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -140,9 +150,10 @@ class FileBrowserFragment : Fragment() {
     companion object {
         const val TAG = "FileBrowserFragment"
         const val ARG_MODE = "arg_mode"
+        const val ARG_JSON = "arg_json"
         const val READ = 0
         const val WRITE = 1
-        fun newInstance(mode: Int): FileBrowserFragment {
+        fun newInstance(mode: Int, setupJson: String = ""): FileBrowserFragment {
             val argMode = if (mode == READ || mode == WRITE) {
                 mode
             } else {
@@ -150,6 +161,7 @@ class FileBrowserFragment : Fragment() {
             }
             val args = Bundle().apply {
                 putInt(ARG_MODE, argMode)
+                putString(ARG_JSON, setupJson)
             }
             return FileBrowserFragment().apply {
                 arguments = args
