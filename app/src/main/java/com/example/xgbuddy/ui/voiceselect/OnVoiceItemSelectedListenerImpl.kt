@@ -25,9 +25,31 @@ sealed class OnVoiceItemSelectedListenerImpl(
             val selectedChannel = midiViewModel.selectedChannel.value!!
             midiViewModel.qsPartMap[selectedChannel]?.let { preset ->
                 if (preset.voices.size > 1) {
-                    midiViewModel.channels.value!![selectedChannel + 1].changeXGVoice(XGNormalVoice.GRAND_PNO)
+                    midiViewModel.channels.value!![selectedChannel + 1].setXGNormalVoice(
+                        XGNormalVoice.GRAND_PNO
+                    )
+                    midiSession.send(
+                        MidiMessageUtility.getXGNormalVoiceChange(
+                            selectedChannel + 1,
+                            XGNormalVoice.GRAND_PNO
+                        )
+                    )
                 }
                 midiViewModel.qsPartMap.remove(selectedChannel)
+            }
+            midiViewModel.qsPartMap[selectedChannel - 1]?.let { preset ->
+                if (preset.voices.size > 1) {
+                    midiViewModel.channels.value!![selectedChannel - 1].setXGNormalVoice(
+                        XGNormalVoice.GRAND_PNO
+                    )
+                    midiViewModel.qsPartMap.remove(selectedChannel - 1)
+                    midiSession.send(
+                        MidiMessageUtility.getXGNormalVoiceChange(
+                            selectedChannel - 1,
+                            XGNormalVoice.GRAND_PNO
+                        )
+                    )
+                }
             }
         }
 
