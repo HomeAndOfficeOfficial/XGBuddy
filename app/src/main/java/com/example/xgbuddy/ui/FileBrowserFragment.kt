@@ -60,10 +60,10 @@ class FileBrowserFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFileBrowserBinding.inflate(layoutInflater)
-        binding.upListItem.bFileItem.apply {
-            text = "..."
-            setCompoundDrawablesWithIntrinsicBounds(R.mipmap.ic_folder, 0, 0, 0)
-            setOnClickListener { navigateUp() }
+        binding.upListItem.apply {
+            tvFileName.text = "..."
+            ivFileIcon.setImageResource(R.mipmap.ic_folder)
+            root.setOnClickListener { navigateUp() }
         }
         if (mode == READ) {
             binding.bSaveSetup.text = "Open"
@@ -123,6 +123,7 @@ class FileBrowserFragment : DialogFragment() {
                 updateBreadcrumb()
             }
         } else {
+            fileAdapter.selectFile(fileName)
             binding.etSetupName.setText(fileName)
             binding.bSaveSetup.isEnabled = true
         }

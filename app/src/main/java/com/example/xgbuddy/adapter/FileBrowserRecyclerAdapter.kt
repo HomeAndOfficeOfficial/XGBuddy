@@ -1,10 +1,14 @@
 package com.example.xgbuddy.adapter
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
@@ -13,16 +17,20 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
     RecyclerView.Adapter<FileBrowserRecyclerAdapter.ViewHolder>() {
 
     var setupFiles: List<String> = filterFiles(files)
+    var selectedIndices = mutableListOf<Int>()
+    var isMultiSelectOn = false
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val button: Button = itemView.findViewById(R.id.bFileItem)
+        private val tvFileName: TextView = itemView.findViewById(R.id.tvFileName)
+        private val ivFileIcon: ImageView = itemView.findViewById(R.id.ivFileIcon)
 
-        fun bind(name: String, type: FileType, listener: OnItemClickListener) {
-            button.apply {
-                text = name
-                setCompoundDrawablesWithIntrinsicBounds(type.iconRes, 0, 0, 0)
+        fun bind(name: String, type: FileType, isSelected: Boolean, listener: OnItemClickListener) {
+            itemView.apply {
+                this.isSelected = isSelected
                 setOnClickListener { listener.onItemClicked(name, type) }
             }
+            tvFileName.text = name
+            ivFileIcon.setImageResource(type.iconRes)
         }
     }
 
@@ -36,13 +44,30 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val fileName = setupFiles[position]
         val fileType = getFileType(fileName)
-        holder.bind(fileName, fileType, listener)
+        holder.bind(fileName, fileType, selectedIndices.contains(position), listener)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setFiles(files: Array<String>) {
         setupFiles = filterFiles(files)
         notifyDataSetChanged()
+    }
+
+    fun selectFile(fileName: String) {
+        val index = setupFiles.indexOf(fileName)
+        if ((isMultiSelectOn || selectedIndices.isEmpty())) {
+            if (selectedIndices.contains(index)) {
+                selectedIndices.removeAt(index)
+            } else {
+                selectedIndices.add(index)
+            }
+        } else {
+            val previousSelection = selectedIndices.first()
+            selectedIndices.clear()
+            selectedIndices.add(index)
+            notifyItemChanged(previousSelection)
+        }
+        notifyItemChanged(index)
     }
 
     private fun getFileType(file: String): FileType {
@@ -62,5 +87,10 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
 
     fun interface OnItemClickListener {
         fun onItemClicked(fileName: String, fileType: FileType)
+    }
+
+    companion object {
+        private val selectedColor = Color.parseColor("#8081C784")
+        private val transparent = Color.parseColor("#00000000")
     }
 }

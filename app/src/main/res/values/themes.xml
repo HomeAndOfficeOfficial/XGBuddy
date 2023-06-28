@@ -22,8 +22,9 @@
         <item name="textFillColor">@color/background_dark</item>
     </style>
 
-    <style name="FileButton" parent="Widget.AppCompat.Button.Borderless">
+    <style name="FileButton" parent="Widget.AppCompat.Button">
         <item name="android:textColor">?textFillColor</item>
+        <item name="android:backgroundTint">@drawable/file_item_selector</item>
     </style>
 
     <style name="ControlViewGroupHeader" parent="Widget.AppCompat.ButtonBar">

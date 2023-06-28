@@ -25,5 +25,6 @@
     <color name="container_light">#D6D2CC</color>
     <color name="container_dark">#3E3E3E</color>
     <color name="container_less_dark">#505050</color>
-
+    <color name="transparent">#00000000</color>
+    <color name="fileItemSelect">#8081C784</color>
 </resources>

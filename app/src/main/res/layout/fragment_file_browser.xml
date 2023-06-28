@@ -5,6 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/bAddDir"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_create_new_folder_24"
+        android:drawableTint="#ffffff"
+        android:drawableTintMode="src_in"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="24dp"
+        android:text="@string/new_folder"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llBreadCrumb" />
+
+    <Button
+        android:id="@+id/bDelete"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_delete_24"
+        android:drawableTint="#ffffff"
+        android:drawableTintMode="src_in"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="24dp"
+        android:text="@string/delete"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llBreadCrumb" />
+
+    <Button
+        android:id="@+id/bMove"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_drive_file_move_24"
+        android:drawableTint="#ffffff"
+        android:drawableTintMode="src_in"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="24dp"
+        android:text="@string/move"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/bDelete"
+        app:layout_constraintTop_toBottomOf="@+id/llBreadCrumb" />
+
     <LinearLayout
         android:id="@+id/llBreadCrumb"
         android:layout_width="0dp"
@@ -37,7 +84,7 @@
         app:layout_constraintBottom_toTopOf="@+id/clSetupSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upListItem"
+        app:layout_constraintTop_toBottomOf="@+id/bAddDir"
         tools:listitem="@layout/file_list_item" />
 
     <include
