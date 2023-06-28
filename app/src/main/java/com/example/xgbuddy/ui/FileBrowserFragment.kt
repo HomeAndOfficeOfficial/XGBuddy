@@ -85,6 +85,9 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                 fileAdapter.cancelMultiSelect()
                 updateFileControlVisibility(false)
             }
+            bDelete.setOnClickListener {
+                deleteSelectedFiles()
+            }
         }
         setupRecyclerView()
         return binding.root
@@ -288,5 +291,18 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             append(fileAdapter.selectedIndices.size)
             append(" Selected")
         }
+    }
+
+    private fun deleteSelectedFiles() {
+        val fileNames = mutableListOf<String>()
+        fileAdapter.selectedIndices.forEach {
+            fileNames.add(fileAdapter.setupFiles[it])
+        }
+        fileNames.forEach {
+            val path = currentDir + it
+            requireContext().deleteFile(path)
+        }
+        fileAdapter.onFilesDeleted()
+        updateFileControlVisibility(false)
     }
 }

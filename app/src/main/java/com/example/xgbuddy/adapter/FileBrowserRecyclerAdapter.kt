@@ -16,7 +16,7 @@ import com.example.xgbuddy.R
 class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClickListener) :
     RecyclerView.Adapter<FileBrowserRecyclerAdapter.ViewHolder>() {
 
-    var setupFiles: List<String> = filterFiles(files)
+    var setupFiles: MutableList<String> = filterFiles(files)
     var selectedIndices = mutableListOf<Int>()
     var isMultiSelectOn = false
 
@@ -91,6 +91,16 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
         notifyItemChanged(index)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun onFilesDeleted() {
+        selectedIndices.forEach {
+            setupFiles.removeAt(it)
+        }
+        selectedIndices.clear()
+        isMultiSelectOn = false
+        notifyDataSetChanged()
+    }
+
     private fun getFileType(file: String): FileType {
         if (!file.contains(".")) {
             return FileType.DIR
@@ -99,20 +109,15 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
         return if (ext == "xgb") FileType.XGB else FileType.DIR
     }
 
-    private fun filterFiles(files: Array<String>): List<String> =
+    private fun filterFiles(files: Array<String>): MutableList<String> =
         files.filter {
             !it.contains(".") || with(it.substringAfter(".")) {
                 this == "xgb"
             }
-        }
+        }.toMutableList()
 
     interface OnItemClickListener {
         fun onItemClicked(fileName: String, fileType: FileType)
         fun onItemLongClicked(fileName: String)
-    }
-
-    companion object {
-        private val selectedColor = Color.parseColor("#8081C784")
-        private val transparent = Color.parseColor("#00000000")
     }
 }
