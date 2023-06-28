@@ -1,5 +1,6 @@
 package com.example.xgbuddy.ui
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.xgbuddy.data.MidiSetup
@@ -8,12 +9,14 @@ import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.data.xg.*
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import org.json.JSONStringer
 
 class MidiViewModel : ViewModel() {
     val channels = MutableLiveData(MutableList(16) { MidiPart(it) })
     val selectedChannel = MutableLiveData(0)
     val selectedDrumVoice = MutableLiveData(0)
+    val setupResetFlag = MutableLiveData(false)
     var reverb = Reverb(ReverbType.HALL1)
     var chorus = Chorus(ChorusType.CHORUS1)
     var variation = Variation(VariationType.DELAY_LCR)
@@ -41,4 +44,20 @@ class MidiViewModel : ViewModel() {
         variation,
         qsPartMap
     )
+
+    fun readSetupJson(jsonString: String): Boolean =
+        try {
+            Gson().fromJson(jsonString, SetupModel::class.java).let {
+                setupResetFlag.value = true
+                channels.value = it.parts.toMutableList()
+                reverb = it.reverb
+                chorus = it.chorus
+                variation = it.variation
+                qsPartMap = it.qsPresetMap.toMutableMap()
+            }
+            true
+        } catch (e: JsonSyntaxException) {
+            Log.e("MidiViewModel", "Couldn't read setup from file: ${e.message}")
+            false
+        }
 }

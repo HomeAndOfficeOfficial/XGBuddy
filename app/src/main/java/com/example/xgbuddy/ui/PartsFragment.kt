@@ -53,4 +53,8 @@ class PartsFragment : Fragment() {
             }
         }
     }
+
+    companion object {
+        const val TAG = "PartsFragment"
+    }
 }

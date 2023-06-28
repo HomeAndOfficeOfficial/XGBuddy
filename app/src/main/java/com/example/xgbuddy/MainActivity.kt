@@ -20,10 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.xgbuddy.data.gm.MidiPart
-import com.example.xgbuddy.ui.ConnectionStatusFragment
-import com.example.xgbuddy.ui.FileBrowserFragment
-import com.example.xgbuddy.ui.MidiViewModel
-import com.example.xgbuddy.ui.QS300PresetCaptureFragment
+import com.example.xgbuddy.ui.*
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
@@ -112,11 +109,21 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
             setupOptionsMenu()
             setupNavigation()
-            midiViewModel.selectedChannel.observe(this) {
-                showOrHideMenuItems()
-            }
-            midiViewModel.channels.observe(this) {
-                showOrHideMenuItems()
+            midiViewModel.apply {
+                selectedChannel.observe(this@MainActivity) {
+                    showOrHideMenuItems()
+                }
+                channels.observe(this@MainActivity) {
+                    showOrHideMenuItems()
+                }
+                setupResetFlag.observe(this@MainActivity) {
+                    if (it) {
+                        if (supportFragmentManager.findFragmentByTag(PartsFragment.TAG) == null) {
+                            navHost.navController.navigate(R.id.partsFragment)
+                        }
+                        setupResetFlag.value = false
+                    }
+                }
             }
             qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
         } else {
@@ -174,12 +181,11 @@ class MainActivity : AppCompatActivity() {
                                 }
                             }"
                         )
-                        if (supportFragmentManager.findFragmentByTag(FileBrowserFragment.TAG) == null) {
-                            FileBrowserFragment.newInstance(
-                                FileBrowserFragment.WRITE,
-                                Gson().toJson(midiViewModel.toSetupModel())
-                            ).show(supportFragmentManager, FileBrowserFragment.TAG)
-                        }
+                        openFileBrowser(FileBrowserFragment.WRITE)
+                        true
+                    }
+                    R.id.open_setup -> {
+                        openFileBrowser(FileBrowserFragment.READ)
                         true
                     }
                     else -> false
@@ -224,6 +230,19 @@ class MainActivity : AppCompatActivity() {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
             start()
+        }
+    }
+
+    private fun openFileBrowser(mode: Int) {
+        val setupString = if (mode == FileBrowserFragment.WRITE)
+            Gson().toJson(midiViewModel.toSetupModel())
+        else
+            ""
+        if (supportFragmentManager.findFragmentByTag(FileBrowserFragment.TAG) == null) {
+            FileBrowserFragment.newInstance(
+                mode,
+                setupString
+            ).show(supportFragmentManager, FileBrowserFragment.TAG)
         }
     }
 

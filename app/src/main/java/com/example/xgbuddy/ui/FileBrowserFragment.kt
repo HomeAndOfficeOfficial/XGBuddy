@@ -1,7 +1,9 @@
 package com.example.xgbuddy.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,18 +18,29 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.xgbuddy.adapter.FileBrowserRecyclerAdapter
 import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
+import com.example.xgbuddy.viewmodel.QS300ViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.io.BufferedReader
 import java.io.File
+import java.io.FileInputStream
 import java.io.IOException
-import java.io.OutputStream
+import java.io.InputStreamReader
 import java.io.OutputStreamWriter
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FileBrowserFragment : DialogFragment() {
+
+    private val midiViewModel: MidiViewModel by activityViewModels()
+//    @Inject
+//    lateinit var qs300ViewModel: QS300ViewModel
 
     private lateinit var fileAdapter: FileBrowserRecyclerAdapter
     private lateinit var binding: FragmentFileBrowserBinding
@@ -128,12 +141,44 @@ class FileBrowserFragment : DialogFragment() {
 
     private fun loadSetup() {
         Log.d(TAG, "Load setup file: $selectedSetupFile")
+        val fileName = binding.etSetupName.text.toString()
+        val jsonString = try {
+            InputStreamReader(requireContext().openFileInput(fileName)).let {
+                val bufferedReader = BufferedReader(it)
+                val stringBuilder = StringBuilder()
+                var line = bufferedReader.readLine()
+                while (line != null) {
+                    stringBuilder.append(line)
+                    line = bufferedReader.readLine()
+                }
+                bufferedReader.close()
+                stringBuilder.toString()
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Caught some exception: ${e.message}")
+            ""
+        }
+        if (jsonString.isNotEmpty() && midiViewModel.readSetupJson(jsonString)) {
+//            qs300ViewModel.
+            dismiss()
+        } else {
+            AlertDialog.Builder(requireContext()).apply {
+                setMessage("Couldn't read setup from file.")
+                setTitle("JSON Error")
+                setIcon(R.drawable.baseline_error_24)
+                setNeutralButton("Close") { d, _ -> d.dismiss() }
+                show()
+            }
+        }
     }
 
     private fun saveSetup() {
         Log.d(TAG, "Save setup file: $selectedSetupFile")
         try {
-            val fileName = binding.etSetupName.text.toString() + ".xgb"
+            var fileName = binding.etSetupName.text.toString()
+            if (fileName.takeLast(4) != ".xgb") {
+                fileName += ".xgb"
+            }
             OutputStreamWriter(
                 requireContext()
                     .openFileOutput(fileName, Context.MODE_PRIVATE)
