@@ -6,7 +6,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.midi.MidiDeviceInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,17 +13,14 @@ import android.view.MenuItem
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.view.MenuProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.*
+import com.example.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

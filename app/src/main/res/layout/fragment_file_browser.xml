@@ -116,7 +116,7 @@
         app:layout_constraintBottom_toTopOf="@+id/clSetupSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clFileControls"
+        app:layout_constraintTop_toBottomOf="@+id/upListItem"
         tools:listitem="@layout/file_list_item" />
 
     <include
@@ -127,7 +127,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llBreadCrumb" />
+        app:layout_constraintTop_toBottomOf="@+id/clFileControls" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clSetupSave"

@@ -39,7 +39,7 @@
         android:label="DrumEditFragment" />
 <!--    <fragment-->
 <!--        android:id="@+id/fileBrowserFragment2"-->
-<!--        android:name="com.example.xgbuddy.ui.FileBrowserFragment"-->
+<!--        android:name="com.example.xgbuddy.ui.filebrowser.FileBrowserFragment"-->
 <!--        android:label="FileBrowserFragment">-->
 <!--        <argument-->
 <!--            android:name="modeArg"-->

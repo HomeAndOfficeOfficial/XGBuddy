@@ -1,14 +1,14 @@
-package com.example.xgbuddy.ui
+package com.example.xgbuddy.ui.filebrowser
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -22,12 +22,9 @@ import com.example.xgbuddy.adapter.FileBrowserRecyclerAdapter
 import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
+import com.example.xgbuddy.ui.MidiViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.BufferedReader
-import java.io.File
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import java.io.*
 
 @AndroidEntryPoint
 class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemClickListener {
@@ -88,6 +85,9 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             bDelete.setOnClickListener {
                 deleteSelectedFiles()
             }
+            bAddDir.setOnClickListener {
+                showNewDirectoryDialog()
+            }
         }
         setupRecyclerView()
         return binding.root
@@ -116,7 +116,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
     private fun openOrNavigate(fileName: String, fileType: FileType) {
         if (fileType == FileType.DIR) {
             val directoryFiles =
-                File(requireContext().filesDir.path + "/" + currentDir + fileName).list()
+                File(getFilesDir() + fileName).list()
             if (directoryFiles == null) {
                 Toast.makeText(
                     requireContext(),
@@ -145,9 +145,10 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
     }
 
     private fun loadSetup() {
-        val fileName = currentDir + binding.etSetupName.text.toString()
+        val fileName =
+            getFilesDir() + binding.etSetupName.text.toString()
         val jsonString = try {
-            InputStreamReader(requireContext().openFileInput(fileName)).let {
+            InputStreamReader(FileInputStream(File(fileName))).let {
                 val bufferedReader = BufferedReader(it)
                 val stringBuilder = StringBuilder()
                 var line = bufferedReader.readLine()
@@ -177,13 +178,13 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
 
     private fun saveSetup() {
         try {
-            var fileName = currentDir + binding.etSetupName.text.toString()
+            var fileName =
+                getFilesDir() + binding.etSetupName.text.toString()
             if (fileName.takeLast(4) != ".xgb") {
                 fileName += ".xgb"
             }
             OutputStreamWriter(
-                requireContext()
-                    .openFileOutput(fileName, Context.MODE_PRIVATE)
+                FileOutputStream(File(fileName), false)
             )
                 .apply {
                     write(setupJsonString)
@@ -299,10 +300,34 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             fileNames.add(fileAdapter.setupFiles[it])
         }
         fileNames.forEach {
-            val path = currentDir + it
-            requireContext().deleteFile(path)
+            val path = getFilesDir() + it
+            File(path).deleteRecursively()
         }
         fileAdapter.onFilesDeleted()
         updateFileControlVisibility(false)
     }
+
+    private fun showNewDirectoryDialog() {
+        val addDirLayout = layoutInflater.inflate(R.layout.dialog_add_directory, null)
+        val etDirName = addDirLayout.findViewById<EditText>(R.id.etDirName)
+        AlertDialog.Builder(requireContext()).apply {
+            setView(addDirLayout)
+            setPositiveButton("Create") { _, _ ->
+                addDirectory(etDirName.text.toString())
+            }
+            show()
+        }
+    }
+
+    private fun addDirectory(dirName: String) {
+        val directory = File(getFilesDir() + dirName)
+        if (!directory.exists()) {
+            directory.mkdir()
+            File(getFilesDir()).list()?.let {
+                fileAdapter.setFiles(it)
+            }
+        }
+    }
+
+    private fun getFilesDir(): String = requireContext().filesDir.path + "/" + currentDir
 }

@@ -1032,6 +1032,8 @@
     <string name="new_folder">New Folder</string>
     <string name="delete">Delete</string>
     <string name="move">Move</string>
+    <string name="add_directory_name">New Folder</string>
+    <string name="add_directory_text_hint">Folder Name</string>
     <!-- System Param Control Names -->
 
 </resources>
