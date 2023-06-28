@@ -50,13 +50,13 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
             return FileType.DIR
         }
         val ext = file.substringAfter(".")
-        return if (ext == "xbx") FileType.XBX else FileType.XBQ
+        return if (ext == "xgb") FileType.XGB else FileType.DIR
     }
 
     private fun filterFiles(files: Array<String>): List<String> =
         files.filter {
             !it.contains(".") || with(it.substringAfter(".")) {
-                this == "xgb" || this == "xbq"
+                this == "xgb"
             }
         }
 
