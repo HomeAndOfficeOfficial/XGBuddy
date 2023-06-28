@@ -24,10 +24,19 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
         private val tvFileName: TextView = itemView.findViewById(R.id.tvFileName)
         private val ivFileIcon: ImageView = itemView.findViewById(R.id.ivFileIcon)
 
-        fun bind(name: String, type: FileType, isSelected: Boolean, listener: OnItemClickListener) {
+        fun bind(
+            name: String,
+            type: FileType,
+            isSelected: Boolean,
+            listener: OnItemClickListener
+        ) {
             itemView.apply {
                 this.isSelected = isSelected
                 setOnClickListener { listener.onItemClicked(name, type) }
+                setOnLongClickListener {
+                    listener.onItemLongClicked(name)
+                    true
+                }
             }
             tvFileName.text = name
             ivFileIcon.setImageResource(type.iconRes)
@@ -44,7 +53,12 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val fileName = setupFiles[position]
         val fileType = getFileType(fileName)
-        holder.bind(fileName, fileType, selectedIndices.contains(position), listener)
+        holder.bind(
+            fileName,
+            fileType,
+            selectedIndices.contains(position),
+            listener
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -53,11 +67,18 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun cancelMultiSelect() {
+        isMultiSelectOn = false
+        selectedIndices.clear()
+        notifyDataSetChanged()
+    }
+
     fun selectFile(fileName: String) {
         val index = setupFiles.indexOf(fileName)
         if ((isMultiSelectOn || selectedIndices.isEmpty())) {
             if (selectedIndices.contains(index)) {
-                selectedIndices.removeAt(index)
+                selectedIndices.remove(index)
             } else {
                 selectedIndices.add(index)
             }
@@ -85,8 +106,9 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
             }
         }
 
-    fun interface OnItemClickListener {
+    interface OnItemClickListener {
         fun onItemClicked(fileName: String, fileType: FileType)
+        fun onItemLongClicked(fileName: String)
     }
 
     companion object {

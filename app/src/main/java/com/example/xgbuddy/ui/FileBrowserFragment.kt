@@ -3,6 +3,7 @@ package com.example.xgbuddy.ui
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -29,7 +30,7 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 @AndroidEntryPoint
-class FileBrowserFragment : DialogFragment() {
+class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemClickListener {
 
     private val midiViewModel: MidiViewModel by activityViewModels()
 
@@ -46,7 +47,7 @@ class FileBrowserFragment : DialogFragment() {
             navigateUp()
         }
         backCallback.isEnabled = false
-        fileAdapter = FileBrowserRecyclerAdapter(requireContext().fileList(), this::openOrNavigate)
+        fileAdapter = FileBrowserRecyclerAdapter(requireContext().fileList(), this)
         arguments?.let {
             mode = it.getInt(ARG_MODE)
             setupJsonString = it.getString(ARG_JSON) ?: ""
@@ -60,23 +61,29 @@ class FileBrowserFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFileBrowserBinding.inflate(layoutInflater)
-        binding.upListItem.apply {
-            tvFileName.text = "..."
-            ivFileIcon.setImageResource(R.mipmap.ic_folder)
-            root.setOnClickListener { navigateUp() }
-        }
-        if (mode == READ) {
-            binding.bSaveSetup.text = "Open"
-            binding.etSetupName.apply {
-                isFocusable = false
-                setOnTouchListener { _, _ -> true }
+        binding.apply {
+            upListItem.apply {
+                tvFileName.text = "..."
+                ivFileIcon.setImageResource(R.mipmap.ic_folder)
+                root.setOnClickListener { navigateUp() }
             }
-        }
-        binding.bSaveSetup.setOnClickListener {
             if (mode == READ) {
-                loadSetup()
-            } else {
-                saveSetup()
+                bSaveSetup.text = "Open"
+                etSetupName.apply {
+                    isFocusable = false
+                    setOnTouchListener { _, _ -> true }
+                }
+            }
+            bSaveSetup.setOnClickListener {
+                if (mode == READ) {
+                    loadSetup()
+                } else {
+                    saveSetup()
+                }
+            }
+            bMultiCancel.setOnClickListener {
+                fileAdapter.cancelMultiSelect()
+                updateFileControlVisibility(false)
             }
         }
         setupRecyclerView()
@@ -123,9 +130,14 @@ class FileBrowserFragment : DialogFragment() {
                 updateBreadcrumb()
             }
         } else {
-            fileAdapter.selectFile(fileName)
-            binding.etSetupName.setText(fileName)
-            binding.bSaveSetup.isEnabled = true
+            if (fileAdapter.isMultiSelectOn) {
+                fileAdapter.selectFile(fileName)
+                updateSelectedCountText()
+            } else {
+                fileAdapter.selectFile(fileName)
+                binding.etSetupName.setText(fileName)
+                binding.bSaveSetup.isEnabled = true
+            }
         }
     }
 
@@ -240,6 +252,41 @@ class FileBrowserFragment : DialogFragment() {
             return FileBrowserFragment().apply {
                 arguments = args
             }
+        }
+    }
+
+    override fun onItemClicked(fileName: String, fileType: FileType) {
+        openOrNavigate(fileName, fileType)
+    }
+
+    override fun onItemLongClicked(fileName: String) {
+        fileAdapter.isMultiSelectOn = true
+        fileAdapter.selectFile(fileName)
+        updateSelectedCountText()
+        updateFileControlVisibility(true)
+    }
+
+    private fun updateFileControlVisibility(isMultiSelectOn: Boolean) {
+        val visibilityMulti = if (isMultiSelectOn) View.VISIBLE else View.GONE
+        val visibilitySingle = if (isMultiSelectOn) View.GONE else View.VISIBLE
+        val backgroundColor =
+            if (isMultiSelectOn) Color.parseColor("#388E3C") else Color.TRANSPARENT
+        binding.apply {
+            bAddDir.visibility = visibilitySingle
+            bDelete.visibility = visibilityMulti
+            bMove.visibility = visibilityMulti
+            tvMultiCount.visibility = visibilityMulti
+            bMultiCancel.visibility = visibilityMulti
+            clFileControls.setBackgroundColor(backgroundColor)
+            etSetupName.isEnabled = !isMultiSelectOn
+            bSaveSetup.isEnabled = !isMultiSelectOn
+        }
+    }
+
+    private fun updateSelectedCountText() {
+        binding.tvMultiCount.text = buildString {
+            append(fileAdapter.selectedIndices.size)
+            append(" Selected")
         }
     }
 }
