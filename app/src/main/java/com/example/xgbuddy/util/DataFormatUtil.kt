@@ -153,11 +153,44 @@ object DataFormatUtil {
     }
 
     val keyAssignFormatter = DataAssignFormatter {
-        if (it == 0) {
-            "Single"
-        } else {
-            "Multi"
+        when (it) {
+            0 -> "Single"
+            1 -> "Multi"
+            2 -> "Inst"
+            else -> "?"
         }
+    }
+
+    val polyMonoFormatter = DataAssignFormatter {
+        if (it == 0)
+            "Mono"
+        else
+            "Poly"
+    }
+
+    val partModeFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "Normal"
+            1 -> "GM Drum"
+            2 -> "XG Drum 1"
+            3 -> "XG Drum 2"
+            else -> "?"
+        }
+    }
+
+    val filterFormatter = DataAssignFormatter {
+        "${-9600 + it * 150}"
+    }
+
+    val signedPercentFormatter = DataAssignFormatter {
+        "${-100 + (it * 1.57).toInt()}"
+    }
+
+    val onOffFormatter = DataAssignFormatter {
+        if (it == 0)
+            "Off"
+        else
+            "On"
     }
 
     fun interface DataAssignFormatter {
