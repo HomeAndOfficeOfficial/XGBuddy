@@ -1,6 +1,7 @@
 package com.example.xgbuddy.data.xg
 
 import com.example.xgbuddy.R
+import com.example.xgbuddy.util.DataFormatUtil
 import kotlin.reflect.KMutableProperty
 
 enum class EffectParameterData(
@@ -12,7 +13,8 @@ enum class EffectParameterData(
     val size: Byte = 1,
     val reflectedField: KMutableProperty<Byte>? = null,
     val reflectedBigField: KMutableProperty<Int>? = null,
-    val paramIndex: Int? = null
+    val paramIndex: Int? = null,
+    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.signed127Formatter
 ) {
     REVERB_TYPE(R.string.fxpc_rev_type, 0, default = 1, size = 2),
     REVERB_PARAM_1(R.string.fxpc_rev_p1, 2, reflectedBigField = Effect::param1, paramIndex = 0),

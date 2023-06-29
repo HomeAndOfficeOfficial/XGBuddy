@@ -2,6 +2,7 @@ package com.example.xgbuddy.data.qs300
 
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.MidiConstants
+import com.example.xgbuddy.util.DataFormatUtil
 import kotlin.reflect.KMutableProperty
 
 enum class QS300ElementParameter(
@@ -10,7 +11,8 @@ enum class QS300ElementParameter(
     val min: Byte,
     val max: Byte,
     val descriptionRes: Int,
-    val reflectedField: KMutableProperty<Byte>
+    val reflectedField: KMutableProperty<Byte>,
+    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.signed127Formatter
 ) {
     WAVE_HI(0x3du, 7, 7, 13, R.string.qs300_el_wave_hi, QS300Element::waveHi),
     WAVE_LO(0x3eu, 0, 0, 6, R.string.qs300_el_wave_lo, QS300Element::waveLo),

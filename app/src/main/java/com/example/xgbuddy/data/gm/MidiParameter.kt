@@ -3,6 +3,7 @@ package com.example.xgbuddy.data.gm
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.xg.NRPN
+import com.example.xgbuddy.util.DataFormatUtil
 import kotlin.reflect.KMutableProperty
 
 enum class MidiParameter(
@@ -13,7 +14,8 @@ enum class MidiParameter(
     val default: Byte,
     val controlChange: MidiControlChange?,
     val nrpn: NRPN?,
-    val reflectedField: KMutableProperty<Byte>
+    val reflectedField: KMutableProperty<Byte>,
+    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.signed127Formatter
 ) {
     ELEMENT_RESERVE(
         0,
