@@ -109,7 +109,7 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
 
 
     override fun initParameter(paramId: Int): ControlParameter {
-        val param = QS300ElementParameter::descriptionRes findBy paramId
+        val param = QS300ElementParameter::nameRes findBy paramId
         val voice = viewModel.preset.value!!.voices[viewModel.voice.value!!]
         val element = voice.elements[elementIndex]
         return ControlParameter(
