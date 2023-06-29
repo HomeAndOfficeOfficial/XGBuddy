@@ -37,5 +37,6 @@ class SwitchControlView : ParameterControlView {
 
     override fun updateViews() {
         switch.isChecked = controlParameter?.value == 1
+        tvValue?.text = controlParameter?.formatter!!.format(controlParameter!!.value)
     }
 }

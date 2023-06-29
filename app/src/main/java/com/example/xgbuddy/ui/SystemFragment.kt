@@ -47,7 +47,7 @@ class SystemFragment : Fragment() {
 
     private fun setupControlView(view: SliderControlView, param: SystemParameter, value: Int) {
         view.apply {
-            controlParameter = ControlParameter(param, value)
+            controlParameter = ControlParameter(getString(param.nameRes), param, value)
             shouldReportAllTouchEvents = false
             isRealtimeControl = false
             this.value = value

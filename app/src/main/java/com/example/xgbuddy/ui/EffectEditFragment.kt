@@ -52,6 +52,7 @@ abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), 
             val reverbParam = vmEffect.parameterList?.get(effectParamData)
             val defaultValue = vmEffect.defaultValues!![effectParamData.paramIndex!!]
             return ControlParameter(
+                getString(reverbParam?.nameRes ?: effectParamData.resId),
                 effectParamData,
                 reverbParam,
                 value,
@@ -60,6 +61,7 @@ abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), 
         } else {
             val value = vmEffect.getPropertyValue(effectParamData.reflectedField)
             return ControlParameter(
+                getString(effectParamData.resId),
                 effectParamData,
                 null,
                 value.toInt(),
