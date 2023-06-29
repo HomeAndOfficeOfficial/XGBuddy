@@ -9,409 +9,313 @@ import kotlin.reflect.KMutableProperty
 enum class MidiParameter(
     val addrLo: Byte, // For use in bulk dump and XG Param Change sysex
     val descriptionRes: Int,
-    val min: Byte,
-    val max: Byte,
-    val default: Byte,
-    val controlChange: MidiControlChange?,
-    val nrpn: NRPN?,
+    val min: Byte = 0,
+    val max: Byte = 127,
+    val default: Byte = 64,
+    val controlChange: MidiControlChange? = null,
+    val nrpn: NRPN? = null,
     val reflectedField: KMutableProperty<Byte>,
-    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.signed127Formatter
+    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.noFormat
 ) {
-    ELEMENT_RESERVE(
+    ELEMENT_RESERVE( // For drum, default is 0
         0,
         R.string.midi_mp_el_reserve,
-        0,
-        32,
-        2,
-        null,
-        null, MidiPart::elementReserve
-    ), // For drum, default is 0
-    BANK_MSB(
+        max = 32,
+        default = 2,
+        reflectedField = MidiPart::elementReserve
+    ),
+    BANK_MSB( // For drum, default is 127
         1,
         R.string.midi_mp_BANK_MSB,
-        0,
-        127,
-        0,
-        MidiControlChange.BANK_SELECT_MSB,
-        null, MidiPart::bankMsb
-    ),                        // For drum, default is 127
+        default = 0,
+        controlChange = MidiControlChange.BANK_SELECT_MSB,
+        reflectedField = MidiPart::bankMsb
+    ),
     BANK_LSB(
         2,
         R.string.midi_mp_BANK_LSB,
-        0,
-        127,
-        0,
-        MidiControlChange.BANK_SELECT_LSB,
-        null, MidiPart::bankLsb
+        default = 0,
+        controlChange = MidiControlChange.BANK_SELECT_LSB,
+        reflectedField = MidiPart::bankLsb
     ),
     PROG_NUMBER(
         3,
         R.string.midi_mp_PROG_NUMBER,
-        0,
-        127,
-        0, null, null, MidiPart::programNumber
+        default = 0,
+        reflectedField = MidiPart::programNumber
     ),                      // Default is part num
-    RCV_CHANNEL(
+    RCV_CHANNEL( // Default is part num, 0x7f also acceptable as OFF
         4,
         R.string.midi_mp_RCV_CHANNEL,
-        0,
-        15,
-        0, null, null, MidiPart::receiveChannel
-    ),                  // Default is part num, 0x7f also acceptable as OFF
+        max = 15,
+        default = 0,
+        reflectedField = MidiPart::receiveChannel
+    ),
     POLY_MODE(
         5,
         R.string.midi_mp_POLY_MODE,
-        0,
-        1,
-        1,
-        MidiControlChange.POLY_MODE,
-        null, MidiPart::polyMode
+        max = 1,
+        default = 1,
+        controlChange = MidiControlChange.POLY_MODE,
+        reflectedField = MidiPart::polyMode
     ),
-    KEY_ON_ASSIGN(6, R.string.midi_mp_KEY_ON_ASSIGN, 0, 2, 1, null, null, MidiPart::keyOnAssign),
-    PART_MODE(
+    KEY_ON_ASSIGN(
+        6,
+        R.string.midi_mp_KEY_ON_ASSIGN,
+        max = 2,
+        default = 1,
+        reflectedField = MidiPart::keyOnAssign
+    ),
+    PART_MODE( // For drum, default is 2
         7,
         R.string.midi_mp_PART_MODE,
-        0,
-        3,
-        0, null, null, MidiPart::partMode
-    ),                        // For drum, default is 2
-    NOTE_SHIFT(8, R.string.midi_mp_NOTE_SHIFT, 0x28, 0x58, 0x40, null, null, MidiPart::noteShift),
-
-    //    DETUNE(9, R.string.midi_mp_DETUNE, , null, MidiPart::elementReserve), /* TODO: Create special case for detune */
+        max = 3,
+        default = 0,
+        reflectedField = MidiPart::partMode
+    ),
+    NOTE_SHIFT(
+        8,
+        R.string.midi_mp_NOTE_SHIFT,
+        0x28,
+        0x58,
+        0x40,
+        reflectedField = MidiPart::noteShift
+    ),
     VOLUME(
         0x0b,
         R.string.midi_mp_VOLUME,
-        0,
-        127,
-        64,
-        MidiControlChange.CH_VOLUME,
-        null, MidiPart::volume
+        controlChange = MidiControlChange.CH_VOLUME,
+        reflectedField = MidiPart::volume
     ),
     VEL_SENS_DEPTH(
         0x0c,
         R.string.midi_mp_VEL_SENS_DEPTH,
-        0,
-        127,
-        64,
-        null,
-        null,
-        MidiPart::velSensDepth
+        reflectedField = MidiPart::velSensDepth
     ),
     VEL_SENS_OFFSET(
         0x0d,
         R.string.midi_mp_VEL_SENS_OFFSET,
-        0,
-        127,
-        64,
-        null,
-        null, MidiPart::velSenseOffset
+        reflectedField = MidiPart::velSenseOffset
     ),
-    PAN(
+    PAN( // 0: Random, L1 - C64 - R127
         0x0e,
         R.string.midi_mp_PAN,
-        0,
-        127,
-        64,
-        MidiControlChange.PAN,
-        null, MidiPart::pan
-    ), // 0: Random, L1 - C64 - R127
+        controlChange = MidiControlChange.PAN,
+        reflectedField = MidiPart::pan
+    ),
     NOTE_LIMIT_LOW(
         0x0f,
         R.string.midi_mp_NOTE_LIMIT_LOW,
-        0,
-        127,
-        0,
-        null,
-        null,
-        MidiPart::noteLimitLo
+        default = 0,
+        reflectedField = MidiPart::noteLimitLo
     ),
     NOTE_LIMIT_HIGH(
         0x10,
         R.string.midi_mp_NOTE_LIMIT_HIGH,
-        0,
-        127,
-        127,
-        null,
-        null, MidiPart::noteLimitHi
+        default = 127,
+        reflectedField = MidiPart::noteLimitHi
     ),
-    DRY_LEVEL(0x11, R.string.midi_mp_DRY_LEVEL, 0, 127, 127, null, null, MidiPart::dryLevel),
+    DRY_LEVEL(0x11, R.string.midi_mp_DRY_LEVEL, default = 127, reflectedField = MidiPart::dryLevel),
     CHORUS_SEND(
         0x12,
         R.string.midi_mp_CHORUS_SEND,
-        0,
-        127,
-        0,
-        MidiControlChange.CHORUS,
-        null, MidiPart::chorusSend
+        default = 0,
+        controlChange = MidiControlChange.CHORUS,
+        reflectedField = MidiPart::chorusSend
     ),
     REVERB_SEND(
         0x13,
         R.string.midi_mp_REVERB_SEND,
-        0,
-        127,
-        0x28,
-        MidiControlChange.REVERB_SEND,
-        null, MidiPart::reverbSend
+        default = 0x28,
+        controlChange = MidiControlChange.REVERB_SEND,
+        reflectedField = MidiPart::reverbSend
     ),
     VARI_SEND(
         0x14,
         R.string.midi_mp_VARI_SEND,
-        0,
-        127,
-        0,
-        MidiControlChange.DETUNE,
-        null, MidiPart::variationSend
+        default = 0,
+        controlChange = MidiControlChange.DETUNE,
+        reflectedField = MidiPart::variationSend
     ),
     VIBRATO_RATE(
         0x15,
         R.string.midi_mp_VIBRATO_RATE,
-        0,
-        127,
-        0x40,
-        null,
-        NRPN.VIBRATO_RATE,
-        MidiPart::vibratoRate
+        nrpn = NRPN.VIBRATO_RATE,
+        reflectedField = MidiPart::vibratoRate
     ),
     VIBRATO_DEPTH(
         0x16,
         R.string.midi_mp_VIBRATO_DEPTH,
-        0,
-        127,
-        0x40,
-        null,
-        NRPN.VIBRATO_DEPTH,
-        MidiPart::vibratoDepth
+        nrpn = NRPN.VIBRATO_DEPTH,
+        reflectedField = MidiPart::vibratoDepth
     ),
     VIBRATO_DELAY(
         0x17,
         R.string.midi_mp_VIBRATO_DELAY,
-        0,
-        127,
-        0x40,
-        null,
-        NRPN.VIBRATO_DELAY,
-        MidiPart::vibratoDelay
+        nrpn = NRPN.VIBRATO_DELAY,
+        reflectedField = MidiPart::vibratoDelay
     ),
     CUTOFF_FREQ(
         0x18,
         R.string.midi_mp_CUTOFF_FREQ,
-        0,
-        127,
-        0x40,
-        MidiControlChange.CUTOFF,
-        NRPN.CUTOFF_FREQ, MidiPart::cutoffFreq
+        controlChange = MidiControlChange.CUTOFF,
+        nrpn = NRPN.CUTOFF_FREQ,
+        reflectedField = MidiPart::cutoffFreq
     ),
     RESONANCE(
         0x19,
         R.string.midi_mp_RESONANCE,
-        0,
-        127,
-        0x40,
-        MidiControlChange.RESONANCE,
-        NRPN.RESONANCE, MidiPart::resonance
+        controlChange = MidiControlChange.RESONANCE,
+        nrpn = NRPN.RESONANCE,
+        reflectedField = MidiPart::resonance
     ),
     EG_ATTACK_TIME(
         0x1a,
         R.string.midi_mp_EG_ATTACK_TIME,
-        0,
-        127,
-        0x40,
-        MidiControlChange.AMP_ATTACK,
-        NRPN.EG_ATTACK, MidiPart::egAttackTime
+        controlChange = MidiControlChange.AMP_ATTACK,
+        nrpn = NRPN.EG_ATTACK,
+        reflectedField = MidiPart::egAttackTime
     ),
     EG_DECAY_TIME(
         0x1b,
         R.string.midi_mp_EG_DECAY_TIME,
-        0,
-        127,
-        0x40,
-        null,
-        NRPN.EG_DECAY,
-        MidiPart::egDecayTime
+        nrpn = NRPN.EG_DECAY,
+        reflectedField = MidiPart::egDecayTime
     ),
     EG_RELEASE_TIME(
         0x1c,
         R.string.midi_mp_EG_RELEASE_TIME,
-        0,
-        127,
-        0x40,
-        MidiControlChange.AMP_RELEASE,
-        NRPN.EG_RELEASE, MidiPart::egReleaseTime
+        controlChange = MidiControlChange.AMP_RELEASE,
+        nrpn = NRPN.EG_RELEASE,
+        reflectedField = MidiPart::egReleaseTime
     ),
     MW_PITCH_CTRL(
         0x1d,
         R.string.midi_mp_MW_PITCH_CTRL,
-        0x28,
-        0x58,
-        0x40,
-        null,
-        null, MidiPart::mwPitchControl
+        min = 0x28,
+        max = 0x58,
+        reflectedField = MidiPart::mwPitchControl
     ),
     MW_FILTER_CTRL(
         0x1e,
         R.string.midi_mp_MW_FILTER_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null, MidiPart::mwFilterControl
+        reflectedField = MidiPart::mwFilterControl
     ),
     MW_AMP_CTRL(
         0x1f,
         R.string.midi_mp_MW_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::mwAmplControl
+        reflectedField = MidiPart::mwAmplControl
     ),
     MW_LFO_PMOD_DEPTH(
         0x20,
         R.string.midi_mp_MW_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0x0a,
-        null,
-        null, MidiPart::mwLfoPmodDepth
+        default = 0x0a,
+        reflectedField = MidiPart::mwLfoPmodDepth
     ),
     MW_LFO_FMOD_DEPTH(
         0x21,
         R.string.midi_mp_MW_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::mwLfoFmodDepth
+        default = 0,
+        reflectedField = MidiPart::mwLfoFmodDepth
     ),
     MW_LFO_AMOD_DEPTH(
         0x22,
         R.string.midi_mp_MW_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::mwLfoAmodDepth
+        default = 0,
+        reflectedField = MidiPart::mwLfoAmodDepth
     ),
     BEND_PITCH_CTRL(
         0x23,
         R.string.midi_mp_BEND_PITCH_CTRL,
         0x28,
         0x58,
-        0x42, null,
-        null, MidiPart::bendPitchContrl
+        0x42,
+        reflectedField = MidiPart::bendPitchContrl
     ),
     BEND_FILTER_CTRL(
         0x24,
         R.string.midi_mp_BEND_FILTER_CTRL,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::bendFilterContrl
+        reflectedField = MidiPart::bendFilterContrl
     ),
     BEND_AMP_CTRL(
         0x25,
         R.string.midi_mp_BEND_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null, MidiPart::bendAmplContrl
+        reflectedField = MidiPart::bendAmplContrl
     ),
     BEND_LFO_PMOD_DEPTH(
         0x26,
         R.string.midi_mp_BEND_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::bendLfoPmodDepth
+        reflectedField = MidiPart::bendLfoPmodDepth
     ),
     BEND_LFO_FMOD_DEPTH(
         0x27,
         R.string.midi_mp_BEND_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::bendLfoFmodDepth
+        reflectedField = MidiPart::bendLfoFmodDepth
     ),
     BEND_LFO_AMOD_DEPTH(
         0x28,
         R.string.midi_mp_BEND_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::bendLfoAmodDepth
+        reflectedField = MidiPart::bendLfoAmodDepth
     ),
     RCV_PITCH_BEND(
         0x30,
         R.string.midi_mp_RCV_PITCH_BEND,
-        0,
-        1,
-        1,
-        null,
-        null,
-        MidiPart::rcvPitchBend
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvPitchBend
     ),
     RCV_CH_AFTER_TOUCH(
         0x31,
         R.string.midi_mp_RCV_CH_AFTER_TOUCH,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvChAfterTouch
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvChAfterTouch
     ),
     RCV_PROGRAM_CHANGE(
         0x32,
         R.string.midi_mp_RCV_PROGRAM_CHANGE,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvProgramChange
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvProgramChange
     ),
     RCV_CONTROL_CHANGE(
         0x33,
         R.string.midi_mp_RCV_CONTROL_CHANGE,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvControlChange
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvControlChange
     ),
     RCV_POLY_AFTER_TOUCH(
         0x34,
         R.string.midi_mp_RCV_POLY_AFTER_TOUCH,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvPolyAfterTouch
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvPolyAfterTouch
     ),
     RCV_NOTE_MESSAGE(
         0x35,
         R.string.midi_mp_RCV_NOTE_MESSAGE,
-        0,
-        1,
-        1,
-        null,
-        null, MidiPart::rcvNoteMessage
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvNoteMessage
     ),
     RCV_RPN(0x36, R.string.midi_mp_RCV_RPN, 0, 1, 1, null, null, MidiPart::rcvRpn),
-    RCV_NRPN(
+    RCV_NRPN( // Default for XG = 1, GM = 0
         0x37,
         R.string.midi_mp_RCV_NRPN,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvNrpn
-    ), // Default for XG = 1, GM = 0
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvNrpn
+    ),
     RCV_MOD(0x38, R.string.midi_mp_RCV_MOD, 0, 1, 1, null, null, MidiPart::rcvMod),
     RCV_VOLUME(0x39, R.string.midi_mp_RCV_VOLUME, 0, 1, 1, null, null, MidiPart::rcvVolume),
     RCV_PAN(0x3a, R.string.midi_mp_RCV_PAN, 0, 1, 1, null, null, MidiPart::rcvPan),
     RCV_EXPRESSION(
         0x3b,
         R.string.midi_mp_RCV_EXPRESSION,
-        0,
-        1,
-        1,
-        null,
-        null,
-        MidiPart::rcvExpression
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvExpression
     ),
     RCV_HOLD1(0x3c, R.string.midi_mp_RCV_HOLD1, 0, 1, 1, null, null, MidiPart::rcvHold),
     RCV_PORTA(0x3d, R.string.midi_mp_RCV_PORTA, 0, 1, 1, null, null, MidiPart::rcvPorta),
@@ -419,415 +323,268 @@ enum class MidiParameter(
     RCV_SOFT_PEDAL(
         0x3f,
         R.string.midi_mp_RCV_SOFT_PEDAL,
-        0,
-        1,
-        1,
-        null,
-        null,
-        MidiPart::rcvSoftPedal
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvSoftPedal
     ),
     RCV_BANK_SELECT(
         0x40,
         R.string.midi_mp_RCV_BANK_SELECT,
-        0,
-        1,
-        1, null,
-        null, MidiPart::rcvBankSelect
+        max = 1,
+        default = 1,
+        reflectedField = MidiPart::rcvBankSelect
     ), // Default for XG = 1, GM = 0
     SCALE_TUNE_C(
         0x41,
         R.string.midi_mp_SCALE_TUNE_C,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneC
+        reflectedField = MidiPart::scaleTuneC
     ),
     SCALE_TUNE_CS(
         0x42,
         R.string.midi_mp_SCALE_TUNE_CS,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneCS
+        reflectedField = MidiPart::scaleTuneCS
     ),
     SCALE_TUNE_D(
         0x43,
         R.string.midi_mp_SCALE_TUNE_D,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneD
+        reflectedField = MidiPart::scaleTuneD
     ),
     SCALE_TUNE_DS(
         0x44,
         R.string.midi_mp_SCALE_TUNE_DS,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneDS
+        reflectedField = MidiPart::scaleTuneDS
     ),
     SCALE_TUNE_E(
         0x45,
         R.string.midi_mp_SCALE_TUNE_E,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneE
+        reflectedField = MidiPart::scaleTuneE
     ),
     SCALE_TUNE_F(
         0x46,
         R.string.midi_mp_SCALE_TUNE_F,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneF
+        reflectedField = MidiPart::scaleTuneF
     ),
     SCALE_TUNE_FS(
         0x47,
         R.string.midi_mp_SCALE_TUNE_FS,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneFS
+        reflectedField = MidiPart::scaleTuneFS
     ),
     SCALE_TUNE_G(
         0x48,
         R.string.midi_mp_SCALE_TUNE_G,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneG
+        reflectedField = MidiPart::scaleTuneG
     ),
     SCALE_TUNE_GS(
         0x49,
         R.string.midi_mp_SCALE_TUNE_GS,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneGS
+        reflectedField = MidiPart::scaleTuneGS
     ),
     SCALE_TUNE_A(
         0x4a,
         R.string.midi_mp_SCALE_TUNE_A,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneA
+        reflectedField = MidiPart::scaleTuneA
     ),
     SCALE_TUNE_AS(
         0x4b,
         R.string.midi_mp_SCALE_TUNE_AS,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneAS
+        reflectedField = MidiPart::scaleTuneAS
     ),
     SCALE_TUNE_B(
         0x4c,
         R.string.midi_mp_SCALE_TUNE_B,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::scaleTuneB
+        reflectedField = MidiPart::scaleTuneB
     ),
     CAT_PITCH_CTRL(
         0x4d,
         R.string.midi_mp_CAT_PITCH_CTRL,
         0x28,
         0x58,
-        0x40, null,
-        null, MidiPart::catPitchControl
+        0x40,
+        reflectedField = MidiPart::catPitchControl
     ),
     CAT_FILTER_CTRL(
         0x4e,
         R.string.midi_mp_CAT_FILTER_CTRL,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::catFilterControl
+        reflectedField = MidiPart::catFilterControl
     ),
     CAT_AMP_CTRL(
         0x4f,
         R.string.midi_mp_CAT_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::catAmplControl
+        reflectedField = MidiPart::catAmplControl
     ),
     CAT_LFO_PMOD_DEPTH(
         0x50,
         R.string.midi_mp_CAT_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::catLfoPmodDepth
+        default = 0,
+        reflectedField = MidiPart::catLfoPmodDepth
     ),
     CAT_LFO_FMOD_DEPTH(
         0x51,
         R.string.midi_mp_CAT_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0,
-        null,
-        null, MidiPart::catLfoFmodDepth
+        default = 0,
+        reflectedField = MidiPart::catLfoFmodDepth
     ),
     CAT_LFO_AMOD_DEPTH(
         0x52,
         R.string.midi_mp_CAT_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::catLfoAmodDepth
+        default = 0,
+        reflectedField = MidiPart::catLfoAmodDepth
     ),
     PAT_PITCH_CTRL(
         0x53,
         R.string.midi_mp_PAT_PITCH_CTRL,
         0x28,
         0x58,
-        0x40, null,
-        null, MidiPart::patPitchControl
+        0x40,
+        reflectedField = MidiPart::patPitchControl
     ),
     PAT_FILTER_CTRL(
         0x54,
         R.string.midi_mp_PAT_FILTER_CTRL,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::patFilterControl
+        reflectedField = MidiPart::patFilterControl
     ),
     PAT_AMP_CTRL(
         0x55,
         R.string.midi_mp_PAT_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::patAmplControl
+        reflectedField = MidiPart::patAmplControl
     ),
     PAT_LFO_PMOD_DEPTH(
         0x56,
         R.string.midi_mp_PAT_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::patLfoPmodDepth
+        default = 0,
+        reflectedField = MidiPart::patLfoPmodDepth
     ),
     PAT_LFO_FMOD_DEPTH(
         0x57,
         R.string.midi_mp_PAT_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::patLfoFmodDepth
+        default = 0,
+        reflectedField = MidiPart::patLfoFmodDepth
     ),
     PAT_LFO_AMOD_DEPTH(
         0x58,
         R.string.midi_mp_PAT_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::patLfoAmodDepth
+        default = 0,
+        reflectedField = MidiPart::patLfoAmodDepth
     ),
     AC1_CTRL_NUMBER(
         0x59,
         R.string.midi_mp_AC1_CTRL_NUMBER,
-        0,
-        0x5f,
-        0x10,
-        null,
-        null, MidiPart::ac1CtrlNumber
+        max = 0x5f,
+        default = 0x10,
+        reflectedField = MidiPart::ac1CtrlNumber
     ),
     AC1_PITCH_CTRL(
         0x5a,
         R.string.midi_mp_AC1_PITCH_CTRL,
         0x28,
         0x58,
-        0x40,
-        null,
-        null, MidiPart::ac1PitchCtrl
+        reflectedField = MidiPart::ac1PitchCtrl
     ),
     AC1_FILTER_CTRL(
         0x5b,
         R.string.midi_mp_AC1_FILTER_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null, MidiPart::ac1FilterCtrl
+        reflectedField = MidiPart::ac1FilterCtrl
     ),
     AC1_AMP_CTRL(
         0x5c,
         R.string.midi_mp_AC1_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::ac1AmpCtrl
+        reflectedField = MidiPart::ac1AmpCtrl
     ),
     AC1_LFO_PMOD_DEPTH(
         0x5d,
         R.string.midi_mp_AC1_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac1LfoPmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac1LfoPmodDepth
     ),
     AC1_LFO_FMOD_DEPTH(
         0x5e,
         R.string.midi_mp_AC1_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac1LfoFmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac1LfoFmodDepth
     ),
     AC1_LFO_AMOD_DEPTH(
         0x5f,
         R.string.midi_mp_AC1_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac1LfoAmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac1LfoAmodDepth
     ),
     AC2_CTRL_NUMBER(
         0x60,
         R.string.midi_mp_AC2_CTRL_NUMBER,
-        0,
-        0x5f,
-        0x11,
-        null,
-        null, MidiPart::ac2CtrlNumber
+        max = 0x5f,
+        default = 0x11,
+        reflectedField = MidiPart::ac2CtrlNumber
     ),
     AC2_PITCH_CTRL(
         0x61,
         R.string.midi_mp_AC2_PITCH_CTRL,
         0x28,
         0x58,
-        0x40,
-        null,
-        null, MidiPart::ac2PitchCtrl
+        reflectedField = MidiPart::ac2PitchCtrl
     ),
     AC2_FILTER_CTRL(
         0x62,
         R.string.midi_mp_AC2_FILTER_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null, MidiPart::ac2FilterCtrl
+        reflectedField = MidiPart::ac2FilterCtrl
     ),
     AC2_AMP_CTRL(
         0x63,
         R.string.midi_mp_AC2_AMP_CTRL,
-        0,
-        127,
-        0x40,
-        null,
-        null,
-        MidiPart::ac2AmpCtrl
+        reflectedField = MidiPart::ac2AmpCtrl
     ),
     AC2_LFO_PMOD_DEPTH(
         0x64,
         R.string.midi_mp_AC2_LFO_PMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac2LfoPmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac2LfoPmodDepth
     ),
     AC2_LFO_FMOD_DEPTH(
         0x65,
         R.string.midi_mp_AC2_LFO_FMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac2LfoFmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac2LfoFmodDepth
     ),
     AC2_LFO_AMOD_DEPTH(
         0x66,
         R.string.midi_mp_AC2_LFO_AMOD_DEPTH,
-        0,
-        127,
-        0, null,
-        null, MidiPart::ac2LfoAmodDepth
+        default = 0,
+        reflectedField = MidiPart::ac2LfoAmodDepth
     ),
     PORTA_SWITCH(
         0x67,
         R.string.midi_mp_PORTA_SWITCH,
-        0,
-        1,
-        0,
-        MidiControlChange.PORTA,
-        null, MidiPart::portaSwitch
+        max = 1,
+        default = 0,
+        controlChange = MidiControlChange.PORTA,
+        reflectedField = MidiPart::portaSwitch
     ),
     PORTA_TIME(0x68, R.string.midi_mp_PORTA_TIME, 0, 127, 0, null, null, MidiPart::portaTime),
     PITCH_EG_INIT_LVL(
         0x69,
         R.string.midi_mp_PITCH_EG_INIT_LVL,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::pitchEgInitLvl
+        reflectedField = MidiPart::pitchEgInitLvl
     ),
     PITCH_EG_ATTACK_TIME(
         0x6a,
         R.string.midi_mp_PITCH_EG_ATTACK_TIME,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::pitchEgAttackTime
+        reflectedField = MidiPart::pitchEgAttackTime
     ),
     PITCH_EG_REL_LVL(
         0x6b,
         R.string.midi_mp_PITCH_EG_REL_LVL,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::pitchEgRelLvl
+        reflectedField = MidiPart::pitchEgRelLvl
     ),
     PITCH_EG_REL_TIME(
         0x6c,
         R.string.midi_mp_PITCH_EG_REL_TIME,
-        0,
-        127,
-        0x40, null,
-        null, MidiPart::pitchEgRelTime
+        reflectedField = MidiPart::pitchEgRelTime
     ),
     VEL_LIMIT_LOW(
         0x6d,
         R.string.midi_mp_VEL_LIMIT_LOW,
         1,
-        127,
-        1,
-        null,
-        null,
-        MidiPart::velocityLimitLo
+        default = 1,
+        reflectedField = MidiPart::velocityLimitLo
     ),
     VEL_LIMIT_HIGH(
         0x6e,
@@ -835,7 +592,6 @@ enum class MidiParameter(
         1,
         127,
         127,
-        null,
-        null, MidiPart::velocityLimitHi
+        reflectedField = MidiPart::velocityLimitHi
     )
 }

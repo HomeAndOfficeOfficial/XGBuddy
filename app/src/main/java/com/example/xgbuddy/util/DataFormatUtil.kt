@@ -4,6 +4,8 @@ import com.example.xgbuddy.data.xg.EffectDataAssignTables
 
 object DataFormatUtil {
 
+    val noFormat = DataAssignFormatter { "$it" }
+
     val dryWetAssignFormatter = DataAssignFormatter {
         "${(it - 1 / 126) * 100}"
     }
