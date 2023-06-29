@@ -6,7 +6,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.midi.MidiDeviceInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,17 +13,14 @@ import android.view.MenuItem
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.view.MenuProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.example.xgbuddy.data.gm.MidiPart
-import com.example.xgbuddy.ui.ConnectionStatusFragment
-import com.example.xgbuddy.ui.MidiViewModel
-import com.example.xgbuddy.ui.QS300PresetCaptureFragment
+import com.example.xgbuddy.ui.*
+import com.example.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.example.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -94,6 +90,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var midiSession: MidiSession
 
+    private val navHost: NavHostFragment by lazy {
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+    }
     private val midiViewModel: MidiViewModel by viewModels()
     private val qs300ViewModel: QS300ViewModel by viewModels()
     private var connectedDevices: Set<MidiDeviceInfo> = setOf()
@@ -106,11 +105,21 @@ class MainActivity : AppCompatActivity() {
             setContentView(R.layout.activity_main)
             setupOptionsMenu()
             setupNavigation()
-            midiViewModel.selectedChannel.observe(this) {
-                showOrHideMenuItems()
-            }
-            midiViewModel.channels.observe(this) {
-                showOrHideMenuItems()
+            midiViewModel.apply {
+                selectedChannel.observe(this@MainActivity) {
+                    showOrHideMenuItems()
+                }
+                channels.observe(this@MainActivity) {
+                    showOrHideMenuItems()
+                }
+                setupResetFlag.observe(this@MainActivity) {
+                    if (it) {
+                        if (supportFragmentManager.findFragmentByTag(PartsFragment.TAG) == null) {
+                            navHost.navController.navigate(R.id.partsFragment)
+                        }
+                        setupResetFlag.value = false
+                    }
+                }
             }
             qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
         } else {
@@ -161,9 +170,18 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.save_setup -> {
-                        Log.d(TAG, "QS Map: ${midiViewModel.qsPartMap.entries.joinToString(", ") { 
-                            "{${it.key}: ${it.value.name}}"
-                        }}")
+                        Log.d(
+                            TAG, "QS Map: ${
+                                midiViewModel.qsPartMap.entries.joinToString(", ") {
+                                    "{${it.key}: ${it.value.name}}"
+                                }
+                            }"
+                        )
+                        openFileBrowser(FileBrowserFragment.WRITE)
+                        true
+                    }
+                    R.id.open_setup -> {
+                        openFileBrowser(FileBrowserFragment.READ)
                         true
                     }
                     else -> false
@@ -173,8 +191,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val navHost: NavHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
         navRail = findViewById(R.id.navRail)
         NavigationUI.setupWithNavController(navRail, navController)
@@ -210,6 +226,19 @@ class MainActivity : AppCompatActivity() {
             repeatCount = ValueAnimator.INFINITE
             repeatMode = ValueAnimator.REVERSE
             start()
+        }
+    }
+
+    private fun openFileBrowser(mode: Int) {
+        val setupString = if (mode == FileBrowserFragment.WRITE)
+            Gson().toJson(midiViewModel.toSetupModel())
+        else
+            ""
+        if (supportFragmentManager.findFragmentByTag(FileBrowserFragment.TAG) == null) {
+            FileBrowserFragment.newInstance(
+                mode,
+                setupString
+            ).show(supportFragmentManager, FileBrowserFragment.TAG)
         }
     }
 

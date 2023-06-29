@@ -2,22 +2,36 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/file_item_selector"
+    android:clickable="true"
+    android:longClickable="true">
 
-    <Button
-        android:id="@+id/bFileItem"
-        style="@style/FileButton"
+    <ImageView
+        android:id="@+id/ivFileIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:padding="8dp"
+        android:scaleType="fitStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_xg_sm" />
+
+    <TextView
+        android:id="@+id/tvFileName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableStart="@mipmap/ic_xg"
-        android:gravity="start|center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:text="preset_name.xbx"
-        android:textAllCaps="false"
-        app:iconPadding="12dp"
-        app:iconTint="@android:color/transparent"
-        app:iconTintMode="add"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivFileIcon"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
