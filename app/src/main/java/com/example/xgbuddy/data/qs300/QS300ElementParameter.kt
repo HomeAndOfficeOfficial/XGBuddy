@@ -22,14 +22,23 @@ enum class QS300ElementParameter(
     FILTER_EG_VEL_CURVE(
         R.string.qs300_el_feg_vel_curve,
         0x43u,
-        reflectedField = QS300Element::filterEGVelCurve
+        max = 1,
+        reflectedField = QS300Element::filterEGVelCurve,
+        formatter = DataFormatUtil.filterCurveFormatter
     ),
-    LFO_WAVE(R.string.qs300_el_lfo_wave, 0x44u, max = 2, reflectedField = QS300Element::lfoWave),
+    LFO_WAVE(
+        R.string.qs300_el_lfo_wave,
+        0x44u,
+        max = 2,
+        reflectedField = QS300Element::lfoWave,
+        formatter = DataFormatUtil.waveShapeFormatter
+    ),
     LFO_PHASE_INIT(
         R.string.qs300_el_lfo_phase_init,
         0x45u,
         max = 1,
-        reflectedField = QS300Element::lfoPhaseInit
+        reflectedField = QS300Element::lfoPhaseInit,
+        formatter = DataFormatUtil.onOffFormatter
     ),
     LFO_SPEED(
         R.string.qs300_el_lfo_speed,
@@ -58,12 +67,21 @@ enum class QS300ElementParameter(
         reflectedField = QS300Element::lfoAmdDepth
     ),
     NOTE_SHIFT(R.string.qs300_el_note_shift, 0x4cu, 32, 96, 64, QS300Element::noteShift), // -32..32
-    DETUNE(R.string.qs300_el_detune, 0x4du, 14, 114, 64, QS300Element::detune), // -50 .. 50
+    DETUNE(
+        R.string.qs300_el_detune,
+        0x4du,
+        14,
+        114,
+        64,
+        QS300Element::detune,
+        DataFormatUtil.signed64Base
+    ), // -50 .. 50
     PITCH_SCALING(
         R.string.qs300_el_pitch_scaling,
         0x4eu,
         max = 5,
-        reflectedField = QS300Element::pitchScaling
+        reflectedField = QS300Element::pitchScaling,
+        formatter = DataFormatUtil.pitchScaleFormatter
     ),
     PITCH_SCALING_CENTER(
         R.string.qs300_el_pitch_scale_center,
@@ -71,14 +89,23 @@ enum class QS300ElementParameter(
         default = 63,
         reflectedField = QS300Element::pitchScalingCenter
     ),
-    PITCH_EG_DEPTH(R.string.qs300_el_peg_depth, 0x50u, 0, 3, 1, QS300Element::pitchEgDepth),
+    PITCH_EG_DEPTH(
+        R.string.qs300_el_peg_depth,
+        0x50u,
+        0,
+        3,
+        1,
+        QS300Element::pitchEgDepth,
+        DataFormatUtil.pegDepthFormatter
+    ),
     VEL_PEG_LVL_SENS(
         R.string.qs300_el_vel_peg_lvl_sens,
         0x51u,
         57,
         71,
         64,
-        QS300Element::velPegLvlSens
+        QS300Element::velPegLvlSens,
+        DataFormatUtil.signed64Base
     ),
     VEL_PEG_RATE_SENS(
         R.string.qs300_el_vel_peg_rate_sens,
@@ -86,7 +113,8 @@ enum class QS300ElementParameter(
         57,
         71,
         64,
-        QS300Element::velPegRateSens
+        QS300Element::velPegRateSens,
+        DataFormatUtil.signed64Base
     ),
     PEG_RATE_SCALING(
         R.string.qs300_el_peg_rate_scaling,
@@ -94,7 +122,8 @@ enum class QS300ElementParameter(
         57,
         71,
         64,
-        QS300Element::pegRateScaling
+        QS300Element::pegRateScaling,
+        DataFormatUtil.signed64Base
     ),
     PEG_RATE_SCALING_CENTER(
         R.string.qs300_el_peg_rate_scale_center,
@@ -102,7 +131,8 @@ enum class QS300ElementParameter(
         57,
         71,
         64,
-        QS300Element::pegRateScalingCenter
+        QS300Element::pegRateScalingCenter,
+        DataFormatUtil.signed64Base
     ),
     PEG_RATE_1(
         R.string.qs300_el_peg_rate_1,
@@ -214,7 +244,8 @@ enum class QS300ElementParameter(
         57,
         71,
         64,
-        QS300Element::velFegRateSens
+        QS300Element::velFegRateSens,
+        DataFormatUtil.signed64Base
     ),
     FEG_RATE_SCALING(
         R.string.qs300_el_feg_rate_scaling,
@@ -222,7 +253,8 @@ enum class QS300ElementParameter(
         57,
         71,
         64,
-        QS300Element::fegRateScaling
+        QS300Element::fegRateScaling,
+        DataFormatUtil.signed64Base
     ),
     FEG_RATE_SCALING_CENTER(
         R.string.qs300_el_feg_rate_scale_center,
@@ -287,35 +319,40 @@ enum class QS300ElementParameter(
         R.string.qs300_el_lvl_scale_off_1,
         0x7bu,
         default = 63,
-        reflectedField = QS300Element::lvlScalingOffset1
+        reflectedField = QS300Element::lvlScalingOffset1,
+        formatter = DataFormatUtil.signed63Base
     ),
     LVL_SCALING_OFFSET_2(
         R.string.qs300_el_lvl_scale_off_2,
         0x7cu,
         default = 63,
-        reflectedField = QS300Element::lvlScalingOffset2
+        reflectedField = QS300Element::lvlScalingOffset2,
+        formatter = DataFormatUtil.signed63Base
     ),
     LVL_SCALING_OFFSET_3(
         R.string.qs300_el_lvl_scale_off_3,
         0x7du,
         default = 63,
-        reflectedField = QS300Element::lvlScalingOffset3
+        reflectedField = QS300Element::lvlScalingOffset3,
+        formatter = DataFormatUtil.signed63Base
     ),
     LVL_SCALING_OFFSET_4(
         R.string.qs300_el_lvl_scale_off_4,
         0x7eu,
         default = 63,
-        reflectedField = QS300Element::lvlScalingOffset4
+        reflectedField = QS300Element::lvlScalingOffset4,
+        formatter = DataFormatUtil.signed63Base
     ),
     VEL_CURVE(R.string.qs300_el_vel_curve, 0x7fu, 0, 6, 2, QS300Element::velCurve),
-    PAN(R.string.qs300_el_pan, 0x80u, 0, 15, 7, QS300Element::pan),
+    PAN(R.string.qs300_el_pan, 0x80u, 0, 15, 7, QS300Element::pan, DataFormatUtil.pan7Formatter),
     AEG_RATE_SCALING(
         R.string.qs300_el_aeg_rate_scaling,
         0x81u,
         57,
         71,
         64,
-        QS300Element::aegRateScaling
+        QS300Element::aegRateScaling,
+        DataFormatUtil.signed64Base
     ),
     AEG_SCALING_CENTER(
         R.string.qs300_el_aeg_rate_scale_center,
@@ -374,5 +411,13 @@ enum class QS300ElementParameter(
         max = 6,
         reflectedField = QS300Element::addressOffsetLo
     ),
-    RESONANCE_SENS(R.string.qs300_el_res_sens, 0x8cu, 57, 71, 64, QS300Element::resonanceSens);
+    RESONANCE_SENS(
+        R.string.qs300_el_res_sens,
+        0x8cu,
+        57,
+        71,
+        64,
+        QS300Element::resonanceSens,
+        DataFormatUtil.signed64Base
+    );
 }

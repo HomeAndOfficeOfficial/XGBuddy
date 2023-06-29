@@ -193,6 +193,61 @@ object DataFormatUtil {
             "On"
     }
 
+    val filterCurveFormatter = DataAssignFormatter {
+        if (it == 0)
+            "Linear"
+        else
+            "Exponential"
+    }
+
+    val waveShapeFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "Saw"
+            1 -> "Tri"
+            2 -> "S&H"
+            else -> "?"
+        }
+    }
+
+    val signed63Base = DataAssignFormatter {
+        "${-63 - it}"
+    }
+
+    val signed64Base = DataAssignFormatter {
+        "${-64 + it}"
+    }
+
+    val pitchScaleFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "100%"
+            1 -> "50%"
+            2 -> "20%"
+            3 -> "10%"
+            4 -> "5%"
+            5 -> "0%"
+            else -> "?"
+        }
+    }
+
+    val pegDepthFormatter = DataAssignFormatter {
+        when (it) {
+            0 -> "1/2 Oct"
+            1 -> "1 Oct"
+            2 -> "2 Oct"
+            3 -> "4 Oct"
+            else -> "?"
+        }
+    }
+
+    val pan7Formatter = DataAssignFormatter {
+        when (it) {
+            in 0..6 -> "L${7 - it}"
+            7 -> "C"
+            in 8 .. 14 -> "R${it - 7}"
+            else -> "Scaling"
+        }
+    }
+
     fun interface DataAssignFormatter {
         fun format(value: Int): String
     }
