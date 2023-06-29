@@ -19,4 +19,5 @@
     <dimen name="kbd_black_width">56dp</dimen>
     <dimen name="kbd_black_height">244dp</dimen>
     <dimen name="qs300_voice_seek_length">400dp</dimen>
+    <dimen name="seekbar_thumb_size">20dp</dimen>
 </resources>
