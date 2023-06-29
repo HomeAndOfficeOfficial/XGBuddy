@@ -7,7 +7,6 @@ import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
-import com.example.xgbuddy.data.xg.DrumControlParameter
 import com.example.xgbuddy.data.xg.DrumVoice
 import com.example.xgbuddy.data.xg.DrumVoiceParameter
 import com.example.xgbuddy.databinding.FragmentDrumParamEditBinding
@@ -63,7 +62,7 @@ class DrumParamEditFragment : ControlBaseFragment<FragmentDrumParamEditBinding>(
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].drumVoices!![midiViewModel.selectedDrumVoice.value!!].getPropertyValue(
                 param!!.reflectedField
             )
-        return DrumControlParameter(param, value)
+        return ControlParameter(param, value)
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {

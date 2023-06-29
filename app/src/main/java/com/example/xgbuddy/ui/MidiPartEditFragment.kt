@@ -14,7 +14,6 @@ import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
 import com.example.xgbuddy.data.gm.MidiParameter
 import com.example.xgbuddy.data.gm.MidiPart
-import com.example.xgbuddy.data.xg.XGControlParameter
 import com.example.xgbuddy.databinding.FragmentMidiPartEditBinding
 import com.example.xgbuddy.ui.custom.SwitchControlView
 import com.example.xgbuddy.ui.voiceselect.OnVoiceItemSelectedListenerImpl
@@ -178,7 +177,7 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
 
     override fun initParameter(paramId: Int): ControlParameter {
         val param = MidiParameter::descriptionRes findBy paramId
-        return XGControlParameter(
+        return ControlParameter(
             param!!,
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].getPropertyValue(
                 param.reflectedField
