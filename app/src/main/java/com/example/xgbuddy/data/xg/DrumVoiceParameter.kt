@@ -14,7 +14,12 @@ enum class DrumVoiceParameter(
 ) {
     PITCH_COARSE(R.string.xgdp_pitch_crs, DrumVoice::pitchCoarse, NRPN.DRUM_PITCH_COARSE),
     PITCH_FINE(R.string.xgdp_pitch_fine, DrumVoice::pitchFine, NRPN.DRUM_PITCH_FINE),
-    LEVEL(R.string.xgdp_level, DrumVoice::level, NRPN.DRUM_LEVEL, formatter = null),
+    LEVEL(
+        R.string.xgdp_level,
+        DrumVoice::level,
+        NRPN.DRUM_LEVEL,
+        formatter = DataFormatUtil.noFormat
+    ),
     ALTERNATE_GROUP(
         R.string.xgdp_alt_group,
         DrumVoice::alternateGroup,
@@ -26,20 +31,20 @@ enum class DrumVoiceParameter(
         R.string.xgdp_reverb_send,
         DrumVoice::reverbSend,
         NRPN.DRUM_REVERB,
-        formatter = null
+        formatter = DataFormatUtil.noFormat
     ),
     CHORUS_SEND(
         R.string.xgdp_chorus_send,
         DrumVoice::chorusSend,
         NRPN.DRUM_CHORUS,
-        formatter = null
+        formatter = DataFormatUtil.noFormat
     ),
     VARI_SEND(
         R.string.xgdp_vari_send,
         DrumVoice::variSend,
         NRPN.DRUM_VARIATION,
         default = 0x7f,
-        formatter = null
+        formatter = DataFormatUtil.noFormat
     ),
     KEY_ASSIGN(
         R.string.xgdp_key_assign,
@@ -53,14 +58,14 @@ enum class DrumVoiceParameter(
         DrumVoice::rcvNoteOff,
         default = 0,
         max = 1,
-        formatter = null
+        formatter = DataFormatUtil.noFormat
     ),
     RCV_NOTE_ON(
         R.string.xgdp_rcv_noteon,
         DrumVoice::rcvNoteOn,
         default = 1,
         max = 1,
-        formatter = null
+        formatter = DataFormatUtil.noFormat
     ),
     CUTOFF_FREQ(R.string.xgdp_cutoff, DrumVoice::cutoffFreq, NRPN.DRUM_CUTOFF_FREQ),
     RESONANCE(R.string.xgdp_resonance, DrumVoice::resonance, NRPN.DRUM_RESONANCE),
