@@ -1035,6 +1035,7 @@
     <string name="add_directory_name">New Folder</string>
     <string name="add_directory_text_hint">Folder Name</string>
     <string name="load_setup">Load Setup</string>
+    <string name="setup_file_name">Setup File Name</string>
     <!-- System Param Control Names -->
 
 </resources>

@@ -32,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dividerAddDir">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etDirName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
