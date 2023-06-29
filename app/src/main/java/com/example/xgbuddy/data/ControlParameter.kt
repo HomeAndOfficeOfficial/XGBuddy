@@ -6,6 +6,7 @@ import com.example.xgbuddy.data.xg.DrumVoiceParameter
 import com.example.xgbuddy.data.xg.EffectParameter
 import com.example.xgbuddy.data.xg.EffectParameterData
 import com.example.xgbuddy.data.xg.SystemParameter
+import com.example.xgbuddy.util.DataFormatUtil
 
 class ControlParameter private constructor(
     val name: String,
@@ -13,7 +14,8 @@ class ControlParameter private constructor(
     var value: Int,
     var min: Int,
     var max: Int,
-    var default: Int
+    var default: Int,
+    var formatter: DataFormatUtil.DataAssignFormatter
 ) {
 
     constructor(
@@ -27,7 +29,8 @@ class ControlParameter private constructor(
         value,
         reverbParameter?.min ?: effectParam.min.toInt(),
         reverbParameter?.max ?: effectParam.max.toInt(),
-        defaultValue
+        defaultValue,
+        reverbParameter?.dataAssignFormatter ?: effectParam.formatter
     )
 
     constructor(elementParameter: QS300ElementParameter, value: Byte) : this(
@@ -36,7 +39,8 @@ class ControlParameter private constructor(
         value.toInt(),
         elementParameter.min.toInt(),
         elementParameter.max.toInt(),
-        elementParameter.default.toInt()
+        elementParameter.default.toInt(),
+        elementParameter.formatter
     )
 
     constructor(drumParameter: DrumVoiceParameter, value: Byte) : this(
@@ -45,7 +49,8 @@ class ControlParameter private constructor(
         value.toInt(),
         0,
         drumParameter.max.toInt(),
-        drumParameter.default.toInt()
+        drumParameter.default.toInt(),
+        drumParameter.formatter
     )
 
     constructor(systemParameter: SystemParameter, value: Int) : this(
@@ -54,7 +59,8 @@ class ControlParameter private constructor(
         value,
         systemParameter.min,
         systemParameter.max,
-        systemParameter.default
+        systemParameter.default,
+        systemParameter.formatter
     )
 
     constructor(elementParameter: MidiParameter, value: Byte) : this(
@@ -63,8 +69,7 @@ class ControlParameter private constructor(
         value.toInt(),
         elementParameter.min.toInt(),
         elementParameter.max.toInt(),
-        elementParameter.default.toInt()
+        elementParameter.default.toInt(),
+        elementParameter.formatter
     )
-
-    var formatString: String? = null
 }

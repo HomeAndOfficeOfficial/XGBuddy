@@ -10,7 +10,7 @@ enum class DrumVoiceParameter(
     val nrpn: NRPN? = null,
     val default: Byte = 0x40,
     val max: Byte = 0x7f,
-    val formatter: DataFormatUtil.DataAssignFormatter? = DataFormatUtil.signed127Formatter
+    val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.signed127Formatter
 ) {
     PITCH_COARSE(R.string.xgdp_pitch_crs, DrumVoice::pitchCoarse, NRPN.DRUM_PITCH_COARSE),
     PITCH_FINE(R.string.xgdp_pitch_fine, DrumVoice::pitchFine, NRPN.DRUM_PITCH_FINE),
