@@ -51,7 +51,7 @@ class SliderControlView :
 
     override fun updateViews() {
         seekbar.progress = value
-        tvValue?.text = "$value"
+        tvValue?.text = controlParameter?.formatter!!.format(value)
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
