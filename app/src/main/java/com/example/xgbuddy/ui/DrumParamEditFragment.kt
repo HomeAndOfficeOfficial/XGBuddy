@@ -62,11 +62,11 @@ class DrumParamEditFragment : ControlBaseFragment<FragmentDrumParamEditBinding>(
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].drumVoices!![midiViewModel.selectedDrumVoice.value!!].getPropertyValue(
                 param!!.reflectedField
             )
-        return ControlParameter(param, value)
+        return ControlParameter(getString(param.nameRes), param, value)
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
-        if (controlParameter.name != currentParam?.name) {
+        if (controlParameter.nameRes != currentParam?.nameRes) {
             currentParam = DrumVoiceParameter::getAddrLo findBy controlParameter.addr.toByte()
         }
         val drumVoice = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]

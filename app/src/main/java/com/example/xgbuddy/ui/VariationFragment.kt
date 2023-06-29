@@ -118,6 +118,7 @@ class VariationFragment : EffectEditFragment<FragmentVariationBinding>() {
         if (effectParamData!!.ordinal > EffectParameterData.VARIATION_PARAM_16.ordinal) {
             val value = vmVari.getPropertyValue(effectParamData.reflectedField)
             return ControlParameter(
+                getString(effectParamData.resId),
                 effectParamData,
                 null,
                 value.toInt(),
@@ -128,6 +129,7 @@ class VariationFragment : EffectEditFragment<FragmentVariationBinding>() {
             val variParam = vmVari.parameterList?.get(effectParamData)
             val defaultValue = vmVari.defaultValues!![effectParamData.paramIndex!!]
             return ControlParameter(
+                getString(variParam?.nameRes ?: effectParamData.resId),
                 effectParamData,
                 variParam,
                 value,

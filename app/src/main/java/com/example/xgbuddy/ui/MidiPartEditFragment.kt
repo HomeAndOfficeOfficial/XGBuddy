@@ -178,7 +178,8 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
     override fun initParameter(paramId: Int): ControlParameter {
         val param = MidiParameter::descriptionRes findBy paramId
         return ControlParameter(
-            param!!,
+            getString(param!!.descriptionRes),
+            param,
             midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].getPropertyValue(
                 param.reflectedField
             )
@@ -186,7 +187,7 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
-        if (controlParameter.name != currentParam?.name) {
+        if (controlParameter.nameRes != currentParam?.descriptionRes) {
             currentParam = MidiParameter::addrLo findBy controlParameter.addr.toByte()
         }
         midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].setProperty(

@@ -113,13 +113,14 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
         val voice = viewModel.preset.value!!.voices[viewModel.voice.value!!]
         val element = voice.elements[elementIndex]
         return ControlParameter(
-            param!!,
+            getString(param!!.nameRes),
+            param,
             element.getPropertyValue(param.reflectedField)
         )
     }
 
     override fun onParameterChanged(controlParameter: ControlParameter, isTouching: Boolean) {
-        if (controlParameter.name != currentParam?.name) {
+        if (controlParameter.nameRes != currentParam?.nameRes) {
             currentParam = QS300ElementParameter::baseAddress findBy controlParameter.addr
         }
         val voiceIndex = viewModel.voice.value!!

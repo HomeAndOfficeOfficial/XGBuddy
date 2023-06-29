@@ -9,6 +9,7 @@ import com.example.xgbuddy.data.xg.SystemParameter
 import com.example.xgbuddy.util.DataFormatUtil
 
 class ControlParameter private constructor(
+    val nameRes: Int,
     val name: String,
     val addr: UByte,
     var value: Int,
@@ -19,12 +20,14 @@ class ControlParameter private constructor(
 ) {
 
     constructor(
+        displayName: String,
         effectParam: EffectParameterData,
         reverbParameter: EffectParameter?,
         value: Int,
         defaultValue: Int
     ) : this(
-        effectParam.name,
+        effectParam.resId,
+        displayName,
         effectParam.addrLo.toUByte(),
         value,
         reverbParameter?.min ?: effectParam.min.toInt(),
@@ -33,8 +36,9 @@ class ControlParameter private constructor(
         reverbParameter?.dataAssignFormatter ?: effectParam.formatter
     )
 
-    constructor(elementParameter: QS300ElementParameter, value: Byte) : this(
-        elementParameter.name,
+    constructor(displayName: String, elementParameter: QS300ElementParameter, value: Byte) : this(
+        elementParameter.nameRes,
+        displayName,
         elementParameter.baseAddress,
         value.toInt(),
         elementParameter.min.toInt(),
@@ -43,8 +47,9 @@ class ControlParameter private constructor(
         elementParameter.formatter
     )
 
-    constructor(drumParameter: DrumVoiceParameter, value: Byte) : this(
-        drumParameter.name,
+    constructor(displayName: String, drumParameter: DrumVoiceParameter, value: Byte) : this(
+        drumParameter.nameRes,
+        displayName,
         drumParameter.ordinal.toUByte(),
         value.toInt(),
         0,
@@ -53,8 +58,9 @@ class ControlParameter private constructor(
         drumParameter.formatter
     )
 
-    constructor(systemParameter: SystemParameter, value: Int) : this(
-        systemParameter.name,
+    constructor(displayName: String, systemParameter: SystemParameter, value: Int) : this(
+        systemParameter.nameRes,
+        displayName,
         systemParameter.addr.toUByte(),
         value,
         systemParameter.min,
@@ -63,8 +69,9 @@ class ControlParameter private constructor(
         systemParameter.formatter
     )
 
-    constructor(elementParameter: MidiParameter, value: Byte) : this(
-        elementParameter.name,
+    constructor(displayName: String, elementParameter: MidiParameter, value: Byte) : this(
+        elementParameter.descriptionRes,
+        displayName,
         elementParameter.addrLo.toUByte(),
         value.toInt(),
         elementParameter.min.toInt(),

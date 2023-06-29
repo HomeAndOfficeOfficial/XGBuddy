@@ -144,7 +144,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                         this.visibility = View.GONE
                     } else {
                         this.visibility = View.VISIBLE
-                        label = reverbParam.name
+                        label = context.getString(reverbParam.nameRes)
                         controlParameter?.min = reverbParam.min
                         controlParameter?.max = reverbParam.max
                         updateControlBounds()
@@ -174,7 +174,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                         this.visibility = View.GONE
                     } else {
                         this.visibility = View.VISIBLE
-                        label = chorusParam.name
+                        label = context.getString(chorusParam.nameRes)
                         controlParameter?.min = chorusParam.min
                         controlParameter?.max = chorusParam.max
                         updateControlBounds()
@@ -200,7 +200,7 @@ class ControlViewGroup(context: Context, attributeSet: AttributeSet) :
                         this.visibility = View.GONE
                     } else {
                         this.visibility = View.VISIBLE
-                        label = variationType.name
+                        label = context.getString(variationType.nameRes)
                         controlParameter?.min = variationType.min
                         controlParameter?.max = variationType.max
                         updateControlBounds()
