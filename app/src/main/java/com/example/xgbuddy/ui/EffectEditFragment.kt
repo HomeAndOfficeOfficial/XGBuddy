@@ -11,7 +11,6 @@ import android.widget.Spinner
 import androidx.viewbinding.ViewBinding
 import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.Effect
-import com.example.xgbuddy.data.xg.EffectControlParameter
 import com.example.xgbuddy.data.xg.EffectParameterData
 import com.example.xgbuddy.util.EnumFinder.findBy
 import com.example.xgbuddy.util.MidiMessageUtility
@@ -52,7 +51,7 @@ abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), 
             val value = vmEffect.getPropertyValue(effectParamData.reflectedBigField)
             val reverbParam = vmEffect.parameterList?.get(effectParamData)
             val defaultValue = vmEffect.defaultValues!![effectParamData.paramIndex!!]
-            return EffectControlParameter(
+            return ControlParameter(
                 effectParamData,
                 reverbParam,
                 value,
@@ -60,7 +59,7 @@ abstract class EffectEditFragment<VB: ViewBinding> : ControlBaseFragment<VB>(), 
             )
         } else {
             val value = vmEffect.getPropertyValue(effectParamData.reflectedField)
-            return EffectControlParameter(
+            return ControlParameter(
                 effectParamData,
                 null,
                 value.toInt(),

@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
 import com.example.xgbuddy.R
 import com.example.xgbuddy.data.ControlParameter
-import com.example.xgbuddy.data.qs300.QS300ControlParameter
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Preset
 import com.example.xgbuddy.ui.ControlBaseFragment
@@ -113,7 +112,7 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
         val param = QS300ElementParameter::descriptionRes findBy paramId
         val voice = viewModel.preset.value!!.voices[viewModel.voice.value!!]
         val element = voice.elements[elementIndex]
-        return QS300ControlParameter(
+        return ControlParameter(
             param!!,
             element.getPropertyValue(param.reflectedField)
         )

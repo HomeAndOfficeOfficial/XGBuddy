@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.xgbuddy.MidiSession
-import com.example.xgbuddy.data.xg.SystemControlParameter
+import com.example.xgbuddy.data.ControlParameter
 import com.example.xgbuddy.data.xg.SystemParameter
 import com.example.xgbuddy.databinding.FragmentSystemBinding
 import com.example.xgbuddy.ui.custom.ParameterControlView
@@ -47,7 +47,7 @@ class SystemFragment : Fragment() {
 
     private fun setupControlView(view: SliderControlView, param: SystemParameter, value: Int) {
         view.apply {
-            controlParameter = SystemControlParameter(param, value)
+            controlParameter = ControlParameter(param, value)
             shouldReportAllTouchEvents = false
             isRealtimeControl = false
             this.value = value
