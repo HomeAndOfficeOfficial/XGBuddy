@@ -88,6 +88,12 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             bAddDir.setOnClickListener {
                 showNewDirectoryDialog()
             }
+            tvFileBrowserTitle.text = getString(
+                if (mode == READ)
+                    R.string.load_setup
+                else
+                    R.string.save_setup
+            )
         }
         setupRecyclerView()
         return binding.root

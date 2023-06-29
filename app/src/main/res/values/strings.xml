@@ -1034,6 +1034,7 @@
     <string name="move">Move</string>
     <string name="add_directory_name">New Folder</string>
     <string name="add_directory_text_hint">Folder Name</string>
+    <string name="load_setup">Load Setup</string>
     <!-- System Param Control Names -->
 
 </resources>
