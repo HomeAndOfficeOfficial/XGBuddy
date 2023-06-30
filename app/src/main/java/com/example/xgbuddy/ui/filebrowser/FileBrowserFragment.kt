@@ -18,17 +18,22 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.adapter.FileBrowserRecyclerAdapter
 import com.example.xgbuddy.data.FileType
 import com.example.xgbuddy.R
 import com.example.xgbuddy.databinding.FragmentFileBrowserBinding
 import com.example.xgbuddy.ui.MidiViewModel
+import com.example.xgbuddy.util.MidiMessageUtility
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemClickListener {
 
+    @Inject
+    lateinit var midiSession: MidiSession
     private val midiViewModel: MidiViewModel by activityViewModels()
 
     private lateinit var fileAdapter: FileBrowserRecyclerAdapter
@@ -169,7 +174,14 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             Log.e(TAG, "Caught some exception: ${e.message}")
             ""
         }
-        if (jsonString.isNotEmpty() && midiViewModel.readSetupJson(jsonString)) {
+        val setup = midiViewModel.readSetupJson(jsonString)
+        if (setup != null) {
+            // Trying this without using the buffer method as used in `sendBulkMessage`
+            // If this doesn't work, first try using the buffer method, but will need to add
+            // timestamps to that.
+            // Also may need to run this in a coroutine since it will probably take a second or two
+            // potentially causing UI thread to hang
+            midiSession.send(MidiMessageUtility.getSetupSequence(setup))
             dismiss()
         } else {
             AlertDialog.Builder(requireContext()).apply {

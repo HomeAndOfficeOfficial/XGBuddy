@@ -45,7 +45,7 @@ class MidiViewModel : ViewModel() {
         qsPartMap
     )
 
-    fun readSetupJson(jsonString: String): Boolean =
+    fun readSetupJson(jsonString: String): SetupModel? =
         try {
             Gson().fromJson(jsonString, SetupModel::class.java).let {
                 setupResetFlag.value = true
@@ -54,10 +54,10 @@ class MidiViewModel : ViewModel() {
                 chorus = it.chorus
                 variation = it.variation
                 qsPartMap = it.qsPresetMap.toMutableMap()
+                it
             }
-            true
         } catch (e: JsonSyntaxException) {
             Log.e("MidiViewModel", "Couldn't read setup from file: ${e.message}")
-            false
+            null
         }
 }

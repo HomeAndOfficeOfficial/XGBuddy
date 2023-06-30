@@ -4,7 +4,9 @@ import android.util.Log
 import com.example.xgbuddy.data.MidiConstants
 import com.example.xgbuddy.data.MidiControlChange
 import com.example.xgbuddy.data.MidiMessage
+import com.example.xgbuddy.data.SetupModel
 import com.example.xgbuddy.data.gm.MidiParameter
+import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.data.qs300.QS300ElementParameter
 import com.example.xgbuddy.data.qs300.QS300Voice
 import com.example.xgbuddy.data.qs300.QS300VoiceParameter
@@ -139,6 +141,10 @@ object MidiMessageUtility {
         return MidiMessage(paramChange, 0)
     }
 
+    fun getDrumSetupBulkDump(drumSetup: Int, drumNote: Int, timestamp: Long = 0): MidiMessage {
+        return MidiMessage(null, timestamp)
+    }
+
     fun getNRPNSet(channel: Int, nrpn: NRPN, drumNoteNumber: Byte? = null): List<MidiMessage> {
         Log.d(TAG, "getNRPNSet, channel $channel, nrpn $nrpn, drumNoteNumber: $drumNoteNumber")
         return listOf(
@@ -209,6 +215,80 @@ object MidiMessageUtility {
         return MidiMessage(paramChange)
     }
 
+    fun getEffectsBulkDump(
+        reverb: Reverb,
+        chorus: Chorus,
+        variation: Variation,
+        timestamp: Long = 0L
+    ): MidiMessage {
+        val data = ByteArray(MidiConstants.XG_EFFECT_BULK_TOTAL_SIZE)
+        data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
+        data[1] = MidiConstants.YAMAHA_ID
+        data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
+        data[3] = MidiConstants.MODEL_ID_XG
+        data[4] = 0
+        data[5] = MidiConstants.XG_EFFECT_BULK_DATA_SIZE
+        data[6] = MidiConstants.XG_EFFECT_PARAM_ADDR_HI
+        data[7] = MidiConstants.XG_EFFECT_PARAM_ADDR_MID
+        data[8] = 0
+        var index = 9
+        EffectParameterData.values().forEach {
+            when (it) {
+                EffectParameterData.REVERB_TYPE -> {
+                    data[index++] = reverb.msb
+                    data[index++] = reverb.lsb
+                }
+                EffectParameterData.CHORUS_TYPE -> {
+                    data[index++] = chorus.msb
+                    data[index++] = chorus.lsb
+                }
+                EffectParameterData.VARIATION_TYPE -> {
+                    data[index++] = variation.msb
+                    data[index++] = variation.lsb
+                }
+                else -> {
+                    if (it.size == 1.toByte()) {
+                        if (it.name.startsWith("REVERB")) {
+                            data[index++] = getEffectParamValue(it, reverb).toByte()
+                        } else if (it.name.startsWith("CHORUS") || it.name.startsWith("SEND_CHOR")) {
+                            data[index++] = getEffectParamValue(it, chorus).toByte()
+                        } else {
+                            data[index++] = getEffectParamValue(it, variation).toByte()
+                        }
+                    } else { // Has to be variation parameter
+                        data[index++] = getEffectParamValue(it, variation).toByte() // lo
+                        data[index++] = getEffectParamValue(it, variation, 1).toByte() // hi
+                    }
+                }
+            }
+
+            // Address jumps
+            index += when (it) {
+                EffectParameterData.REVERB_PAN -> 2
+                EffectParameterData.REVERB_PARAM_16 -> 10
+                EffectParameterData.SEND_CHOR_TO_REV -> 1
+                EffectParameterData.CHORUS_PARAMETER_16 -> 10
+                EffectParameterData.AC2_VARI_CTRL_DEPTH -> 15
+                else -> 0
+            }
+        }
+        data[index++] = getChecksum(data, 4)
+        data[index] = MidiConstants.SYSEX_END
+        return MidiMessage(data, timestamp)
+    }
+
+    private fun getEffectParamValue(
+        effectParameterData: EffectParameterData,
+        effect: Effect,
+        byteIndex: Int = 0
+    ): Int {
+        return if (effectParameterData.reflectedField != null) {
+            effect.getPropertyValue(effectParameterData.reflectedField).toInt()
+        } else {
+            effect.getPropertyValue(effectParameterData.reflectedBigField) shr 8 * byteIndex
+        }
+    }
+
     fun getXGSystemOn(): MidiMessage {
         Log.d(TAG, "getXGSystemOn")
         return MidiMessage(MidiConstants.XY_SYSTEM_ON_ARRAY, 0)
@@ -228,6 +308,27 @@ object MidiMessageUtility {
     fun getAllParameterReset(): MidiMessage {
         Log.d(TAG, "getAllParameterReset")
         return MidiMessage(MidiConstants.ALL_PARAM_RESET_ARRAY, 0)
+    }
+
+    fun getXGMultiPartBulkDump(part: MidiPart, partNumber: Int, timestamp: Long = 0): MidiMessage {
+        val data = ByteArray(MidiConstants.XG_MULTIPART_BULK_TOTAL_SIZE)
+        data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
+        data[1] = MidiConstants.YAMAHA_ID
+        data[2] = MidiConstants.DEVICE_NUMBER_BULK_DUMP
+        data[3] = MidiConstants.MODEL_ID_XG
+        data[4] = 0
+        data[5] = MidiConstants.XG_MULTIPART_BULK_DATA_SIZE
+        data[6] = MidiConstants.XG_MP_PARAM_ADDR_HI
+        data[7] = partNumber.toByte()
+        data[8] = 0
+        var index = 9
+        MidiParameter.values().forEach {
+            data[index++] = part.getPropertyValue(it.reflectedField)
+            if (it == MidiParameter.BEND_LFO_AMOD_DEPTH) index += 7 // param addr jumps up here
+        }
+        data[index++] = getChecksum(data, 4)
+        data[index] = MidiConstants.SYSEX_END
+        return MidiMessage(data, timestamp)
     }
 
 
@@ -252,7 +353,7 @@ object MidiMessageUtility {
         return MidiMessage(data)
     }
 
-    fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int): MidiMessage {
+    fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int, timestamp: Long = 0): MidiMessage {
         Log.d(TAG, "getQS300BulkDump voice $voice, voiceNumber $voiceNumber")
         val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
@@ -303,7 +404,7 @@ object MidiMessageUtility {
         data[data.size - 2] = getChecksum(data, 4)
         data[data.size - 1] = MidiConstants.SYSEX_END
 
-        return MidiMessage(data)
+        return MidiMessage(data, timestamp)
     }
 
     private fun getChecksum(data: ByteArray, startIndex: Int): Byte {
@@ -371,5 +472,40 @@ object MidiMessageUtility {
             messages.add(getControlChange(i, MidiControlChange.RESET_ALL_CTRL.controlNumber, 0))
         }
         return messages
+    }
+
+    fun getSetupSequence(setup: SetupModel): List<MidiMessage> = mutableListOf<MidiMessage>().let {
+        var timestamp = System.nanoTime()
+        // XG System On - initialize everythin
+        it.add(getXGSystemOn())
+
+        // Bulk dump for each Midi Part
+        setup.parts.forEachIndexed { index, part ->
+            timestamp += MidiConstants.SETUP_SEQUENCE_INTERVAL_NANO
+            if (part.voiceType == MidiPart.VoiceType.QS300) {
+                val qsVoiceIndex: Int
+                val preset = if (setup.qsPresetMap.containsKey(index)) {
+                    qsVoiceIndex = 0
+                    setup.qsPresetMap[index]
+                } else {
+                    qsVoiceIndex = 1
+                    setup.qsPresetMap[index - 1]
+                }
+                it.add(getQS300BulkDump(preset!!.voices[qsVoiceIndex], index, timestamp))
+            } else {
+                it.add(getXGMultiPartBulkDump(part, index, timestamp))
+                // if (part.voiceType == MidiPart.VoiceType.DRUM) {
+                // TODO Send bulk dump for each drum note in part.drumVoices
+                //}
+            }
+        }
+
+        // Effects
+        timestamp += MidiConstants.SETUP_SEQUENCE_INTERVAL_NANO
+        it.add(getEffectsBulkDump(setup.reverb, setup.chorus, setup.variation, timestamp))
+
+        // Todo: System params
+
+        it
     }
 }

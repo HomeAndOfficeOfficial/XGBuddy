@@ -86,6 +86,18 @@ enum class MidiParameter(
         reflectedField = MidiPart::noteShift,
         formatter = DataFormatUtil.pitchFormatter
     ),
+    DETUNE_HI(
+        9,
+        R.string.midi_mp_DETUNE,
+        default = 8,
+        reflectedField = MidiPart::detuneHi
+    ),
+    DETUNE_LO(
+        10,
+        R.string.midi_mp_DETUNE,
+        default = 0,
+        reflectedField = MidiPart::detuneLo
+    ),
     VOLUME(
         0x0b,
         R.string.midi_mp_VOLUME,

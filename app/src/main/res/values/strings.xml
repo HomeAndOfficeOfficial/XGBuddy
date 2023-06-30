@@ -544,7 +544,8 @@
     <string name="midi_mp_KEY_ON_ASSIGN">Key On Assign</string>
     <string name="midi_mp_PART_MODE">Part Mode</string>
     <string name="midi_mp_NOTE_SHIFT">Note Shift</string>
-    <string name="midi_mp_DETUNE">Detune</string>
+    <string name="midi_mp_DETUNE_hi">Detune</string>
+    <string name="midi_mp_detune_lo">Detune</string>
     <string name="midi_mp_VOLUME">Volume</string>
     <string name="midi_mp_VEL_SENS_DEPTH">Vel. Sens. Depth</string>
     <string name="midi_mp_VEL_SENS_OFFSET">Vel. Sens. Offset</string>

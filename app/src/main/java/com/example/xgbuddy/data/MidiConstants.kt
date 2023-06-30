@@ -2,7 +2,8 @@ package com.example.xgbuddy.data
 
 object MidiConstants {
 
-    const val SEND_SCHEDULE_INTERVAL_NANO = 2
+    const val SETUP_SEQUENCE_INTERVAL_NANO = 60000000L
+    const val SETUP_SEQUENCE_DRUM_INTERVAL = 30000000L
 
     const val STATUS_NOTE_OFF = 0x80
     const val STATUS_NOTE_ON = 0x90
@@ -43,6 +44,10 @@ object MidiConstants {
     const val MODEL_ID_QS300: Byte = 0x4b
     const val MODEL_ID_XG: Byte = 0x4c
 
+    const val XG_MULTIPART_BULK_TOTAL_SIZE = 121
+    const val XG_MULTIPART_BULK_DATA_SIZE: Byte = 110
+    const val XG_EFFECT_BULK_TOTAL_SIZE = 128
+    const val XG_EFFECT_BULK_DATA_SIZE: Byte = 117
     const val XG_NORMAL_VOICE_MSB: Byte = 0
     const val XG_SFX_VOICE_MSB: Byte = 64
     const val XG_SFX_VOICE_LSB: Byte = 0

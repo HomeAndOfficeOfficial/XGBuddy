@@ -22,6 +22,8 @@ open class MidiPart(val ch: Int) : MidiData() {
     var keyOnAssign: Byte = MidiParameter.KEY_ON_ASSIGN.default
     var partMode: Byte = MidiParameter.PART_MODE.default
     var noteShift: Byte = MidiParameter.NOTE_SHIFT.default
+    var detuneHi: Byte = MidiParameter.DETUNE_HI.default
+    var detuneLo: Byte = MidiParameter.DETUNE_LO.default
     var volume: Byte = MidiParameter.VOLUME.default
     var velSensDepth: Byte = MidiParameter.VEL_SENS_DEPTH.default
     var velSenseOffset: Byte = MidiParameter.VEL_SENS_OFFSET.default
