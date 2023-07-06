@@ -44,10 +44,10 @@ object MidiConstants {
     const val MODEL_ID_QS300: Byte = 0x4b
     const val MODEL_ID_XG: Byte = 0x4c
 
-    const val XG_MULTIPART_BULK_TOTAL_SIZE = 121
-    const val XG_MULTIPART_BULK_DATA_SIZE: Byte = 110
-    const val XG_EFFECT_BULK_TOTAL_SIZE = 128
-    const val XG_EFFECT_BULK_DATA_SIZE: Byte = 117
+    const val XG_MULTIPART_BULK_TOTAL_SIZE = 122
+    const val XG_MULTIPART_BULK_DATA_SIZE: Byte = 111
+    const val XG_EFFECT_BULK_TOTAL_SIZE = 129
+    const val XG_EFFECT_BULK_DATA_SIZE: Byte = 118
     const val XG_NORMAL_VOICE_MSB: Byte = 0
     const val XG_SFX_VOICE_MSB: Byte = 64
     const val XG_SFX_VOICE_LSB: Byte = 0

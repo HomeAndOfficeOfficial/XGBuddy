@@ -28,6 +28,7 @@ class ConnectionStatusFragment : DialogFragment() {
     private lateinit var disconnectAlertContainer: ConstraintLayout
     private lateinit var deviceListContainer: ConstraintLayout
     private lateinit var ivDisconnect: ImageView
+    private lateinit var ivIcon: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +40,7 @@ class ConnectionStatusFragment : DialogFragment() {
         disconnectAlertContainer = view.findViewById(R.id.disconnectAlertContainer)
         deviceListContainer = view.findViewById(R.id.deviceListContainer)
         ivDisconnect = view.findViewById(R.id.ivDisconnected)
+        ivIcon = view.findViewById(R.id.ivConnStatusIcon)
         recyclerAdapter = ConnectedDeviceRecyclerAdapter(midiSession, listOf())
         recyclerView.apply {
             adapter = recyclerAdapter
@@ -73,7 +75,7 @@ class ConnectionStatusFragment : DialogFragment() {
         ValueAnimator.ofFloat(0f, 359f).apply {
             duration = 4000
             addUpdateListener {
-                ivDisconnect.rotationY = it.animatedValue as Float
+                ivIcon.rotationY = it.animatedValue as Float
             }
             repeatCount = ValueAnimator.INFINITE
             interpolator = LinearInterpolator()
