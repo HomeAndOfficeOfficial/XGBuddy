@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:padding="@dimen/popup_padding">
 
+    <ImageView
+        android:id="@+id/ivSpinDisk"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_save_24_color" />
+
     <TextView
         android:id="@+id/tvFileBrowserTitle"
         android:layout_width="wrap_content"
@@ -14,17 +22,19 @@
         android:text="@string/new_folder"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivSpinDisk"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ivSpinDisk" />
 
     <View
         android:id="@+id/dividerFileBrowser"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="12dp"
         android:background="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvFileBrowserTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/ivSpinDisk" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clFileControls"
@@ -40,12 +50,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/baseline_create_new_folder_24"
-            android:drawableTint="#ffffff"
+            android:drawableTint="?colorPrimary"
             android:drawableTintMode="src_in"
             android:includeFontPadding="false"
             android:paddingHorizontal="24dp"
             android:text="@string/new_folder"
-            android:textColor="@color/white"
+            android:textColor="?colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -121,6 +131,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:tint="@android:color/secondary_text_dark"
             app:srcCompat="@drawable/baseline_home_24" />
 
         <TextView

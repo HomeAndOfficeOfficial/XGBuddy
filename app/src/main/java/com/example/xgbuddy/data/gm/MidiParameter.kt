@@ -88,13 +88,13 @@ enum class MidiParameter(
     ),
     DETUNE_HI(
         9,
-        R.string.midi_mp_DETUNE,
+        R.string.midi_mp_DETUNE_hi,
         default = 8,
         reflectedField = MidiPart::detuneHi
     ),
     DETUNE_LO(
         10,
-        R.string.midi_mp_DETUNE,
+        R.string.midi_mp_detune_lo,
         default = 0,
         reflectedField = MidiPart::detuneLo
     ),

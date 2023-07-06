@@ -1,5 +1,6 @@
 package com.example.xgbuddy.ui.filebrowser
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -99,6 +101,13 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                 else
                     R.string.save_setup
             )
+            ivSpinDisk.setImageResource(
+                if (mode == READ)
+                    R.drawable.baseline_folder_24_color
+                else
+                    R.drawable.baseline_save_24_color
+            )
+
         }
         setupRecyclerView()
         return binding.root
@@ -112,6 +121,32 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             it.setLayout(width, height)
             it.setBackgroundDrawableResource(R.drawable.popup_bg)
         }
+        startAnimators()
+    }
+
+    private fun startAnimators() {
+        // Y Rotation
+        ValueAnimator.ofFloat(0f, 359f).apply {
+            duration = 4000
+            addUpdateListener {
+                binding.ivSpinDisk.rotationY = it.animatedValue as Float
+            }
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = LinearInterpolator()
+            start()
+        }
+
+//        // Alpha Oscillation
+//        ValueAnimator.ofFloat(0f, 1f).apply {
+//            duration = 1000
+//            addUpdateListener {
+//                binding.ivSpinDisk.alpha = it.animatedValue as Float
+//            }
+//            repeatCount = ValueAnimator.INFINITE
+//            repeatMode = ValueAnimator.REVERSE
+//            interpolator = LinearInterpolator()
+//            start()
+//        }
     }
 
     private fun setupRecyclerView() {
