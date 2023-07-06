@@ -2,6 +2,7 @@ package com.example.xgbuddy.adapter
 
 import android.content.Context
 import android.view.ViewGroup
+import com.example.xgbuddy.R
 import com.example.xgbuddy.data.gm.MidiPart
 import com.example.xgbuddy.ui.MidiViewModel
 import com.example.xgbuddy.ui.custom.PartsRowItem
@@ -52,7 +53,12 @@ class PartsListAdapter(
     fun updateAll(parts: List<MidiPart>) {
         parts.forEachIndexed { index, part ->
             (partsContainer.getChildAt(index) as PartsRowItem).apply {
-                setChannelInfo(part, context.getString(part.voiceNameRes))
+                val voiceName =
+                    if (part.voiceNameRes == R.string.qs300_voice_label)
+                        part.qs300VoiceName
+                    else
+                        context.getString(part.voiceNameRes)
+                setChannelInfo(part, voiceName)
             }
         }
     }

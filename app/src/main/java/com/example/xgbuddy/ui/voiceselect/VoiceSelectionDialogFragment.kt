@@ -71,18 +71,6 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             interpolator = LinearInterpolator()
             start()
         }
-
-//        // Alpha Oscillation
-//        ValueAnimator.ofFloat(0f, 1f).apply {
-//            duration = 1000
-//            addUpdateListener {
-//                binding.ivSpinDisk.alpha = it.animatedValue as Float
-//            }
-//            repeatCount = ValueAnimator.INFINITE
-//            repeatMode = ValueAnimator.REVERSE
-//            interpolator = LinearInterpolator()
-//            start()
-//        }
     }
 
     private fun initAdapter() {

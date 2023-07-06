@@ -120,6 +120,7 @@ open class MidiPart(val ch: Int) : MidiData() {
 
     var drumVoices: List<DrumVoice>? = null
     var qs300VoiceNumber = 0
+    var qs300VoiceName = ""
 
     init {
         if (ch == 9) {
@@ -175,6 +176,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceType = VoiceType.QS300
         voiceNameRes = R.string.qs300_voice_label
         qs300VoiceNumber = voiceNumber
+        qs300VoiceName = qS300Voice.voiceName
         // Do we need to change program number/bank if switching to qs300 voice?
         // What to set voice name to?
         // There might be a way to pass an argument to the "getString" method when updating the
