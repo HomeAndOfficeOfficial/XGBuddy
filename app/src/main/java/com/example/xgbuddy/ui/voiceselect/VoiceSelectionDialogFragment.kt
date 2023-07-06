@@ -1,9 +1,11 @@
 package com.example.xgbuddy.ui.voiceselect
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,6 +57,32 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             it.setLayout(width, height)
             it.setBackgroundDrawableResource(R.drawable.popup_bg)
         }
+        startAnimators()
+    }
+
+    private fun startAnimators() {
+        // Y Rotation
+        ValueAnimator.ofFloat(0f, 359f).apply {
+            duration = 4000
+            addUpdateListener {
+                binding.ivVoiceIcon.rotationY = it.animatedValue as Float
+            }
+            repeatCount = ValueAnimator.INFINITE
+            interpolator = LinearInterpolator()
+            start()
+        }
+
+//        // Alpha Oscillation
+//        ValueAnimator.ofFloat(0f, 1f).apply {
+//            duration = 1000
+//            addUpdateListener {
+//                binding.ivSpinDisk.alpha = it.animatedValue as Float
+//            }
+//            repeatCount = ValueAnimator.INFINITE
+//            repeatMode = ValueAnimator.REVERSE
+//            interpolator = LinearInterpolator()
+//            start()
+//        }
     }
 
     private fun initAdapter() {

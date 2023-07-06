@@ -6,6 +6,15 @@
     android:layout_height="@dimen/voice_select_dialog_height"
     android:padding="@dimen/popup_padding">
 
+    <ImageView
+        android:id="@+id/ivVoiceIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:rotation="-30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_voice_24_color" />
+
     <TextView
         android:id="@+id/tvVoiceSelTitle"
         android:layout_width="wrap_content"
@@ -14,17 +23,19 @@
         android:text="@string/midi_voice_select"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/ivVoiceIcon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/ivVoiceIcon" />
 
     <View
         android:id="@+id/dividerVoiceSel"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="12dp"
         android:background="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvVoiceSelTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/ivVoiceIcon" />
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/bgVoiceCategory"
@@ -470,21 +481,14 @@
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Current Voice:"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvVoiceSelTitle"
-        app:layout_constraintStart_toEndOf="@+id/filterContainer" />
-
-    <TextView
         android:id="@+id/tvCurrentVoice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="TextView"
+        android:textColor="?colorPrimary"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
-        app:layout_constraintStart_toEndOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/ivVoiceIcon"
+        app:layout_constraintEnd_toEndOf="@+id/rvVoiceSelect"
+        app:layout_constraintStart_toEndOf="@+id/filterContainer"
+        app:layout_constraintTop_toTopOf="@+id/ivVoiceIcon" />
 </androidx.constraintlayout.widget.ConstraintLayout>
