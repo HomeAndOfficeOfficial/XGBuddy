@@ -333,7 +333,7 @@ object MidiMessageUtility {
 
 
     fun getQS300VoiceSelection(channel: Int, userVoice: Int): MidiMessage {
-        Log.d(TAG, "getQS300VoiceSelection channel $channel, userVoice $userVoice")
+        Log.d(TAG, "getQS300VoiceSelection channel $channel, presetVoice $userVoice, userVoice: ${channel + userVoice}")
         val data = ByteArray(14)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
@@ -346,15 +346,15 @@ object MidiMessageUtility {
         data[8] = 1
         data[9] = 0x3f
         data[10] = 0
-        data[11] = userVoice.toByte()
+        data[11] = channel.toByte()
         data[12] = getChecksum(data, 4)
         data[13] = MidiConstants.SYSEX_END
 
         return MidiMessage(data)
     }
 
-    fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int, timestamp: Long = 0): MidiMessage {
-        Log.d(TAG, "getQS300BulkDump voice $voice, voiceNumber $voiceNumber")
+    fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int, partNumber: Int, timestamp: Long = 0): MidiMessage {
+        Log.d(TAG, "getQS300BulkDump voice $voice, presetVoice $voiceNumber, userVoice: ${voiceNumber + partNumber}")
         val data = ByteArray(MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
@@ -364,7 +364,7 @@ object MidiMessageUtility {
         data[5] = 0x7d
         data[6] = 17 // Addr hi
         data[7] =
-            voiceNumber.toByte() // Addr mid : todo: This value changes depending on normal voice selection
+            (voiceNumber + partNumber).toByte() // Addr mid : todo: This value changes depending on normal voice selection
         data[8] = 0
 
         // Voice Name
@@ -491,7 +491,7 @@ object MidiMessageUtility {
                     qsVoiceIndex = 1
                     setup.qsPresetMap[index - 1]
                 }
-                it.add(getQS300BulkDump(preset!!.voices[qsVoiceIndex], index, timestamp))
+                it.add(getQS300BulkDump(preset!!.voices[qsVoiceIndex], index, index, timestamp))
             } else {
                 it.add(getXGMultiPartBulkDump(part, index, timestamp))
                 // if (part.voiceType == MidiPart.VoiceType.DRUM) {

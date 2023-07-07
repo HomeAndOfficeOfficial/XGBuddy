@@ -73,7 +73,8 @@ class QSElementPrimaryControlFragment :
                             midiSession.send(
                                 MidiMessageUtility.getQS300BulkDump(
                                     voice,
-                                    voiceIndex
+                                    voiceIndex,
+                                    midiViewModel.selectedChannel.value!!
                                 )
                             )
                         }
@@ -90,7 +91,8 @@ class QSElementPrimaryControlFragment :
                 midiSession.send(
                     MidiMessageUtility.getQS300BulkDump(
                         viewModel.preset.value!!.voices[voiceIndex],
-                        voiceIndex
+                        voiceIndex,
+                        midiViewModel.selectedChannel.value!!
                     )
                 )
             }

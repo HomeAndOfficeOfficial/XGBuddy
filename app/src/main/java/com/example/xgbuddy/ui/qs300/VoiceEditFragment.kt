@@ -103,7 +103,13 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
         val voiceIndex = qS300ViewModel.voice.value!!
         val voice = qS300ViewModel.preset.value!!.voices[voiceIndex]
         voice.voiceLevel = voiceLevel.toByte()
-        midiSession.send(MidiMessageUtility.getQS300BulkDump(voice, voiceIndex))
+        midiSession.send(
+            MidiMessageUtility.getQS300BulkDump(
+                voice,
+                voiceIndex,
+                midiViewModel.selectedChannel.value!!
+            )
+        )
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

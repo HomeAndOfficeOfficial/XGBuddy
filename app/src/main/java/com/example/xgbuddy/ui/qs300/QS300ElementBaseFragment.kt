@@ -129,7 +129,13 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
             currentParam!!.reflectedField, controlParameter.value.toByte()
         )
 
-        midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, voiceIndex))
+        midiSession.sendBulkMessage(
+            MidiMessageUtility.getQS300BulkDump(
+                voice,
+                voiceIndex,
+                midiViewModel.selectedChannel.value!!
+            )
+        )
     }
 
     companion object {

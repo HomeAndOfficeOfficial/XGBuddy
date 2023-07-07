@@ -1,5 +1,6 @@
 package com.example.xgbuddy.ui.voiceselect
 
+import android.util.Log
 import com.example.xgbuddy.MidiSession
 import com.example.xgbuddy.data.voiceselect.VoiceListCategory
 import com.example.xgbuddy.data.xg.SFXNormalVoice
@@ -170,18 +171,21 @@ sealed class OnVoiceItemSelectedListenerImpl(
                          *  sure both midi part are receiving the same channel, set to the same mode,
                          *  etc.
                          */
-                        midiSession.sendBulkMessage(
-                            MidiMessageUtility.getQS300BulkDump(
-                                voice,
-                                voiceIndex
-                            )
-                        )
+                        Log.d("VoiceItemSelected", "Before voice selection SelectedChanel = $selectedChannel, voiceIndex ")
                         midiSession.sendBulkMessage(
                             MidiMessageUtility.getQS300VoiceSelection(
                                 selectedChannel + voiceIndex,
                                 voiceIndex,
                             )
                         )
+                        midiSession.sendBulkMessage(
+                            MidiMessageUtility.getQS300BulkDump(
+                                voice,
+                                voiceIndex,
+                                selectedChannel
+                            )
+                        )
+
                     }
                 }
             }
@@ -245,13 +249,20 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     voice,
                     voiceIndex
                 )
-                midiSession.sendBulkMessage(MidiMessageUtility.getQS300BulkDump(voice, index))
                 midiSession.sendBulkMessage(
                     MidiMessageUtility.getQS300VoiceSelection(
-                        firstChannel + voiceIndex,
+                        firstChannel,
                         voiceIndex,
                     )
                 )
+                midiSession.sendBulkMessage(
+                    MidiMessageUtility.getQS300BulkDump(
+                        voice,
+                        index,
+                        firstChannel
+                    )
+                )
+
             }
         }
     }
