@@ -204,7 +204,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             // timestamps to that.
             // Also may need to run this in a coroutine since it will probably take a second or two
             // potentially causing UI thread to hang
-            midiSession.send(MidiMessageUtility.getSetupSequence(setup))
+            midiSession.sendBulkMessages(MidiMessageUtility.getSetupSequence(setup))
             dismiss()
         } else {
             AlertDialog.Builder(requireContext()).apply {

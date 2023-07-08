@@ -332,7 +332,7 @@ object MidiMessageUtility {
     }
 
 
-    fun getQS300VoiceSelection(channel: Int, userVoice: Int): MidiMessage {
+    fun getQS300VoiceSelection(channel: Int, userVoice: Int, timestamp: Long = 0): MidiMessage {
         Log.d(TAG, "getQS300VoiceSelection channel $channel, presetVoice $userVoice, userVoice: ${channel + userVoice}")
         val data = ByteArray(14)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
@@ -344,13 +344,13 @@ object MidiMessageUtility {
         data[6] = 8
         data[7] = channel.toByte()
         data[8] = 1
-        data[9] = 0x3f
-        data[10] = 0
-        data[11] = channel.toByte()
+        data[9] = MidiConstants.QS300_USER_VOICE_MSB
+        data[10] = MidiConstants.QS300_USER_VOICE_LSB
+        data[11] = channel.toByte() // Program Number
         data[12] = getChecksum(data, 4)
         data[13] = MidiConstants.SYSEX_END
 
-        return MidiMessage(data)
+        return MidiMessage(data, timestamp)
     }
 
     fun getQS300BulkDump(voice: QS300Voice, voiceNumber: Int, partNumber: Int, timestamp: Long = 0): MidiMessage {
@@ -491,7 +491,9 @@ object MidiMessageUtility {
                     qsVoiceIndex = 1
                     setup.qsPresetMap[index - 1]
                 }
-                it.add(getQS300BulkDump(preset!!.voices[qsVoiceIndex], index, index, timestamp))
+                it.add(getXGMultiPartBulkDump(part, index, timestamp))
+                timestamp += MidiConstants.SETUP_SEQUENCE_INTERVAL_NANO
+                it.add(getQS300BulkDump(preset!!.voices[qsVoiceIndex], qsVoiceIndex, index, timestamp))
             } else {
                 it.add(getXGMultiPartBulkDump(part, index, timestamp))
                 // if (part.voiceType == MidiPart.VoiceType.DRUM) {

@@ -40,6 +40,8 @@ object MidiConstants {
 
     const val QS300_VOICE_NAME_SIZE = 10
     const val QS300_ELEMENT_DATA_SIZE = 80
+    const val QS300_USER_VOICE_MSB: Byte = 0x3f
+    const val QS300_USER_VOICE_LSB: Byte = 0
 
     const val MODEL_ID_QS300: Byte = 0x4b
     const val MODEL_ID_XG: Byte = 0x4c

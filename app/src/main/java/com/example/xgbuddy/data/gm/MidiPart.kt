@@ -177,6 +177,9 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceNameRes = R.string.qs300_voice_label
         qs300VoiceNumber = voiceNumber
         qs300VoiceName = qS300Voice.voiceName
+        programNumber = ch.toByte()
+        bankMsb = MidiConstants.QS300_USER_VOICE_MSB
+        bankLsb = MidiConstants.QS300_USER_VOICE_LSB
         // Do we need to change program number/bank if switching to qs300 voice?
         // What to set voice name to?
         // There might be a way to pass an argument to the "getString" method when updating the
