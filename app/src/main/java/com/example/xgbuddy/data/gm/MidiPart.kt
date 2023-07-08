@@ -126,10 +126,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         if (ch == 9) {
             // Drum channel by default. If this isn't a drum channel, these fields will be changed
             // anyway.
-            elementReserve = 0
-            bankMsb = 127
-            partMode = 2
-            drumVoices = DrumKitVoiceUtil.standardKit1
+            setDrumKit(XGDrumKit.STANDARD_KIT_1)
         }
     }
 
@@ -141,6 +138,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceNameRes = voice.nameRes
         drumVoices = null
         partMode = 0
+        elementReserve = 2
         // TODO: Set element reserve and part mode for this and other
     }
 
@@ -152,6 +150,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         voiceNameRes = drumKit.nameRes
         keyOnAssign = 2
         partMode = 2
+        elementReserve = 0
         drumVoices = drumKit.drumVoices
     }
 

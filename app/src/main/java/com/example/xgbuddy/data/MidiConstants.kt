@@ -50,6 +50,8 @@ object MidiConstants {
     const val XG_MULTIPART_BULK_DATA_SIZE: Byte = 111
     const val XG_EFFECT_BULK_TOTAL_SIZE = 129
     const val XG_EFFECT_BULK_DATA_SIZE: Byte = 118
+    const val XG_DRUM_BULK_TOTAL_SIZE = 27
+    const val XG_DRUM_BULK_DATA_SIZE: Byte = 16
     const val XG_NORMAL_VOICE_MSB: Byte = 0
     const val XG_SFX_VOICE_MSB: Byte = 64
     const val XG_SFX_VOICE_LSB: Byte = 0
