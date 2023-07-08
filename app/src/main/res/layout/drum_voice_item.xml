@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clDrumContainer"
-    android:layout_width="120dp"
-    android:layout_height="150dp"
+    android:layout_width="@dimen/drum_voice_item_width"
+    android:layout_height="@dimen/drum_voice_item_height"
     android:layout_margin="2dp"
     android:background="@drawable/container_bg_shape"
     android:clickable="true"
@@ -12,7 +12,7 @@
     <Button
         android:id="@+id/bDrumHit"
         android:layout_width="0dp"
-        android:layout_height="96dp"
+        android:layout_height="100dp"
         android:text="Snare"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="V: 100"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bDrumHit" />
 
@@ -31,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="P: -63"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bDrumHit" />
 
@@ -39,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="R: 40"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDrumLevel" />
 
@@ -47,6 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="C: 40"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDrumPan" />
 </androidx.constraintlayout.widget.ConstraintLayout>

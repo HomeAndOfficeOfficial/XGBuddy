@@ -73,7 +73,7 @@ class DrumEditFragment : Fragment(), DrumVoiceRecyclerAdapter.OnDrumClickListene
         }
         binding.rvDrumVoices.apply {
             layoutManager =
-                GridLayoutManager(requireContext(), 6, GridLayoutManager.VERTICAL, false)
+                GridLayoutManager(requireContext(), 5, GridLayoutManager.VERTICAL, false)
             adapter = drumVoiceAdapter
         }
         return binding.root
