@@ -13,6 +13,9 @@ import android.view.MenuItem
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.view.MenuProvider
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.xgbuddy.data.gm.MidiPart
@@ -146,6 +149,19 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, "OutputDeviceOpened = $it")
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        enableFullscreenMode()
+    }
+
+    private fun enableFullscreenMode() {
+        val windowInsetsController =
+            WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
     }
 
     private fun setupOptionsMenu() {
