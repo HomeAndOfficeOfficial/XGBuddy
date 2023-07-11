@@ -17,6 +17,8 @@ import com.example.xgbuddy.util.EnumFinder.findBy
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.max
+import kotlin.math.min
 
 @AndroidEntryPoint
 class KeyboardFragment : Fragment() {
@@ -24,7 +26,16 @@ class KeyboardFragment : Fragment() {
     @Inject
     lateinit var midiSession: MidiSession
 
-    private var octave = 5
+    private var baseOctave = 5
+        set(value) {
+            field = value
+            binding.tvOctave.text = "${value - 2}"
+        }
+    private var transpose = 0
+        set(value) {
+            field = value
+            binding.tvTranspose.text = "$value"
+        }
     private var channel = 0
 
     private val binding: FragmentKeyboardBinding by lazy {
@@ -36,15 +47,17 @@ class KeyboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        for (i in 0 until binding.keysContainer.childCount - 1) {
+        for (i in 0 until binding.keysContainer.childCount) {
             (binding.keysContainer.getChildAt(i) as KeyView).listener =
                 object : KeyView.OnKeyPressListener {
                     override fun onKeyDown(note: String) {
-                        sendMidiNote(note, true)
+                        val keyOctave = baseOctave + i / 13
+                        sendMidiNote(note, keyOctave, true)
                     }
 
                     override fun onKeyUp(note: String) {
-                        sendMidiNote(note, false)
+                        val keyOctave = baseOctave + i / 13
+                        sendMidiNote(note, keyOctave, false)
                     }
                 }
         }
@@ -55,7 +68,7 @@ class KeyboardFragment : Fragment() {
                 Array(16) { it + 1 }).apply {
                 setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             }
-            onItemSelectedListener = object: OnItemSelectedListener {
+            onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>?,
                     view: View?,
@@ -68,18 +81,24 @@ class KeyboardFragment : Fragment() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+        binding.bOctDown.setOnClickListener { baseOctave = max(0, baseOctave - 1) }
+        binding.bOctUp.setOnClickListener { baseOctave = min(10, baseOctave + 1) }
+        binding.bNoteDown.setOnClickListener { transpose = max(-11, transpose - 1) }
+        binding.bNoteUp.setOnClickListener { transpose = min(11, transpose + 1) }
         return binding.root
     }
 
-    private fun sendMidiNote(note: String, isKeyDown: Boolean) {
-        val msg = encodeNote(note, isKeyDown)
-        midiSession.send(MidiMessage(msg, 0))
+    private fun sendMidiNote(note: String, octave: Int, isKeyDown: Boolean) {
+        encodeNote(note, octave, isKeyDown)?.let {
+            midiSession.send(MidiMessage(it, 0))
+        }
     }
 
-    private fun encodeNote(noteString: String, isKeyDown: Boolean): ByteArray? {
+    private fun encodeNote(noteString: String, octave: Int, isKeyDown: Boolean): ByteArray? {
         val noteVal = (Note::name findBy noteString.uppercase(Locale.getDefault()))?.ordinal
         noteVal?.let { note ->
-            val actualNote = note + (12 * octave)
+            val actualNote = note + (12 * octave) + transpose
+            if (actualNote > 127 || actualNote < 0) return null
             val noteStatus = if (isKeyDown) 0x90 else 0x80
             val buffer = ByteArray(3)
             buffer[0] = (noteStatus + channel).toByte() // Note On/Off status

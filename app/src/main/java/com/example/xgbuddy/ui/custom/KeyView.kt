@@ -43,15 +43,10 @@ class KeyView(context: Context, attributeSet: AttributeSet) :
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                if (event.x < 0 || event.x > measuredWidth || event.y < 0 || event.y > measuredHeight) {
-                    isKeyOn = false
-                    listener?.onKeyUp(note)
-                } else {
-                    if (!isKeyOn) {
-                        isKeyOn = true
-                        listener?.onKeyDown(note)
-                    }
+            MotionEvent.ACTION_DOWN -> {
+                if (!isKeyOn) {
+                    isKeyOn = true
+                    listener?.onKeyDown(note)
                 }
                 return true
             }
