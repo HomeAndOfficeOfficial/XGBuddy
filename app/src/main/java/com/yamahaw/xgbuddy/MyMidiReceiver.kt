@@ -41,16 +41,6 @@ class MyMidiReceiver(
                     inputPort?.send(sysexBuffer.toByteArray(), 0, sysexBuffer.size)
                 }
             } else {
-                when (midiMsg[0].toInt() and 0xf0) {
-                    MidiConstants.STATUS_CONTROL_CHANGE -> {
-                        parseControlChange(midiMsg)
-                    }
-                    MidiConstants.STATUS_PROGRAM_CHANGE -> {
-                        parseProgramChange(midiMsg)
-                    }
-                    else -> { /* Don't care */
-                    }
-                }
                 inputPort?.send(midiMsg.toByteArray(), 0, midiMsg.size)
             }
         }
