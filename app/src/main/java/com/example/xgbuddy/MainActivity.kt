@@ -172,15 +172,6 @@ class MainActivity : AppCompatActivity() {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    R.id.qs_capture -> {
-                        if (supportFragmentManager.findFragmentByTag(QS300PresetCaptureFragment.TAG) == null) {
-                            QS300PresetCaptureFragment().show(
-                                supportFragmentManager,
-                                QS300PresetCaptureFragment.TAG
-                            )
-                        }
-                        true
-                    }
                     R.id.connect_status -> {
                         showConnectionStatusDialog()
                         true
