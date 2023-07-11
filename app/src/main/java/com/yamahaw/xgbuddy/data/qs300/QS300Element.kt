@@ -1,7 +1,9 @@
 package com.yamahaw.xgbuddy.data.qs300
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.data.MidiData
 
+@Keep
 data class QS300Element(val elementNumber: Int) : MidiData() {
     var waveHi: Byte = QS300ElementParameter.WAVE_HI.default
     var waveLo: Byte = QS300ElementParameter.WAVE_LO.default

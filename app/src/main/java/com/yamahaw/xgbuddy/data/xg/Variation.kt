@@ -1,7 +1,9 @@
 package com.yamahaw.xgbuddy.data.xg
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 
+@Keep
 class Variation(variationType: VariationType) : Effect(
     variationType.nameRes,
     variationType.msb,

@@ -1,8 +1,10 @@
 package com.yamahaw.xgbuddy.data.xg
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.data.MidiData
 import java.util.*
 
+@Keep
 abstract class Effect(
     var nameRes: Int,
     var msb: Byte,

@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Andy\\keystores\\xgb-keystore.jks')
+            storePassword 'xgbuddy'
+            keyAlias 'key0'
+            keyPassword 'xgbuddy'
+        }
+    }
     namespace 'com.yamahaw.xgbuddy'
     compileSdk 33
 
@@ -26,8 +34,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

@@ -1,7 +1,9 @@
 package com.yamahaw.xgbuddy.data.xg
 
+import androidx.annotation.Keep
 import kotlin.reflect.KMutableProperty
 
+@Keep
 data class DrumVoice(var name: String,
                      var pitchCoarse: Byte,
                      var pitchFine: Byte,

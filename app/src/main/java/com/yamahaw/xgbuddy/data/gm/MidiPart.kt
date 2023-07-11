@@ -1,5 +1,6 @@
 package com.yamahaw.xgbuddy.data.gm
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.MidiConstants
 import com.yamahaw.xgbuddy.data.MidiData
@@ -9,6 +10,7 @@ import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
 import com.yamahaw.xgbuddy.data.xg.XGDrumKit
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 
+@Keep
 open class MidiPart(val ch: Int) : MidiData() {
     var voiceType: VoiceType = VoiceType.NORMAL
     var voiceNameRes: Int = XGNormalVoice.GRAND_PNO.nameRes

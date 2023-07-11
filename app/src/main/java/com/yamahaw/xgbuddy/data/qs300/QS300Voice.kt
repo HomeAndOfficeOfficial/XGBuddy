@@ -1,7 +1,9 @@
 package com.yamahaw.xgbuddy.data.qs300
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.data.MidiData
 
+@Keep
 data class QS300Voice(var voiceName: String = "") : MidiData() {
 
     var elements: MutableList<QS300Element> = mutableListOf()

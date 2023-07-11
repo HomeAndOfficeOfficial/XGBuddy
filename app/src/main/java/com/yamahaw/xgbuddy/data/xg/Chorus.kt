@@ -1,7 +1,9 @@
 package com.yamahaw.xgbuddy.data.xg
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 
+@Keep
 class Chorus(chorusType: ChorusType) : Effect(
     chorusType.nameRes,
     chorusType.msb,
