@@ -13,13 +13,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgDrumParam"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/xg_drum_param"
                 app:cvgLabel="Voice Parameters" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgDrumParam2"
                 style="@style/ControlViewGroupElement"
                 app:cvgLabel="Note Parameters">
@@ -30,28 +30,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvDPKeyAssign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:pcId="@string/xgdp_key_assign" />
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvDPNoteOff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:pcId="@string/xgdp_rcv_noteoff" />
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvDPNoteOn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:pcId="@string/xgdp_rcv_noteon" />
                 </LinearLayout>
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
         </LinearLayout>
 
     </ScrollView>

@@ -38,7 +38,7 @@
             android:background="@drawable/container_bg_shape"
             android:layout_marginEnd="32dp">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgReverb"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/fx_rev_params"
@@ -50,20 +50,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvReverbReturn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_rev_ret" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvReverbPan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_rev_pan" />
                 </LinearLayout>
 
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

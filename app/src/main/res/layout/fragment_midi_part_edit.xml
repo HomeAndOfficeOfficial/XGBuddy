@@ -59,31 +59,31 @@
             android:orientation="vertical"
             android:paddingEnd="32dp">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiMain"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_main"
                 app:cvgLabel="Main" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiPitch"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_pitch"
                 app:cvgLabel="Pitch" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiEG"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_eg"
                 app:cvgLabel="EG" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiFx"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_fx"
                 app:cvgLabel="Effects" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiNote"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_note_general"
@@ -95,71 +95,71 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvPolyMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:pcId="@string/midi_mp_POLY_MODE" />
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvPortaSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:pcId="@string/midi_mp_PORTA_SWITCH" />
                 </LinearLayout>
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiPat"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_pat"
                 app:cvgLabel="PAT" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiCat"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_cat"
                 app:cvgLabel="CAT" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiBend"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_bend"
                 app:cvgLabel="Bend Wheel" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiMod"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_mod_wheel"
                 app:cvgLabel="Mod Wheel" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiAc1"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_ac1"
                 app:cvgLabel="AC1 Settings" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiAc2"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_ac2"
                 app:cvgLabel="AC2 Settings" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiScale"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_scale_tuning"
                 app:cvgLabel="Scale Tuning" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiRcv"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_rcv_switch"
                 app:cvgLabel="Receive Switches" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMidiCh"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/midi_channel"

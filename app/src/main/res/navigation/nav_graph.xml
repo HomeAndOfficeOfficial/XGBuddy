@@ -6,7 +6,7 @@
     app:startDestination="@id/partsFragment">
     <fragment
         android:id="@+id/partsFragment"
-        android:name="com.example.xgbuddy.ui.PartsFragment"
+        android:name="com.yamahaw.xgbuddy.ui.PartsFragment"
         android:label="Parts"
         tools:layout="@layout/fragment_parts" >
 <!--        <action-->
@@ -15,31 +15,31 @@
     </fragment>
     <fragment
         android:id="@+id/voiceEditFragment"
-        android:name="com.example.xgbuddy.ui.qs300.VoiceEditFragment"
+        android:name="com.yamahaw.xgbuddy.ui.qs300.VoiceEditFragment"
         android:label="Voice Edit"
         tools:layout="@layout/fragment_voice_edit" />
     <fragment
         android:id="@+id/effectsFragment"
-        android:name="com.example.xgbuddy.ui.EffectsFragment"
+        android:name="com.yamahaw.xgbuddy.ui.EffectsFragment"
         android:label="Effects"
         tools:layout="@layout/fragment_effects" />
     <fragment
         android:id="@+id/systemFragment"
-        android:name="com.example.xgbuddy.ui.SystemFragment"
+        android:name="com.yamahaw.xgbuddy.ui.SystemFragment"
         android:label="System"
         tools:layout="@layout/fragment_system" />
     <fragment
         android:id="@+id/keyboardFragment"
-        android:name="com.example.xgbuddy.ui.KeyboardFragment"
+        android:name="com.yamahaw.xgbuddy.ui.KeyboardFragment"
         android:label="Keyboard"
         tools:layout="@layout/fragment_keyboard" />
     <fragment
         android:id="@+id/drumEditFragment"
-        android:name="com.example.xgbuddy.ui.DrumEditFragment"
+        android:name="com.yamahaw.xgbuddy.ui.DrumEditFragment"
         android:label="DrumEditFragment" />
 <!--    <fragment-->
 <!--        android:id="@+id/fileBrowserFragment2"-->
-<!--        android:name="com.example.xgbuddy.ui.filebrowser.FileBrowserFragment"-->
+<!--        android:name="com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment"-->
 <!--        android:label="FileBrowserFragment">-->
 <!--        <argument-->
 <!--            android:name="modeArg"-->

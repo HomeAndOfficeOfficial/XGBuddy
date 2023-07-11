@@ -11,19 +11,19 @@
         android:orientation="vertical"
         tools:viewBindingIgnore="true">
 
-        <com.example.xgbuddy.ui.custom.SliderControlView
+        <com.yamahaw.xgbuddy.ui.custom.SliderControlView
             android:id="@+id/scvMasterVolume"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:pcId="@string/sys_master_vol" />
 
-        <com.example.xgbuddy.ui.custom.SliderControlView
+        <com.yamahaw.xgbuddy.ui.custom.SliderControlView
             android:id="@+id/scvMasterTune"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:pcId="@string/sys_master_tune" />
 
-        <com.example.xgbuddy.ui.custom.SliderControlView
+        <com.yamahaw.xgbuddy.ui.custom.SliderControlView
             android:id="@+id/scvTranspose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
