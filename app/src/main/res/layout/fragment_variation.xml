@@ -78,7 +78,7 @@
             android:background="@drawable/container_bg_shape"
             android:orientation="vertical">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgVari"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -91,34 +91,34 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvVariReturn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_vari_ret" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvVariPan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_vari_pan" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvVariToRev"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_vari_send_rev" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvVariToCho"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_vari_send_chor" />
                 </LinearLayout>
 
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgVariCtrl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

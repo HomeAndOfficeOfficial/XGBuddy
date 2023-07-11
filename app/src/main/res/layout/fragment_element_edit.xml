@@ -23,13 +23,13 @@
             android:orientation="vertical"
             tools:viewBindingIgnore="true">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgElementMain"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_main"
                 app:cvgLabel="Main" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgLfo"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_lfo"
@@ -40,14 +40,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.example.xgbuddy.ui.custom.SpinnerControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SpinnerControlView
                         android:id="@+id/cvLfoWave"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:pcEntries="@array/qs300_lfo_wave_entries"
                         app:pcId="@string/qs300_el_lfo_wave" />
 
-                    <com.example.xgbuddy.ui.custom.SwitchControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SwitchControlView
                         android:id="@+id/cvLfoPhaseInit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -55,45 +55,45 @@
                         app:pcId="@string/qs300_el_lfo_phase_init" />
 
                 </LinearLayout>
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgAeg"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_aeg"
                 app:cvgLabel="Amplitude EG" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgPitch"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_pitch"
                 app:cvgLabel="Pitch" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgPeg"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_peg"
                 app:cvgLabel="Pitch EG" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgFeg"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_feg"
                 app:cvgLabel="Filter EG" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgLvlScale"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_level_scaling"
                 app:cvgLabel="Level Scaling" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgFilterScale"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_filter_scaling"
                 app:cvgLabel="Filter Scaling" />
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgMisc"
                 style="@style/ControlViewGroupElement"
                 android:entries="@array/qs300_element_general"

@@ -38,7 +38,7 @@
             android:background="@drawable/container_bg_shape"
             android:orientation="vertical">
 
-            <com.example.xgbuddy.ui.custom.ControlViewGroup
+            <com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
                 android:id="@+id/cvgChorus"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,26 +51,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvChorusReturn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_chor_ret" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvChorusPan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_chor_pan" />
 
-                    <com.example.xgbuddy.ui.custom.SliderControlView
+                    <com.yamahaw.xgbuddy.ui.custom.SliderControlView
                         android:id="@+id/cvChorusToRev"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:pcId="@string/fxpc_chor_send_rev" />
                 </LinearLayout>
 
-            </com.example.xgbuddy.ui.custom.ControlViewGroup>
+            </com.yamahaw.xgbuddy.ui.custom.ControlViewGroup>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
