@@ -40,11 +40,11 @@ class Variation(variationType: VariationType) : Effect(
 
     companion object {
         val partValues = ByteArray(18) {
-            if (it == 16)
-                0x40.toByte()
-            if (it == 17)
-                0x7f.toByte()
-            it.toByte()
+            when (it) {
+                16 -> 0x40.toByte()
+                17 -> 0x7f.toByte()
+                else -> it.toByte()
+            }
         }
     }
 }
