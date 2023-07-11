@@ -55,8 +55,8 @@ class SliderControlView :
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-        updateValueText(progress)
         if (fromUser && isRealtimeControl) {
+            updateValueText(progress)
             this.value = progress
             listener?.onParameterChanged(controlParameter!!, true)
         }

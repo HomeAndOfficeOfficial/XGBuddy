@@ -7,7 +7,7 @@ object DataFormatUtil {
     val noFormat = DataAssignFormatter { "$it" }
 
     val dryWetAssignFormatter = DataAssignFormatter {
-        "${(it - 1 / 126) * 100}"
+        "${(((it - 1) / 126f) * 100).toInt()}%"
     }
 
     val signed127Formatter = DataAssignFormatter {

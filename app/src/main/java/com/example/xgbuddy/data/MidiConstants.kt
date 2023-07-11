@@ -60,6 +60,18 @@ object MidiConstants {
     const val XG_MP_PARAM_ADDR_HI: Byte = 8
     const val XG_EFFECT_PARAM_ADDR_HI: Byte = 2
     const val XG_EFFECT_PARAM_ADDR_MID: Byte = 1
+    const val XG_REVERB1_BULK_DATA_SIZE: Byte = 0x0e
+    const val XG_REVERB2_BULK_DATA_SIZE: Byte = 6
+    const val XG_CHORUS1_BULK_DATA_SIZE: Byte = 0x0f
+    const val XG_CHORUS2_BULK_DATA_SIZE: Byte = 6
+    const val XG_VARI1_BULK_DATA_SIZE: Byte = 0x21
+    const val XG_VARI2_BULK_DATA_SIZE: Byte = 6
+    const val XG_REVERB1_START_ADDR: Byte = 0
+    const val XG_REVERB2_START_ADDR: Byte = 0x10
+    const val XG_CHORUS1_START_ADDR: Byte = 0x20
+    const val XG_CHORUS2_START_ADDR: Byte = 0x30
+    const val XG_VARI1_START_ADDR: Byte = 0x40
+    const val XG_VARI2_START_ADDR: Byte = 0x70
     const val XG_INITIAL_DRUM_NOTE = 13
 
     const val XG_SYS_ADDR_TUNE: Byte = 0
