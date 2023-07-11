@@ -31,6 +31,11 @@ class KeyboardFragment : Fragment() {
             field = value
             binding.tvOctave.text = "${value - 2}"
         }
+    private var transpose = 0
+        set(value) {
+            field = value
+            binding.tvTranspose.text = "$value"
+        }
     private var channel = 0
 
     private val binding: FragmentKeyboardBinding by lazy {
@@ -78,6 +83,8 @@ class KeyboardFragment : Fragment() {
         }
         binding.bOctDown.setOnClickListener { baseOctave = max(0, baseOctave - 1) }
         binding.bOctUp.setOnClickListener { baseOctave = min(10, baseOctave + 1) }
+        binding.bNoteDown.setOnClickListener { transpose = max(-11, transpose - 1) }
+        binding.bNoteUp.setOnClickListener { transpose = min(11, transpose + 1) }
         return binding.root
     }
 
@@ -90,8 +97,8 @@ class KeyboardFragment : Fragment() {
     private fun encodeNote(noteString: String, octave: Int, isKeyDown: Boolean): ByteArray? {
         val noteVal = (Note::name findBy noteString.uppercase(Locale.getDefault()))?.ordinal
         noteVal?.let { note ->
-            val actualNote = note + (12 * octave)
-            if (actualNote > 127) return null
+            val actualNote = note + (12 * octave) + transpose
+            if (actualNote > 127 || actualNote < 0) return null
             val noteStatus = if (isKeyDown) 0x90 else 0x80
             val buffer = ByteArray(3)
             buffer[0] = (noteStatus + channel).toByte() // Note On/Off status
