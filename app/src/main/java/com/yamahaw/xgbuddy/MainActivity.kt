@@ -26,6 +26,7 @@ import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
 import com.yamahaw.xgbuddy.service.MidiService
+import com.yamahaw.xgbuddy.service.MidiServiceConnection
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,6 +35,9 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var midiSession: MidiSession
+    private val midiServiceConnection by lazy {
+        MidiServiceConnection(this)
+    }
 
     private val navHost: NavHostFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_MIDI)) {
             setContentView(R.layout.activity_main)
-            startForegroundService(Intent(this, MidiService::class.java))
+            bindMidiService()
             setupOptionsMenu()
             setupNavigation()
             midiViewModel.apply {
@@ -97,6 +101,19 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         stopService(Intent(this, MidiService::class.java))
+    }
+
+    private fun bindMidiService() {
+        try {
+            bindService(
+                Intent(this, MidiService::class.java),
+                midiServiceConnection,
+                BIND_AUTO_CREATE
+            )
+        } catch (e: RuntimeException) {
+            Log.d(TAG, "Couldn't do it: ${e.message}")
+            startForegroundService(Intent(this, MidiService::class.java))
+        }
     }
 
     private fun enableFullscreenMode() {
