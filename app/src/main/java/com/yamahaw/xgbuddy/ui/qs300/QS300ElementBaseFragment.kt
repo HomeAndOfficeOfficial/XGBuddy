@@ -3,7 +3,6 @@ package com.yamahaw.xgbuddy.ui.qs300
 import android.content.Context
 import android.os.Bundle
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
@@ -59,17 +58,7 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
         viewModel.preset.observe(viewLifecycleOwner) {
             updateViews(it!!)
         }
-
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.preset.value?.let {
-//            if (elementIndex < it.voices[viewModel.voice].elements.size) {
-//                updateViews(it)
-//            }
-//        }
-//    }
 
     protected open fun updateViews(preset: QS300Preset) {
         val element = preset.voices[viewModel.voice.value!!].elements[elementIndex]
@@ -130,7 +119,6 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
             currentParam!!.reflectedField, controlParameter.value.toByte()
         )
 
-        Log.d("QS300ElementBaseFragment", "LFO Wave = ${voice.elements[elementIndex].lfoWave}")
         midiSession.sendBulkMessage(
             MidiMessageUtility.getQS300BulkDump(
                 voice,

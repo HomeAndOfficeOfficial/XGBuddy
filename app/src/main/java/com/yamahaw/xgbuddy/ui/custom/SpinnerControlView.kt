@@ -65,5 +65,6 @@ class SpinnerControlView : ParameterControlView, OnItemSelectedListener {
     override fun updateViews() {
         isUserUpdating = false
         spinner.setSelection(value)
+        isUserUpdating = true
     }
 }
