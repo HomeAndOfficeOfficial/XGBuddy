@@ -38,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     private val midiServiceConnection by lazy {
         MidiServiceConnection(this)
     }
+    private val qsNoteDuplicator: QSPartNoteDuplicator by lazy {
+        QSPartNoteDuplicator(midiViewModel, midiSession)
+    }
 
     private val navHost: NavHostFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -86,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                 outputDeviceOpened.observe(this@MainActivity) {
                     Log.d(TAG, "OutputDeviceOpened = $it")
                 }
+                registerForMidiCallbacks(qsNoteDuplicator)
             }
             qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
         } else {

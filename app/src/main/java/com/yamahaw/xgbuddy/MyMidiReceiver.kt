@@ -12,10 +12,9 @@ import kotlin.experimental.and
 const val RECEIVER_MAX_LENGTH = MidiConstants.QS300_BULK_DUMP_TOTAL_SIZE
 const val SYSEX_TIMEOUT_MS = 500L
 
-class MyMidiReceiver(
-    private val receiverListener: MidiReceiverListener
-) : MidiReceiver(RECEIVER_MAX_LENGTH) {
+class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
 
+    private val midiSubscribers = mutableListOf<MidiReceiverListener>()
     private val sysexBuffer = mutableListOf<Byte>()
     private var isReceivingSysex = false
     private val job = SupervisorJob()
@@ -25,6 +24,18 @@ class MyMidiReceiver(
     }
 
     var inputPort: MidiInputPort? = null
+
+    fun subscribe(listener: MidiReceiverListener) {
+        midiSubscribers.add(listener)
+    }
+
+    fun unsubscribe(listener: MidiReceiverListener) {
+        midiSubscribers.remove(listener)
+    }
+
+    fun unsubscribeAll() {
+        midiSubscribers.clear()
+    }
 
     override fun onSend(msg: ByteArray?, offset: Int, count: Int, timestamp: Long) {
         if (msg != null) {
@@ -42,8 +53,17 @@ class MyMidiReceiver(
                 }
             } else {
                 inputPort?.send(midiMsg.toByteArray(), 0, midiMsg.size)
+                if (isNote(midiMsg[0])) {
+                    val channel = (midiMsg[0] and 0x0f).toInt()
+                    midiSubscribers.forEach { it.onNoteReceived(channel, midiMsg.toByteArray()) }
+                }
             }
         }
+    }
+
+    private fun isNote(statusByte: Byte): Boolean {
+        val status = (statusByte and 0xf0.toByte()).toInt()
+        return status == MidiConstants.STATUS_NOTE_ON || status == MidiConstants.STATUS_NOTE_OFF
     }
 
     private fun startSysexTimer(onTimeout: () -> Unit) = scope.launch {
@@ -72,13 +92,13 @@ class MyMidiReceiver(
         val channel = (msg[0] and 0x0f).toInt()
         val controlChange = MidiControlChange::controlNumber findBy msg[1]
         val value = msg[2].toInt()
-        receiverListener.onControlChangeReceived(channel, controlChange!!, value)
+        midiSubscribers.forEach { it.onControlChangeReceived(channel, controlChange!!, value) }
     }
 
     private fun parseProgramChange(msg: List<Byte>) {
         val channel = (msg[0] and 0x0f).toInt()
         val programNumber = (msg[1]).toInt()
-        receiverListener.onProgramChangeReceived(channel, programNumber)
+        midiSubscribers.forEach { it.onProgramChangeReceived(channel, programNumber) }
     }
 
     companion object {

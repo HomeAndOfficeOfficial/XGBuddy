@@ -17,4 +17,5 @@ open class MidiReceiverListener {
     open fun onDrumParameterChangeReceived(channel: Int, parameter: DrumVoiceParameter) {}
     open fun onControlChangeReceived(channel: Int, cc: MidiControlChange, value: Int) {}
     open fun onProgramChangeReceived(channel: Int, programNumber: Int) {}
+    open fun onNoteReceived(channel: Int, message: ByteArray) {}
 }
