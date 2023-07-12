@@ -13,29 +13,6 @@ import android.os.Looper
 import android.util.Log
 import com.yamahaw.xgbuddy.data.DeviceError
 
-/**
- * For now, it's unclear to me what I'm supposed to do with the device callbacks because they don't
- * seem to work when I plug/unplug the UM-1. The registered executor does something, so I guess I
- * could use that to check if there is a device connected, if it has input/output ports, then use
- * info to deduce whether or not a device has been attached or detached.
- *
- * I can create a DeviceStatusCallback that I could pass in to this class from the main fragment.
- * That can respond to attach/detach events, displaying a popup if we get disconnected.
- *
- * From there, probably choose between a QS300 or XG mode. That will send the appropriate command
- * to the output port.
- *
- * I guess once I get the initial setup figured out, I'll need to figure out sending midi data.
- * Probably will need a class or set of utility functions to encode and send commands.
- *
- * I will need some basic in/out indicators.
- *
- * Once I can send data, need to start mapping out all the xg-specific things i need to send, and
- * start defining those.
- *
- * Then I'll have to get into the QS300 voices, and see what all I am able to control.
- */
-
 private const val NOT_OPEN = -1
 
 @Suppress("DEPRECATION") // To accommodate API < 33

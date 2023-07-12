@@ -6,6 +6,8 @@
         android:name="android.software.midi"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:name=".XGBuddyApplication"
         android:allowBackup="true"
@@ -36,6 +38,7 @@
                 <data android:host="*" />
             </intent-filter>
         </activity>
+        <service android:name=".service.MidiService" />
     </application>
 
 </manifest>
