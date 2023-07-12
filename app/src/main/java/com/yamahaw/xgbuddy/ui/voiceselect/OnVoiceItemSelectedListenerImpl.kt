@@ -2,6 +2,7 @@ package com.yamahaw.xgbuddy.ui.voiceselect
 
 import android.util.Log
 import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.data.gm.MidiParameter
 import com.yamahaw.xgbuddy.data.voiceselect.VoiceListCategory
 import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
 import com.yamahaw.xgbuddy.data.xg.XGDrumKit
@@ -171,7 +172,10 @@ sealed class OnVoiceItemSelectedListenerImpl(
                          *  sure both midi part are receiving the same channel, set to the same mode,
                          *  etc.
                          */
-                        Log.d("VoiceItemSelected", "Before voice selection SelectedChanel = $selectedChannel, voiceIndex ")
+                        Log.d(
+                            "VoiceItemSelected",
+                            "Before voice selection SelectedChanel = $selectedChannel, voiceIndex "
+                        )
                         midiSession.sendBulkMessage(
                             MidiMessageUtility.getQS300VoiceSelection(
                                 selectedChannel + voiceIndex,
@@ -211,30 +215,79 @@ sealed class OnVoiceItemSelectedListenerImpl(
                 //
                 if (currentVoice == 1) {
                     val updateSelectedChannel = selectedChannel - 1
-                    midiViewModel.channels.value!![selectedChannel].setXGNormalVoice(
-                        XGNormalVoice.GRAND_PNO
-                    )
+
+                    /*
+                    Current selected channel will be orphaned, so change voice grand piano, reset
+                    receive channel to default value.
+                     */
+                    midiViewModel.channels.value!![selectedChannel].apply {
+                        setXGNormalVoice(XGNormalVoice.GRAND_PNO)
+                        receiveChannel = selectedChannel.toByte()
+                    }
+
+                    // Set the receive channel of the newly selected channel to its default value.
+                    midiViewModel.channels.value!![updateSelectedChannel].receiveChannel =
+                        updateSelectedChannel.toByte()
+
+                    // Update viewModel selected channel
                     midiViewModel.selectedChannel.value = updateSelectedChannel
+
+                    // Send messages for each of the above actions
                     midiSession.send(
-                        MidiMessageUtility.getXGNormalVoiceChange(
-                            updateSelectedChannel + 1,
-                            XGNormalVoice.GRAND_PNO
-                        )
+                        mutableListOf(
+                            MidiMessageUtility.getXGParamChange(
+                                selectedChannel, MidiParameter.RCV_CHANNEL,
+                                selectedChannel.toByte()
+                            ),
+                            MidiMessageUtility.getXGParamChange(
+                                updateSelectedChannel, MidiParameter.RCV_CHANNEL,
+                                updateSelectedChannel.toByte()
+                            )
+                        ).apply {
+                            addAll(
+                                MidiMessageUtility.getXGNormalVoiceChange(
+                                    selectedChannel,
+                                    XGNormalVoice.GRAND_PNO
+                                )
+                            )
+                        }
                     )
+
                     currentVoice = 0
                     selectedChannel = updateSelectedChannel
                 } else {
-                    midiViewModel.channels.value!![selectedChannel + 1].setXGNormalVoice(
-                        XGNormalVoice.GRAND_PNO
-                    )
-                    midiSession.send(
-                        MidiMessageUtility.getXGNormalVoiceChange(
-                            selectedChannel + 1,
-                            XGNormalVoice.GRAND_PNO
+                    // Second voice will be orphaned so apply the same changes as above, reversed
+                    midiViewModel.channels.value!![selectedChannel + 1].apply {
+                        setXGNormalVoice(XGNormalVoice.GRAND_PNO)
+                        receiveChannel = (selectedChannel + 1).toByte()
+                    }
+                    midiViewModel.channels.value!![selectedChannel].receiveChannel =
+                        selectedChannel.toByte()
+
+                    midiSession.send(mutableListOf(
+                        MidiMessageUtility.getXGParamChange(
+                            selectedChannel + 1, MidiParameter.RCV_CHANNEL,
+                            (selectedChannel + 1).toByte()
+                        ),
+                        MidiMessageUtility.getXGParamChange(
+                            selectedChannel, MidiParameter.RCV_CHANNEL, selectedChannel.toByte()
                         )
+                    ).apply {
+                        addAll(
+                            MidiMessageUtility.getXGNormalVoiceChange(
+                                selectedChannel + 1,
+                                XGNormalVoice.GRAND_PNO
+                            )
+                        )
+                    }
                     )
                 }
             } else if (currentVoiceCount == 1 && updateVoiceCount == 2) {
+                /*
+                If there is a preset in the slot next to the current selected channel, remove it.
+                I think the below voice selection messages should take care of overwriting the
+                previous voice.
+                 */
                 midiViewModel.qsPartMap.remove(selectedChannel + 1)
             }
             val firstChannel =
@@ -249,9 +302,14 @@ sealed class OnVoiceItemSelectedListenerImpl(
                     voice,
                     voiceIndex
                 )
+
+                /*
+                I think not adding voiceIndex was wrong. I need to confirm this still changes
+                the voice whether receive_channel has been changed or not. What a complicated mess.
+                 */
                 midiSession.sendBulkMessage(
                     MidiMessageUtility.getQS300VoiceSelection(
-                        firstChannel,
+                        firstChannel + voiceIndex, // I think not adding voiceIndex was wrong.
                         voiceIndex,
                     )
                 )
