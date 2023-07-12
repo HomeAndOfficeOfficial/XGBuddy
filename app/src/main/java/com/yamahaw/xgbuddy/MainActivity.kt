@@ -1,6 +1,7 @@
 package com.yamahaw.xgbuddy
 
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.media.midi.MidiDeviceInfo
@@ -24,6 +25,7 @@ import com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
+import com.yamahaw.xgbuddy.service.MidiService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         if (packageManager.hasSystemFeature(PackageManager.FEATURE_MIDI)) {
             setContentView(R.layout.activity_main)
+            startForegroundService(Intent(this, MidiService::class.java))
             setupOptionsMenu()
             setupNavigation()
             midiViewModel.apply {
@@ -89,6 +92,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         enableFullscreenMode()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService(Intent(this, MidiService::class.java))
     }
 
     private fun enableFullscreenMode() {
