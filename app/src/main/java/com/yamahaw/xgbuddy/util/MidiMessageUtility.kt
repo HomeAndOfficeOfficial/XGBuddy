@@ -20,9 +20,9 @@ object MidiMessageUtility {
     fun getDrumHit(channel: Int, drumNote: Byte): List<MidiMessage> {
         Log.d(TAG, "GetDrumHit: Ch $channel, drumNote $drumNote")
         val noteOnData =
-            byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel).toByte(), drumNote, 100)
+            byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel.toUByte()).toByte(), drumNote, 100)
         val noteOffData =
-            byteArrayOf((MidiConstants.STATUS_NOTE_OFF + channel).toByte(), drumNote, 0)
+            byteArrayOf((MidiConstants.STATUS_NOTE_OFF + channel.toUByte()).toByte(), drumNote, 0)
         return listOf(
             MidiMessage(noteOnData),
             MidiMessage(

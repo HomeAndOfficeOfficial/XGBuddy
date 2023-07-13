@@ -62,7 +62,7 @@ class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
     }
 
     private fun isNote(statusByte: Byte): Boolean {
-        val status = (statusByte and 0xf0.toByte()).toInt()
+        val status = (statusByte.toUByte() and 0xf0u)
         return status == MidiConstants.STATUS_NOTE_ON || status == MidiConstants.STATUS_NOTE_OFF
     }
 
