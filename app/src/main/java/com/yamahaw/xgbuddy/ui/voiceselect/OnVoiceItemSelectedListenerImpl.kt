@@ -358,8 +358,8 @@ sealed class OnVoiceItemSelectedListenerImpl(
                 midiSession.sendBulkMessage(
                     MidiMessageUtility.getQS300BulkDump(
                         voice,
-                        index,
-                        firstChannel
+                        voiceIndex,
+                        firstChannel + voiceIndex
                     )
                 )
 

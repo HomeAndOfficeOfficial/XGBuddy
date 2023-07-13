@@ -427,10 +427,10 @@ object MidiMessageUtility {
 
 
     fun getQS300VoiceSelection(channel: Int, userVoice: Int, timestamp: Long = 0): MidiMessage {
-//        Log.d(
-//            TAG,
-//            "getQS300VoiceSelection channel $channel, presetVoice $userVoice, userVoice: ${channel + userVoice}"
-//        )
+        Log.d(
+            TAG,
+            "getQS300VoiceSelection channel $channel, presetVoice $userVoice, userVoice: ${channel + userVoice}"
+        )
         val data = ByteArray(14)
         data[0] = MidiConstants.EXCLUSIVE_STATUS_BYTE
         data[1] = MidiConstants.YAMAHA_ID
@@ -468,7 +468,7 @@ object MidiMessageUtility {
         data[5] = 0x7d
         data[6] = 17 // Addr hi
         data[7] =
-            (voiceNumber + partNumber).toByte() // Addr mid : todo: This value changes depending on normal voice selection
+            (partNumber).toByte() // Addr mid : todo: This value changes depending on normal voice selection
         data[8] = 0
 
         // Voice Name
