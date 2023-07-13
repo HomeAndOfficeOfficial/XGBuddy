@@ -25,6 +25,10 @@ class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
 
     var inputPort: MidiInputPort? = null
 
+    var receivedPitchBend = false
+    var receivedModWheel = false
+    var continuousChannel = UNSET
+
     fun subscribe(listener: MidiReceiverListener) {
         midiSubscribers.add(listener)
     }
@@ -41,6 +45,25 @@ class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
         if (msg != null) {
             val midiMsg = msg.slice(offset until offset + count)
             Log.d(TAG, "received: ${midiMsg.joinToString { String.format("%02x ", it) }}")
+
+            // Only applies to continuous data
+//            if (continuousChannel != UNSET) {
+//                if (midiMsg.size == MidiConstants.CONTINUOUS_DATA_LENGTH) {
+//
+//                } else {
+//                    receivedPitchBend = isPitchBend(midiMsg[0])
+//                    receivedModWheel = isModWheel(midiMsg[0], midiMsg[1])
+//                    if (receivedModWheel || receivedPitchBend) {
+//                        continuousChannel = (midiMsg[0] and 0x0f).toInt()
+//                        if (receivedPitchBend) {
+//                            parsePitchBend(midiMsg)
+//                        } else {
+//                            parseControlChange(midiMsg)
+//                        }
+//                    }
+//                }
+//            }
+
             if (isReceivingSysex) {
                 sysexTimeoutJob.cancel()
                 sysexTimeoutJob.start()
@@ -73,6 +96,10 @@ class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
     private fun isPitchBend(statusByte: Byte): Boolean {
         val status = (statusByte.toUByte() and 0xf0u)
         return status == MidiConstants.STATUS_PITCH_BEND
+    }
+
+    private fun isModWheel(statusByte: Byte, controlByte: Byte): Boolean {
+        return isControlChange(statusByte) && controlByte == MidiControlChange.MODULATION.controlNumber
     }
 
     private fun isControlChange(statusByte: Byte): Boolean {
@@ -134,5 +161,6 @@ class MyMidiReceiver() : MidiReceiver(RECEIVER_MAX_LENGTH) {
 
     companion object {
         const val TAG = "MyMidiReceiver"
+        const val UNSET = -1
     }
 }

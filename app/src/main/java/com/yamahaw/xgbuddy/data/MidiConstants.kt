@@ -5,6 +5,7 @@ object MidiConstants {
     const val SETUP_SEQUENCE_INTERVAL_NANO = 60000000L
     const val SETUP_SEQUENCE_DRUM_INTERVAL = 30000000L
 
+    const val CONTINUOUS_DATA_LENGTH = 2
     const val STATUS_NOTE_OFF: UByte = 0x80u
     const val STATUS_NOTE_ON: UByte = 0x90u
     const val STATUS_PITCH_BEND: UByte = 0xe0u
