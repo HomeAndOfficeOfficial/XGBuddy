@@ -231,7 +231,6 @@ sealed class OnVoiceItemSelectedListenerImpl(
                                 selectedChannel
                             )
                         )
-
                     }
                 }
             }

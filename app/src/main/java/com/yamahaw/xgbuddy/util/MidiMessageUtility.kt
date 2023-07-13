@@ -40,7 +40,7 @@ object MidiMessageUtility {
 
     fun getControlChange(channel: Int, controlNumber: Byte, value: Byte): MidiMessage {
         Log.d(TAG, "getControlChange: Ch $channel, controlNumber $controlNumber")
-        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel).toByte()
+        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel.toUByte()).toByte()
         return MidiMessage(byteArrayOf(statusByte, controlNumber, value), 0)
     }
 
