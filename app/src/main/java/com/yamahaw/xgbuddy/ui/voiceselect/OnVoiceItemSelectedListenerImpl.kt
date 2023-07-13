@@ -228,7 +228,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             MidiMessageUtility.getQS300BulkDump(
                                 voice,
                                 voiceIndex,
-                                selectedChannel
+                                selectedChannel + voiceIndex
                             )
                         )
                     }
