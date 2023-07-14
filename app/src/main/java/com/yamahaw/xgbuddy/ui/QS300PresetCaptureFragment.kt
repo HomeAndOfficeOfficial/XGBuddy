@@ -69,7 +69,8 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
             it.setLayout(width, height)
             it.setBackgroundDrawableResource(R.drawable.popup_bg)
         }
-        midiSession.registerForMidiCallbacks(this)
+        // If this is really needed, I can figure out a new solution
+//        midiSession.registerForMidiCallbacks(this)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -85,10 +86,10 @@ class QS300PresetCaptureFragment : DialogFragment(), MidiSession.OnMidiReceivedL
         outState.putString(ARG_PRESET_JSON, qs300PresetsJSON.toString())
     }
 
-    override fun onPause() {
-        super.onPause()
-        midiSession.unregisterMidiListener(this)
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        midiSession.unregisterMidiListener(this)
+//    }
 
     private fun setupViewListeners() {
         binding.etPresetName.addTextChangedListener {

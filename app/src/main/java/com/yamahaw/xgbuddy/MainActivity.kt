@@ -27,6 +27,7 @@ import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
 import com.yamahaw.xgbuddy.service.MidiService
 import com.yamahaw.xgbuddy.service.MidiServiceConnection
+import com.yamahaw.xgbuddy.util.MidiMessageUtility
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var midiSession: MidiSession
     private val midiServiceConnection by lazy {
         MidiServiceConnection(this)
+    }
+    private val qsNoteDuplicator: QSPartNoteDuplicator by lazy {
+        QSPartNoteDuplicator(midiViewModel, midiSession)
     }
 
     private val navHost: NavHostFragment by lazy {
@@ -86,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 outputDeviceOpened.observe(this@MainActivity) {
                     Log.d(TAG, "OutputDeviceOpened = $it")
                 }
+                registerForMidiCallbacks(qsNoteDuplicator)
             }
             qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
         } else {
@@ -149,6 +154,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     R.id.open_setup -> {
                         openFileBrowser(FileBrowserFragment.READ)
+                        true
+                    }
+                    R.id.panic -> {
+                        midiSession.send(MidiMessageUtility.getAllOff())
+                        true
+                    }
+                    R.id.send_default -> {
+                        midiSession.send(MidiMessageUtility.getXGSystemOn())
+                        midiViewModel.resetToDefaultSetup()
                         true
                     }
                     else -> false

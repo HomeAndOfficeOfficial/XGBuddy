@@ -13,9 +13,7 @@ import kotlin.math.min
 
 class MidiSession @Inject constructor(context: Context) {
 
-    private val midiReceiver = MyMidiReceiver(object : MidiReceiverListener() {
-
-    })
+    private val midiReceiver = MyMidiReceiver()
 
     private var midiReceivedListener: OnMidiReceivedListener? = null
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
@@ -109,15 +107,12 @@ class MidiSession @Inject constructor(context: Context) {
          */
     }
 
-    fun registerForMidiCallbacks(listener: OnMidiReceivedListener) {
-        midiReceivedListener = listener
+    fun registerForMidiCallbacks(listener: MidiReceiverListener) {
+        midiReceiver.subscribe(listener)
     }
 
-    fun unregisterMidiListener(listener: OnMidiReceivedListener) {
-        if (midiReceivedListener == listener) {
-            midiReceivedListener = null
-            midiReceiver.flush()
-        }
+    fun unregisterMidiListener(listener: MidiReceiverListener) {
+        midiReceiver.unsubscribe(listener)
     }
 
     /**TODO: Create separate send method for bulk dump. I think everything else can be send

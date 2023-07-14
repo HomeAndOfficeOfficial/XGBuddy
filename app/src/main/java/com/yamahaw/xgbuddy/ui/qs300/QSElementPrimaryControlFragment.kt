@@ -2,6 +2,7 @@ package com.yamahaw.xgbuddy.ui.qs300
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,8 @@ class QSElementPrimaryControlFragment :
                         val voiceIndex = viewModel.voice.value!!
                         val voice = viewModel.preset.value!!.voices[voiceIndex]
                         val element = voice.elements[elementIndex]
-                        if (decodeWave(element.waveHi, element.waveLo) != waveValue) {
+                        val decodedWave = decodeWave(element.waveHi, element.waveLo)
+                        if (decodedWave != waveValue) {
                             element.setWaveValue(waveValue)
                             midiSession.send(
                                 MidiMessageUtility.getQS300BulkDump(
