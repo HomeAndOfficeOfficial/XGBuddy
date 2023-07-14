@@ -15,7 +15,6 @@ class MidiSession @Inject constructor(context: Context) {
 
     private val midiReceiver = MyMidiReceiver()
 
-    private var midiReceivedListener: OnMidiReceivedListener? = null
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
     private var outputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
 
@@ -23,9 +22,9 @@ class MidiSession @Inject constructor(context: Context) {
     val inputDeviceOpened = MutableLiveData(false)
     val connectedDeviceList = MutableLiveData(setOf<MidiDeviceInfo>())
 
-    val midiManager = MyMidiManager(context, object : MyMidiManager.MyMidiDeviceCallback {
+    private val midiManager = MyMidiManager(context, object : MyMidiManager.MyMidiDeviceCallback {
         override fun onInputDeviceOpened(device: MidiDevice, inputPort: MidiInputPort) {
-            midiReceiver.inputPort = inputPort
+            midiReceiver.addInputPort(inputPort)
             inputDeviceOpened.postValue(true)
             inputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
         }
@@ -52,8 +51,6 @@ class MidiSession @Inject constructor(context: Context) {
         }
     })
 
-    var midiSetup = MidiSetup.getXGDefault()
-
     fun getInputDevices(): Map<String, MidiDevice> = inputDevices
 
     fun getOutputDevices(): Map<String, MidiDevice> = outputDevices
@@ -76,37 +73,6 @@ class MidiSession @Inject constructor(context: Context) {
         outputDevices.remove(name)
     }
 
-    fun createNewSetup(instrumentMode: InstrumentMode) {
-
-        midiSetup = if (instrumentMode == InstrumentMode.XG) {
-            MidiSetup.getXGDefault()
-        } else {
-            MidiSetup.getQSDefault()
-        }
-
-        /**
-         * Just a note: Instead of sending an entire default setup here, I think I could probably
-         * just send a "reset all parameters" command.
-         *
-         * From a fresh setup, any time a control is changed, that is added to a file (.xbs).
-         *
-         * Whenever a setup is loaded from a file, send a reset command, then send only the parameters
-         * that are required for that setup.
-         *
-         * I will still need to set initial values for everything in the code. It may take some work
-         * to determine what the default values for everything are when you reset every parameter.
-         */
-
-        /*
-        TODO: Work on data structures. Can't really continue on without having the MIDI data structs
-            all planned out.
-
-            Then need to work on encoding and sending MIDI.
-
-            Then will need to figure out how to send setups.
-         */
-    }
-
     fun registerForMidiCallbacks(listener: MidiReceiverListener) {
         midiReceiver.subscribe(listener)
     }
@@ -114,10 +80,6 @@ class MidiSession @Inject constructor(context: Context) {
     fun unregisterMidiListener(listener: MidiReceiverListener) {
         midiReceiver.unsubscribe(listener)
     }
-
-    /**TODO: Create separate send method for bulk dump. I think everything else can be send
-     *  normally, but bulk dump is going to require some extra effort.
-     */
 
     fun send(midiMessages: List<MidiMessage>) {
         midiMessages.forEach {
@@ -170,7 +132,7 @@ class MidiSession @Inject constructor(context: Context) {
                     midiMessage.timestamp
                 )
             } else {
-                midiManager.inputPort?.send(midiMessage.msg, 0, midiMessage.msg!!.size)
+                midiManager.inputPort?.send(midiMessage.msg, 0, midiMessage.msg.size)
             }
         }
     }
