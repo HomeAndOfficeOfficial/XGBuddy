@@ -556,10 +556,10 @@ object MidiMessageUtility {
 
     fun getTuningChange(tuning: Int): MidiMessage {
         val tuningBytes = byteArrayOf(
-            0,
-            ((tuning shr 16) and 0x0f).toByte(),
+            (tuning and 0x0f).toByte(),
+            ((tuning shr 4) and 0x0f).toByte(),
             ((tuning shr 8) and 0x0f).toByte(),
-            (tuning and 0x0f).toByte()
+            0
         )
         return getSystemParamChange(0, tuningBytes)
     }
