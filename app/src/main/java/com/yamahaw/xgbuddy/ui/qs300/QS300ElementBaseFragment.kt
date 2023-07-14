@@ -58,17 +58,7 @@ abstract class QS300ElementBaseFragment<VB : ViewBinding> : ControlBaseFragment<
         viewModel.preset.observe(viewLifecycleOwner) {
             updateViews(it!!)
         }
-
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.preset.value?.let {
-//            if (elementIndex < it.voices[viewModel.voice].elements.size) {
-//                updateViews(it)
-//            }
-//        }
-//    }
 
     protected open fun updateViews(preset: QS300Preset) {
         val element = preset.voices[viewModel.voice.value!!].elements[elementIndex]

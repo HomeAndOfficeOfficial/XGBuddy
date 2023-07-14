@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import com.yamahaw.xgbuddy.MidiSession
@@ -18,20 +19,15 @@ const val NOTIFICATION_ID = 12
 
 @AndroidEntryPoint
 class MidiService : Service() {
-
     @Inject
     lateinit var midiSession: MidiSession
+    class LocalBinder(val service: MidiService): Binder() {}
+    private val binder = LocalBinder(this)
+    override fun onBind(intent: Intent?): IBinder = binder
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    fun getNotification(): Notification {
         createNotificationChannel()
-        val notification = buildNotification()
-        startForeground(NOTIFICATION_ID, notification)
-        Log.d("MidiService", "Starting service")
-        return START_STICKY
+        return buildNotification()
     }
 
     private fun buildNotification(): Notification =
@@ -51,9 +47,4 @@ class MidiService : Service() {
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         service.createNotificationChannel(chan)
     }
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        midiSession.terminateConnection()
-//    }
 }

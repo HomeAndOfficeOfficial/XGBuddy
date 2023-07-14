@@ -20,9 +20,9 @@ object MidiMessageUtility {
     fun getDrumHit(channel: Int, drumNote: Byte): List<MidiMessage> {
         Log.d(TAG, "GetDrumHit: Ch $channel, drumNote $drumNote")
         val noteOnData =
-            byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel).toByte(), drumNote, 100)
+            byteArrayOf((MidiConstants.STATUS_NOTE_ON + channel.toUByte()).toByte(), drumNote, 100)
         val noteOffData =
-            byteArrayOf((MidiConstants.STATUS_NOTE_OFF + channel).toByte(), drumNote, 0)
+            byteArrayOf((MidiConstants.STATUS_NOTE_OFF + channel.toUByte()).toByte(), drumNote, 0)
         return listOf(
             MidiMessage(noteOnData),
             MidiMessage(
@@ -40,7 +40,7 @@ object MidiMessageUtility {
 
     fun getControlChange(channel: Int, controlNumber: Byte, value: Byte): MidiMessage {
         Log.d(TAG, "getControlChange: Ch $channel, controlNumber $controlNumber")
-        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel).toByte()
+        val statusByte = (MidiConstants.STATUS_CONTROL_CHANGE or channel.toUByte()).toByte()
         return MidiMessage(byteArrayOf(statusByte, controlNumber, value), 0)
     }
 
@@ -468,7 +468,7 @@ object MidiMessageUtility {
         data[5] = 0x7d
         data[6] = 17 // Addr hi
         data[7] =
-            (voiceNumber + partNumber).toByte() // Addr mid : todo: This value changes depending on normal voice selection
+            (partNumber).toByte() // Addr mid : todo: This value changes depending on normal voice selection
         data[8] = 0
 
         // Voice Name
