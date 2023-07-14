@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import android.util.Log
 
 class MidiServiceConnection(private val context: Context) : ServiceConnection {
 
@@ -24,18 +23,7 @@ class MidiServiceConnection(private val context: Context) : ServiceConnection {
         context.unbindService(this)
     }
 
-    override fun onBindingDied(name: ComponentName?) {
-        Log.w(TAG, "Binding has died.")
-    }
-
-    override fun onNullBinding(name: ComponentName?) {
-        Log.w(TAG, "Bind was null.")
-    }
-
-    override fun onServiceDisconnected(name: ComponentName?) {
-        midiService = null
-        Log.w(TAG, "Service is disconnected..")
-    }
+    override fun onServiceDisconnected(name: ComponentName?) { midiService = null }
 
     companion object {
         const val TAG = "MidiServiceConnection"
