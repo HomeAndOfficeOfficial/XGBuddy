@@ -18,7 +18,7 @@ object DataFormatUtil {
         "${it / 10f}ms"
     }
 
-    val decibleFormatter = DataAssignFormatter {
+    val decibelFormatter = DataAssignFormatter {
         "${-12 + it - 52}dB"
     }
 
@@ -246,6 +246,10 @@ object DataFormatUtil {
             in 8 .. 14 -> "R${it - 7}"
             else -> "Scaling"
         }
+    }
+
+    val masterTuneFormatter = DataAssignFormatter {
+        "${(-1024 + it) / 10f}"
     }
 
     fun interface DataAssignFormatter {
