@@ -2,25 +2,88 @@ package com.yamahaw.xgbuddy.util
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.*
 import com.yamahaw.xgbuddy.data.qs300.*
+import com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import javax.inject.Inject
 
 class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
+    private var userPresets: List<QS300Preset>? = null
+
+    /**
+     * Todo: I think I will probably need to read the JSON as an array
+     *   first and then convert it to a List <- that's for the "getUserPresets"
+     *   method. For the "save" method, will probably need to read a json array from the file,
+     *   then add the preset to the array, then overwrite the file.
+     */
 
     fun saveUserPreset(preset: QS300Preset) {
+        val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
+        try {
+            val file = File(fileName)
+            var jsonString = ""
+            if (file.exists()) {
 
+            }
+
+
+
+            val isNewFile = !file.exists()
+            OutputStreamWriter(FileOutputStream(File(fileName), true)).apply {
+                val jsonString = Gson().toJson(preset)
+                val builder = StringBuilder(jsonString)
+                if (isNewFile) {
+
+                }
+
+                write(Gson().toJson(preset) + ",\n")
+                close()
+            }
+            Toast
+                .makeText(context, "User preset saved: ${preset.name}", Toast.LENGTH_SHORT)
+                .show()
+        } catch (e: IOException) {
+            Log.e(TAG, "Caught IOException: ${e.message}")
+        }
     }
 
     fun getUserPresets(): List<QS300Preset> {
-        return listOf()
+        val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
+        val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+        val jsonString = try {
+            InputStreamReader(FileInputStream(File(fileName))).let {
+                val bufferedReader = BufferedReader(it)
+                val stringBuilder = StringBuilder()
+                var line = bufferedReader.readLine()
+                while (line != null) {
+                    stringBuilder.append(line)
+                    line = bufferedReader.readLine()
+                }
+                bufferedReader.close()
+                stringBuilder.toString()
+            }
+        } catch (e: Exception) {
+            Log.e(FileBrowserFragment.TAG, "Caught some exception: ${e.message}")
+            ""
+        }
+
+        return try {
+            Gson().fromJson(jsonString, itemType) ?: listOf()
+        } catch (e: JsonSyntaxException) {
+            listOf()
+        }
     }
 
     fun getQS300Presets(): List<QS300Preset> {
@@ -105,5 +168,6 @@ class QS300Repository @Inject constructor(val context: Context) {
 
     companion object {
         private const val TAG = "QS300Repository"
+        private const val USER_PRESET_FILE = "user_presets.json"
     }
 }
