@@ -20,7 +20,7 @@ class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
-    private var userPresets: List<QS300Preset>? = null
+    private var userPresets: MutableList<QS300Preset> = mutableListOf()
 
     /**
      * Todo: I think I will probably need to read the JSON as an array
@@ -30,25 +30,12 @@ class QS300Repository @Inject constructor(val context: Context) {
      */
 
     fun saveUserPreset(preset: QS300Preset) {
+        userPresets.add(preset)
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
         try {
-            val file = File(fileName)
-            var jsonString = ""
-            if (file.exists()) {
-
-            }
-
-
-
-            val isNewFile = !file.exists()
-            OutputStreamWriter(FileOutputStream(File(fileName), true)).apply {
-                val jsonString = Gson().toJson(preset)
-                val builder = StringBuilder(jsonString)
-                if (isNewFile) {
-
-                }
-
-                write(Gson().toJson(preset) + ",\n")
+            OutputStreamWriter(FileOutputStream(File(fileName), false)).apply {
+                val jsonString = Gson().toJsonTree(userPresets).asJsonArray.asString
+                write(jsonString)
                 close()
             }
             Toast
@@ -62,28 +49,29 @@ class QS300Repository @Inject constructor(val context: Context) {
     fun getUserPresets(): List<QS300Preset> {
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
         val itemType = object : TypeToken<List<QS300Preset>>() {}.type
-        val jsonString = try {
-            InputStreamReader(FileInputStream(File(fileName))).let {
-                val bufferedReader = BufferedReader(it)
-                val stringBuilder = StringBuilder()
-                var line = bufferedReader.readLine()
-                while (line != null) {
-                    stringBuilder.append(line)
-                    line = bufferedReader.readLine()
-                }
-                bufferedReader.close()
-                stringBuilder.toString()
-            }
-        } catch (e: Exception) {
-            Log.e(FileBrowserFragment.TAG, "Caught some exception: ${e.message}")
-            ""
-        }
-
+        val jsonString = readUserPresetJson(File(fileName))
         return try {
             Gson().fromJson(jsonString, itemType) ?: listOf()
         } catch (e: JsonSyntaxException) {
             listOf()
         }
+    }
+
+    private fun readUserPresetJson(jsonFile: File): String = try {
+        InputStreamReader(FileInputStream(jsonFile)).let {
+            val bufferedReader = BufferedReader(it)
+            val stringBuilder = StringBuilder()
+            var line = bufferedReader.readLine()
+            while (line != null) {
+                stringBuilder.append(line)
+                line = bufferedReader.readLine()
+            }
+            bufferedReader.close()
+            stringBuilder.toString()
+        }
+    } catch (e: Exception) {
+        Log.e(FileBrowserFragment.TAG, "Caught some exception: ${e.message}")
+        ""
     }
 
     fun getQS300Presets(): List<QS300Preset> {
