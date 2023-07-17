@@ -12,10 +12,11 @@ import kotlin.experimental.xor
 
 @HiltViewModel
 class QS300ViewModel @Inject constructor(
-    repository: QS300Repository
+    private val repository: QS300Repository
 ) : ViewModel() {
 
     val presets: List<QS300Preset> = repository.getQS300Presets()
+    var userPresets: List<QS300Preset> = repository.getUserPresets()
 
     val preset = MutableLiveData<QS300Preset?>(null)
     var voice = MutableLiveData(0)
@@ -25,7 +26,7 @@ class QS300ViewModel @Inject constructor(
         ))
     // ^ Long way of saying set it to the element switch value or EL_12 if null
 
-    fun updateElementStatus(elementIndex: Int, isOn: Boolean) {
+    fun updateElementStatus(elementIndex: Int) {
         if (elementIndex < 2) { // Don't worry about 3 or 4 for now
             var updatedStatus = elementStatus.value!! xor ((1 shl elementIndex).toByte())
             if (updatedStatus == 0.toByte()) {
@@ -37,5 +38,10 @@ class QS300ViewModel @Inject constructor(
             preset.value!!.voices[voice.value!!].elementSwitch = updatedStatus
         }
 
+    }
+
+    fun addCurrentToUserPresets() {
+        repository.saveUserPreset(preset.value!!)
+        userPresets = repository.getUserPresets()
     }
 }

@@ -58,6 +58,18 @@
         app:layout_constraintTop_toTopOf="@+id/tiQSPresetName"
         app:srcCompat="@drawable/baseline_edit_24" />
 
+    <ImageButton
+        android:id="@+id/ibSave"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/spQsVoice"
+        app:layout_constraintStart_toEndOf="@id/ibNameEdit"
+        app:layout_constraintTop_toTopOf="@+id/tiQSPresetName"
+        app:srcCompat="@drawable/baseline_save_24" />
+
     <TextView
         android:id="@+id/tvVoiceName"
         android:layout_width="wrap_content"

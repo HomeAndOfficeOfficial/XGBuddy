@@ -15,6 +15,14 @@ class QS300Repository @Inject constructor(val context: Context) {
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
 
+    fun saveUserPreset(preset: QS300Preset) {
+
+    }
+
+    fun getUserPresets(): List<QS300Preset> {
+        return listOf()
+    }
+
     fun getQS300Presets(): List<QS300Preset> {
         if (qs300Presets == null) {
             qs300Presets = parseQS300PresetsJSON()
