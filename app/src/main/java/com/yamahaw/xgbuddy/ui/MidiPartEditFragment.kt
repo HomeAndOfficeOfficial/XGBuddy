@@ -177,6 +177,11 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
                 if (name.isNotEmpty()) {
                     midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceName =
                         name
+                    midiViewModel.channels.value = midiViewModel.channels.value
+                    if (midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceType == MidiPart.VoiceType.QS300) {
+                        qs300ViewModel.preset.value!!.voices[qs300ViewModel.voice.value!!].voiceName =
+                            name
+                    }
                 }
             }
             show()
