@@ -201,11 +201,13 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             text = "Save QS300 Preset"
         }
         AlertDialog.Builder(requireContext()).apply {
-            setNeutralButton("Cancel") { d, _, -> d.dismiss() }
+            setNeutralButton("Cancel") { d, _ -> d.dismiss() }
             setPositiveButton("Save") { _, _ ->
                 val presetName = etName.text.toString().ifEmpty { presetName }
                 savePreset(presetName)
             }
+            setView(layout)
+            show()
         }
     }
 
