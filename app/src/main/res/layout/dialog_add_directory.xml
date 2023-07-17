@@ -26,10 +26,11 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAddDirTitle" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDirName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dividerAddDir">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -37,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/add_directory_text_hint"
-            android:inputType="textNoSuggestions"/>
+            android:inputType="textNoSuggestions" />
 
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

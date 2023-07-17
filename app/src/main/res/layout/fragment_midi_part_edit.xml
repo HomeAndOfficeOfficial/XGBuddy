@@ -22,10 +22,11 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="32dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/tiPartVoiceName"
-        app:layout_constraintStart_toEndOf="@+id/ibVoiceList"
+        app:layout_constraintEnd_toStartOf="@+id/spRcvCh"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/baseline_edit_24" />
 
@@ -33,13 +34,12 @@
         android:id="@+id/tiPartVoiceName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         app:boxBackgroundColor="#00000000"
-        app:layout_constraintEnd_toStartOf="@id/spRcvCh"
-        app:layout_constraintStart_toEndOf="@+id/ibNameEdit"
+        app:layout_constraintEnd_toStartOf="@id/ibNameEdit"
+        app:layout_constraintStart_toEndOf="@+id/ibVoiceList"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPartVoiceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

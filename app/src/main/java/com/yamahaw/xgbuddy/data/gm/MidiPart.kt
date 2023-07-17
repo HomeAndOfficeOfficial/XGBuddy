@@ -13,6 +13,7 @@ import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 @Keep
 open class MidiPart(val ch: Int) : MidiData() {
     var voiceType: VoiceType = VoiceType.NORMAL
+    var voiceName = ""
     var voiceNameRes: Int = XGNormalVoice.GRAND_PNO.nameRes
     var elementReserve: Byte = MidiParameter.ELEMENT_RESERVE.default
     var bankMsb: Byte = MidiParameter.BANK_MSB.default

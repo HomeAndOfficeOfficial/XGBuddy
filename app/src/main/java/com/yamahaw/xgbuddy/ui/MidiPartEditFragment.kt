@@ -1,14 +1,20 @@
 package com.yamahaw.xgbuddy.ui
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.textfield.TextInputLayout
+import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.ControlParameter
 import com.yamahaw.xgbuddy.data.MidiControlChange
 import com.yamahaw.xgbuddy.data.MidiMessage
@@ -37,6 +43,9 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
     override fun setupViews() {
         initControlGroups()
         binding?.apply {
+            ibNameEdit.setOnClickListener {
+                openNameEditDialog()
+            }
             etPartVoiceName.apply {
                 showSoftInputOnFocus = false
                 setOnClickListener { openVoiceSelectionDialog() }
@@ -136,6 +145,37 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
             }
         }
         controlGroups.add(binding!!.cvgMidiRcv)
+    }
+
+    private fun openNameEditDialog() {
+        val currentName = getCurrentVoiceName()
+        val layout = layoutInflater.inflate(R.layout.dialog_add_directory, null)
+        val etName = layout.findViewById<EditText>(R.id.etDirName).apply {
+            setText(currentName)
+            hint = "Voice Name"
+        }
+        layout.findViewById<TextInputLayout>(R.id.tilDirName).apply {
+            hint = "Voice Name"
+        }
+        val title = layout.findViewById<TextView>(R.id.tvAddDirTitle)
+        title.setText(R.string.voice_name)
+        AlertDialog.Builder(requireContext()).apply {
+            setView(layout)
+            setNeutralButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            setPositiveButton("Save") { _, _ ->
+                val name = etName.text.toString()
+                if (name.isNotEmpty()) {
+                    midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceName =
+                        name
+                }
+            }
+            show()
+        }
+    }
+
+    private fun getCurrentVoiceName(): String {
+        val part = midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!]
+        return part.voiceName.ifEmpty { getString(part.voiceNameRes) }
     }
 
     private fun openVoiceSelectionDialog() {
