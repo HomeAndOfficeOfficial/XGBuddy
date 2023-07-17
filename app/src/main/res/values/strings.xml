@@ -796,6 +796,7 @@
 
     <string name="qs300_voice_label">QS300 Voice</string>
     <string name="qs300_preset_label">QS300 Preset</string>
+    <string name="qs300_preset_name">Preset Name</string>
 
     <!-- QS300 Element Parameter Descriptions -->
     <string name="qs300_el_wave_hi">Wave Number Hi</string>
@@ -1031,6 +1032,7 @@
     <string name="sys_all_sounds_off">All Sounds/Notes Off</string>
     <string name="midi_voice_select">Select MIDI Voice</string>
     <string name="new_folder">New Folder</string>
+    <string name="qs300_name_change">Change Preset Names</string>
     <string name="delete">Delete</string>
     <string name="move">Move</string>
     <string name="add_directory_name">New Folder</string>
