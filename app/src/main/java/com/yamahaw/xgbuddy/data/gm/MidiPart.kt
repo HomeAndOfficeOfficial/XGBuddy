@@ -122,7 +122,6 @@ open class MidiPart(val ch: Int) : MidiData() {
 
     var drumVoices: List<DrumVoice>? = null
     var qs300VoiceNumber = 0
-    var qs300VoiceName = ""
 
     init {
         if (ch == 9) {
@@ -141,6 +140,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         drumVoices = null
         partMode = 0
         elementReserve = 2
+        voiceName = ""
         // TODO: Set element reserve and part mode for this and other
     }
 
@@ -154,6 +154,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         partMode = 2
         elementReserve = 0
         drumVoices = drumKit.drumVoices
+        voiceName = ""
     }
 
     fun changeXGVoice(xgVoice: XGNormalVoice) {
@@ -162,6 +163,7 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankMsb = MidiConstants.XG_NORMAL_VOICE_MSB
         bankLsb = xgVoice.bank
         voiceNameRes = xgVoice.nameRes
+        voiceName = ""
         // TODO: add element reserve here and to normal voice and sfx voice enums, and part mode
     }
 
@@ -171,13 +173,14 @@ open class MidiPart(val ch: Int) : MidiData() {
         bankMsb = MidiConstants.XG_SFX_VOICE_MSB
         bankLsb = MidiConstants.XG_SFX_VOICE_LSB
         voiceNameRes = sfxNormalVoice.nameRes
+        voiceName = ""
     }
 
     fun changeQS300Voice(qS300Voice: QS300Voice, voiceNumber: Int) {
         voiceType = VoiceType.QS300
         voiceNameRes = R.string.qs300_voice_label
         qs300VoiceNumber = voiceNumber
-        qs300VoiceName = qS300Voice.voiceName
+        voiceName = qS300Voice.voiceName
         programNumber = ch.toByte()
         bankMsb = MidiConstants.QS300_USER_VOICE_MSB
         bankLsb = MidiConstants.QS300_USER_VOICE_LSB

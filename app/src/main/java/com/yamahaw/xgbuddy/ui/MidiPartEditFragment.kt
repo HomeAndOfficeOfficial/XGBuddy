@@ -46,6 +46,7 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
             ibNameEdit.setOnClickListener {
                 openNameEditDialog()
             }
+            ibVoiceList.setOnClickListener { openVoiceSelectionDialog() }
             etPartVoiceName.apply {
                 showSoftInputOnFocus = false
                 setOnClickListener { openVoiceSelectionDialog() }
@@ -53,7 +54,11 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
             midiViewModel.channels.observe(viewLifecycleOwner) {
                 val channel = midiViewModel.selectedChannel.value
                 // TODO: Find a way to change the edit text when the voice is selected.
-                etPartVoiceName.setText(it[channel!!].voiceNameRes)
+                if (it[channel!!].voiceName.isEmpty()) {
+                    etPartVoiceName.setText(it[channel].voiceNameRes)
+                } else {
+                    etPartVoiceName.setText(it[channel].voiceName)
+                }
             }
             midiViewModel.selectedChannel.observe(viewLifecycleOwner) {
                 updateViews(midiViewModel.channels.value!![it])
@@ -102,7 +107,12 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
     }
 
     private fun updateViews(midiPart: MidiPart) {
-        binding!!.etPartVoiceName.setText(midiPart.voiceNameRes)
+        if (midiPart.voiceName.isEmpty()) {
+            binding!!.etPartVoiceName.setText(midiPart.voiceNameRes)
+        } else {
+            binding!!.etPartVoiceName.setText(midiPart.voiceName)
+        }
+
         binding!!.spRcvCh.setSelection(midiPart.receiveChannel.toInt())
         controlGroups.forEach {
             it.updateViews(midiPart)
