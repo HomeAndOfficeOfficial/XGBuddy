@@ -212,7 +212,10 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
     }
 
     private fun savePreset(presetName: String) {
-        qS300ViewModel.preset.value!!.name = presetName
+        qS300ViewModel.preset.value!!.apply {
+            name = presetName
+            isUserPreset = true
+        }
         qS300ViewModel.addCurrentToUserPresets()
     }
 

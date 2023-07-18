@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.InstrumentGroup
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
+import com.yamahaw.xgbuddy.data.voiceselect.QS300_USER_ENUM_NAME
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 import com.yamahaw.xgbuddy.data.voiceselect.VoiceListCategory
 import kotlin.reflect.full.isSubclassOf
@@ -25,7 +26,7 @@ class VoiceListAdapter(
                 (voiceEntries[it] as XGNormalVoice).instrumentGroup
             else
                 null
-        VoiceListEntry(getVoiceName(voiceEntries[it]), voiceEntries[it]::class.java.name, group)
+        VoiceListEntry(getVoiceName(voiceEntries[it]), getTypeName(voiceEntries[it]), group)
     }
 
     private var typedList: List<VoiceListEntry>? = null
@@ -80,6 +81,11 @@ class VoiceListAdapter(
     } else {
         "Invalid Item"
     }
+
+    private fun getTypeName(item: Any): String =
+        if (item is QS300Preset && item.isUserPreset) {
+            QS300_USER_ENUM_NAME
+        } else item::class.java.name
 
     private fun Any?.isEnum(): Boolean {
         return this != null && this::class.isSubclassOf(Enum::class)
