@@ -7,10 +7,14 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.*
+import com.yamahaw.xgbuddy.data.MidiConstants
 import com.yamahaw.xgbuddy.data.qs300.*
 import com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
@@ -20,7 +24,7 @@ class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
-    private var userPresets: MutableList<QS300Preset> = mutableListOf()
+    private var userPresets: MutableList<QS300Preset>? = null
 
     /**
      * Todo: I think I will probably need to read the JSON as an array
@@ -30,32 +34,39 @@ class QS300Repository @Inject constructor(val context: Context) {
      */
 
     fun saveUserPreset(preset: QS300Preset) {
-        userPresets.add(preset)
+        userPresets?.add(preset)
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
         try {
-            OutputStreamWriter(FileOutputStream(File(fileName), false)).apply {
-                val itemType = object : TypeToken<List<QS300Preset>>() {}.type
-                val jsonString = Gson().toJsonTree(userPresets, itemType).asJsonArray.toString()
-                write(jsonString)
-                close()
+            CoroutineScope(Dispatchers.IO).launch {
+                withContext(Dispatchers.IO) {
+                    OutputStreamWriter(FileOutputStream(File(fileName), false)).apply {
+                        val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+                        val jsonString =
+                            Gson().toJsonTree(userPresets, itemType).asJsonArray.toString()
+                        write(jsonString)
+                        close()
+                    }
+                }
+                withContext(Dispatchers.Main) {
+                    Toast
+                        .makeText(context, "User preset saved: ${preset.name}", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
-            Toast
-                .makeText(context, "User preset saved: ${preset.name}", Toast.LENGTH_SHORT)
-                .show()
         } catch (e: IOException) {
             Log.e(TAG, "Caught IOException: ${e.message}")
         }
     }
 
     fun getUserPresets(): List<QS300Preset> {
-        val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
-        val itemType = object : TypeToken<List<QS300Preset>>() {}.type
-        val jsonString = readUserPresetJson(File(fileName))
-        return try {
-            Gson().fromJson(jsonString, itemType) ?: listOf()
+        return userPresets ?: try {
+            val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
+            val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+            val jsonString = readUserPresetJson(File(fileName))
+            userPresets = Gson().fromJson(jsonString, itemType) ?: mutableListOf()
         } catch (e: JsonSyntaxException) {
-            listOf()
-        }
+            userPresets = mutableListOf()
+        }.let { userPresets!! }
     }
 
     private fun readUserPresetJson(jsonFile: File): String = try {
