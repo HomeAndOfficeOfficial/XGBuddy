@@ -87,9 +87,8 @@ class QSElementPrimaryControlFragment :
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
             swElementOn.setOnClickListener {
-                val isChecked = (it as SwitchMaterial).isChecked
                 val voiceIndex = viewModel.voice.value!!
-                viewModel.updateElementStatus(elementIndex, isChecked)
+                viewModel.updateElementStatus(elementIndex)
                 midiSession.send(
                     MidiMessageUtility.getQS300BulkDump(
                         viewModel.preset.value!!.voices[voiceIndex],
