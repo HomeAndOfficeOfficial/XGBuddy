@@ -86,7 +86,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
         addAll(XGNormalVoice.values())
         addAll(XGDrumKit.values())
         addAll(SFXNormalVoice.values())
-        addAll(qs300ViewModel.userPresets)
+        addAll(qs300ViewModel.userPresets.values)
         addAll(qs300ViewModel.presets)
     }.toList()
 

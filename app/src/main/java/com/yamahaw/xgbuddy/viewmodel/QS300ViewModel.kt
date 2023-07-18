@@ -16,7 +16,7 @@ class QS300ViewModel @Inject constructor(
 ) : ViewModel() {
 
     val presets: List<QS300Preset> = repository.getQS300Presets()
-    var userPresets: List<QS300Preset> = repository.getUserPresets()
+    var userPresets: Map<String, QS300Preset> = repository.getUserPresets()
 
     val preset = MutableLiveData<QS300Preset?>(null)
     var voice = MutableLiveData(0)

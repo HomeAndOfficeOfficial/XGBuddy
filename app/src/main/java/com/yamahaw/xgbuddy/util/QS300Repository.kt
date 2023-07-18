@@ -24,18 +24,18 @@ class QS300Repository @Inject constructor(val context: Context) {
 
     private var qs300Presets: List<QS300Preset>? = null
     private var qs300PresetsJSON: JSONObject? = null
-    private var userPresets: MutableList<QS300Preset>? = null
+    private var userPresets: MutableMap<String, QS300Preset>? = null
 
     fun saveUserPreset(preset: QS300Preset) {
-        userPresets?.add(preset)
+        userPresets!![preset.name] = preset
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
         try {
             CoroutineScope(Dispatchers.IO).launch {
                 withContext(Dispatchers.IO) {
                     OutputStreamWriter(FileOutputStream(File(fileName), false)).apply {
-                        val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+                        val itemType = object : TypeToken<Map<String, QS300Preset>>() {}.type
                         val jsonString =
-                            Gson().toJsonTree(userPresets, itemType).asJsonArray.toString()
+                            Gson().toJsonTree(userPresets, itemType).asJsonObject.toString()
                         write(jsonString)
                         close()
                     }
@@ -51,14 +51,14 @@ class QS300Repository @Inject constructor(val context: Context) {
         }
     }
 
-    fun getUserPresets(): List<QS300Preset> {
+    fun getUserPresets(): Map<String, QS300Preset> {
         return userPresets ?: try {
             val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
-            val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+            val itemType = object : TypeToken<Map<String, QS300Preset>>() {}.type
             val jsonString = readUserPresetJson(File(fileName))
-            userPresets = Gson().fromJson(jsonString, itemType) ?: mutableListOf()
+            userPresets = Gson().fromJson(jsonString, itemType) ?: mutableMapOf()
         } catch (e: JsonSyntaxException) {
-            userPresets = mutableListOf()
+            userPresets = mutableMapOf()
         }.let { userPresets!! }
     }
 

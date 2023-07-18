@@ -106,7 +106,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
                 VoiceListCategory.QS300,
                 VoiceListCategory.QS300_USER -> {
                     val preset = if (category == VoiceListCategory.QS300_USER) {
-                        qs300ViewModel.userPresets[index].clone()
+                        qs300ViewModel.userPresets.values.toList()[index].clone()
                     } else {
                         qs300ViewModel.presets[index].clone()
                     }
@@ -252,7 +252,7 @@ sealed class OnVoiceItemSelectedListenerImpl(
             val currentVoiceCount = qs300ViewModel.preset.value!!.voices.size
             var currentVoice = qs300ViewModel.voice.value!!
             val updatePreset = if (category == VoiceListCategory.QS300_USER) {
-                qs300ViewModel.userPresets[index].clone()
+                qs300ViewModel.userPresets.values.toList()[index].clone()
             } else {
                 qs300ViewModel.presets[index].clone()
             }
