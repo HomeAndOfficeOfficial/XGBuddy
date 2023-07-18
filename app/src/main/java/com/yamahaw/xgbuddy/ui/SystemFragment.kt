@@ -1,7 +1,6 @@
 package com.yamahaw.xgbuddy.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +37,15 @@ class SystemFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            scvMasterVolume.forceSeekbarUpdate()
+            scvTranspose.forceSeekbarUpdate()
+            scvMasterTune.forceSeekbarUpdate()
+        }
+    }
+
     private fun setupViewParams() {
         binding.apply {
             setupControlView(scvMasterVolume, SystemParameter.MASTER_VOLUME, midiViewModel.volume)
@@ -47,7 +55,6 @@ class SystemFragment : Fragment() {
     }
 
     private fun setupControlView(view: SliderControlView, param: SystemParameter, value: Int) {
-        Log.d("SystemFragment", "Param: $param, value: $value")
         view.apply {
             controlParameter = ControlParameter(getString(param.nameRes), param, value)
             shouldReportAllTouchEvents = false
@@ -73,7 +80,6 @@ class SystemFragment : Fragment() {
             scvMasterTune.listener =
                 ParameterControlView.OnParameterChangedListener { controlParameter, _ ->
                     val tuning = controlParameter.value
-                    Log.d("SystemFragment", "Tuning change: $tuning")
                     midiViewModel.tuning = tuning
                     midiSession.send(MidiMessageUtility.getTuningChange(tuning))
                 }

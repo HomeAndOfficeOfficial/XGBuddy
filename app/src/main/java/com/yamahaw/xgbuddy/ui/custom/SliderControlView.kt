@@ -81,4 +81,15 @@ class SliderControlView :
     private fun updateValueText(value: Int) {
         tvValue?.text = controlParameter?.formatter!!.format(value)
     }
+
+    fun forceSeekbarUpdate() {
+        seekbar.apply {
+            min = 0
+            progress = 0
+            max = 100
+            min = controlParameter?.min ?: 0
+            max = controlParameter?.max ?: 127
+            progress = value
+        }
+    }
 }
