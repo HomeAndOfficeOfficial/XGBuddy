@@ -154,13 +154,15 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             voiceName
     }
 
-    private fun updateNameViews(presetName: String, voiceName: String) {
+    private fun updateNameViews(presetName: String, voiceName: String?) {
         binding.apply {
             etQSPreset.setText(presetName)
-            (spQsVoice.adapter as SimpleVoiceNameAdapter).updateVoice(
-                voiceName,
-                qS300ViewModel.voice.value!!
-            )
+            voiceName?.let {
+                (spQsVoice.adapter as SimpleVoiceNameAdapter).updateVoice(
+                    it,
+                    qS300ViewModel.voice.value!!
+                )
+            }
         }
     }
 
@@ -198,13 +200,14 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             hint = "Preset Name"
         }
         layout.findViewById<TextView>(R.id.tvAddDirTitle).apply {
-            text = "Save QS300 Preset"
+            setText(R.string.save_preset_as)
         }
         AlertDialog.Builder(requireContext()).apply {
             setNeutralButton("Cancel") { d, _ -> d.dismiss() }
             setPositiveButton("Save") { _, _ ->
-                val presetName = etName.text.toString().ifEmpty { presetName }
-                savePreset(presetName)
+                val updatePresetName = etName.text.toString().ifEmpty { presetName }
+                updateNameViews(updatePresetName, null)
+                savePreset(updatePresetName)
             }
             setView(layout)
             show()
