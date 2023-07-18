@@ -1,6 +1,8 @@
 package com.yamahaw.xgbuddy.ui.qs300
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -11,6 +13,8 @@ import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.textfield.TextInputEditText
+import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.databinding.FragmentVoiceEditBinding
 import com.yamahaw.xgbuddy.ui.MidiBaseFragment
 import com.yamahaw.xgbuddy.ui.voiceselect.VoiceSelectionDialogFragment
@@ -41,7 +45,12 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
         savedInstanceState: Bundle?
     ): View {
         initObservers()
-        binding.cvVoiceLevel.setOnSeekBarChangeListener(this)
+        binding.apply {
+            cvVoiceLevel.setOnSeekBarChangeListener(this@VoiceEditFragment)
+            ibNameEdit.setOnClickListener { openPresetEditDialog() }
+            ibQSVoiceList.setOnClickListener { openPresetSelectionDialog() }
+        }
+
         return binding.root
     }
 
@@ -62,10 +71,10 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             preset?.voices!![qS300ViewModel.voice.value!!].let {
                 binding.cvVoiceLevel.progress = it.voiceLevel.toInt()
                 binding.spQsVoice.apply {
-                    adapter = ArrayAdapter(
+                    adapter = SimpleVoiceNameAdapter(
                         requireContext(),
                         android.R.layout.simple_spinner_item,
-                        preset.voices.map { v -> v.voiceName }
+                        preset.voices.map { v -> v.voiceName }.toMutableList()
                     ).apply {
                         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     }
@@ -77,20 +86,9 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
     }
 
     private fun setupSpinner() {
-        val voiceNames = qS300ViewModel.preset.value!!.voices.map { it.voiceName }
         binding.spQsVoice.apply {
             setOnTouchListener(spinnerTouchListener)
             onItemSelectedListener = this@VoiceEditFragment
-            if (adapter == null) {
-                adapter = ArrayAdapter(
-                    requireContext(),
-                    android.R.layout.simple_spinner_item,
-                    voiceNames
-                ).apply {
-                    setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                }
-            }
-            setSelection(qS300ViewModel.voice.value ?: 0)
         }
     }
 
@@ -120,6 +118,48 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+    private fun openPresetEditDialog() {
+        val currentPresetName = qS300ViewModel.preset.value!!.name
+        val currentVoiceName =
+            qS300ViewModel.preset.value!!.voices[qS300ViewModel.voice.value!!].voiceName
+        val layout = layoutInflater.inflate(R.layout.dialog_qs300_name, null)
+        val etPreset = layout.findViewById<TextInputEditText>(R.id.etPresetName).apply {
+            setText(currentPresetName)
+        }
+        val etVoice = layout.findViewById<TextInputEditText>(R.id.etQsVoiceName).apply {
+            setText(currentVoiceName)
+        }
+        AlertDialog.Builder(requireContext()).apply {
+            setView(layout)
+            setNeutralButton("Cancel") { dialog, _ -> dialog.dismiss() }
+            setPositiveButton("Save") { _, _ ->
+                val presetName = etPreset.text.toString().ifEmpty { currentPresetName }
+                val voiceName = etVoice.text.toString().ifEmpty { currentVoiceName }
+                updateViewModelNames(presetName, voiceName)
+                updateNameViews(presetName, voiceName)
+            }
+            show()
+        }
+    }
+
+    private fun updateViewModelNames(presetName: String, voiceName: String) {
+        qS300ViewModel.preset.value!!.name = presetName
+        qS300ViewModel.preset.value!!.voices[qS300ViewModel.voice.value!!].voiceName =
+            voiceName
+        midiViewModel.channels.value!![midiViewModel.selectedChannel.value!!].voiceName =
+            voiceName
+    }
+
+    private fun updateNameViews(presetName: String, voiceName: String) {
+        binding.apply {
+            etQSPreset.setText(presetName)
+            (spQsVoice.adapter as SimpleVoiceNameAdapter).updateVoice(
+                voiceName,
+                qS300ViewModel.voice.value!!
+            )
+        }
+    }
 
     private fun openPresetSelectionDialog() {
         val voiceSelectFragment = VoiceSelectionDialogFragment(
@@ -157,6 +197,17 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             midiViewModel.selectedChannel.value = midiViewModel.selectedChannel.value!! + 1
         } else if (newIndex < currentIndex) {
             midiViewModel.selectedChannel.value = midiViewModel.selectedChannel.value!! - 1
+        }
+    }
+
+    class SimpleVoiceNameAdapter(
+        context: Context,
+        resource: Int,
+        private val dataSet: MutableList<String>
+    ) : ArrayAdapter<String>(context, resource, dataSet) {
+        fun updateVoice(voiceName: String, index: Int) {
+            dataSet[index] = voiceName
+            notifyDataSetChanged()
         }
     }
 }

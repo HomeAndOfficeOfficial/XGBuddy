@@ -22,7 +22,9 @@ class PartsListAdapter(
     private fun populateContainer(context: Context) {
         viewModel.channels.value?.forEach { midiChannel ->
             partsContainer.addView(PartsRowItem(context).apply {
-                val name = context.getString(midiChannel.voiceNameRes)
+                val name = midiChannel.voiceName.ifEmpty {
+                    context.getString(midiChannel.voiceNameRes)
+                }
                 setChannelInfo(midiChannel, name)
                 listener = this@PartsListAdapter
             })
@@ -46,18 +48,16 @@ class PartsListAdapter(
 
     fun updateRow(midiPart: MidiPart) {
         (partsContainer.getChildAt(midiPart.ch) as PartsRowItem).apply {
-            setChannelInfo(midiPart, context.getString(midiPart.voiceNameRes))
+            setChannelInfo(
+                midiPart,
+                midiPart.voiceName.ifEmpty { context.getString(midiPart.voiceNameRes) })
         }
     }
 
     fun updateAll(parts: List<MidiPart>) {
         parts.forEachIndexed { index, part ->
             (partsContainer.getChildAt(index) as PartsRowItem).apply {
-                val voiceName =
-                    if (part.voiceNameRes == R.string.qs300_voice_label)
-                        part.qs300VoiceName
-                    else
-                        context.getString(part.voiceNameRes)
+                val voiceName = part.voiceName.ifEmpty { context.getString(part.voiceNameRes) }
                 setChannelInfo(part, voiceName)
             }
         }

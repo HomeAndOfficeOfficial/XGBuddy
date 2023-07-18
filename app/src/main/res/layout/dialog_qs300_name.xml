@@ -6,11 +6,11 @@
     android:padding="@dimen/popup_padding">
 
     <TextView
-        android:id="@+id/tvAddDirTitle"
+        android:id="@+id/tvQSNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
-        android:text="@string/new_folder"
+        android:text="@string/qs300_name_change"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,21 +23,40 @@
         android:background="?colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddDirTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvQSNameTitle" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilDirName"
-        android:layout_width="match_parent"
+        android:id="@+id/tilPresetName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dividerAddDir">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDirName"
+            android:id="@+id/etPresetName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/add_directory_text_hint"
+            android:hint="@string/qs300_preset_name"
+            android:inputType="textNoSuggestions" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilVoiceName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilPresetName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etQsVoiceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/voice_name"
             android:inputType="textNoSuggestions" />
 
     </com.google.android.material.textfield.TextInputLayout>

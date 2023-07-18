@@ -6,12 +6,25 @@
     android:layout_height="match_parent"
     android:padding="8dp">
 
+    <ImageButton
+        android:id="@+id/ibQSVoiceList"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/tiQSPresetName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_view_list_24" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tiQSPresetName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minEms="8"
         app:boxBackgroundColor="#00000000"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ibQSVoiceList"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -33,14 +46,26 @@
         app:layout_constraintStart_toEndOf="@id/tiQSPresetName"
         app:layout_constraintTop_toBottomOf="@id/tvVoiceName" />
 
+    <ImageButton
+        android:id="@+id/ibNameEdit"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/spQsVoice"
+        app:layout_constraintStart_toEndOf="@id/spQsVoice"
+        app:layout_constraintTop_toTopOf="@+id/tiQSPresetName"
+        app:srcCompat="@drawable/baseline_edit_24" />
+
     <TextView
         android:id="@+id/tvVoiceName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/qs300_voice_label"
         android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/spQsVoice" />
+        app:layout_constraintStart_toStartOf="@id/spQsVoice"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvLevelLabel"
@@ -53,11 +78,11 @@
 
     <SeekBar
         android:id="@+id/cvVoiceLevel"
+        style="@style/BiggerSeekbar"
         android:layout_width="@dimen/qs300_voice_seek_length"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:max="127"
-        style="@style/BiggerSeekbar"
         app:layout_constraintBottom_toBottomOf="@id/spQsVoice"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/spQsVoice" />
