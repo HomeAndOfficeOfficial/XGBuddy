@@ -86,6 +86,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
         addAll(XGNormalVoice.values())
         addAll(XGDrumKit.values())
         addAll(SFXNormalVoice.values())
+        addAll(qs300ViewModel.userPresets)
         addAll(qs300ViewModel.presets)
     }.toList()
 
@@ -167,6 +168,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             CATEGORY_ID_XGDRUM -> VoiceListCategory.XG_DRUM
             CATEGORY_ID_SFX -> VoiceListCategory.SFX
             CATEGORY_ID_QS300 -> VoiceListCategory.QS300
+            CATEGORY_ID_QS300_USER -> VoiceListCategory.QS300_USER
             else -> null
         }
         category?.let { voiceListAdapter.updateCategory(it) }
@@ -181,6 +183,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
         const val CATEGORY_ID_XGDRUM = R.id.bXGDrum
         const val CATEGORY_ID_SFX = R.id.bXGSfx
         const val CATEGORY_ID_QS300 = R.id.bQs300
+        const val CATEGORY_ID_QS300_USER = R.id.bQs300User
         private val qs300FilterMap: Map<Int, String> = mapOf(
             R.id.bFiltSpec to "[^a-zA-Z0-9]",
             R.id.bFiltNum to "[0-9]",

@@ -29,6 +29,10 @@ import com.yamahaw.xgbuddy.service.MidiService
 import com.yamahaw.xgbuddy.service.MidiServiceConnection
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -92,7 +96,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 registerForMidiCallbacks(qsNoteDuplicator)
             }
-            qs300ViewModel.presets // Initialize presets now so app doesn't hang up later
+            CoroutineScope(Dispatchers.IO).launch {
+                // Initialize presets in coroutine to avoid hanging up the UI thread
+                qs300ViewModel.presets
+                qs300ViewModel.userPresets
+            }
         } else {
             displayNoMidiCompatScreen()
         }

@@ -103,8 +103,13 @@ sealed class OnVoiceItemSelectedListenerImpl(
                         )
                     }
                 }
-                VoiceListCategory.QS300 -> {
-                    val preset = qs300ViewModel.presets[index].clone()
+                VoiceListCategory.QS300,
+                VoiceListCategory.QS300_USER -> {
+                    val preset = if (category == VoiceListCategory.QS300_USER) {
+                        qs300ViewModel.userPresets[index].clone()
+                    } else {
+                        qs300ViewModel.presets[index].clone()
+                    }
                     midiViewModel.qsPartMap[selectedChannel]?.let { prevPreset ->
                         if (preset.voices.size == 1 && prevPreset.voices.size > 1) {
                             midiViewModel.channels.value!![selectedChannel + 1].apply {
@@ -114,13 +119,13 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             midiSession.send(
                                 mutableListOf(
                                     MidiMessageUtility.getXGParamChange(
-                                        selectedChannel+1, MidiParameter.RCV_CHANNEL,
-                                        (selectedChannel+1).toByte()
+                                        selectedChannel + 1, MidiParameter.RCV_CHANNEL,
+                                        (selectedChannel + 1).toByte()
                                     )
                                 ).apply {
                                     addAll(
                                         MidiMessageUtility.getXGNormalVoiceChange(
-                                            selectedChannel+1,
+                                            selectedChannel + 1,
                                             XGNormalVoice.GRAND_PNO
                                         )
                                     )
@@ -138,13 +143,13 @@ sealed class OnVoiceItemSelectedListenerImpl(
                             midiSession.send(
                                 mutableListOf(
                                     MidiMessageUtility.getXGParamChange(
-                                        selectedChannel-1, MidiParameter.RCV_CHANNEL,
-                                        (selectedChannel-1).toByte()
+                                        selectedChannel - 1, MidiParameter.RCV_CHANNEL,
+                                        (selectedChannel - 1).toByte()
                                     )
                                 ).apply {
                                     addAll(
                                         MidiMessageUtility.getXGNormalVoiceChange(
-                                            selectedChannel-1,
+                                            selectedChannel - 1,
                                             XGNormalVoice.GRAND_PNO
                                         )
                                     )
@@ -177,13 +182,13 @@ sealed class OnVoiceItemSelectedListenerImpl(
                                     midiSession.send(
                                         mutableListOf(
                                             MidiMessageUtility.getXGParamChange(
-                                                selectedChannel+2, MidiParameter.RCV_CHANNEL,
-                                                (selectedChannel+2).toByte()
+                                                selectedChannel + 2, MidiParameter.RCV_CHANNEL,
+                                                (selectedChannel + 2).toByte()
                                             )
                                         ).apply {
                                             addAll(
                                                 MidiMessageUtility.getXGNormalVoiceChange(
-                                                    selectedChannel+2,
+                                                    selectedChannel + 2,
                                                     XGNormalVoice.GRAND_PNO
                                                 )
                                             )
@@ -246,7 +251,11 @@ sealed class OnVoiceItemSelectedListenerImpl(
         override fun onVoiceItemSelected(index: Int, category: VoiceListCategory) {
             val currentVoiceCount = qs300ViewModel.preset.value!!.voices.size
             var currentVoice = qs300ViewModel.voice.value!!
-            val updatePreset = qs300ViewModel.presets[index].clone()
+            val updatePreset = if (category == VoiceListCategory.QS300_USER) {
+                qs300ViewModel.userPresets[index].clone()
+            } else {
+                qs300ViewModel.presets[index].clone()
+            }
             var selectedChannel = midiViewModel.selectedChannel.value!!
             val updateVoiceCount = updatePreset.voices.size
             if (currentVoiceCount == 2 && updateVoiceCount == 1) {

@@ -12,8 +12,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.databinding.FragmentVoiceEditBinding
 import com.yamahaw.xgbuddy.ui.MidiBaseFragment
@@ -49,6 +51,7 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             cvVoiceLevel.setOnSeekBarChangeListener(this@VoiceEditFragment)
             ibNameEdit.setOnClickListener { openPresetEditDialog() }
             ibQSVoiceList.setOnClickListener { openPresetSelectionDialog() }
+            ibSave.setOnClickListener { openPresetSaveDialog() }
         }
 
         return binding.root
@@ -151,13 +154,15 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             voiceName
     }
 
-    private fun updateNameViews(presetName: String, voiceName: String) {
+    private fun updateNameViews(presetName: String, voiceName: String?) {
         binding.apply {
             etQSPreset.setText(presetName)
-            (spQsVoice.adapter as SimpleVoiceNameAdapter).updateVoice(
-                voiceName,
-                qS300ViewModel.voice.value!!
-            )
+            voiceName?.let {
+                (spQsVoice.adapter as SimpleVoiceNameAdapter).updateVoice(
+                    it,
+                    qS300ViewModel.voice.value!!
+                )
+            }
         }
     }
 
@@ -182,6 +187,39 @@ class VoiceEditFragment : MidiBaseFragment(), OnSeekBarChangeListener,
             }
         }
         voiceSelectFragment.show(childFragmentManager, VoiceSelectionDialogFragment.TAG)
+    }
+
+    private fun openPresetSaveDialog() {
+        val presetName = qS300ViewModel.preset.value!!.name
+        val layout = layoutInflater.inflate(R.layout.dialog_add_directory, null)
+        val etName = layout.findViewById<TextInputEditText>(R.id.etDirName).apply {
+            hint = "Preset Name"
+            setText(presetName)
+        }
+        layout.findViewById<TextInputLayout>(R.id.tilDirName).apply {
+            hint = "Preset Name"
+        }
+        layout.findViewById<TextView>(R.id.tvAddDirTitle).apply {
+            setText(R.string.save_preset_as)
+        }
+        AlertDialog.Builder(requireContext()).apply {
+            setNeutralButton("Cancel") { d, _ -> d.dismiss() }
+            setPositiveButton("Save") { _, _ ->
+                val updatePresetName = etName.text.toString().ifEmpty { presetName }
+                updateNameViews(updatePresetName, null)
+                savePreset(updatePresetName)
+            }
+            setView(layout)
+            show()
+        }
+    }
+
+    private fun savePreset(presetName: String) {
+        qS300ViewModel.preset.value!!.apply {
+            name = presetName
+            isUserPreset = true
+        }
+        qS300ViewModel.addCurrentToUserPresets()
     }
 
     private fun updateVoice(voiceIndex: Int) {
