@@ -26,13 +26,6 @@ class QS300Repository @Inject constructor(val context: Context) {
     private var qs300PresetsJSON: JSONObject? = null
     private var userPresets: MutableList<QS300Preset>? = null
 
-    /**
-     * Todo: I think I will probably need to read the JSON as an array
-     *   first and then convert it to a List <- that's for the "getUserPresets"
-     *   method. For the "save" method, will probably need to read a json array from the file,
-     *   then add the preset to the array, then overwrite the file.
-     */
-
     fun saveUserPreset(preset: QS300Preset) {
         userPresets?.add(preset)
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
