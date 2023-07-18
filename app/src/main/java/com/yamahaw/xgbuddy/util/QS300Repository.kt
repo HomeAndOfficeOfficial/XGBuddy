@@ -34,7 +34,8 @@ class QS300Repository @Inject constructor(val context: Context) {
         val fileName = context.filesDir.path + "/" + USER_PRESET_FILE
         try {
             OutputStreamWriter(FileOutputStream(File(fileName), false)).apply {
-                val jsonString = Gson().toJsonTree(userPresets).asJsonArray.asString
+                val itemType = object : TypeToken<List<QS300Preset>>() {}.type
+                val jsonString = Gson().toJsonTree(userPresets, itemType).asJsonArray.toString()
                 write(jsonString)
                 close()
             }
