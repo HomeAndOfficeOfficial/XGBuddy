@@ -90,8 +90,13 @@ class FileBrowserRecyclerAdapter(files: Array<String>, val listener: OnItemClick
 
     @SuppressLint("NotifyDataSetChanged")
     fun onFilesDeleted() {
-        selectedIndices.forEach {
-            setupFiles.removeAt(it)
+        selectedIndices.forEachIndexed { i, selectedIndex ->
+            setupFiles.removeAt(selectedIndex)
+            for (j in i until selectedIndices.size) {
+                if (selectedIndex < selectedIndices[j]) {
+                    selectedIndices[j]--
+                }
+            }
         }
         selectedIndices.clear()
         isMultiSelectOn = false
