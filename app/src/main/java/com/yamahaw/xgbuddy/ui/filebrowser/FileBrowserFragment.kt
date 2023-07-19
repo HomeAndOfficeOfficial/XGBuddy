@@ -82,7 +82,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                 if (mode == READ) {
                     loadSetup()
                 } else {
-                    saveSetup()
+                    showOverwriteDialogOrSave()
                 }
             }
             bMultiCancel.setOnClickListener {
@@ -215,13 +215,30 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
         }
     }
 
-    private fun saveSetup() {
-        try {
-            var fileName =
-                getFilesDir() + binding.etSetupName.text.toString()
-            if (fileName.takeLast(4) != ".xgb") {
-                fileName += ".xgb"
+    private fun showOverwriteDialogOrSave() {
+        var shortName = binding.etSetupName.text.toString()
+        if (shortName.takeLast(4) != ".xgb") {
+            shortName += ".xgb"
+        }
+        val fileName = getFilesDir() + shortName
+        if (fileAdapter.setupFiles.contains(shortName)) {
+            AlertDialog.Builder(requireContext()).apply {
+                setNegativeButton("Cancel") { d, _ -> d.dismiss() }
+                setPositiveButton("Overwrite") { d, _ ->
+                    d.dismiss()
+                    saveSetup(fileName)
+                }
+                setTitle("Overwrite Existing Setup")
+                setMessage("Are you sure you want to overwrite existing setup file $shortName?")
+                show()
             }
+        } else {
+            saveSetup(fileName)
+        }
+    }
+
+    private fun saveSetup(fileName: String) {
+        try {
             OutputStreamWriter(
                 FileOutputStream(File(fileName), false)
             )
@@ -232,6 +249,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
         } catch (e: IOException) {
             Log.e(TAG, "Caught IOException: ${e.message}")
         }
+        Toast.makeText(requireContext(), "Saved setup at $fileName", Toast.LENGTH_SHORT).show()
         dismiss()
     }
 
