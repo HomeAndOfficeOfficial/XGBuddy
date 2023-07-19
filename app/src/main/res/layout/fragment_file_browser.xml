@@ -131,7 +131,7 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@android:color/secondary_text_dark"
+            app:tint="@android:color/secondary_text_dark"
             app:srcCompat="@drawable/baseline_home_24" />
 
         <TextView
@@ -175,6 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

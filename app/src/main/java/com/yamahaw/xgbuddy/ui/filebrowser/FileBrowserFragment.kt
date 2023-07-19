@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -110,6 +113,21 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                 else
                     R.drawable.baseline_save_24_color
             )
+            etSetupName.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    bSaveSetup.isEnabled = s?.isNotEmpty() == true
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
 
         }
         setupRecyclerView()
@@ -169,6 +187,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                     backCallback.isEnabled = true
                     currentDir += "$fileName/"
                 }
+                binding.etSetupName.setText("")
                 updateUpItem()
                 updateBreadcrumb()
             }
