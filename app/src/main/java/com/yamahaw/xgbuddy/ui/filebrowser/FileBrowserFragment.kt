@@ -148,7 +148,10 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
     }
 
     private fun openOrNavigate(fileName: String, fileType: FileType) {
-        if (fileType == FileType.DIR) {
+        if (fileAdapter.isMultiSelectOn) {
+            fileAdapter.selectFile(fileName)
+            updateSelectedCountText()
+        } else if (fileType == FileType.DIR) {
             val directoryFiles =
                 File(getFilesDir() + fileName).list()
             if (directoryFiles == null) {
@@ -167,14 +170,9 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
                 updateBreadcrumb()
             }
         } else {
-            if (fileAdapter.isMultiSelectOn) {
-                fileAdapter.selectFile(fileName)
-                updateSelectedCountText()
-            } else {
-                fileAdapter.selectFile(fileName)
-                binding.etSetupName.setText(fileName)
-                binding.bSaveSetup.isEnabled = true
-            }
+            fileAdapter.selectFile(fileName)
+            binding.etSetupName.setText(fileName)
+            binding.bSaveSetup.isEnabled = true
         }
     }
 
