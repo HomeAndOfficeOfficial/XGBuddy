@@ -28,6 +28,9 @@ import com.yamahaw.xgbuddy.databinding.FragmentFileBrowserBinding
 import com.yamahaw.xgbuddy.ui.MidiViewModel
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.*
 import javax.inject.Inject
 
@@ -215,7 +218,9 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             // timestamps to that.
             // Also may need to run this in a coroutine since it will probably take a second or two
             // potentially causing UI thread to hang
-            midiSession.sendBulkMessages(MidiMessageUtility.getSetupSequence(setup))
+            CoroutineScope(Dispatchers.IO).launch {
+                midiSession.sendBulkMessages(MidiMessageUtility.getSetupSequence(setup))
+            }
             dismiss()
         } else {
             AlertDialog.Builder(requireContext()).apply {
