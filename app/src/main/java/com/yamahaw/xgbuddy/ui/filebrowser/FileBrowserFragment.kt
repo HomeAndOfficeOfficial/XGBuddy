@@ -80,7 +80,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
             }
             bSaveSetup.setOnClickListener {
                 if (mode == READ) {
-                    loadSetup()
+                    showUnsavedDialogOrLoad()
                 } else {
                     showOverwriteDialogOrSave()
                 }
@@ -176,9 +176,22 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
         }
     }
 
-    private fun loadSetup() {
-        val fileName =
-            getFilesDir() + binding.etSetupName.text.toString()
+    private fun showUnsavedDialogOrLoad() {
+        val shortName = binding.etSetupName.text.toString()
+        val fileName = getFilesDir() + shortName
+        AlertDialog.Builder(requireContext()).apply {
+            setPositiveButton("Load Setup") { d, _ ->
+                d.dismiss()
+                loadSetup(fileName)
+            }
+            setNegativeButton("Cancel", null)
+            setTitle(R.string.load_setup)
+            setMessage("Load setup $shortName? Any unsaved work will be lost.")
+            show()
+        }
+    }
+
+    private fun loadSetup(fileName: String) {
         val jsonString = try {
             InputStreamReader(FileInputStream(File(fileName))).let {
                 val bufferedReader = BufferedReader(it)
@@ -223,7 +236,7 @@ class FileBrowserFragment : DialogFragment(), FileBrowserRecyclerAdapter.OnItemC
         val fileName = getFilesDir() + shortName
         if (fileAdapter.setupFiles.contains(shortName)) {
             AlertDialog.Builder(requireContext()).apply {
-                setNegativeButton("Cancel") { d, _ -> d.dismiss() }
+                setNegativeButton("Cancel", null)
                 setPositiveButton("Overwrite") { d, _ ->
                     d.dismiss()
                     saveSetup(fileName)
