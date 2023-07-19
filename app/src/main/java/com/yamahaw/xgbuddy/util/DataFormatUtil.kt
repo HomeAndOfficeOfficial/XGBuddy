@@ -1,6 +1,6 @@
 package com.yamahaw.xgbuddy.util
 
-import com.yamahaw.xgbuddy.data.xg.EffectDataAssignTables
+import com.yamahaw.xgbuddy.data.xg.effect.EffectDataAssignTables
 
 object DataFormatUtil {
 

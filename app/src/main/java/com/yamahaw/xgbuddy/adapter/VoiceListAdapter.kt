@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.InstrumentGroup
+import com.yamahaw.xgbuddy.data.voiceselect.InstrumentGroup
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.data.voiceselect.QS300_USER_ENUM_NAME
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice

@@ -1,6 +1,6 @@
 package com.yamahaw.xgbuddy.util
 
-import com.yamahaw.xgbuddy.data.xg.DrumVoice
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoice
 
 object DrumKitVoiceUtil {
     private const val SURDO_MUTE = "Surdo Mute"

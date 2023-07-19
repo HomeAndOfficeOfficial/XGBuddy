@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.yamahaw.xgbuddy.MidiSession
-import com.yamahaw.xgbuddy.data.ControlParameter
+import com.yamahaw.xgbuddy.midi.MidiSession
+import com.yamahaw.xgbuddy.data.buddy.ControlParameter
 import com.yamahaw.xgbuddy.data.xg.SystemParameter
 import com.yamahaw.xgbuddy.databinding.FragmentSystemBinding
 import com.yamahaw.xgbuddy.ui.custom.ParameterControlView
 import com.yamahaw.xgbuddy.ui.custom.SliderControlView
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
+import com.yamahaw.xgbuddy.viewmodel.MidiViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

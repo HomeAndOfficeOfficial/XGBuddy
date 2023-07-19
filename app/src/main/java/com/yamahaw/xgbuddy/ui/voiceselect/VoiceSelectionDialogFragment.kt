@@ -11,10 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.adapter.VoiceListAdapter
-import com.yamahaw.xgbuddy.data.InstrumentGroup
+import com.yamahaw.xgbuddy.data.voiceselect.InstrumentGroup
 import com.yamahaw.xgbuddy.data.voiceselect.VoiceListCategory
 import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
-import com.yamahaw.xgbuddy.data.xg.XGDrumKit
+import com.yamahaw.xgbuddy.data.xg.drum.XGDrumKit
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 import com.yamahaw.xgbuddy.databinding.FragmentVoiceSelectionDialogBinding
 import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel

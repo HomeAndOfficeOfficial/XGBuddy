@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.ControlParameter
+import com.yamahaw.xgbuddy.data.buddy.ControlParameter
 import com.yamahaw.xgbuddy.data.qs300.QS300ElementParameter
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.ui.ControlBaseFragment

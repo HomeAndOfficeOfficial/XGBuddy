@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.xg.DrumVoice
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoice
 import com.yamahaw.xgbuddy.util.DataFormatUtil
 
 class DrumVoiceRecyclerAdapter(

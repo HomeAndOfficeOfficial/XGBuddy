@@ -25,14 +25,17 @@ import com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
 import com.google.gson.Gson
+import com.yamahaw.xgbuddy.midi.MidiSession
+import com.yamahaw.xgbuddy.midi.QSPartNoteDuplicator
 import com.yamahaw.xgbuddy.service.MidiService
 import com.yamahaw.xgbuddy.service.MidiServiceConnection
+import com.yamahaw.xgbuddy.ui.parts.PartsFragment
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
+import com.yamahaw.xgbuddy.viewmodel.MidiViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint

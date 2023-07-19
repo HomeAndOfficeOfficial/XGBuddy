@@ -2,15 +2,19 @@ package com.yamahaw.xgbuddy.util
 
 import android.util.Log
 import com.yamahaw.xgbuddy.data.MidiConstants
-import com.yamahaw.xgbuddy.data.MidiControlChange
-import com.yamahaw.xgbuddy.data.MidiMessage
-import com.yamahaw.xgbuddy.data.SetupModel
+import com.yamahaw.xgbuddy.data.gm.MidiControlChange
+import com.yamahaw.xgbuddy.data.comms.MidiMessage
+import com.yamahaw.xgbuddy.data.buddy.SetupModel
 import com.yamahaw.xgbuddy.data.gm.MidiParameter
 import com.yamahaw.xgbuddy.data.gm.MidiPart
 import com.yamahaw.xgbuddy.data.qs300.QS300ElementParameter
 import com.yamahaw.xgbuddy.data.qs300.QS300Voice
 import com.yamahaw.xgbuddy.data.qs300.QS300VoiceParameter
 import com.yamahaw.xgbuddy.data.xg.*
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoice
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoiceParameter
+import com.yamahaw.xgbuddy.data.xg.drum.XGDrumKit
+import com.yamahaw.xgbuddy.data.xg.effect.*
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 
 object MidiMessageUtility {

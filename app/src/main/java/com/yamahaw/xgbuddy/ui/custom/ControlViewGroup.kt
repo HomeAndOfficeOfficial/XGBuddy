@@ -13,7 +13,9 @@ import com.yamahaw.xgbuddy.data.gm.MidiParameter
 import com.yamahaw.xgbuddy.data.gm.MidiPart
 import com.yamahaw.xgbuddy.data.qs300.QS300Element
 import com.yamahaw.xgbuddy.data.qs300.QS300ElementParameter
-import com.yamahaw.xgbuddy.data.xg.*
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoice
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoiceParameter
+import com.yamahaw.xgbuddy.data.xg.effect.*
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 
 class ControlViewGroup(context: Context, attributeSet: AttributeSet) :

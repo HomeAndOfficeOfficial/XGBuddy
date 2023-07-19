@@ -2,9 +2,8 @@ package com.yamahaw.xgbuddy.adapter
 
 import android.content.Context
 import android.view.ViewGroup
-import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.gm.MidiPart
-import com.yamahaw.xgbuddy.ui.MidiViewModel
+import com.yamahaw.xgbuddy.viewmodel.MidiViewModel
 import com.yamahaw.xgbuddy.ui.custom.PartsRowItem
 
 class PartsListAdapter(

@@ -1,13 +1,13 @@
 package com.yamahaw.xgbuddy.ui.voiceselect
 
 import android.util.Log
-import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.data.gm.MidiParameter
 import com.yamahaw.xgbuddy.data.voiceselect.VoiceListCategory
 import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
-import com.yamahaw.xgbuddy.data.xg.XGDrumKit
+import com.yamahaw.xgbuddy.data.xg.drum.XGDrumKit
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
-import com.yamahaw.xgbuddy.ui.MidiViewModel
+import com.yamahaw.xgbuddy.viewmodel.MidiViewModel
 import com.yamahaw.xgbuddy.util.EnumFinder.findBy
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
 import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel

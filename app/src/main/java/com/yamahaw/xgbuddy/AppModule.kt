@@ -1,6 +1,7 @@
 package com.yamahaw.xgbuddy
 
 import android.content.Context
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.util.QS300Repository
 import dagger.Module
 import dagger.Provides

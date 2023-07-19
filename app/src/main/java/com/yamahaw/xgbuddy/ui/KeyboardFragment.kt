@@ -8,8 +8,8 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import com.yamahaw.xgbuddy.MidiSession
-import com.yamahaw.xgbuddy.data.MidiMessage
+import com.yamahaw.xgbuddy.midi.MidiSession
+import com.yamahaw.xgbuddy.data.comms.MidiMessage
 import com.yamahaw.xgbuddy.data.gm.Note
 import com.yamahaw.xgbuddy.databinding.FragmentKeyboardBinding
 import com.yamahaw.xgbuddy.ui.custom.KeyView

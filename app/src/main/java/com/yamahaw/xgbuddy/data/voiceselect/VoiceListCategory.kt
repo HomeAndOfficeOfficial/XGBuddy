@@ -2,7 +2,7 @@ package com.yamahaw.xgbuddy.data.voiceselect
 
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
-import com.yamahaw.xgbuddy.data.xg.XGDrumKit
+import com.yamahaw.xgbuddy.data.xg.drum.XGDrumKit
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 
 const val QS300_USER_ENUM_NAME = "QS300_USER"

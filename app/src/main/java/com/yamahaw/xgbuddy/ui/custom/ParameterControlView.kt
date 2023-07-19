@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.ControlParameter
+import com.yamahaw.xgbuddy.data.buddy.ControlParameter
 
 abstract class ParameterControlView :
     ConstraintLayout {

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.yamahaw.xgbuddy.data.ControlParameter
+import com.yamahaw.xgbuddy.data.buddy.ControlParameter
 import com.yamahaw.xgbuddy.ui.custom.ControlViewGroup
 import com.yamahaw.xgbuddy.ui.custom.ParameterControlView
 import com.yamahaw.xgbuddy.ui.custom.SliderControlView

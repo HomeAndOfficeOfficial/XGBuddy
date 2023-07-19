@@ -1,7 +1,6 @@
 package com.yamahaw.xgbuddy.data.gm
 
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.MidiControlChange
 
 enum class ChannelModeMessage(val nameRes: Int, val cc: MidiControlChange) {
     ALL_SOUND_OFF(R.string.cmm_all_sound_off, MidiControlChange.ALL_SOUND_OFF),

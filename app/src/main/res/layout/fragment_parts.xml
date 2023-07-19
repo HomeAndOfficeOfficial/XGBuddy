@@ -80,7 +80,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/partsControlFragmentContainer"
-        android:name="com.yamahaw.xgbuddy.ui.MidiPartEditFragment"
+        android:name="com.yamahaw.xgbuddy.ui.parts.MidiPartEditFragment"
         android:layout_width="400dp"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

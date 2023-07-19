@@ -1,7 +1,7 @@
 package com.yamahaw.xgbuddy.data.xg
 
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.InstrumentGroup
+import com.yamahaw.xgbuddy.data.voiceselect.InstrumentGroup
 
 enum class XGNormalVoice(
     val nameRes: Int,

@@ -11,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.adapter.ConnectedDeviceRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint

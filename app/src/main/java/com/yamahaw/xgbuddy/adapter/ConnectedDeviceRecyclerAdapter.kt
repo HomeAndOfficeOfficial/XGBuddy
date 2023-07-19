@@ -9,7 +9,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.R
 
 class ConnectedDeviceRecyclerAdapter(

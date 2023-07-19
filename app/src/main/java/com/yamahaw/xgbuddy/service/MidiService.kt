@@ -8,8 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
-import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

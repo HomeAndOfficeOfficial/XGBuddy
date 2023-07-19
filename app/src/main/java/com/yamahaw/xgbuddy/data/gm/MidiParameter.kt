@@ -1,7 +1,6 @@
 package com.yamahaw.xgbuddy.data.gm
 
 import com.yamahaw.xgbuddy.R
-import com.yamahaw.xgbuddy.data.MidiControlChange
 import com.yamahaw.xgbuddy.data.xg.NRPN
 import com.yamahaw.xgbuddy.util.DataFormatUtil
 import kotlin.reflect.KMutableProperty

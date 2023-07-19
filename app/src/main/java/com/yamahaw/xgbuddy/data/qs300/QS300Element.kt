@@ -1,7 +1,7 @@
 package com.yamahaw.xgbuddy.data.qs300
 
 import androidx.annotation.Keep
-import com.yamahaw.xgbuddy.data.MidiData
+import com.yamahaw.xgbuddy.data.buddy.MidiData
 
 @Keep
 data class QS300Element(val elementNumber: Int) : MidiData() {

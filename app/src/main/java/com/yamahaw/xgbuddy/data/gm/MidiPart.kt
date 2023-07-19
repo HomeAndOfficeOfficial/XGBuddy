@@ -3,11 +3,11 @@ package com.yamahaw.xgbuddy.data.gm
 import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.MidiConstants
-import com.yamahaw.xgbuddy.data.MidiData
+import com.yamahaw.xgbuddy.data.buddy.MidiData
 import com.yamahaw.xgbuddy.data.qs300.QS300Voice
-import com.yamahaw.xgbuddy.data.xg.DrumVoice
+import com.yamahaw.xgbuddy.data.xg.drum.DrumVoice
 import com.yamahaw.xgbuddy.data.xg.SFXNormalVoice
-import com.yamahaw.xgbuddy.data.xg.XGDrumKit
+import com.yamahaw.xgbuddy.data.xg.drum.XGDrumKit
 import com.yamahaw.xgbuddy.data.xg.XGNormalVoice
 
 @Keep

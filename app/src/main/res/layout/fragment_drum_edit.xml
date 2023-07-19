@@ -36,7 +36,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/drumParamEditContainer"
-        android:name="com.yamahaw.xgbuddy.ui.DrumParamEditFragment"
+        android:name="com.yamahaw.xgbuddy.ui.drum.DrumParamEditFragment"
         android:layout_width="400dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

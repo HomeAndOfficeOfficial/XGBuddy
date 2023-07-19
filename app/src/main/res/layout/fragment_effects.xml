@@ -16,21 +16,21 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/reverbFragContainer"
-                android:name="com.yamahaw.xgbuddy.ui.ReverbFragment"
+                android:name="com.yamahaw.xgbuddy.ui.effects.ReverbFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_reverb" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/chorusFragContainer"
-                android:name="com.yamahaw.xgbuddy.ui.ChorusFragment"
+                android:name="com.yamahaw.xgbuddy.ui.effects.ChorusFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_chorus" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/variFragContainer"
-                android:name="com.yamahaw.xgbuddy.ui.VariationFragment"
+                android:name="com.yamahaw.xgbuddy.ui.effects.VariationFragment"
                 android:layout_width="@dimen/qs300_element_edit_width"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_variation" />

@@ -20,12 +20,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yamahaw.xgbuddy.MidiSession
+import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.adapter.FileBrowserRecyclerAdapter
-import com.yamahaw.xgbuddy.data.FileType
+import com.yamahaw.xgbuddy.data.buddy.FileType
 import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.databinding.FragmentFileBrowserBinding
-import com.yamahaw.xgbuddy.ui.MidiViewModel
+import com.yamahaw.xgbuddy.viewmodel.MidiViewModel
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
