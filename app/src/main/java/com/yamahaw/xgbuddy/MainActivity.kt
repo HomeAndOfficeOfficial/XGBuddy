@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.MenuProvider
 import androidx.core.view.WindowCompat
@@ -168,6 +169,11 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
                     R.id.panic -> {
+                        Toast.makeText(
+                            baseContext,
+                            "Sending All Note Off/All Sound Off",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         midiSession.send(MidiMessageUtility.getAllOff())
                         true
                     }

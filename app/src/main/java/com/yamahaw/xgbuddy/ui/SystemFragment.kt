@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.yamahaw.xgbuddy.midi.MidiSession
@@ -102,11 +103,17 @@ class SystemFragment : Fragment() {
     }
 
     private fun resetSetup(v: View) {
-        midiViewModel.resetToDefaultSetup()
+        Toast.makeText(requireContext(), "Reset to XG default setup", Toast.LENGTH_SHORT).show()
+                midiViewModel.resetToDefaultSetup()
         midiSession.send(MidiMessageUtility.getXGSystemOn())
     }
 
     private fun sendAllOff(v: View) {
+        Toast.makeText(
+            requireContext(),
+            "Sending All Note Off/All Sound Off",
+            Toast.LENGTH_SHORT
+        ).show()
         midiSession.send(MidiMessageUtility.getAllOff())
     }
 
