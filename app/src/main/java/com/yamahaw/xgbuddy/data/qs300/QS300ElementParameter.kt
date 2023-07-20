@@ -13,8 +13,8 @@ enum class QS300ElementParameter(
     val reflectedField: KMutableProperty<Byte>,
     val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.noFormat
 ) {
-    WAVE_HI(R.string.qs300_el_wave_hi, 0x3du, 7, 13, 7, QS300Element::waveHi),
-    WAVE_LO(R.string.qs300_el_wave_lo, 0x3eu, max = 6, reflectedField = QS300Element::waveLo),
+    WAVE_HI(R.string.qs300_el_wave_hi, 0x3du, 7, 13, 0, QS300Element::waveHi),
+    WAVE_LO(R.string.qs300_el_wave_lo, 0x3eu, max = 6, default = 0x25, reflectedField = QS300Element::waveLo),
     NOTE_LO(R.string.qs300_el_note_lo, 0x3fu, reflectedField = QS300Element::noteLo),
     NOTE_HI(R.string.qs300_el_note_hi, 0x40u, default = 127, reflectedField = QS300Element::noteHi),
     VEL_LO(R.string.qs300_el_vel_lo, 0x41u, reflectedField = QS300Element::velLo),
