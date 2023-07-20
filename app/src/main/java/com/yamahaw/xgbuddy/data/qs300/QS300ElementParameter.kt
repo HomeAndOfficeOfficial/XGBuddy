@@ -74,7 +74,7 @@ enum class QS300ElementParameter(
         114,
         64,
         QS300Element::detune,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ), // -50 .. 50
     PITCH_SCALING(
         R.string.qs300_el_pitch_scaling,
@@ -105,7 +105,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velPegLvlSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     VEL_PEG_RATE_SENS(
         R.string.qs300_el_vel_peg_rate_sens,
@@ -114,7 +114,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velPegRateSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_SCALING(
         R.string.qs300_el_peg_rate_scaling,
@@ -123,7 +123,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::pegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_SCALING_CENTER(
         R.string.qs300_el_peg_rate_scale_center,
@@ -132,7 +132,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::pegRateScalingCenter,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_1(
         R.string.qs300_el_peg_rate_1,
@@ -245,7 +245,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velFegRateSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     FEG_RATE_SCALING(
         R.string.qs300_el_feg_rate_scaling,
@@ -254,7 +254,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::fegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     FEG_RATE_SCALING_CENTER(
         R.string.qs300_el_feg_rate_scale_center,
@@ -352,7 +352,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::aegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     AEG_SCALING_CENTER(
         R.string.qs300_el_aeg_rate_scale_center,
@@ -418,6 +418,6 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::resonanceSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     );
 }

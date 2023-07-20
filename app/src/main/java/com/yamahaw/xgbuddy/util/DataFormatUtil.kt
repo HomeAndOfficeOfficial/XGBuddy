@@ -213,10 +213,6 @@ object DataFormatUtil {
         "${-63 + it}"
     }
 
-    val signed64Base = DataAssignFormatter {
-        "${-64 + it}"
-    }
-
     val pitchScaleFormatter = DataAssignFormatter {
         when (it) {
             0 -> "100%"
