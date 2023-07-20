@@ -1027,6 +1027,7 @@
     <string name="add_directory_text_hint">Folder Name</string>
     <string name="load_setup">Load Setup</string>
     <string name="setup_file_name">Setup File Name</string>
+    <string name="re_init">Initialize</string>
     <!-- System Param Control Names -->
 
 </resources>
