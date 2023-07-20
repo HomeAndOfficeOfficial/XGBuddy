@@ -210,7 +210,7 @@ object DataFormatUtil {
     }
 
     val signed63Base = DataAssignFormatter {
-        "${-63 - it}"
+        "${-63 + it}"
     }
 
     val signed64Base = DataAssignFormatter {
