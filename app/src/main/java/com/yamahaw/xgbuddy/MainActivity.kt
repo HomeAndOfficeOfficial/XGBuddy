@@ -180,6 +180,9 @@ class MainActivity : AppCompatActivity() {
                     R.id.send_default -> {
                         midiSession.send(MidiMessageUtility.getXGSystemOn())
                         midiViewModel.resetToDefaultSetup()
+                        if (supportFragmentManager.findFragmentByTag(PartsFragment.TAG) == null) {
+                            navHost.navController.navigate(R.id.partsFragment)
+                        }
                         true
                     }
                     else -> false

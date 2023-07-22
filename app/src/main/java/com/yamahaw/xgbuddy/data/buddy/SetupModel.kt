@@ -1,11 +1,13 @@
 package com.yamahaw.xgbuddy.data.buddy
 
+import androidx.annotation.Keep
 import com.yamahaw.xgbuddy.data.gm.MidiPart
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.data.xg.effect.Chorus
 import com.yamahaw.xgbuddy.data.xg.effect.Reverb
 import com.yamahaw.xgbuddy.data.xg.effect.Variation
 
+@Keep
 data class SetupModel(
     val parts: List<MidiPart>,
     val reverb: Reverb,
