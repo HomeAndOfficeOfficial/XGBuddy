@@ -835,8 +835,8 @@
     <string name="qs300_el_feg_rate_scaling">FEG Rate Scaling</string>
     <string name="qs300_el_feg_rate_scale_center">FEG Rate Scaling Center Note</string>
     <string name="qs300_el_feg_rate_1">Attack Rate</string>
-    <string name="qs300_el_feg_rate_3">Decay Rate 1</string>
-    <string name="qs300_el_feg_rate_2">Decay Rate 2</string>
+    <string name="qs300_el_feg_rate_3">Decay Rate 2</string>
+    <string name="qs300_el_feg_rate_2">Decay Rate 1</string>
     <string name="qs300_el_feg_rate_4">Release Rate</string>
     <string name="qs300_el_feg_lvl_0">Initial Level</string>
     <string name="qs300_el_feg_lvl_1">Attack Level</string>
@@ -1027,6 +1027,7 @@
     <string name="add_directory_text_hint">Folder Name</string>
     <string name="load_setup">Load Setup</string>
     <string name="setup_file_name">Setup File Name</string>
+    <string name="re_init">Initialize</string>
     <!-- System Param Control Names -->
 
 </resources>

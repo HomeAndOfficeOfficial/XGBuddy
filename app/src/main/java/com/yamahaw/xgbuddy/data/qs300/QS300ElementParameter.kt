@@ -13,8 +13,8 @@ enum class QS300ElementParameter(
     val reflectedField: KMutableProperty<Byte>,
     val formatter: DataFormatUtil.DataAssignFormatter = DataFormatUtil.noFormat
 ) {
-    WAVE_HI(R.string.qs300_el_wave_hi, 0x3du, 7, 13, 7, QS300Element::waveHi),
-    WAVE_LO(R.string.qs300_el_wave_lo, 0x3eu, max = 6, reflectedField = QS300Element::waveLo),
+    WAVE_HI(R.string.qs300_el_wave_hi, 0x3du, 7, 13, 0, QS300Element::waveHi),
+    WAVE_LO(R.string.qs300_el_wave_lo, 0x3eu, max = 6, default = 0x25, reflectedField = QS300Element::waveLo),
     NOTE_LO(R.string.qs300_el_note_lo, 0x3fu, reflectedField = QS300Element::noteLo),
     NOTE_HI(R.string.qs300_el_note_hi, 0x40u, default = 127, reflectedField = QS300Element::noteHi),
     VEL_LO(R.string.qs300_el_vel_lo, 0x41u, reflectedField = QS300Element::velLo),
@@ -23,6 +23,7 @@ enum class QS300ElementParameter(
         R.string.qs300_el_feg_vel_curve,
         0x43u,
         max = 1,
+        default = 1,
         reflectedField = QS300Element::filterEGVelCurve,
         formatter = DataFormatUtil.filterCurveFormatter
     ),
@@ -74,7 +75,7 @@ enum class QS300ElementParameter(
         114,
         64,
         QS300Element::detune,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ), // -50 .. 50
     PITCH_SCALING(
         R.string.qs300_el_pitch_scaling,
@@ -86,7 +87,7 @@ enum class QS300ElementParameter(
     PITCH_SCALING_CENTER(
         R.string.qs300_el_pitch_scale_center,
         0x4fu,
-        default = 63,
+        default = 60,
         reflectedField = QS300Element::pitchScalingCenter
     ),
     PITCH_EG_DEPTH(
@@ -105,7 +106,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velPegLvlSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     VEL_PEG_RATE_SENS(
         R.string.qs300_el_vel_peg_rate_sens,
@@ -114,7 +115,7 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velPegRateSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_SCALING(
         R.string.qs300_el_peg_rate_scaling,
@@ -123,50 +124,55 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::pegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_SCALING_CENTER(
         R.string.qs300_el_peg_rate_scale_center,
         0x54u,
         57,
         71,
-        64,
+        60,
         QS300Element::pegRateScalingCenter,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     PEG_RATE_1(
         R.string.qs300_el_peg_rate_1,
         0x55u,
         max = 63,
+        default = 63,
         reflectedField = QS300Element::pegRate1
     ),
     PEG_RATE_2(
         R.string.qs300_el_peg_rate_2,
         0x56u,
         max = 63,
+        default = 63,
         reflectedField = QS300Element::pegRate2
     ),
     PEG_RATE_3(
         R.string.qs300_el_peg_rate_3,
         0x57u,
         max = 63,
+        default = 63,
         reflectedField = QS300Element::pegRate3
     ),
     PEG_RATE_4(
         R.string.qs300_el_peg_rate_4,
         0x58u,
         max = 63,
+        default = 63,
         reflectedField = QS300Element::pegRate4
     ),
-    PEG_LEVEL_0(R.string.qs300_el_peg_lvl_0, 0x59u, reflectedField = QS300Element::pegLvl0),
-    PEG_LEVEL_1(R.string.qs300_el_peg_lvl_1, 0x5au, reflectedField = QS300Element::pegLvl1),
-    PEG_LEVEL_2(R.string.qs300_el_peg_lvl_2, 0x5bu, reflectedField = QS300Element::pegLvl2),
-    PEG_LEVEL_3(R.string.qs300_el_peg_lvl_3, 0x5cu, reflectedField = QS300Element::pegLvl3),
-    PEG_LEVEL_4(R.string.qs300_el_peg_lvl_4, 0x5du, reflectedField = QS300Element::pegLvl4),
+    PEG_LEVEL_0(R.string.qs300_el_peg_lvl_0, 0x59u, default = 64, reflectedField = QS300Element::pegLvl0),
+    PEG_LEVEL_1(R.string.qs300_el_peg_lvl_1, 0x5au, default = 64, reflectedField = QS300Element::pegLvl1),
+    PEG_LEVEL_2(R.string.qs300_el_peg_lvl_2, 0x5bu, default = 64, reflectedField = QS300Element::pegLvl2),
+    PEG_LEVEL_3(R.string.qs300_el_peg_lvl_3, 0x5cu, default = 64, reflectedField = QS300Element::pegLvl3),
+    PEG_LEVEL_4(R.string.qs300_el_peg_lvl_4, 0x5du, default = 64, reflectedField = QS300Element::pegLvl4),
     FILTER_RES(
         R.string.qs300_el_filter_res,
         0x5eu,
         max = 63,
+        default = 6,
         reflectedField = QS300Element::filterRes
     ),
     VEL_SENS(
@@ -179,43 +185,43 @@ enum class QS300ElementParameter(
     CUTOFF_FREQ(
         R.string.qs300_el_cutoff_freq,
         0x60u,
-        default = 63,
+        default = 52,
         reflectedField = QS300Element::cutoffFreq
     ),
     CUTOFF_SCALING_BREAK_1(
         R.string.qs300_el_cutoff_scale_bp_1,
         0x61u,
-        default = 63,
+        default = 24,
         reflectedField = QS300Element::cutoffScalingBreak1
     ),
     CUTOFF_SCALING_BREAK_2(
         R.string.qs300_el_cutoff_scale_bp_2,
         0x62u,
-        default = 63,
+        default = 48,
         reflectedField = QS300Element::cutoffScalingBreak2
     ),
     CUTOFF_SCALING_BREAK_3(
         R.string.qs300_el_cutoff_scale_bp_3,
         0x63u,
-        default = 63,
+        default = 96,
         reflectedField = QS300Element::cutoffScalingBreak3
     ),
     CUTOFF_SCALING_BREAK_4(
         R.string.qs300_el_cutoff_scale_bp_4,
         0x64u,
-        default = 63,
+        default = 108,
         reflectedField = QS300Element::cutoffScalingBreak4
     ),
     CUTOFF_SCALING_OFFSET_1(
         R.string.qs300_el_cutoff_scale_off_1,
         0x65u,
-        default = 63,
+        default = 62,
         reflectedField = QS300Element::cutoffScalingOffset1
     ),
     CUTOFF_SCALING_OFFSET_2(
         R.string.qs300_el_cutoff_scale_off_2,
         0x66u,
-        default = 63,
+        default = 64,
         reflectedField = QS300Element::cutoffScalingOffset2
     ),
     CUTOFF_SCALING_OFFSET_3(
@@ -235,7 +241,7 @@ enum class QS300ElementParameter(
         0x69u,
         57,
         71,
-        64,
+        69,
         QS300Element::velFegLvlSens
     ),
     VEL_FEG_RATE_SENS(
@@ -245,46 +251,50 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::velFegRateSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     FEG_RATE_SCALING(
         R.string.qs300_el_feg_rate_scaling,
         0x6bu,
         57,
         71,
-        64,
+        66,
         QS300Element::fegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     FEG_RATE_SCALING_CENTER(
         R.string.qs300_el_feg_rate_scale_center,
         0x6cu,
-        default = 63,
+        default = 60,
         reflectedField = QS300Element::fegRateScalingCenter
     ),
-    FEG_RATE_1(R.string.qs300_el_feg_rate_1, 0x6du, 0, 63, 0, QS300Element::fegRate1), FEG_RATE_2(
+    FEG_RATE_1(R.string.qs300_el_feg_rate_1, 0x6du, 0, 63, 63, QS300Element::fegRate1),
+    FEG_RATE_2(
         R.string.qs300_el_feg_rate_2,
         0x6eu,
         max = 63,
+        default = 3,
         reflectedField = QS300Element::fegRate2
     ),
     FEG_RATE_3(
         R.string.qs300_el_feg_rate_3,
         0x6fu,
         max = 63,
+        default = 1,
         reflectedField = QS300Element::fegRate3
     ),
     FEG_RATE_4(
         R.string.qs300_el_feg_rate_4,
         0x70u,
         max = 63,
+        default = 1,
         reflectedField = QS300Element::fegRate4
     ),
-    FEG_LVL_0(R.string.qs300_el_feg_lvl_0, 0x71u, reflectedField = QS300Element::fegLvl0),
-    FEG_LVL_1(R.string.qs300_el_feg_lvl_1, 0x72u, reflectedField = QS300Element::fegLvl1),
-    FEG_LVL_2(R.string.qs300_el_feg_lvl_2, 0x73u, reflectedField = QS300Element::fegLvl2),
-    FEG_LVL_3(R.string.qs300_el_feg_lvl_3, 0x74u, reflectedField = QS300Element::fegLvl3),
-    FEG_LVL_4(R.string.qs300_el_feg_lvl_4, 0x75u, reflectedField = QS300Element::fegLvl4),
+    FEG_LVL_0(R.string.qs300_el_feg_lvl_0, 0x71u, default = 64, reflectedField = QS300Element::fegLvl0),
+    FEG_LVL_1(R.string.qs300_el_feg_lvl_1, 0x72u, default = 111, reflectedField = QS300Element::fegLvl1),
+    FEG_LVL_2(R.string.qs300_el_feg_lvl_2, 0x73u, default = 64, reflectedField = QS300Element::fegLvl2),
+    FEG_LVL_3(R.string.qs300_el_feg_lvl_3, 0x74u, default = 64, reflectedField = QS300Element::fegLvl3),
+    FEG_LVL_4(R.string.qs300_el_feg_lvl_4, 0x75u, default = 64, reflectedField = QS300Element::fegLvl4),
     ELEMENT_LVL(
         R.string.qs300_el_element_lvl,
         0x76u,
@@ -294,31 +304,31 @@ enum class QS300ElementParameter(
     LVL_SCALING_BREAK_1(
         R.string.qs300_el_lvl_scale_bp_1,
         0x77u,
-        default = 63,
+        default = 24,
         reflectedField = QS300Element::lvlScalingBreak1
     ),
     LVL_SCALING_BREAK_2(
         R.string.qs300_el_lvl_scale_bp_2,
         0x78u,
-        default = 63,
+        default = 58,
         reflectedField = QS300Element::lvlScalingBreak2
     ),
     LVL_SCALING_BREAK_3(
         R.string.qs300_el_lvl_scale_bp_3,
         0x79u,
-        default = 63,
+        default = 72,
         reflectedField = QS300Element::lvlScalingBreak3
     ),
     LVL_SCALING_BREAK_4(
         R.string.qs300_el_lvl_scale_bp_4,
         0x7au,
-        default = 63,
+        default = 96,
         reflectedField = QS300Element::lvlScalingBreak4
     ),
     LVL_SCALING_OFFSET_1(
         R.string.qs300_el_lvl_scale_off_1,
         0x7bu,
-        default = 63,
+        default = 64,
         reflectedField = QS300Element::lvlScalingOffset1,
         formatter = DataFormatUtil.signed63Base
     ),
@@ -332,14 +342,14 @@ enum class QS300ElementParameter(
     LVL_SCALING_OFFSET_3(
         R.string.qs300_el_lvl_scale_off_3,
         0x7du,
-        default = 63,
+        default = 66,
         reflectedField = QS300Element::lvlScalingOffset3,
         formatter = DataFormatUtil.signed63Base
     ),
     LVL_SCALING_OFFSET_4(
         R.string.qs300_el_lvl_scale_off_4,
         0x7eu,
-        default = 63,
+        default = 67,
         reflectedField = QS300Element::lvlScalingOffset4,
         formatter = DataFormatUtil.signed63Base
     ),
@@ -350,51 +360,52 @@ enum class QS300ElementParameter(
         0x81u,
         57,
         71,
-        64,
+        66,
         QS300Element::aegRateScaling,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     ),
     AEG_SCALING_CENTER(
         R.string.qs300_el_aeg_rate_scale_center,
         0x82u,
-        default = 63,
+        default = 72,
         reflectedField = QS300Element::aegScalingCenter
     ),
     AEG_KEY_ON_DELAY(
         R.string.qs300_el_aeg_key_on_delay,
         0x83u,
         max = 15,
+        default = 0,
         reflectedField = QS300Element::aegKeyOnDelay
     ),
     AEG_ATTACK_RATE(R.string.qs300_el_aeg_attack, 0x84u, 0, 127, 63, QS300Element::aegAttackRate),
     AEG_DECAY_RATE_1(
         R.string.qs300_el_aeg_decay_rate_1,
         0x85u,
-        default = 63,
+        default = 16,
         reflectedField = QS300Element::aegDecayRate1
     ),
     AEG_DECAY_RATE_2(
         R.string.qs300_el_aeg_decay_rate_2,
         0x86u,
-        default = 63,
+        default = 17,
         reflectedField = QS300Element::aegDecayRate2
     ),
     AEG_RELEASE_RATE(
         R.string.qs300_el_aeg_release,
         0x87u,
-        default = 63,
+        default = 31,
         reflectedField = QS300Element::aegReleaseRate
     ),
     AEG_DECAY_LVL_1(
         R.string.qs300_el_aeg_decay_lvl_1,
         0x88u,
-        default = 63,
+        default = 111,
         reflectedField = QS300Element::aegDecayLvl1
     ),
     AEG_DECAY_LVL_2(
         R.string.qs300_el_aeg_decay_lvl_2,
         0x89u,
-        default = 63,
+        default = 0,
         reflectedField = QS300Element::aegDecayLvl2
     ),
     ADDRESS_OFFSET_HI(
@@ -418,6 +429,6 @@ enum class QS300ElementParameter(
         71,
         64,
         QS300Element::resonanceSens,
-        DataFormatUtil.signed64Base
+        DataFormatUtil.signed127Formatter
     );
 }

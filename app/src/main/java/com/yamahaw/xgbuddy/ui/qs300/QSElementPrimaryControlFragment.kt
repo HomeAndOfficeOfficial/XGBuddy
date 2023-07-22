@@ -2,7 +2,6 @@ package com.yamahaw.xgbuddy.ui.qs300
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import com.yamahaw.xgbuddy.R
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.databinding.FragmentQsElementPrimaryControlBinding
 import com.yamahaw.xgbuddy.util.MidiMessageUtility
-import com.google.android.material.switchmaterial.SwitchMaterial
+import com.yamahaw.xgbuddy.data.qs300.QS300Element
 import kotlin.experimental.and
 
 class QSElementPrimaryControlFragment :
@@ -72,13 +71,7 @@ class QSElementPrimaryControlFragment :
                         val decodedWave = decodeWave(element.waveHi, element.waveLo)
                         if (decodedWave != waveValue) {
                             element.setWaveValue(waveValue)
-                            midiSession.send(
-                                MidiMessageUtility.getQS300BulkDump(
-                                    voice,
-                                    voiceIndex,
-                                    midiViewModel.selectedChannel.value!!
-                                )
-                            )
+                            sendSetup()
                         }
                     }
                     isSpinnerUpdating = false
@@ -87,15 +80,11 @@ class QSElementPrimaryControlFragment :
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
             swElementOn.setOnClickListener {
-                val voiceIndex = viewModel.voice.value!!
                 viewModel.updateElementStatus(elementIndex)
-                midiSession.send(
-                    MidiMessageUtility.getQS300BulkDump(
-                        viewModel.preset.value!!.voices[voiceIndex],
-                        voiceIndex,
-                        midiViewModel.selectedChannel.value!!
-                    )
-                )
+                sendSetup()
+            }
+            bElInit.setOnClickListener {
+                initializeElement()
             }
         }
     }
@@ -111,6 +100,24 @@ class QSElementPrimaryControlFragment :
         // TODO: Verify element switch values when more than two elements are allowed
         val elSwitchBit = (voice.elementSwitch.toInt() shr elementIndex) and 1
         binding!!.swElementOn.isChecked = elSwitchBit == 1
+    }
+
+    private fun initializeElement() {
+        val elements = viewModel.preset.value!!.voices[viewModel.voice.value!!].elements
+        elements[elementIndex] = QS300Element(elementIndex)
+        viewModel.preset.value = viewModel.preset.value
+        sendSetup()
+    }
+
+    private fun sendSetup() {
+        val voiceIndex = viewModel.voice.value!!
+        midiSession.send(
+            MidiMessageUtility.getQS300BulkDump(
+                viewModel.preset.value!!.voices[voiceIndex],
+                voiceIndex,
+                midiViewModel.selectedChannel.value!!
+            )
+        )
     }
 
     private fun decodeWave(waveHi: Byte, waveLo: Byte): Int =
