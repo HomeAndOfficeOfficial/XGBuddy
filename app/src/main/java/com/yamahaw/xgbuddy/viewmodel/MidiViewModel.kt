@@ -8,6 +8,7 @@ import com.yamahaw.xgbuddy.data.gm.MidiPart
 import com.yamahaw.xgbuddy.data.qs300.QS300Preset
 import com.yamahaw.xgbuddy.data.xg.*
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import com.yamahaw.xgbuddy.data.xg.effect.*
 
@@ -46,15 +47,21 @@ class MidiViewModel : ViewModel() {
 
     fun readSetupJson(jsonString: String): SetupModel? =
         try {
-            Gson().fromJson(jsonString, SetupModel::class.java).let {
-                setupResetFlag.value = true
-                channels.value = it.parts.toMutableList()
-                reverb = it.reverb
-                chorus = it.chorus
-                variation = it.variation
-                qsPartMap = it.qsPresetMap.toMutableMap()
-                it
-            }
+            GsonBuilder()
+                .serializeNulls()
+                .create()
+                .fromJson(
+                    jsonString,
+                    SetupModel::class.java
+                ).let {
+                    setupResetFlag.value = true
+                    channels.value = it.parts.toMutableList()
+                    reverb = it.reverb
+                    chorus = it.chorus
+                    variation = it.variation
+                    qsPartMap = it.qsPresetMap.toMutableMap()
+                    it
+                }
         } catch (e: JsonSyntaxException) {
             Log.e("MidiViewModel", "Couldn't read setup from file: ${e.message}")
             null

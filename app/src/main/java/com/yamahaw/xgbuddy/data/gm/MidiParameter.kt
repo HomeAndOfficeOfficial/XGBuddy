@@ -99,6 +99,7 @@ enum class MidiParameter(
     VOLUME(
         0x0b,
         R.string.midi_mp_VOLUME,
+        default = 100,
         controlChange = MidiControlChange.CH_VOLUME,
         reflectedField = MidiPart::volume
     ),
@@ -275,16 +276,19 @@ enum class MidiParameter(
     BEND_LFO_PMOD_DEPTH(
         0x26,
         R.string.midi_mp_BEND_LFO_PMOD_DEPTH,
+        default = 0,
         reflectedField = MidiPart::bendLfoPmodDepth
     ),
     BEND_LFO_FMOD_DEPTH(
         0x27,
         R.string.midi_mp_BEND_LFO_FMOD_DEPTH,
+        default = 0,
         reflectedField = MidiPart::bendLfoFmodDepth
     ),
     BEND_LFO_AMOD_DEPTH(
         0x28,
         R.string.midi_mp_BEND_LFO_AMOD_DEPTH,
+        default = 0,
         reflectedField = MidiPart::bendLfoAmodDepth
     ),
     RCV_PITCH_BEND(

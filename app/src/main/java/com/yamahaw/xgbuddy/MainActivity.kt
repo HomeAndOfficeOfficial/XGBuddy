@@ -25,7 +25,7 @@ import com.yamahaw.xgbuddy.ui.*
 import com.yamahaw.xgbuddy.ui.filebrowser.FileBrowserFragment
 import com.yamahaw.xgbuddy.viewmodel.QS300ViewModel
 import com.google.android.material.navigationrail.NavigationRailView
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.yamahaw.xgbuddy.midi.MidiSession
 import com.yamahaw.xgbuddy.midi.QSPartNoteDuplicator
 import com.yamahaw.xgbuddy.service.MidiService
@@ -153,6 +153,7 @@ class MainActivity : AppCompatActivity() {
                         showConnectionStatusDialog()
                         true
                     }
+
                     R.id.save_setup -> {
                         Log.d(
                             TAG, "QS Map: ${
@@ -164,10 +165,12 @@ class MainActivity : AppCompatActivity() {
                         openFileBrowser(FileBrowserFragment.WRITE)
                         true
                     }
+
                     R.id.open_setup -> {
                         openFileBrowser(FileBrowserFragment.READ)
                         true
                     }
+
                     R.id.panic -> {
                         Toast.makeText(
                             baseContext,
@@ -177,6 +180,7 @@ class MainActivity : AppCompatActivity() {
                         midiSession.send(MidiMessageUtility.getAllOff())
                         true
                     }
+
                     R.id.send_default -> {
                         midiSession.send(MidiMessageUtility.getXGSystemOn())
                         midiViewModel.resetToDefaultSetup()
@@ -185,6 +189,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         true
                     }
+
                     else -> false
                 }
             }
@@ -232,7 +237,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun openFileBrowser(mode: Int) {
         val setupString = if (mode == FileBrowserFragment.WRITE)
-            Gson().toJson(midiViewModel.toSetupModel())
+            GsonBuilder()
+                .serializeNulls()
+                .create()
+                .toJson(midiViewModel.toSetupModel())
         else
             ""
         if (supportFragmentManager.findFragmentByTag(FileBrowserFragment.TAG) == null) {
