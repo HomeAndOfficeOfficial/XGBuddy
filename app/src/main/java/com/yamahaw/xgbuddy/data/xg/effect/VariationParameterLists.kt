@@ -322,10 +322,11 @@ object VariationParameterLists {
         EnumMap<EffectParameterData, EffectParameter>(EffectParameterData::class.java).apply {
             put(EffectParameterData.VARIATION_PARAM_1, EffectParameter.EQ_LOW_GAIN)
             put(EffectParameterData.VARIATION_PARAM_2, EffectParameter.EQ_MID_FREQ)
-            put(EffectParameterData.VARIATION_PARAM_3, EffectParameter.EQ_MID_WIDTH)
-            put(EffectParameterData.VARIATION_PARAM_4, EffectParameter.EQ_HIGH_GAIN)
-            put(EffectParameterData.VARIATION_PARAM_5, EffectParameter.EQ_LOW_FREQ)
-            put(EffectParameterData.VARIATION_PARAM_6, EffectParameter.EQ_HIGH_FREQ)
+            put(EffectParameterData.VARIATION_PARAM_3, EffectParameter.EQ_MID_GAIN)
+            put(EffectParameterData.VARIATION_PARAM_4, EffectParameter.EQ_MID_WIDTH)
+            put(EffectParameterData.VARIATION_PARAM_5, EffectParameter.EQ_HIGH_GAIN)
+            put(EffectParameterData.VARIATION_PARAM_6, EffectParameter.EQ_LOW_FREQ)
+            put(EffectParameterData.VARIATION_PARAM_7, EffectParameter.EQ_HIGH_FREQ)
         }
 
     val twoBandEq: EnumMap<EffectParameterData, EffectParameter> =

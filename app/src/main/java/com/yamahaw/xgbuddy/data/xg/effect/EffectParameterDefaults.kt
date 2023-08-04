@@ -43,7 +43,7 @@ object EffectParameterDefaults {
     val threeBandEQDefaults = intArrayOf(70, 34, 60, 10, 70, 28, 46, 0, 0, 127, 0, 0, 0, 0, 0, 0)
     val twoBandEQDefaults = intArrayOf(28, 70, 46, 70, 0, 0, 0, 0, 0, 127, 34, 64, 10, 0, 0, 0)
     val autoWahDefaults = intArrayOf(70, 56, 39, 25, 0, 28, 66, 46, 64, 127, 0, 0, 0, 0, 0, 0)
-    val pitchChangeDefaults = intArrayOf(64, 0, 74, 54, 64, 0, 0, 0, 0, 64, 1, 127, 127, 127, 0, 0)
+    val pitchChangeDefaults = intArrayOf(64, 0, 64, 0, 0, 28, 64, 46, 64, 127, 0, 0, 0, 0, 0, 0)
     val whiteRoomDefaults = intArrayOf(9, 5, 11, 0, 46, 30, 50, 70, 7, 40, 34, 4, 64, 7, 64, 0)
     val tunnelDefaults = intArrayOf(48, 6, 19, 0, 44, 33, 52, 70, 16, 40, 20, 4, 64, 7, 64, 0)
 }
