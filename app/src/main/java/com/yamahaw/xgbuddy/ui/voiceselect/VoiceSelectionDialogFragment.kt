@@ -222,7 +222,7 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             R.id.bFiltBass to InstrumentGroup.BASS,
             R.id.bFiltStrings to InstrumentGroup.STRINGS,
             R.id.bFiltEnsemble to InstrumentGroup.ENSEMBLE,
-            R.id.bFiltBass to InstrumentGroup.BASS,
+            R.id.bFiltBrass to InstrumentGroup.BRASS,
             R.id.bFiltReed to InstrumentGroup.REED,
             R.id.bFiltPipe to InstrumentGroup.PIPE,
             R.id.bFiltSynLd to InstrumentGroup.SYN_LEAD,

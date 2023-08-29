@@ -2,7 +2,7 @@ package com.yamahaw.xgbuddy.data
 
 object MidiConstants {
 
-    const val SETUP_SEQUENCE_INTERVAL_NANO = 60000000L
+    const val SETUP_SEQUENCE_INTERVAL_NANO = 75000000L
     const val SETUP_SEQUENCE_DRUM_INTERVAL = 30000000L
 
     const val CONTINUOUS_DATA_LENGTH = 2
