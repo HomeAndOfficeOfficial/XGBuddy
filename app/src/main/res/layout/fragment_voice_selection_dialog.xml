@@ -37,6 +37,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivVoiceIcon" />
 
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerVoiceSel" />
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/bgVoiceCategory"
         android:layout_width="wrap_content"
@@ -45,7 +53,7 @@
         app:checkedButton="@id/bXGVoice"
         app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -92,7 +100,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
         app:layout_constraintStart_toEndOf="@+id/bgVoiceCategory"
-        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel">
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <ScrollView
             android:id="@+id/svXGFilter"
@@ -464,7 +472,7 @@
         app:layout_constraintBottom_toTopOf="@id/dividerVoiceSel2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/filterContainer"
-        app:layout_constraintTop_toBottomOf="@id/dividerVoiceSel"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
         tools:listitem="@layout/voice_list_item" />
 
     <View

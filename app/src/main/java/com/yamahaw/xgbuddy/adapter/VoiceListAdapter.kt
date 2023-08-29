@@ -31,7 +31,14 @@ class VoiceListAdapter(
 
     private var typedList: List<VoiceListEntry>? = null
     private var filteredList: List<VoiceListEntry>? = null
+    private var queryFilterList: List<VoiceListEntry>? = null
     private var selectedCategory: VoiceListCategory? = null
+
+    var searchString = ""
+        set(value) {
+            field = value
+            filterBySearchQuery()
+        }
 
     data class VoiceListEntry(
         val name: String,
@@ -61,10 +68,10 @@ class VoiceListAdapter(
         return ViewHolder(v)
     }
 
-    override fun getItemCount(): Int = filteredList?.size ?: 0
+    override fun getItemCount(): Int = queryFilterList?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        filteredList?.let {
+        queryFilterList?.let {
             holder.bind(
                 typedList!!.indexOf(it[position]),
                 it[position].name,
@@ -91,29 +98,33 @@ class VoiceListAdapter(
         return this != null && this::class.isSubclassOf(Enum::class)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateCategory(category: VoiceListCategory) {
         selectedCategory = category
         typedList = voiceList.filter {
             it.typeName == category.enumName
         }
         filteredList = typedList!!.toList()
-        notifyDataSetChanged()
-
+        filterBySearchQuery()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun filterByInstrumentGroup(group: InstrumentGroup?) {
         filteredList = typedList!!.filter {
             it.instrumentGroup == group
         }
-        notifyDataSetChanged()
+        filterBySearchQuery()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun filterByAlphabet(regex: String) {
         filteredList = typedList!!.filter {
             it.name.substring(0, 1).matches(regex.toRegex())
+        }
+        filterBySearchQuery()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun filterBySearchQuery() {
+        queryFilterList = filteredList!!.filter {
+            it.name.contains(searchString, ignoreCase = true)
         }
         notifyDataSetChanged()
     }
