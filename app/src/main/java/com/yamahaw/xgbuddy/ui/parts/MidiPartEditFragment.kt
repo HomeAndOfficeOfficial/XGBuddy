@@ -278,14 +278,16 @@ class MidiPartEditFragment : ControlBaseFragment<FragmentMidiPartEditBinding>() 
 
         // Then check if control change param
         if (currentParam?.controlChange != null) {
-            return MidiMessageUtility.getControlChange(
-                midiViewModel.selectedChannel.value!!,
-                currentParam!!.controlChange!!.controlNumber,
-                controlParameter.value.toByte()
-            )
+            // If pan, check for Random (need to send XG Param change)
+            if (currentParam != MidiParameter.PAN || controlParameter.value != 0) {
+                return MidiMessageUtility.getControlChange(
+                    midiViewModel.selectedChannel.value!!,
+                    currentParam!!.controlChange!!.controlNumber,
+                    controlParameter.value.toByte()
+                )
+            }
         }
 
-        // TODO: Verify parameters are changing
         return MidiMessageUtility.getXGParamChange(
             midiViewModel.selectedChannel.value!!,
             currentParam!!,
