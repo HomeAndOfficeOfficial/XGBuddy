@@ -35,6 +35,10 @@ class VoiceListAdapter(
     private var selectedCategory: VoiceListCategory? = null
 
     var searchString = ""
+        set(value) {
+            field = value
+            filterBySearchQuery()
+        }
 
     data class VoiceListEntry(
         val name: String,

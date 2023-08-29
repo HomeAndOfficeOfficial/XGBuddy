@@ -6,7 +6,7 @@
     <dimen name="connection_dialog_height">400dp</dimen>
     <dimen name="connection_dialog_width">400dp</dimen>
     <dimen name="voice_select_dialog_width">640dp</dimen>
-    <dimen name="voice_select_dialog_height">480dp</dimen>
+    <dimen name="voice_select_dialog_height">560dp</dimen>
     <dimen name="file_browser_dialog_width">640dp</dimen>
     <dimen name="file_browser_dialog_height">480dp</dimen>
     <dimen name="preset_capture_dialog_height">500dp</dimen>

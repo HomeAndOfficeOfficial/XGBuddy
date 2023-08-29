@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +41,15 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
             layoutManager = LinearLayoutManager(requireContext())
         }
         binding.tvCurrentVoice.text = arguments?.getString(ARG_START_VOICE) ?: ""
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                voiceListAdapter.searchString = newText ?: ""
+                return false
+            }
+
+        })
         return binding.root
     }
 
@@ -150,11 +160,13 @@ class VoiceSelectionDialogFragment(var listener: OnVoiceItemSelectedListener) : 
                 binding.svXGFilter.visibility = View.VISIBLE
                 binding.bgXGFilter.check(R.id.bSecAll)
             }
+
             CATEGORY_ID_QS300 -> {
                 binding.svXGFilter.visibility = View.GONE
                 binding.svQSFilter.visibility = View.VISIBLE
                 binding.bgQSFilter.check(R.id.bQSAll)
             }
+
             else -> {
                 binding.svQSFilter.visibility = View.GONE
                 binding.svXGFilter.visibility = View.GONE
