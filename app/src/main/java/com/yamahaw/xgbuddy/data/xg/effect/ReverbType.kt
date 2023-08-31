@@ -75,10 +75,17 @@ enum class ReverbType(
         EffectParameterDefaults.whiteRoomDefaults
     ),
     TUNNEL(
-        R.string.reverb_basement,
-        0x13,
+        R.string.reverb_tunnel,
+        0x11,
         0,
         VariationParameterLists.dimensionalReverb,
         EffectParameterDefaults.tunnelDefaults
     )
+    /**
+     * So why does Tunnel have a string resource called "reverb_basement" as its title? Well,
+     * I messed up. I added an enum entry called "TUNNEL", gave it the address of the Basement
+     * preset, and gave it the default values of the tunnel preset. Then I forgot to add a BASEMENT
+     * enum entry. So I just changed the address to match the actual Tunnel address and I'm going
+     * to pretend Basement doesn't exist for now. I can add it some other time.
+     */
 }
