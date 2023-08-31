@@ -231,7 +231,7 @@ object MidiMessageUtility {
         val valueMsb: Byte
         val valueLsb: Byte
         if (effectParameterData.size == 2.toByte()) {
-            valueMsb = (value shr 8).toByte()
+            valueMsb = (value shr 7).toByte()
             valueLsb = value.toByte()
         } else {
             valueMsb = value.toByte()
