@@ -71,13 +71,15 @@ class MyMidiReceiver : MidiReceiver(RECEIVER_MAX_LENGTH) {
         val channel = (msg[0] and 0x0f).toInt()
         val controlChange = MidiControlChange::controlNumber findBy msg[1]
         val value = msg[2].toInt()
-        midiSubscribers.forEach {
-            it.onControlChangeReceived(
-                channel,
-                controlChange!!,
-                value,
-                msg.toByteArray()
-            )
+        controlChange?.let { cc ->
+            midiSubscribers.forEach { subscriber ->
+                subscriber.onControlChangeReceived(
+                    channel,
+                    cc,
+                    value,
+                    msg.toByteArray()
+                )
+            }
         }
     }
 
