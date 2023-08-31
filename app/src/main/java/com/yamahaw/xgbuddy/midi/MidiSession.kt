@@ -17,7 +17,7 @@ class MidiSession @Inject constructor(context: Context) {
     private val midiReceiver = MyMidiReceiver()
 
     private var inputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
-    private var outputDevices: MutableMap<String, MidiDevice> = mutableMapOf()
+    private var outputDevices: MutableMap<Int, MidiDevice> = mutableMapOf()
 
     val outputDeviceOpened = MutableLiveData(false)
     val inputDeviceOpened = MutableLiveData(false)
@@ -34,7 +34,7 @@ class MidiSession @Inject constructor(context: Context) {
             Log.d(TAG, "Should have an output device")
             outputPort.connect(midiReceiver)
             outputDeviceOpened.postValue(true)
-            outputDevices[device.info.properties.getString(MidiDeviceInfo.PROPERTY_NAME)!!] = device
+            outputDevices[device.info.id] = device
         }
 
         override fun onConnectionStatusChanged(devices: Set<MidiDeviceInfo>) {
@@ -54,7 +54,7 @@ class MidiSession @Inject constructor(context: Context) {
 
     fun getInputDevices(): Map<String, MidiDevice> = inputDevices
 
-    fun getOutputDevices(): Map<String, MidiDevice> = outputDevices
+    fun getOutputDevices(): Map<Int, MidiDevice> = outputDevices
 
     fun openInputDevice(deviceInfo: MidiDeviceInfo) {
         midiManager.openInputDevice(deviceInfo)
@@ -70,8 +70,8 @@ class MidiSession @Inject constructor(context: Context) {
     }
 
     fun removeOutputDevice(deviceInfo: MidiDeviceInfo) {
-        val name = deviceInfo.properties.getString(MidiDeviceInfo.PROPERTY_NAME)
-        outputDevices.remove(name)
+        val id = deviceInfo.id
+        outputDevices.remove(id)
     }
 
     fun registerForMidiCallbacks(listener: MidiReceiverListener) {

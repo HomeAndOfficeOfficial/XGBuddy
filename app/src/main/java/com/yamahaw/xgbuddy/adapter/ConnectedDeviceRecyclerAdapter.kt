@@ -50,7 +50,8 @@ class ConnectedDeviceRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val name = connectedDevices[position].properties.getString(MidiDeviceInfo.PROPERTY_NAME)
             ?: "Unknown Device" // TODO: Replace with string res
-        val isOutputChecked = midiSession.getOutputDevices().containsKey(name)
+        val id = connectedDevices[position].id
+        val isOutputChecked = midiSession.getOutputDevices().containsKey(id)
         val isInputChecked = midiSession.getInputDevices().containsKey(name)
         val listener =
             OnCheckedChangeListener { buttonView, isChecked ->
