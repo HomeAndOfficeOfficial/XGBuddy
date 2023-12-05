@@ -145,7 +145,7 @@ object DataFormatUtil {
 
     val panFormatter = DataAssignFormatter {
         when (it) {
-            0 -> "Random"
+            0 -> "Rnd."
             in 1..63 -> "L${64 - it}"
             64 -> "C"
             else -> "R${it - 64}"
@@ -239,7 +239,7 @@ object DataFormatUtil {
         when (it) {
             in 0..6 -> "L${7 - it}"
             7 -> "C"
-            in 8 .. 14 -> "R${it - 7}"
+            in 8..14 -> "R${it - 7}"
             else -> "Scaling"
         }
     }
