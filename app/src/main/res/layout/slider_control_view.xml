@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/pcRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp">
+
+        <ImageButton
+            android:id="@+id/ibReset"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="@+id/tvParamLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvParamLabel"
+            app:srcCompat="@drawable/baseline_refresh_24" />
 
         <TextView
             android:id="@+id/tvParamLabel"
@@ -21,15 +33,17 @@
             style="@style/BiggerSeekbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/ibReset"
             app:layout_constraintEnd_toStartOf="@id/tvParamValue"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvParamLabel" />
+            app:layout_constraintStart_toEndOf="@+id/ibReset"
+            app:layout_constraintTop_toTopOf="@+id/ibReset" />
 
         <TextView
             android:id="@+id/tvParamValue"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
             android:layout_height="wrap_content"
-            android:text="127"
+            android:gravity="end"
+            android:text="39.70"
             app:layout_constraintBottom_toBottomOf="@id/cpSeekbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cpSeekbar" />

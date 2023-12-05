@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.yamahaw.xgbuddy.R
@@ -22,6 +23,7 @@ class SliderControlView :
     constructor(context: Context) : this(context, null)
 
     private val seekbar: SeekBar
+    private val ibReset: ImageButton
 
     var shouldReportAllTouchEvents = false
 
@@ -40,6 +42,9 @@ class SliderControlView :
                 v.parent.requestDisallowInterceptTouchEvent(true)
                 false
             }
+        }
+        ibReset = view.findViewById<ImageButton?>(R.id.ibReset).apply {
+            setOnClickListener { onResetClicked() }
         }
         initializeCommonViews(view)
     }
@@ -90,6 +95,13 @@ class SliderControlView :
             min = controlParameter?.min ?: 0
             max = controlParameter?.max ?: 127
             progress = value
+        }
+    }
+
+    private fun onResetClicked() {
+        controlParameter?.let {
+            this@SliderControlView.value = it.default
+            listener?.onParameterChanged(controlParameter!!, false)
         }
     }
 }

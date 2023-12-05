@@ -15,7 +15,7 @@ object DataFormatUtil {
     }
 
     val millisecondFormatter = DataAssignFormatter {
-        "${it / 10f}ms"
+        "${it / 10f}"
     }
 
     val decibelFormatter = DataAssignFormatter {
@@ -23,11 +23,11 @@ object DataFormatUtil {
     }
 
     val reverbTimeFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.reverbTime[it]}s"
+        EffectDataAssignTables.reverbTime[it]
     }
 
     val reverbDimensionFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.reverbDimension[it]}m"
+        EffectDataAssignTables.reverbDimension[it]
     }
 
     val erTypeFormatter = DataAssignFormatter {
@@ -43,11 +43,11 @@ object DataFormatUtil {
     }
 
     val lfoFreqFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.lfoFreq[it]}Hz"
+        "${EffectDataAssignTables.lfoFreq[it]}"
     }
 
     val modDelayOffsetFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.modDelayOffset[it]}ms"
+        "${EffectDataAssignTables.modDelayOffset[it]}"
     }
 
     val monoSteroFormatter = DataAssignFormatter {
@@ -63,15 +63,15 @@ object DataFormatUtil {
     }
 
     val roomSizeFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.roomSize[it]}m"
+        EffectDataAssignTables.roomSize[it]
     }
 
     val delayTimeFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.delayTime[it]}ms"
+        EffectDataAssignTables.delayTime[it]
     }
 
     val eqFreqFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.eqFrequency[it]}Hz"
+        EffectDataAssignTables.eqFrequency[it]
     }
 
     val lrSelectFormatter = DataAssignFormatter {
@@ -110,7 +110,7 @@ object DataFormatUtil {
     }
 
     val karaokeDelayFormatter = DataAssignFormatter {
-        "${EffectDataAssignTables.karaokeDelay[it]}ms"
+        EffectDataAssignTables.karaokeDelay[it]
     }
 
     val eqTenthKHzFormatter = DataAssignFormatter {
@@ -197,7 +197,7 @@ object DataFormatUtil {
         if (it == 0)
             "Linear"
         else
-            "Exponential"
+            "Exp."
     }
 
     val waveShapeFormatter = DataAssignFormatter {
